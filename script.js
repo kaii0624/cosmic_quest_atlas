@@ -202,8 +202,6 @@ const storyScene = document.querySelector("#storyScene");
 const detailRoutePath = document.querySelector("#detailRoutePath");
 const storyPointsEl = document.querySelector("#storyPoints");
 const homeButton = document.querySelector("#homeButton");
-const panelTitle = document.querySelector("#panelTitle");
-const panelLead = document.querySelector("#panelLead");
 const guidePanel = document.querySelector("#guidePanel");
 const storyPanel = document.querySelector("#storyPanel");
 const portraitEl = document.querySelector("#portrait");
@@ -317,8 +315,6 @@ function renderStoryPoints(points) {
 
 function renderPanel() {
   if (state.mode === "home") {
-    panelTitle.textContent = "天空の大陸";
-    panelLead.textContent = "星座と神話が重なる天空の星図。";
     guidePanel.classList.remove("is-hidden");
     storyPanel.classList.add("is-hidden");
     guidePanel.innerHTML = `
@@ -336,8 +332,6 @@ function renderPanel() {
 
   if (state.mode === "detail") {
     const kingdom = KINGDOMS[state.kingdomId];
-    panelTitle.textContent = kingdom.name;
-    panelLead.textContent = kingdom.lead;
     guidePanel.classList.remove("is-hidden");
     storyPanel.classList.add("is-hidden");
     guidePanel.innerHTML = `
@@ -356,8 +350,6 @@ function renderPanel() {
 }
 
 function renderGuideNote(title, note) {
-  panelTitle.textContent = title;
-  panelLead.textContent = note;
   guidePanel.classList.remove("is-hidden");
   storyPanel.classList.add("is-hidden");
   guidePanel.innerHTML = `
@@ -376,8 +368,6 @@ function renderStory() {
   const pattern = line.pattern ?? "normal";
   const sprite = story.enemy[pattern] ?? story.enemy.normal;
 
-  panelTitle.textContent = story.name;
-  panelLead.textContent = story.lead;
   storyScene.dataset.bg = story.battleBg;
   storyScene.dataset.story = state.storyId;
   storyScene.setAttribute("aria-label", `${story.name}のストーリー画面`);

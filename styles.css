@@ -152,7 +152,6 @@ button {
 
 .map-title span,
 .map-title em,
-.panel-header span,
 .stage-type {
   display: block;
   font-size: 0.78rem;
@@ -330,7 +329,6 @@ button {
   overflow: auto;
 }
 
-.panel-header,
 .encounter-panel,
 .observation-panel,
 .scroll-panel {
@@ -340,24 +338,6 @@ button {
     linear-gradient(180deg, rgba(255, 244, 205, 0.98), rgba(232, 187, 110, 0.97)),
     var(--paper);
   box-shadow: 0 5px 0 rgba(75, 42, 14, 0.72);
-}
-
-.panel-header {
-  padding: 14px;
-  text-align: center;
-}
-
-.panel-header h1 {
-  margin: 2px 0 4px;
-  font-size: 1.58rem;
-  line-height: 1.12;
-}
-
-.panel-header p {
-  margin: 0;
-  font-size: 0.9rem;
-  font-weight: 700;
-  line-height: 1.45;
 }
 
 .layer-tabs {
@@ -1006,7 +986,7 @@ button {
 }
 
 .codex-panel {
-  grid-template-rows: auto auto 1fr;
+  grid-template-rows: auto auto;
 }
 
 .guide-panel,
@@ -1871,18 +1851,6 @@ button {
   .codex-panel {
     gap: 8px;
     padding: 8px;
-  }
-
-  .panel-header {
-    padding: 10px;
-  }
-
-  .panel-header h1 {
-    font-size: 1.24rem;
-  }
-
-  .panel-header p {
-    font-size: 0.78rem;
   }
 
   .guide-panel,
