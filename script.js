@@ -100,6 +100,17 @@ const STORIES = {
       normal: "./assets/algol-enemy-normal.png",
       eclipse: "./assets/algol-enemy-eclipse.png"
     },
+    status: {
+      rows: [
+        { icon: "✦", label: "種類", value: "食変光星" },
+        { icon: "⌁", label: "距離", value: "約93 ly" },
+        { icon: "▲", label: "質量", value: "主星 約3.2 M☉" }
+      ],
+      meter: {
+        normal: 72,
+        eclipse: 43
+      }
+    },
     rule: "能力：数ターンごとに暗くなり、隠れている伴星が現れる。",
     clearRule: "攻略法：光度曲線を読んで「食」のタイミングを見破る。",
     lines: [
@@ -149,6 +160,17 @@ const STORIES = {
       normal: "./assets/cygnus-swan-normal.png",
       parallax: "./assets/cygnus-swan-parallax.png"
     },
+    status: {
+      rows: [
+        { icon: "✦", label: "種類", value: "星座" },
+        { icon: "◎", label: "代表星", value: "デネブ" },
+        { icon: "⌁", label: "奥行き", value: "年周視差" }
+      ],
+      meter: {
+        normal: 68,
+        parallax: 84
+      }
+    },
     rule: "能力：半年ごとに翼の位置がわずかにずれて見える。",
     clearRule: "攻略法：年周視差 p を測り、d = 1 / p で距離を読む。",
     lines: [
@@ -194,6 +216,7 @@ const state = {
   battleBg: "autumn"
 };
 
+const gameShell = document.querySelector(".game-shell");
 const mapStage = document.querySelector("#mapStage");
 const detailCanvas = document.querySelector("#detailCanvas");
 const detailArt = document.querySelector("#detailArt");
@@ -210,6 +233,10 @@ const guidePanel = document.querySelector("#guidePanel");
 const storyPanel = document.querySelector("#storyPanel");
 const scrollPanel = document.querySelector(".scroll-panel");
 const enemySprite = document.querySelector("#enemySprite");
+const targetStatusThumb = document.querySelector("#targetStatusThumb");
+const targetStatusName = document.querySelector("#targetStatusName");
+const targetStatusStats = document.querySelector("#targetStatusStats");
+const targetStatusMeter = document.querySelector("#targetStatusMeter");
 const storySceneTypeEl = document.querySelector("#storySceneType");
 const storySceneNameEl = document.querySelector("#storySceneName");
 const storyTypeEl = document.querySelector("#storyType");
@@ -258,9 +285,11 @@ function goHome() {
 }
 
 function renderMap() {
+  gameShell.dataset.mode = state.mode;
   mapStage.className = `map-stage mode-${state.mode}`;
   storyScene.dataset.bg = state.battleBg;
-  homeButton.classList.toggle("is-visible", state.mode !== "home");
+  homeButton.hidden = state.mode !== "detail";
+  homeButton.classList.toggle("is-visible", state.mode === "detail");
 
   kingdomButtons.forEach((button) => {
     const active = button.dataset.kingdom === state.kingdomId && state.mode !== "home";
@@ -382,6 +411,24 @@ function renderStory() {
   enemySprite.src = sprite;
   enemySprite.alt = story.name;
   enemySprite.className = `enemy-sprite story-${state.storyId} pattern-${pattern}`;
+  targetStatusThumb.src = sprite;
+  targetStatusThumb.alt = story.name;
+  targetStatusName.textContent = story.name;
+  targetStatusStats.innerHTML = "";
+  story.status.rows.forEach((row) => {
+    const item = document.createElement("div");
+    const term = document.createElement("dt");
+    const icon = document.createElement("span");
+    const value = document.createElement("dd");
+
+    icon.setAttribute("aria-hidden", "true");
+    icon.textContent = row.icon;
+    term.append(icon, row.label);
+    value.textContent = row.value;
+    item.append(term, value);
+    targetStatusStats.appendChild(item);
+  });
+  targetStatusMeter.style.setProperty("--meter", `${story.status.meter[pattern] ?? 70}%`);
   storySceneTypeEl.textContent = story.type;
   storySceneNameEl.textContent = story.name;
   storyTypeEl.textContent = story.type;

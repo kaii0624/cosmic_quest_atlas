@@ -52,9 +52,19 @@
         </div>
         <div id="storyScene" class="story-scene" aria-label="ストーリー画面">
           <div class="battle-screen">
-            <div class="enemy-hud battle-hud">
-              <span>HP:</span>
-              <i><b></b></i>
+            <div id="targetStatusPanel" class="status-panel target-status-panel">
+              <div class="status-object">
+                <img
+                  id="targetStatusThumb"
+                  src="./assets/algol-enemy-normal.png"
+                  alt="悪魔の首アルゴル"
+                />
+                <div>
+                  <strong id="targetStatusName">悪魔の首アルゴル</strong>
+                  <dl id="targetStatusStats" class="status-stats target-stats"></dl>
+                </div>
+              </div>
+              <span class="status-meter gold"><b id="targetStatusMeter"></b></span>
             </div>
             <img
               id="enemySprite"
@@ -67,10 +77,25 @@
               src="./assets/observer-astronomer.png"
               alt="望遠鏡を構える観測者"
             />
-            <div class="player-hud battle-hud">
-              <span>HP:</span>
-              <i><b></b></i>
-              <strong>20 / 20</strong>
+            <div id="observerStatusPanel" class="status-panel observer-status-panel">
+              <strong>観測者</strong>
+              <dl class="status-stats observer-stats">
+                <div>
+                  <dt><span aria-hidden="true">▤</span>観測知識</dt>
+                  <dd>120 / 200</dd>
+                  <span class="status-meter blue"><b style="--meter: 60%"></b></span>
+                </div>
+                <div>
+                  <dt><span aria-hidden="true">◎</span>観測精度</dt>
+                  <dd>85 %</dd>
+                  <span class="status-meter blue"><b style="--meter: 85%"></b></span>
+                </div>
+                <div>
+                  <dt><span aria-hidden="true">⌛</span>観測時間</dt>
+                  <dd>60 秒</dd>
+                  <span class="status-meter blue"><b style="--meter: 72%"></b></span>
+                </div>
+              </dl>
             </div>
           </div>
           <div class="story-scene-title">
