@@ -1659,13 +1659,16 @@ button {
 
 .observer-sprite {
   position: absolute;
-  left: 210px;
-  bottom: 210px;
-  width: 142px;
-  height: 184px;
+  left: 132px;
+  bottom: 142px;
+  width: min(30%, 320px);
+  height: auto;
   z-index: 4;
-  border-bottom: 5px solid rgba(46, 45, 39, 0.82);
-  filter: drop-shadow(6px 6px 0 rgba(30, 29, 24, 0.2));
+  object-fit: contain;
+  image-rendering: auto;
+  filter:
+    drop-shadow(7px 8px 0 rgba(3, 7, 20, 0.22))
+    drop-shadow(0 0 12px rgba(98, 159, 255, 0.22));
 }
 
 .observer-head,
@@ -1835,12 +1838,10 @@ button {
   }
 
   .observer-sprite {
-    left: 72px;
-    bottom: 86px;
-    width: 86px;
-    height: 116px;
-    transform: scale(0.76);
-    transform-origin: left bottom;
+    left: 30px;
+    bottom: 28px;
+    width: 40%;
+    max-width: 150px;
   }
 
   .player-hud {
@@ -2005,9 +2006,10 @@ button {
   }
 
   .observer-sprite {
-    left: 48px;
-    bottom: 34px;
-    transform: scale(0.58);
+    left: 22px;
+    bottom: 20px;
+    width: 43%;
+    max-width: 162px;
   }
 
   .player-hud {
