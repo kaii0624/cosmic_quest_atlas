@@ -61,9 +61,25 @@ button {
   display: grid;
   grid-template-columns: minmax(620px, 1fr) minmax(340px, 430px);
   gap: 18px;
+  align-content: start;
   width: min(1500px, calc(100% - 28px));
   min-height: calc(100vh - 28px);
   margin: 14px auto;
+}
+
+.map-stage {
+  grid-column: 1;
+  grid-row: 1;
+}
+
+.story-text-panel {
+  grid-column: 1;
+  grid-row: 2;
+}
+
+.codex-panel {
+  grid-column: 2;
+  grid-row: 1 / span 2;
 }
 
 .map-stage {
@@ -314,8 +330,9 @@ button {
 
 .codex-panel {
   display: grid;
-  grid-template-rows: auto auto minmax(260px, auto) auto auto;
+  grid-template-rows: auto auto;
   gap: 12px;
+  align-content: start;
   min-height: calc(100vh - 28px);
   padding: 14px;
   border: 3px solid var(--gold);
@@ -711,6 +728,14 @@ button {
 @media (max-width: 1080px) {
   .game-shell {
     grid-template-columns: 1fr;
+    min-height: 0;
+  }
+
+  .map-stage,
+  .story-text-panel,
+  .codex-panel {
+    grid-column: 1;
+    grid-row: auto;
   }
 
   .map-stage {
@@ -985,12 +1010,9 @@ button {
   background: rgba(9, 32, 67, 0.9);
 }
 
-.codex-panel {
-  grid-template-rows: auto auto;
-}
-
 .guide-panel,
-.story-panel {
+.story-panel,
+.story-text-panel {
   border: 2px solid rgba(247, 203, 94, 0.9);
   border-radius: 8px;
   background:
@@ -1001,6 +1023,58 @@ button {
 
 .guide-panel {
   padding: 14px;
+}
+
+.story-text-panel {
+  padding: 10px;
+}
+
+.story-advance {
+  position: relative;
+  display: block;
+  width: 100%;
+  min-height: 122px;
+  padding: 17px 46px 18px 18px;
+  border: 2px solid rgba(70, 39, 15, 0.82);
+  border-radius: 8px;
+  color: var(--ink);
+  background:
+    linear-gradient(180deg, rgba(255, 248, 224, 0.98), rgba(237, 199, 124, 0.98)),
+    var(--paper);
+  box-shadow:
+    inset 0 0 0 3px rgba(255, 255, 255, 0.38),
+    0 4px 0 rgba(73, 41, 14, 0.72);
+  cursor: pointer;
+  text-align: left;
+}
+
+.story-advance:focus-visible {
+  outline: 3px solid rgba(255, 237, 142, 0.95);
+  outline-offset: 3px;
+}
+
+.story-speaker {
+  display: block;
+  margin-bottom: 8px;
+  color: #0c4764;
+  font-size: 0.94rem;
+  font-weight: 900;
+}
+
+.story-line {
+  display: block;
+  font-size: 1.12rem;
+  font-weight: 900;
+  line-height: 1.58;
+}
+
+.story-cue {
+  position: absolute;
+  right: 18px;
+  bottom: 14px;
+  color: #2a2119;
+  font-size: 1.2rem;
+  animation: cueBlink 1.1s ease-in-out infinite;
 }
 
 .guide-panel h2,
@@ -1033,57 +1107,24 @@ button {
 }
 
 .story-panel {
-  display: grid;
-  grid-template-columns: 132px 1fr;
-  gap: 12px;
-  padding: 12px;
-  align-items: start;
+  display: block;
+  padding: 16px;
+  text-align: left;
 }
 
-.story-panel .story-mechanic,
-.story-panel .season-switcher,
-.story-panel .primary-action {
-  grid-column: 1 / -1;
+.story-panel .stage-type {
+  margin-bottom: 10px;
 }
 
-.story-panel .dialog {
-  min-height: 116px;
+.story-panel h2 {
+  font-size: 1.52rem;
+  line-height: 1.18;
 }
 
-.story-panel .dialog b {
-  color: #103d5a;
-  font-size: 0.82rem;
-}
-
-.story-mechanic {
-  padding: 10px;
-  border: 1px solid rgba(105, 72, 30, 0.55);
-  border-radius: 8px;
-  background: rgba(255, 250, 224, 0.82);
-}
-
-.season-switcher {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 6px;
-}
-
-.season-switcher button {
-  min-width: 0;
-  min-height: 34px;
-  border: 1px solid rgba(108, 72, 29, 0.68);
-  border-radius: 7px;
-  color: #fff4c0;
-  background: linear-gradient(180deg, #25475f, #132844);
-  box-shadow: 0 2px 0 rgba(45, 24, 9, 0.72);
-  font-size: 0.78rem;
+.story-panel p {
+  margin: 0;
   font-weight: 900;
-  cursor: pointer;
-}
-
-.season-switcher button.active {
-  color: var(--ink);
-  background: linear-gradient(180deg, #fff0b4, #e6a94e);
+  line-height: 1.35;
 }
 
 .light-curve {
@@ -1313,6 +1354,18 @@ button {
   }
 }
 
+@keyframes cueBlink {
+  0%,
+  100% {
+    opacity: 0.35;
+    transform: translateY(0);
+  }
+  50% {
+    opacity: 1;
+    transform: translateY(3px);
+  }
+}
+
 @media (max-width: 700px) {
   .map-home-button {
     top: 12px;
@@ -1362,6 +1415,21 @@ button {
 .map-stage.mode-detail .detail-canvas,
 .map-stage.mode-story .story-scene {
   opacity: 1;
+  pointer-events: auto;
+}
+
+.map-stage.mode-story {
+  min-height: min(680px, calc(100vh - 220px));
+}
+
+.map-stage.mode-story > .map-canvas,
+.map-stage.mode-story > .detail-canvas {
+  opacity: 0 !important;
+  pointer-events: none;
+}
+
+.map-stage.mode-story > .story-scene {
+  opacity: 1 !important;
   pointer-events: auto;
 }
 
@@ -1833,6 +1901,7 @@ button {
 
 @media (max-width: 1080px) {
   .map-stage.mode-story {
+    min-height: auto;
     aspect-ratio: 16 / 10;
   }
 }
@@ -1845,6 +1914,7 @@ button {
   }
 
   .map-stage.mode-story {
+    min-height: auto;
     aspect-ratio: 4 / 3;
   }
 
@@ -1855,31 +1925,13 @@ button {
 
   .guide-panel,
   .story-panel,
+  .story-text-panel,
   .scroll-panel {
     padding: 9px;
   }
 
   .story-panel {
-    grid-template-columns: 82px 1fr;
-    gap: 8px;
-  }
-
-  .portrait-shell {
-    width: 82px;
-  }
-
-  .encounter-copy h2 {
-    font-size: 1.02rem;
-  }
-
-  .encounter-copy p {
-    font-size: 0.78rem;
-  }
-
-  .story-panel .dialog {
-    min-height: 76px;
-    padding: 7px 8px;
-    font-size: 0.78rem;
+    text-align: center;
   }
 
   .stage-type {
@@ -1888,47 +1940,33 @@ button {
     font-size: 0.62rem;
   }
 
-  .story-mechanic {
-    padding: 7px;
+  .story-panel h2 {
+    font-size: 1.18rem;
   }
 
-  .light-curve {
-    height: 50px;
-    gap: 5px;
-    padding: 6px;
+  .story-panel p {
+    font-size: 0.78rem;
   }
 
-  .light-curve span:nth-child(1),
-  .light-curve span:nth-child(6) {
-    height: 36px;
+  .story-advance {
+    min-height: 104px;
+    padding: 12px 34px 14px 13px;
   }
 
-  .light-curve span:nth-child(2),
-  .light-curve span:nth-child(5) {
-    height: 29px;
+  .story-speaker {
+    margin-bottom: 6px;
+    font-size: 0.76rem;
   }
 
-  .light-curve span:nth-child(3),
-  .light-curve span:nth-child(4) {
-    height: 15px;
+  .story-line {
+    font-size: 0.92rem;
+    line-height: 1.55;
   }
 
-  .parallax-diagram {
-    height: 58px;
-  }
-
-  .story-mechanic p {
-    margin-top: 6px;
-    font-size: 0.72rem;
-  }
-
-  .season-switcher {
-    gap: 5px;
-  }
-
-  .season-switcher button {
-    min-height: 30px;
-    font-size: 0.68rem;
+  .story-cue {
+    right: 13px;
+    bottom: 10px;
+    font-size: 1rem;
   }
 
   .equation-scrolls {

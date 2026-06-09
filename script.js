@@ -104,33 +104,33 @@ const STORIES = {
     clearRule: "攻略法：光度曲線を読んで「食」のタイミングを見破る。",
     lines: [
       {
-        speaker: "星図",
-        text: "秋の王国の奥、ペルセウス座の手元で、切り落とされた首がまだ光っている。",
+        speaker: "悪魔の首アルゴル",
+        text: "ペルセウスの手に掲げられたこの首は、まだ空で明滅している。",
         pattern: "normal"
       },
       {
-        speaker: "ペルセウス",
-        text: "メデューサは倒した。だが、その目だけは生きているように明滅を続ける。",
+        speaker: "悪魔の首アルゴル",
+        text: "我が名はアルゴル。悪魔の頭と呼ばれ、メデューサの目の位置にある星。",
         pattern: "eclipse"
       },
       {
-        speaker: "アルゴル",
-        text: "我が名はアルゴル。アラビア語系で『悪魔の頭』と呼ばれた星。",
+        speaker: "悪魔の首アルゴル",
+        text: "呪いと思うか。数日ごとに、私はすっと暗くなる。",
         pattern: "normal"
       },
       {
-        speaker: "観測者",
-        text: "呪いではない。明るさは周期的に落ち、また戻っている。光度曲線に谷がある。",
+        speaker: "悪魔の首アルゴル",
+        text: "伴星が前を横切る。そのとき光が隠れ、光度曲線には深い谷が刻まれる。",
         pattern: "eclipse"
       },
       {
-        speaker: "星図",
-        text: "正体は食変光星。2つの星が互いに回り、片方がもう片方を隠すと暗くなる。",
+        speaker: "悪魔の首アルゴル",
+        text: "正体は食変光星。2つの星が互いに回り、隠し合っているのだ。",
         pattern: "eclipse"
       },
       {
-        speaker: "獲得",
-        text: "食変光星の砂時計を得た。暗くなる星を恐れず、食のタイミングとして読める。",
+        speaker: "悪魔の首アルゴル",
+        text: "恐れるな。暗くなる時刻を読めば、悪魔の目は観測で見破れる。",
         pattern: "normal"
       }
     ]
@@ -153,32 +153,32 @@ const STORIES = {
     clearRule: "攻略法：年周視差 p を測り、d = 1 / p で距離を読む。",
     lines: [
       {
-        speaker: "星図",
+        speaker: "白鳥座キュグヌス",
         text: "夏の王国、天の川の上に大きな十字が浮かぶ。星座絵では翼を広げた白鳥だ。",
         pattern: "normal"
       },
       {
-        speaker: "白鳥座",
+        speaker: "白鳥座キュグヌス",
         text: "尾のデネブは遠く強く輝き、くちばしのアルビレオは色の違いを見せる。だが今夜の試練は距離だ。",
         pattern: "normal"
       },
       {
-        speaker: "観測者",
+        speaker: "白鳥座キュグヌス",
         text: "半年おいて同じ星を見る。地球が公転軌道の反対側へ移ると、近い星だけ背景に対して少しずれる。",
         pattern: "parallax"
       },
       {
-        speaker: "白鳥座",
+        speaker: "白鳥座キュグヌス",
         text: "この小さな角度が年周視差。視差 p が大きいほど、その星は近い。",
         pattern: "parallax"
       },
       {
-        speaker: "星図",
+        speaker: "白鳥座キュグヌス",
         text: "p を秒角で測れば、距離 d はパーセクで d = 1 / p。61 Cygni はこの測定で有名な白鳥座の近い星だ。",
         pattern: "parallax"
       },
       {
-        speaker: "獲得",
+        speaker: "白鳥座キュグヌス",
         text: "年周視差の羽根を得た。星座の絵の奥に、近い星と遠い星の立体的な距離が見える。",
         pattern: "normal"
       }
@@ -202,18 +202,19 @@ const storyScene = document.querySelector("#storyScene");
 const detailRoutePath = document.querySelector("#detailRoutePath");
 const storyPointsEl = document.querySelector("#storyPoints");
 const homeButton = document.querySelector("#homeButton");
+const storyTextPanel = document.querySelector("#storyTextPanel");
+const storyAdvanceButton = document.querySelector("#storyAdvanceButton");
+const storyTextSpeaker = document.querySelector("#storyTextSpeaker");
+const storyTextLine = document.querySelector("#storyTextLine");
 const guidePanel = document.querySelector("#guidePanel");
 const storyPanel = document.querySelector("#storyPanel");
-const portraitEl = document.querySelector("#portrait");
+const scrollPanel = document.querySelector(".scroll-panel");
 const enemySprite = document.querySelector("#enemySprite");
 const storySceneTypeEl = document.querySelector("#storySceneType");
 const storySceneNameEl = document.querySelector("#storySceneName");
 const storyTypeEl = document.querySelector("#storyType");
 const storyNameEl = document.querySelector("#storyName");
 const storySubtitleEl = document.querySelector("#storySubtitle");
-const dialogEl = document.querySelector("#dialog");
-const storyMechanicEl = document.querySelector("#storyMechanic");
-const nextStoryButton = document.querySelector("#nextStoryButton");
 const kingdomButtons = [...document.querySelectorAll("[data-kingdom]")];
 const battleBgButtons = [...document.querySelectorAll("[data-battle-bg]")];
 
@@ -317,6 +318,8 @@ function renderPanel() {
   if (state.mode === "home") {
     guidePanel.classList.remove("is-hidden");
     storyPanel.classList.add("is-hidden");
+    storyTextPanel.classList.add("is-hidden");
+    scrollPanel.classList.remove("is-hidden");
     guidePanel.innerHTML = `
       <h2>中央観測塔</h2>
       <p>見かけの星座の向こうに、恒星、星雲、銀河の奥行きが眠っている。</p>
@@ -334,6 +337,8 @@ function renderPanel() {
     const kingdom = KINGDOMS[state.kingdomId];
     guidePanel.classList.remove("is-hidden");
     storyPanel.classList.add("is-hidden");
+    storyTextPanel.classList.add("is-hidden");
+    scrollPanel.classList.remove("is-hidden");
     guidePanel.innerHTML = `
       <h2>${kingdom.detailTitle}</h2>
       <p>${kingdom.detailText}</p>
@@ -352,6 +357,8 @@ function renderPanel() {
 function renderGuideNote(title, note) {
   guidePanel.classList.remove("is-hidden");
   storyPanel.classList.add("is-hidden");
+  storyTextPanel.classList.add("is-hidden");
+  scrollPanel.classList.remove("is-hidden");
   guidePanel.innerHTML = `
     <h2>${title}</h2>
     <p>${note}</p>
@@ -364,15 +371,14 @@ function renderGuideNote(title, note) {
 function renderStory() {
   const story = STORIES[state.storyId];
   const line = story.lines[state.lineIndex];
-  const isSolved = state.lineIndex >= story.clearAt;
   const pattern = line.pattern ?? "normal";
   const sprite = story.enemy[pattern] ?? story.enemy.normal;
 
+  storyTextPanel.classList.remove("is-hidden");
+  scrollPanel.classList.add("is-hidden");
   storyScene.dataset.bg = story.battleBg;
   storyScene.dataset.story = state.storyId;
   storyScene.setAttribute("aria-label", `${story.name}のストーリー画面`);
-  portraitEl.className = `portrait ${state.storyId} generated`;
-  portraitEl.style.backgroundImage = `url("${story.portrait}")`;
   enemySprite.src = sprite;
   enemySprite.alt = story.name;
   enemySprite.className = `enemy-sprite story-${state.storyId} pattern-${pattern}`;
@@ -381,47 +387,13 @@ function renderStory() {
   storyTypeEl.textContent = story.type;
   storyNameEl.textContent = story.name;
   storySubtitleEl.textContent = story.subtitle;
-  storyMechanicEl.className = `story-mechanic mechanic-${story.mechanic}`;
-  storyMechanicEl.innerHTML = `
-    ${renderMechanic(story.mechanic)}
-    <p>${isSolved ? story.clearRule : story.rule}</p>
-  `;
-  dialogEl.innerHTML = `
-    <p><b>${line.speaker}</b></p>
-    <p>${line.text}</p>
-  `;
-  nextStoryButton.textContent =
-    state.lineIndex >= story.lines.length - 1 ? "星図へ戻る" : "次へ";
+  storyTextSpeaker.textContent = line.speaker;
+  storyTextLine.textContent = line.text;
+  storyAdvanceButton.setAttribute(
+    "aria-label",
+    state.lineIndex >= story.lines.length - 1 ? "星図へ戻る" : "次のセリフへ"
+  );
   renderBattleBgButtons();
-}
-
-function renderMechanic(mechanic) {
-  if (mechanic === "parallax") {
-    return `
-      <div class="parallax-diagram" aria-label="年周視差の図">
-        <span class="sun"></span>
-        <span class="earth earth-left"></span>
-        <span class="earth earth-right"></span>
-        <i class="sight sight-left"></i>
-        <i class="sight sight-right"></i>
-        <b class="near-star"></b>
-        <em class="far-star far-star-a"></em>
-        <em class="far-star far-star-b"></em>
-        <em class="far-star far-star-c"></em>
-      </div>
-    `;
-  }
-
-  return `
-    <div class="light-curve" aria-label="アルゴルの光度曲線">
-      <span></span>
-      <span></span>
-      <span></span>
-      <span></span>
-      <span></span>
-      <span></span>
-    </div>
-  `;
 }
 
 function renderBattleBgButtons() {
@@ -465,6 +437,6 @@ battleBgButtons.forEach((button) => {
 });
 
 homeButton.addEventListener("click", goHome);
-nextStoryButton.addEventListener("click", nextStoryLine);
+storyAdvanceButton.addEventListener("click", nextStoryLine);
 
 render();

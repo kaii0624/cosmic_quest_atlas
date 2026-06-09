@@ -81,6 +81,16 @@
         <button id="homeButton" class="map-home-button" type="button">戻る</button>
       </section>
 
+      <section id="storyTextPanel" class="story-text-panel is-hidden" aria-live="polite">
+        <button id="storyAdvanceButton" class="story-advance" type="button">
+          <span id="storyTextSpeaker" class="story-speaker">悪魔の首アルゴル</span>
+          <span id="storyTextLine" class="story-line">
+            我が名はアルゴル。隠れるたび、空は悪魔の目を思い出す。
+          </span>
+          <span class="story-cue" aria-hidden="true">▼</span>
+        </button>
+      </section>
+
       <aside class="codex-panel" aria-label="観測手帳">
         <section id="guidePanel" class="guide-panel" aria-live="polite">
           <h2>中央観測塔</h2>
@@ -96,34 +106,9 @@
         </section>
 
         <section id="storyPanel" class="story-panel is-hidden" aria-live="polite">
-          <div class="portrait-shell">
-            <div id="portrait" class="portrait algol"></div>
-            <div id="aura" class="aura"></div>
-          </div>
-          <div class="encounter-copy">
-            <span id="storyType" class="stage-type">ストーリー1</span>
-            <h2 id="storyName">悪魔の首アルゴル</h2>
-            <p id="storySubtitle">悪魔の星そのもの</p>
-            <div id="dialog" class="dialog"></div>
-          </div>
-          <div id="storyMechanic" class="story-mechanic">
-            <div class="light-curve" aria-label="アルゴルの光度曲線">
-              <span></span>
-              <span></span>
-              <span></span>
-              <span></span>
-              <span></span>
-              <span></span>
-            </div>
-            <p id="storyRule">光度曲線の谷が「食」のタイミング。</p>
-          </div>
-          <div class="season-switcher" aria-label="星域背景">
-            <button type="button" data-battle-bg="spring">春</button>
-            <button type="button" data-battle-bg="summer">夏</button>
-            <button type="button" data-battle-bg="autumn" class="active">秋</button>
-            <button type="button" data-battle-bg="winter">冬</button>
-          </div>
-          <button id="nextStoryButton" class="primary-action" type="button">次へ</button>
+          <span id="storyType" class="stage-type">STORY 1</span>
+          <h2 id="storyName">悪魔の首アルゴル</h2>
+          <p id="storySubtitle">悪魔の星そのもの</p>
         </section>
 
         <section class="scroll-panel">
