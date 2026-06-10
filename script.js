@@ -522,7 +522,7 @@ function renderPanel() {
     guidePanel.innerHTML = `
       <div class="info-heading">
         <span aria-hidden="true"></span>
-        <h2>中央観測塔</h2>
+        <h2>天球観測塔</h2>
         <span aria-hidden="true"></span>
       </div>
       <p>見かけの星座の向こうに、恒星、星雲、銀河の奥行きが眠っている。</p>
