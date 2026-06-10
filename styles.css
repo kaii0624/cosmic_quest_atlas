@@ -1010,6 +1010,30 @@ button {
   background: rgba(9, 32, 67, 0.9);
 }
 
+.detail-canvas[data-kingdom="spring"] .story-point {
+  background:
+    radial-gradient(circle at 35% 30%, #ffffff 0 13%, #bff27a 14% 38%, #1d6740 40% 100%);
+  box-shadow:
+    0 0 0 3px rgba(22, 76, 47, 0.86),
+    0 0 18px rgba(193, 255, 129, 0.95);
+}
+
+.detail-canvas[data-kingdom="spring"] .story-point::after {
+  background: rgba(17, 61, 41, 0.9);
+}
+
+.detail-canvas[data-kingdom="winter"] .story-point {
+  background:
+    radial-gradient(circle at 35% 30%, #ffffff 0 13%, #9fe9ff 14% 38%, #164a7c 40% 100%);
+  box-shadow:
+    0 0 0 3px rgba(21, 55, 98, 0.86),
+    0 0 18px rgba(151, 229, 255, 0.95);
+}
+
+.detail-canvas[data-kingdom="winter"] .story-point::after {
+  background: rgba(10, 37, 73, 0.9);
+}
+
 .guide-panel,
 .story-panel,
 .story-text-panel {
@@ -1721,7 +1745,8 @@ button {
 }
 
 .observer-status-panel {
-  left: 32px;
+  left: auto;
+  right: 32px;
   bottom: 34px;
   width: min(390px, 44%);
   padding: 10px 12px;
@@ -1761,6 +1786,24 @@ button {
     drop-shadow(0 0 18px rgba(126, 195, 255, 0.42));
 }
 
+.enemy-sprite.story-mizar {
+  top: 44px;
+  right: 72px;
+  width: min(43%, 430px);
+  filter:
+    drop-shadow(0 16px 0 rgba(7, 11, 20, 0.22))
+    drop-shadow(0 0 18px rgba(255, 222, 112, 0.38));
+}
+
+.enemy-sprite.story-rigel {
+  top: 38px;
+  right: 84px;
+  width: min(42%, 430px);
+  filter:
+    drop-shadow(0 18px 0 rgba(3, 7, 20, 0.28))
+    drop-shadow(0 0 24px rgba(124, 210, 255, 0.48));
+}
+
 .enemy-sprite.pattern-eclipse {
   transform: translateY(4px) scale(1.05);
   filter:
@@ -1782,10 +1825,29 @@ button {
     parallaxShift 1.6s ease-in-out infinite;
 }
 
+.enemy-sprite.pattern-split {
+  transform: translateX(-6px) scale(1.03);
+  animation:
+    enemyFloat 2.8s ease-in-out infinite,
+    parallaxShift 1.5s ease-in-out infinite;
+}
+
+.enemy-sprite.pattern-hot {
+  transform: scale(1.05);
+  filter:
+    brightness(1.16)
+    saturate(1.14)
+    drop-shadow(0 18px 0 rgba(3, 7, 20, 0.26))
+    drop-shadow(0 0 28px rgba(133, 220, 255, 0.78));
+  animation:
+    enemyFloat 2.8s ease-in-out infinite,
+    whiteFlare 1.4s ease-in-out infinite;
+}
+
 .observer-sprite {
   position: absolute;
   left: 132px;
-  bottom: 142px;
+  bottom: 72px;
   width: min(30%, 320px);
   height: auto;
   z-index: 4;
@@ -2064,74 +2126,96 @@ button {
   .target-status-panel {
     top: 8px;
     left: 8px;
-    right: 8px;
-    width: auto;
-    padding: 6px;
+    right: auto;
+    width: calc(50% - 12px);
+    max-height: calc(50% - 12px);
+    padding: 5px;
+    overflow: hidden;
   }
 
   .status-object {
-    grid-template-columns: 58px 1fr;
-    gap: 8px;
+    grid-template-columns: 34px 1fr;
+    gap: 5px;
   }
 
   .status-object img {
-    width: 58px;
+    width: 34px;
   }
 
   .status-object strong,
   .observer-status-panel > strong {
-    margin-bottom: 4px;
-    font-size: 0.86rem;
+    margin-bottom: 3px;
+    font-size: 0.68rem;
+    line-height: 1.12;
   }
 
   .status-stats {
-    gap: 2px;
+    gap: 1px;
   }
 
   .status-stats div {
-    grid-template-columns: minmax(58px, auto) 1fr;
-    gap: 5px;
-    font-size: 0.66rem;
+    grid-template-columns: minmax(38px, auto) 1fr;
+    gap: 3px;
+    font-size: 0.54rem;
   }
 
   .status-meter {
-    height: 10px;
+    height: 8px;
     border-width: 2px;
   }
 
   .status-meter.gold {
-    margin-top: 5px;
+    margin-top: 4px;
   }
 
   .observer-status-panel {
-    left: 8px;
+    left: auto;
     right: 8px;
     bottom: 8px;
-    width: auto;
-    padding: 6px 7px;
+    width: calc(50% - 12px);
+    padding: 5px 6px;
   }
 
   .observer-stats div {
-    grid-template-columns: minmax(74px, auto) 48px 1fr;
-    font-size: 0.62rem;
+    grid-template-columns: 42px 47px 1fr;
+    gap: 2px;
+    font-size: 0.5rem;
+  }
+
+  .observer-stats dd {
+    white-space: nowrap;
   }
 
   .enemy-sprite {
-    top: 86px;
+    top: 34px;
     right: 10px;
-    width: 40%;
+    width: 42%;
+    max-height: 45%;
   }
 
   .enemy-sprite.story-cygnus {
-    top: 76px;
+    top: 28px;
     right: 0;
-    width: 47%;
+    width: 48%;
+  }
+
+  .enemy-sprite.story-mizar {
+    top: 32px;
+    right: 6px;
+    width: 45%;
+  }
+
+  .enemy-sprite.story-rigel {
+    top: 18px;
+    right: 8px;
+    width: 44%;
   }
 
   .observer-sprite {
-    left: 18px;
-    bottom: 82px;
-    width: 36%;
-    max-width: 138px;
+    left: 9px;
+    bottom: 12px;
+    width: 41%;
+    max-width: 148px;
+    max-height: 45%;
   }
 }

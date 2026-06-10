@@ -1,7 +1,37 @@
 const KINGDOMS = {
   spring: {
     name: "春の王国",
-    lead: "銀河の霧をまとった春の星域。"
+    lead: "銀河の霧をまとった春の星域。",
+    detailImage: "./assets/spring-kingdom-mizar-detail.png",
+    detailAlt: "春の王国と北斗七星の詳細星図",
+    detailTitle: "春の星図",
+    detailText: "北の空に大きなひしゃくが浮かぶ。柄の途中にあるミザールとアルコルは、目と観測で分けて読む春の試練。",
+    steps: ["ミザールとアルコル", "アルクトゥルス", "スピカ"],
+    points: [
+      {
+        id: "mizar",
+        x: 49,
+        y: 42,
+        label: "ミザール",
+        storyId: "mizar"
+      },
+      {
+        id: "arcturus-preview",
+        x: 28,
+        y: 71,
+        label: "アルクトゥルス",
+        locked: true,
+        note: "うしかい座の橙色巨星。春の大曲線で見つけ、色と温度を読む。"
+      },
+      {
+        id: "spica-preview",
+        x: 73,
+        y: 76,
+        label: "スピカ",
+        locked: true,
+        note: "おとめ座の青白い一等星。春の大曲線の先で、熱い星の色を覚える。"
+      }
+    ]
   },
   summer: {
     name: "夏の王国",
@@ -81,11 +111,91 @@ const KINGDOMS = {
   },
   winter: {
     name: "冬の王国",
-    lead: "青白い巨星が凍てつく冬の星域。"
+    lead: "青白い巨星が凍てつく冬の星域。",
+    detailImage: "./assets/winter-kingdom-rigel-detail.png",
+    detailAlt: "冬の王国とオリオン座の詳細星図",
+    detailTitle: "冬の星図",
+    detailText: "オリオン座の足もとでリゲルが青白く輝く。星の色、温度、明るさの違いを冬の空で読む。",
+    steps: ["青白き巨星リゲル", "ベテルギウス", "シリウス"],
+    points: [
+      {
+        id: "rigel",
+        x: 57,
+        y: 70,
+        label: "リゲル",
+        storyId: "rigel"
+      },
+      {
+        id: "betelgeuse-preview",
+        x: 39,
+        y: 32,
+        label: "ベテルギウス",
+        locked: true,
+        note: "赤色超巨星。リゲルとの色の違いで、温度と進化段階を比べる。"
+      },
+      {
+        id: "sirius-preview",
+        x: 78,
+        y: 83,
+        label: "シリウス",
+        locked: true,
+        note: "近いから明るい白犬王。見かけの明るさと距離の関係を読む。"
+      }
+    ]
   }
 };
 
 const STORIES = {
+  mizar: {
+    kingdomId: "spring",
+    battleBg: "spring",
+    type: "STORY 3",
+    name: "双星の門ミザール",
+    subtitle: "目で分ける二重星",
+    lead: "北斗七星の柄に並ぶ、ミザールとアルコルの観測試練。",
+    mechanic: "doubleStar",
+    clearAt: 4,
+    portrait: "./assets/mizar-enemy-normal.png",
+    enemy: {
+      normal: "./assets/mizar-enemy-normal.png",
+      split: "./assets/mizar-enemy-split.png"
+    },
+    status: {
+      rows: [
+        { icon: "✦", label: "種類", value: "二重星" },
+        { icon: "⌁", label: "距離", value: "約83 ly" },
+        { icon: "◎", label: "相棒", value: "アルコル" }
+      ],
+      meter: {
+        normal: 62,
+        split: 88
+      }
+    },
+    rule: "能力：ひとつの星に見せかけ、観測精度が上がると相棒が分かれる。",
+    clearRule: "攻略法：北斗七星の柄をたどり、ミザールとアルコルを二重星として見分ける。",
+    lines: [
+      {
+        speaker: "双星の門ミザール",
+        text: "春の北の空、北斗七星の柄をたどれ。私は一つに見えて、隣に小さな相棒を隠している。",
+        pattern: "normal"
+      },
+      {
+        speaker: "双星の門ミザール",
+        text: "その名はアルコル。目がよく、空が暗ければ、肉眼でも私たちは分かれて見える。",
+        pattern: "split"
+      },
+      {
+        speaker: "双星の門ミザール",
+        text: "望遠鏡を向けると、ミザール自身もさらに連星だと分かる。星は点に見えても、奥に仲間を持つ。",
+        pattern: "split"
+      },
+      {
+        speaker: "双星の門ミザール",
+        text: "星座は見かけの地図。近くに並んで見える星を、観測で一つずつほどいていけ。",
+        pattern: "normal"
+      }
+    ]
+  },
   algol: {
     kingdomId: "autumn",
     battleBg: "autumn",
@@ -202,6 +312,56 @@ const STORIES = {
       {
         speaker: "白鳥座キュグヌス",
         text: "年周視差の羽根を得た。星座の絵の奥に、近い星と遠い星の立体的な距離が見える。",
+        pattern: "normal"
+      }
+    ]
+  },
+  rigel: {
+    kingdomId: "winter",
+    battleBg: "winter",
+    type: "STORY 4",
+    name: "青白き巨星リゲル",
+    subtitle: "色で読む温度と大光度",
+    lead: "オリオン座の足もとで輝く、青白い高温の大光度星。",
+    mechanic: "stellarColor",
+    clearAt: 4,
+    portrait: "./assets/rigel-enemy-normal.png",
+    enemy: {
+      normal: "./assets/rigel-enemy-normal.png",
+      hot: "./assets/rigel-enemy-hot.png"
+    },
+    status: {
+      rows: [
+        { icon: "✦", label: "種類", value: "青色超巨星" },
+        { icon: "⌁", label: "距離", value: "約860 ly" },
+        { icon: "☉", label: "温度", value: "約1.2万K" }
+      ],
+      meter: {
+        normal: 78,
+        hot: 95
+      }
+    },
+    rule: "能力：青白い光で観測者を惑わせ、近さだけでは説明できない明るさを示す。",
+    clearRule: "攻略法：星の色から表面温度を読み、リゲルが高温で大光度の星だと見破る。",
+    lines: [
+      {
+        speaker: "青白き巨星リゲル",
+        text: "オリオンの足もとを見よ。私は青白く輝くリゲル、冬の空の大光度星だ。",
+        pattern: "normal"
+      },
+      {
+        speaker: "青白き巨星リゲル",
+        text: "赤いベテルギウスと比べれば分かる。青白い星ほど表面温度は高い。",
+        pattern: "hot"
+      },
+      {
+        speaker: "青白き巨星リゲル",
+        text: "私は近いからだけ明るいのではない。遠くにいても強く輝く、巨大で高温の星なのだ。",
+        pattern: "hot"
+      },
+      {
+        speaker: "青白き巨星リゲル",
+        text: "色、温度、光度を合わせて読め。冬の星座は、恒星進化を学ぶ入口になる。",
         pattern: "normal"
       }
     ]
