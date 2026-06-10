@@ -321,7 +321,7 @@ const STORIES = {
     battleBg: "winter",
     type: "STORY 4",
     name: "青白き巨星リゲル",
-    subtitle: "色で読む温度と大光度",
+    subtitle: "",
     lead: "オリオン座の足もとで輝く、青白い高温の大光度星。",
     mechanic: "stellarColor",
     clearAt: 4,
@@ -560,7 +560,7 @@ function renderPanel() {
         <h2>天球観測塔</h2>
         <span aria-hidden="true"></span>
       </div>
-      <p>見かけの星座の向こうに、恒星、星雲、銀河の奥行きが眠っている。</p>
+      <p>星座をたどり、宇宙の奥へ。</p>
       <div class="guide-steps home-choice-grid">
         ${HOME_CHOICES.map(
           (choice) => `
@@ -672,7 +672,8 @@ function renderStory() {
   storySceneNameEl.textContent = story.name;
   storyTypeEl.textContent = story.type;
   storyNameEl.textContent = story.name;
-  storySubtitleEl.textContent = story.subtitle;
+  storySubtitleEl.textContent = story.subtitle ?? "";
+  storySubtitleEl.hidden = !story.subtitle;
   storyTextSpeaker.textContent = line.speaker;
   storyTextLine.textContent = line.text;
   storyAdvanceButton.setAttribute(
