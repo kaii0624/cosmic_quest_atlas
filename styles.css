@@ -11,6 +11,14 @@
   --rose: #b95471;
   --ice: #8ed8ff;
   --shadow: rgba(5, 9, 27, 0.74);
+  --ui-navy: #081735;
+  --ui-navy-2: #0c2546;
+  --ui-violet: #241044;
+  --ui-gold-light: #fff1a8;
+  --ui-gold-mid: #d9a33f;
+  --ui-gold-dark: #694013;
+  --ui-parchment: #f4dfb3;
+  --ui-parchment-dark: #bc7c37;
 }
 
 * {
@@ -934,6 +942,561 @@ button {
 .region-label.winter:focus-visible,
 .region-label.winter.active {
   transform: scale(1.08) rotate(1deg);
+}
+
+.game-shell[data-mode="home"] {
+  grid-template-columns: minmax(0, min(100%, 820px));
+  gap: 12px;
+  justify-content: center;
+  width: min(100% - 18px, 820px);
+  margin: max(8px, env(safe-area-inset-top)) auto max(10px, env(safe-area-inset-bottom));
+}
+
+.game-shell[data-mode="home"] .map-stage,
+.game-shell[data-mode="home"] .story-text-panel,
+.game-shell[data-mode="home"] .codex-panel {
+  grid-column: 1;
+}
+
+.game-shell[data-mode="home"] .map-stage {
+  grid-row: 1;
+  min-height: 0;
+  aspect-ratio: 1;
+  border-width: 4px;
+  border-color: rgba(238, 184, 74, 0.95);
+  border-radius: 14px;
+  background:
+    radial-gradient(circle at 50% 50%, rgba(47, 94, 145, 0.24), transparent 55%),
+    linear-gradient(180deg, #071633, #030918);
+  box-shadow:
+    0 20px 42px rgba(0, 0, 0, 0.54),
+    0 0 0 2px rgba(44, 22, 8, 0.92),
+    inset 0 0 0 6px rgba(21, 15, 27, 0.82),
+    inset 0 0 64px rgba(255, 219, 94, 0.24);
+}
+
+.game-shell[data-mode="home"] .map-stage::before {
+  inset: 8.4%;
+  border: 3px double rgba(246, 207, 95, 0.95);
+  border-radius: 50%;
+  box-shadow:
+    inset 0 0 0 7px rgba(7, 12, 34, 0.35),
+    inset 0 0 24px rgba(255, 232, 144, 0.28),
+    0 0 22px rgba(255, 221, 97, 0.2);
+}
+
+.game-shell[data-mode="home"] .map-stage::after {
+  inset: 11.2%;
+  border: 1px solid rgba(255, 232, 145, 0.68);
+  border-radius: 50%;
+  opacity: 0.92;
+  box-shadow:
+    inset 0 0 0 1px rgba(116, 69, 21, 0.62),
+    0 0 18px rgba(255, 232, 145, 0.22);
+}
+
+.game-shell[data-mode="home"] .world-art {
+  filter: saturate(1.08) contrast(1.07) brightness(0.98);
+}
+
+.game-shell[data-mode="home"] .codex-panel {
+  grid-row: 2;
+  min-height: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+  overflow: visible;
+}
+
+.game-shell[data-mode="home"] .scroll-panel,
+.game-shell[data-mode="home"] .story-text-panel {
+  display: none !important;
+}
+
+.ornate-frame {
+  position: relative;
+}
+
+.map-title-logo {
+  top: 4.2%;
+  left: 4.2%;
+  width: clamp(118px, 22%, 178px);
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  color: var(--ui-gold-light);
+  background: transparent;
+  box-shadow: none;
+  text-align: left;
+  pointer-events: none;
+  filter:
+    drop-shadow(0 4px 0 rgba(20, 10, 4, 0.7))
+    drop-shadow(0 0 10px rgba(255, 215, 93, 0.35));
+}
+
+.map-title-logo::before {
+  content: "";
+  position: absolute;
+  left: -10%;
+  top: -22%;
+  width: 54%;
+  aspect-ratio: 1;
+  border: 2px solid rgba(240, 197, 82, 0.85);
+  border-radius: 50%;
+  background:
+    linear-gradient(45deg, transparent 46%, rgba(255, 234, 142, 0.85) 47% 53%, transparent 54%),
+    linear-gradient(-45deg, transparent 46%, rgba(255, 234, 142, 0.52) 47% 53%, transparent 54%),
+    radial-gradient(circle, rgba(8, 20, 47, 0.92) 0 52%, rgba(157, 94, 30, 0.7) 53% 57%, transparent 58%);
+  opacity: 0.9;
+}
+
+.map-title-logo::after {
+  content: "";
+  position: absolute;
+  left: -3%;
+  right: 1%;
+  bottom: -14%;
+  height: 26%;
+  border-bottom: 2px solid rgba(232, 186, 79, 0.88);
+  border-left: 2px solid rgba(232, 186, 79, 0.52);
+  transform: skewX(-18deg);
+}
+
+.map-title-logo strong {
+  position: relative;
+  z-index: 1;
+  display: block;
+  margin-left: 16%;
+  color: transparent;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(1.42rem, 4vw, 2.35rem);
+  font-weight: 900;
+  letter-spacing: 0;
+  line-height: 0.82;
+  background: linear-gradient(180deg, #fff7bd 0%, #e7b94b 43%, #9e5e1b 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  text-shadow:
+    0 1px 0 rgba(255, 246, 178, 0.65),
+    0 3px 0 rgba(63, 33, 8, 0.75),
+    0 0 12px rgba(255, 231, 128, 0.28);
+}
+
+.logo-compass {
+  position: absolute;
+  z-index: 0;
+  left: 1%;
+  top: -30%;
+  width: 16%;
+  height: 78%;
+  background: linear-gradient(180deg, #fff7bd, #c17a1d);
+  clip-path: polygon(50% 0, 75% 72%, 50% 100%, 25% 72%);
+  filter: drop-shadow(0 0 4px rgba(255, 229, 125, 0.76));
+}
+
+.compass-marker {
+  --medal-size: clamp(42px, 7vw, 64px);
+  width: var(--medal-size);
+  height: var(--medal-size);
+  display: grid;
+  place-items: center;
+  border: 0;
+  border-radius: 50%;
+  color: #fff2b5;
+  background:
+    radial-gradient(circle, #162b5d 0 42%, #081833 43% 56%, #d5a647 57% 61%, #5e3413 62% 70%, transparent 71%),
+    conic-gradient(from 22deg, #eac36a, #6b3a13, #f9df91, #774313, #eac36a);
+  box-shadow:
+    0 0 0 2px rgba(22, 10, 3, 0.82),
+    0 0 0 5px rgba(214, 160, 61, 0.42),
+    0 0 18px rgba(255, 221, 112, 0.45),
+    inset 0 0 0 2px rgba(255, 244, 174, 0.58);
+  font-family: Georgia, "Hiragino Mincho ProN", serif;
+  font-size: clamp(1.2rem, 3.4vw, 1.95rem);
+  font-weight: 900;
+  text-shadow:
+    0 2px 0 rgba(49, 22, 5, 0.88),
+    0 0 10px rgba(255, 236, 148, 0.4);
+}
+
+.compass-marker::before,
+.compass-marker::after {
+  content: "";
+  position: absolute;
+  inset: -18%;
+  z-index: -1;
+  background:
+    linear-gradient(90deg, transparent 45%, rgba(238, 190, 74, 0.9) 48% 52%, transparent 55%),
+    linear-gradient(0deg, transparent 45%, rgba(238, 190, 74, 0.9) 48% 52%, transparent 55%);
+  clip-path: polygon(50% 0, 58% 38%, 100% 50%, 58% 62%, 50% 100%, 42% 62%, 0 50%, 42% 38%);
+}
+
+.compass-marker::after {
+  inset: -8%;
+  opacity: 0.5;
+  transform: rotate(45deg);
+}
+
+.compass.north {
+  top: 2.2%;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.compass.south {
+  bottom: 2.2%;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.compass.west {
+  top: 50%;
+  left: 2.2%;
+  transform: translateY(-50%);
+}
+
+.compass.east {
+  top: 50%;
+  right: 2.2%;
+  transform: translateY(-50%);
+}
+
+.region-label.kingdom-marker,
+.tower-marker {
+  --plate-bg: linear-gradient(180deg, rgba(18, 50, 59, 0.98), rgba(8, 20, 46, 0.98));
+  --plate-glow: rgba(129, 235, 167, 0.44);
+  min-width: clamp(128px, 20vw, 190px);
+  min-height: clamp(38px, 5.6vw, 54px);
+  padding: 8px 18px;
+  border: 0;
+  border-radius: 0;
+  color: #fff0b7;
+  background:
+    linear-gradient(90deg, transparent 0 7%, rgba(244, 205, 95, 0.95) 7% 8.5%, transparent 8.5% 91.5%, rgba(244, 205, 95, 0.95) 91.5% 93%, transparent 93%),
+    var(--plate-bg);
+  clip-path: polygon(8% 0, 92% 0, 100% 50%, 92% 100%, 8% 100%, 0 50%);
+  box-shadow:
+    inset 0 0 0 2px rgba(255, 239, 159, 0.55),
+    inset 0 0 16px rgba(255, 225, 115, 0.14),
+    0 5px 0 rgba(42, 20, 7, 0.72),
+    0 0 16px var(--plate-glow);
+  font-family: "Hiragino Mincho ProN", "Yu Mincho", serif;
+  font-size: clamp(0.94rem, 2.2vw, 1.35rem);
+  font-weight: 900;
+  letter-spacing: 0;
+  text-shadow:
+    0 2px 0 rgba(35, 18, 6, 0.95),
+    0 0 8px rgba(255, 226, 134, 0.46);
+}
+
+.region-label.kingdom-marker::before,
+.tower-marker::before {
+  content: var(--season-icon, "✦");
+  display: inline-grid;
+  place-items: center;
+  width: 1.7em;
+  height: 1.7em;
+  margin-right: 0.45em;
+  border: 1px solid rgba(255, 235, 150, 0.62);
+  border-radius: 50%;
+  color: var(--season-color, #fff2b7);
+  background: radial-gradient(circle, rgba(255, 246, 199, 0.16), rgba(6, 18, 43, 0.76));
+  box-shadow: inset 0 0 6px rgba(255, 231, 128, 0.2);
+  font-size: 0.78em;
+  vertical-align: middle;
+}
+
+.region-label.kingdom-marker::after,
+.tower-marker::after {
+  content: "";
+  position: absolute;
+  inset: 3px 9px;
+  pointer-events: none;
+  border-top: 1px solid rgba(255, 238, 154, 0.62);
+  border-bottom: 1px solid rgba(83, 45, 15, 0.64);
+  clip-path: polygon(6% 0, 94% 0, 100% 50%, 94% 100%, 6% 100%, 0 50%);
+}
+
+.region-label.kingdom-marker:hover,
+.region-label.kingdom-marker:focus-visible,
+.region-label.kingdom-marker.active,
+.tower-marker:hover,
+.tower-marker:focus-visible {
+  outline: none;
+  filter: brightness(1.14) saturate(1.12);
+  box-shadow:
+    inset 0 0 0 2px rgba(255, 247, 190, 0.75),
+    inset 0 0 20px rgba(255, 225, 115, 0.22),
+    0 7px 0 rgba(42, 20, 7, 0.78),
+    0 0 25px var(--plate-glow),
+    0 0 10px rgba(255, 238, 151, 0.55);
+}
+
+.region-label.kingdom-marker:active,
+.tower-marker:active {
+  translate: 0 2px;
+}
+
+.region-label.kingdom-marker.spring {
+  --season-icon: "✤";
+  --season-color: #d8ff9a;
+  --plate-bg: linear-gradient(180deg, rgba(29, 87, 53, 0.96), rgba(9, 31, 45, 0.98));
+  --plate-glow: rgba(145, 244, 156, 0.45);
+  background:
+    linear-gradient(90deg, transparent 0 7%, rgba(244, 205, 95, 0.95) 7% 8.5%, transparent 8.5% 91.5%, rgba(244, 205, 95, 0.95) 91.5% 93%, transparent 93%),
+    var(--plate-bg);
+  top: 25%;
+  left: 20%;
+}
+
+.region-label.kingdom-marker.summer {
+  --season-icon: "☉";
+  --season-color: #ffdf76;
+  --plate-bg: linear-gradient(180deg, rgba(14, 83, 105, 0.96), rgba(8, 31, 61, 0.98));
+  --plate-glow: rgba(97, 217, 255, 0.42);
+  background:
+    linear-gradient(90deg, transparent 0 7%, rgba(244, 205, 95, 0.95) 7% 8.5%, transparent 8.5% 91.5%, rgba(244, 205, 95, 0.95) 91.5% 93%, transparent 93%),
+    var(--plate-bg);
+  bottom: 27%;
+  left: 17%;
+}
+
+.region-label.kingdom-marker.autumn {
+  --season-icon: "✦";
+  --season-color: #f2b06f;
+  --plate-bg: linear-gradient(180deg, rgba(81, 38, 91, 0.98), rgba(28, 16, 58, 0.98));
+  --plate-glow: rgba(212, 129, 255, 0.4);
+  background:
+    linear-gradient(90deg, transparent 0 7%, rgba(244, 205, 95, 0.95) 7% 8.5%, transparent 8.5% 91.5%, rgba(244, 205, 95, 0.95) 91.5% 93%, transparent 93%),
+    var(--plate-bg);
+  right: 15%;
+  bottom: 27%;
+}
+
+.region-label.kingdom-marker.winter {
+  --season-icon: "✧";
+  --season-color: #bdeaff;
+  --plate-bg: linear-gradient(180deg, rgba(38, 83, 119, 0.98), rgba(12, 31, 65, 0.98));
+  --plate-glow: rgba(151, 229, 255, 0.44);
+  background:
+    linear-gradient(90deg, transparent 0 7%, rgba(244, 205, 95, 0.95) 7% 8.5%, transparent 8.5% 91.5%, rgba(244, 205, 95, 0.95) 91.5% 93%, transparent 93%),
+    var(--plate-bg);
+  top: 20%;
+  right: 15%;
+}
+
+.tower-marker {
+  --season-icon: "✦";
+  --season-color: #fff2b7;
+  --plate-bg: linear-gradient(180deg, rgba(253, 234, 184, 0.98), rgba(185, 119, 47, 0.97));
+  --plate-glow: rgba(255, 222, 126, 0.58);
+  left: 50%;
+  top: 48.2%;
+  width: clamp(180px, 28vw, 250px);
+  color: #2b180b;
+  font-size: clamp(0.78rem, 1.7vw, 1.04rem);
+  text-shadow: 0 1px 0 rgba(255, 247, 203, 0.7);
+  transform: translate(-50%, -50%);
+}
+
+.tower-marker:hover,
+.tower-marker:focus-visible {
+  transform: translate(-50%, -50%) scale(1.03);
+}
+
+.info-panel {
+  padding: 22px clamp(14px, 3vw, 28px) clamp(16px, 2.5vw, 24px);
+  border: 3px solid rgba(31, 21, 35, 0.95);
+  border-radius: 14px;
+  color: #2a1a11;
+  background:
+    linear-gradient(90deg, rgba(121, 69, 23, 0.14), transparent 12% 88%, rgba(121, 69, 23, 0.14)),
+    radial-gradient(circle at 22% 18%, rgba(255, 249, 220, 0.8), transparent 28%),
+    linear-gradient(180deg, rgba(255, 238, 192, 0.99), rgba(229, 181, 100, 0.99));
+  box-shadow:
+    0 10px 0 rgba(43, 22, 10, 0.82),
+    0 0 0 3px rgba(229, 174, 75, 0.94),
+    inset 0 0 0 4px rgba(69, 39, 15, 0.32),
+    inset 0 0 38px rgba(105, 60, 22, 0.16);
+}
+
+.info-panel::before,
+.info-panel::after {
+  content: "";
+  position: absolute;
+  width: 54px;
+  height: 54px;
+  pointer-events: none;
+  border-color: rgba(115, 67, 22, 0.82);
+  border-style: solid;
+}
+
+.info-panel::before {
+  left: 9px;
+  top: 9px;
+  border-width: 2px 0 0 2px;
+  border-radius: 9px 0 0 0;
+  box-shadow: -3px -3px 0 rgba(247, 207, 91, 0.45);
+}
+
+.info-panel::after {
+  right: 9px;
+  bottom: 9px;
+  border-width: 0 2px 2px 0;
+  border-radius: 0 0 9px 0;
+  box-shadow: 3px 3px 0 rgba(247, 207, 91, 0.45);
+}
+
+.info-heading {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  gap: 12px;
+  align-items: center;
+  margin-bottom: 6px;
+}
+
+.info-heading span {
+  height: 1px;
+  background:
+    linear-gradient(90deg, transparent, rgba(96, 56, 20, 0.74)),
+    linear-gradient(90deg, transparent 45%, rgba(184, 123, 42, 0.8) 48% 52%, transparent 55%);
+}
+
+.info-heading h2,
+.info-panel h2 {
+  margin: 0;
+  font-family: "Hiragino Mincho ProN", "Yu Mincho", serif;
+  font-size: clamp(1.55rem, 4vw, 2.4rem);
+  font-weight: 900;
+  letter-spacing: 0;
+  line-height: 1.1;
+  text-align: center;
+  color: #3a2415;
+  text-shadow: 0 1px 0 rgba(255, 246, 213, 0.7);
+}
+
+.info-panel p {
+  margin: 8px auto 16px;
+  max-width: 680px;
+  color: #4a321f;
+  font-size: clamp(0.86rem, 2.1vw, 1rem);
+  font-weight: 800;
+  line-height: 1.55;
+  text-align: center;
+}
+
+.home-choice-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 10px;
+  max-width: 650px;
+  margin: 0 auto;
+}
+
+.choice-button {
+  position: relative;
+  min-height: clamp(48px, 8vw, 64px);
+  display: grid;
+  grid-template-columns: 48px 1fr 34px;
+  gap: 10px;
+  align-items: center;
+  padding: 6px 16px;
+  border: 0;
+  border-radius: 0;
+  color: #ffe9a2;
+  background:
+    radial-gradient(circle at 18% 50%, var(--choice-glow, rgba(118, 220, 255, 0.22)), transparent 28%),
+    linear-gradient(180deg, rgba(11, 43, 74, 0.98), rgba(5, 18, 45, 0.99));
+  clip-path: polygon(5% 0, 95% 0, 100% 50%, 95% 100%, 5% 100%, 0 50%);
+  box-shadow:
+    inset 0 0 0 2px rgba(255, 235, 143, 0.5),
+    inset 0 0 18px rgba(255, 224, 112, 0.1),
+    0 4px 0 rgba(43, 23, 10, 0.84),
+    0 0 0 2px rgba(91, 51, 16, 0.95);
+  font-family: "Hiragino Mincho ProN", "Yu Mincho", serif;
+  font-size: clamp(1.08rem, 3.4vw, 1.55rem);
+  font-weight: 900;
+  text-align: center;
+  text-shadow:
+    0 2px 0 rgba(24, 12, 4, 0.95),
+    0 0 10px rgba(255, 224, 116, 0.35);
+  cursor: pointer;
+  transition:
+    filter 160ms ease,
+    translate 160ms ease,
+    box-shadow 160ms ease;
+}
+
+.choice-button::before {
+  content: "";
+  position: absolute;
+  inset: 4px 12px;
+  pointer-events: none;
+  border-top: 1px solid rgba(255, 234, 143, 0.58);
+  border-bottom: 1px solid rgba(255, 234, 143, 0.32);
+  clip-path: inherit;
+}
+
+.choice-button:hover,
+.choice-button:focus-visible {
+  outline: none;
+  filter: brightness(1.16) saturate(1.12);
+  box-shadow:
+    inset 0 0 0 2px rgba(255, 248, 190, 0.78),
+    inset 0 0 24px rgba(255, 224, 112, 0.18),
+    0 5px 0 rgba(43, 23, 10, 0.9),
+    0 0 0 2px rgba(139, 82, 25, 0.95),
+    0 0 22px var(--choice-glow, rgba(128, 210, 255, 0.45));
+}
+
+.choice-button:active {
+  translate: 0 2px;
+}
+
+.choice-icon {
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  border: 1px solid rgba(255, 231, 139, 0.62);
+  border-radius: 50%;
+  color: var(--choice-icon-color, #fff2b0);
+  background:
+    radial-gradient(circle, rgba(255, 245, 191, 0.18), rgba(3, 14, 36, 0.82));
+  box-shadow:
+    inset 0 0 7px rgba(255, 232, 143, 0.18),
+    0 0 10px var(--choice-glow, rgba(128, 210, 255, 0.25));
+  font-size: 1rem;
+}
+
+.choice-arrow {
+  color: #e6b85a;
+  text-align: right;
+  filter: drop-shadow(0 0 5px rgba(255, 230, 125, 0.55));
+}
+
+.season-spring {
+  --choice-glow: rgba(148, 245, 158, 0.46);
+  --choice-icon-color: #d7ffa0;
+}
+
+.season-summer {
+  --choice-glow: rgba(100, 220, 255, 0.48);
+  --choice-icon-color: #ffda62;
+}
+
+.season-autumn {
+  --choice-glow: rgba(196, 113, 255, 0.46);
+  --choice-icon-color: #f0ac6a;
+  background:
+    radial-gradient(circle at 18% 50%, rgba(196, 113, 255, 0.18), transparent 30%),
+    linear-gradient(180deg, rgba(33, 20, 72, 0.98), rgba(11, 13, 43, 0.99));
+}
+
+.season-winter {
+  --choice-glow: rgba(150, 229, 255, 0.48);
+  --choice-icon-color: #c3edff;
 }
 
 .story-points {
@@ -2217,5 +2780,156 @@ button {
     width: 41%;
     max-width: 148px;
     max-height: 45%;
+  }
+}
+
+@media (max-width: 700px) {
+  .game-shell[data-mode="home"] {
+    gap: 8px;
+    width: min(100% - 10px, 820px);
+    margin: max(5px, env(safe-area-inset-top)) auto max(8px, env(safe-area-inset-bottom));
+  }
+
+  .game-shell[data-mode="home"] .map-stage {
+    border-width: 3px;
+    border-radius: 10px;
+  }
+
+  .game-shell[data-mode="home"] .map-stage::before {
+    inset: 8%;
+    border-width: 2px;
+  }
+
+  .game-shell[data-mode="home"] .map-stage::after {
+    inset: 11%;
+  }
+
+  .map-title-logo {
+    top: 3.8%;
+    left: 4%;
+    width: clamp(92px, 25vw, 120px);
+  }
+
+  .map-title-logo strong {
+    font-size: clamp(1.04rem, 7vw, 1.36rem);
+  }
+
+  .compass-marker {
+    --medal-size: clamp(36px, 10vw, 44px);
+    font-size: clamp(1rem, 5vw, 1.26rem);
+  }
+
+  .compass.north {
+    top: 2.6%;
+  }
+
+  .compass.south {
+    bottom: 2.8%;
+  }
+
+  .compass.west {
+    left: 2.4%;
+  }
+
+  .compass.east {
+    right: 2.4%;
+  }
+
+  .kingdom-marker,
+  .tower-marker {
+    min-width: 104px;
+    min-height: 34px;
+    padding: 6px 10px;
+    font-size: 0.74rem;
+    box-shadow:
+      inset 0 0 0 1px rgba(255, 239, 159, 0.55),
+      inset 0 0 12px rgba(255, 225, 115, 0.12),
+      0 3px 0 rgba(42, 20, 7, 0.72),
+      0 0 10px var(--plate-glow);
+  }
+
+  .kingdom-marker::before,
+  .tower-marker::before {
+    width: 1.45em;
+    height: 1.45em;
+    margin-right: 0.3em;
+  }
+
+  .kingdom-marker.spring {
+    top: 25%;
+    left: 15.5%;
+  }
+
+  .kingdom-marker.summer {
+    left: 13%;
+    bottom: 27.5%;
+  }
+
+  .kingdom-marker.autumn {
+    right: 10.8%;
+    bottom: 27.5%;
+  }
+
+  .kingdom-marker.winter {
+    top: 20.5%;
+    right: 10%;
+  }
+
+  .tower-marker {
+    width: 155px;
+    min-width: 155px;
+    top: 48%;
+    padding-inline: 8px;
+    font-size: 0.65rem;
+  }
+
+  .info-panel {
+    padding: 15px 12px 13px;
+    border-radius: 10px;
+    box-shadow:
+      0 6px 0 rgba(43, 22, 10, 0.82),
+      0 0 0 2px rgba(229, 174, 75, 0.94),
+      inset 0 0 0 3px rgba(69, 39, 15, 0.28),
+      inset 0 0 30px rgba(105, 60, 22, 0.14);
+  }
+
+  .info-panel::before,
+  .info-panel::after {
+    width: 35px;
+    height: 35px;
+  }
+
+  .info-heading {
+    gap: 8px;
+    margin-bottom: 3px;
+  }
+
+  .info-heading h2,
+  .info-panel h2 {
+    font-size: 1.55rem;
+  }
+
+  .info-panel p {
+    margin: 6px auto 11px;
+    font-size: 0.8rem;
+    line-height: 1.48;
+  }
+
+  .home-choice-grid {
+    gap: 7px;
+  }
+
+  .choice-button {
+    min-height: 45px;
+    grid-template-columns: 38px 1fr 22px;
+    gap: 7px;
+    padding: 5px 12px;
+    font-size: 1.12rem;
+  }
+
+  .choice-icon {
+    width: 31px;
+    height: 31px;
+    font-size: 0.82rem;
   }
 }

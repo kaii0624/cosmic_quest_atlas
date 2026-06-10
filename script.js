@@ -385,6 +385,7 @@ const storyScene = document.querySelector("#storyScene");
 const detailRoutePath = document.querySelector("#detailRoutePath");
 const storyPointsEl = document.querySelector("#storyPoints");
 const homeButton = document.querySelector("#homeButton");
+const towerButton = document.querySelector("#towerButton");
 const storyTextPanel = document.querySelector("#storyTextPanel");
 const storyAdvanceButton = document.querySelector("#storyAdvanceButton");
 const storyTextSpeaker = document.querySelector("#storyTextSpeaker");
@@ -404,6 +405,13 @@ const storyNameEl = document.querySelector("#storyName");
 const storySubtitleEl = document.querySelector("#storySubtitle");
 const kingdomButtons = [...document.querySelectorAll("[data-kingdom]")];
 const battleBgButtons = [...document.querySelectorAll("[data-battle-bg]")];
+
+const HOME_CHOICES = [
+  { id: "spring", icon: "✤", label: "春の王国", className: "season-spring" },
+  { id: "summer", icon: "☉", label: "夏の王国", className: "season-summer" },
+  { id: "autumn", icon: "✦", label: "秋の王国", className: "season-autumn" },
+  { id: "winter", icon: "✧", label: "冬の王国", className: "season-winter" }
+];
 
 function selectKingdom(kingdomId) {
   const kingdom = KINGDOMS[kingdomId];
@@ -504,19 +512,30 @@ function renderStoryPoints(points) {
 }
 
 function renderPanel() {
+  guidePanel.dataset.panelMode = state.mode;
+
   if (state.mode === "home") {
     guidePanel.classList.remove("is-hidden");
     storyPanel.classList.add("is-hidden");
     storyTextPanel.classList.add("is-hidden");
-    scrollPanel.classList.remove("is-hidden");
+    scrollPanel.classList.add("is-hidden");
     guidePanel.innerHTML = `
-      <h2>中央観測塔</h2>
+      <div class="info-heading">
+        <span aria-hidden="true"></span>
+        <h2>中央観測塔</h2>
+        <span aria-hidden="true"></span>
+      </div>
       <p>見かけの星座の向こうに、恒星、星雲、銀河の奥行きが眠っている。</p>
-      <div class="guide-steps">
-        <span>春の王国</span>
-        <span>夏の王国</span>
-        <span>秋の王国</span>
-        <span>冬の王国</span>
+      <div class="guide-steps home-choice-grid">
+        ${HOME_CHOICES.map(
+          (choice) => `
+            <button class="choice-button ${choice.className}" type="button" data-menu-kingdom="${choice.id}">
+              <span class="choice-icon" aria-hidden="true">${choice.icon}</span>
+              <span>${choice.label}</span>
+              <span class="choice-arrow" aria-hidden="true">✦</span>
+            </button>
+          `
+        ).join("")}
       </div>
     `;
     return;
@@ -634,6 +653,14 @@ function render() {
 
 kingdomButtons.forEach((button) => {
   button.addEventListener("click", () => selectKingdom(button.dataset.kingdom));
+});
+
+towerButton.addEventListener("click", goHome);
+
+guidePanel.addEventListener("click", (event) => {
+  const button = event.target.closest("[data-menu-kingdom]");
+  if (!button) return;
+  selectKingdom(button.dataset.menuKingdom);
 });
 
 battleBgButtons.forEach((button) => {

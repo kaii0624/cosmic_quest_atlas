@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>天空の大陸 - 天文宇宙検定RPG</title>
+    <title>COSMIC QUEST</title>
     <link rel="stylesheet" href="./styles.css" />
   </head>
   <body>
@@ -19,20 +19,19 @@
           <svg class="route-layer" viewBox="0 0 100 100" aria-hidden="true">
             <path id="routePath" d="" />
           </svg>
-          <div class="map-title">
-            <span>RPGワールドMAP</span>
-            <strong>天空の大陸</strong>
-            <em>星座と宇宙をめぐる冒険</em>
+          <div class="map-title map-title-logo ornate-frame" aria-label="COSMIC QUEST">
+            <span class="logo-compass" aria-hidden="true"></span>
+            <strong>COSMIC<br />QUEST</strong>
           </div>
-          <div class="compass north">北</div>
-          <div class="compass west">西</div>
-          <div class="compass south">南</div>
-          <div class="compass east">東</div>
-          <button class="region-label spring" type="button" data-kingdom="spring">春の王国</button>
-          <button class="region-label summer" type="button" data-kingdom="summer">夏の王国</button>
-          <button class="region-label autumn" type="button" data-kingdom="autumn">秋の王国</button>
-          <button class="region-label winter" type="button" data-kingdom="winter">冬の王国</button>
-          <div class="tower-label">地球の中央観測塔</div>
+          <div class="compass compass-marker north"><span>北</span></div>
+          <div class="compass compass-marker west"><span>西</span></div>
+          <div class="compass compass-marker south"><span>南</span></div>
+          <div class="compass compass-marker east"><span>東</span></div>
+          <button class="region-label kingdom-marker spring" type="button" data-kingdom="spring">春の王国</button>
+          <button class="region-label kingdom-marker summer" type="button" data-kingdom="summer">夏の王国</button>
+          <button class="region-label kingdom-marker autumn" type="button" data-kingdom="autumn">秋の王国</button>
+          <button class="region-label kingdom-marker winter" type="button" data-kingdom="winter">冬の王国</button>
+          <button id="towerButton" class="tower-label tower-marker" type="button">地球の中央観測塔</button>
         </div>
         <div id="detailCanvas" class="detail-canvas" aria-label="星域MAP">
           <img
@@ -117,16 +116,36 @@
       </section>
 
       <aside class="codex-panel" aria-label="観測手帳">
-        <section id="guidePanel" class="guide-panel" aria-live="polite">
-          <h2>中央観測塔</h2>
+        <section id="guidePanel" class="guide-panel info-panel ornate-frame" aria-live="polite">
+          <div class="info-heading">
+            <span aria-hidden="true"></span>
+            <h2>中央観測塔</h2>
+            <span aria-hidden="true"></span>
+          </div>
           <p>
             見かけの星座の向こうに、恒星、星雲、銀河の奥行きが眠っている。
           </p>
-          <div class="guide-steps">
-            <span>春の王国</span>
-            <span>夏の王国</span>
-            <span>秋の王国</span>
-            <span>冬の王国</span>
+          <div class="guide-steps home-choice-grid">
+            <button class="choice-button season-spring" type="button" data-menu-kingdom="spring">
+              <span class="choice-icon" aria-hidden="true">✤</span>
+              <span>春の王国</span>
+              <span class="choice-arrow" aria-hidden="true">✦</span>
+            </button>
+            <button class="choice-button season-summer" type="button" data-menu-kingdom="summer">
+              <span class="choice-icon" aria-hidden="true">☉</span>
+              <span>夏の王国</span>
+              <span class="choice-arrow" aria-hidden="true">✦</span>
+            </button>
+            <button class="choice-button season-autumn" type="button" data-menu-kingdom="autumn">
+              <span class="choice-icon" aria-hidden="true">✦</span>
+              <span>秋の王国</span>
+              <span class="choice-arrow" aria-hidden="true">✦</span>
+            </button>
+            <button class="choice-button season-winter" type="button" data-menu-kingdom="winter">
+              <span class="choice-icon" aria-hidden="true">✧</span>
+              <span>冬の王国</span>
+              <span class="choice-arrow" aria-hidden="true">✦</span>
+            </button>
           </div>
         </section>
 
