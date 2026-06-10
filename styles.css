@@ -2933,3 +2933,182 @@ button {
     font-size: 0.82rem;
   }
 }
+
+.map-title-logo {
+  width: clamp(132px, 24%, 198px);
+  aspect-ratio: 1000 / 420;
+  padding: 0;
+  filter:
+    drop-shadow(0 6px 0 rgba(18, 8, 4, 0.72))
+    drop-shadow(0 0 13px rgba(255, 226, 119, 0.48));
+}
+
+.map-title-logo::before,
+.map-title-logo::after,
+.logo-compass {
+  display: none;
+}
+
+.map-title-logo-image {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.region-label.kingdom-marker,
+.choice-button {
+  --kingdom-frame: url("./assets/ui-kingdom-frame-spring.png");
+  border: 0;
+  border-radius: 0;
+  background-image: var(--kingdom-frame);
+  background-color: transparent;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 100% 100%;
+  clip-path: none;
+  box-shadow: none;
+  color: #fff0b8;
+  text-shadow:
+    0 2px 0 rgba(26, 12, 3, 0.95),
+    0 0 8px rgba(255, 232, 148, 0.55);
+}
+
+.region-label.kingdom-marker::before,
+.region-label.kingdom-marker::after,
+.choice-button::before,
+.choice-icon,
+.choice-arrow {
+  display: none;
+}
+
+.region-label.kingdom-marker {
+  min-width: clamp(150px, 23vw, 214px);
+  min-height: clamp(46px, 6.5vw, 64px);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.48em 1.1em 0.52em 2.4em;
+  font-size: clamp(1rem, 2.35vw, 1.45rem);
+  line-height: 1;
+}
+
+.choice-button {
+  min-height: clamp(54px, 8.5vw, 74px);
+  display: grid;
+  grid-template-columns: 1fr;
+  place-items: center;
+  padding: 0.3em 2.2em 0.38em 4.2em;
+  font-size: clamp(1.16rem, 3.8vw, 1.65rem);
+}
+
+.region-label.kingdom-marker.spring,
+.choice-button.season-spring {
+  --kingdom-frame: url("./assets/ui-kingdom-frame-spring.png");
+}
+
+.region-label.kingdom-marker.summer,
+.choice-button.season-summer {
+  --kingdom-frame: url("./assets/ui-kingdom-frame-summer.png");
+}
+
+.region-label.kingdom-marker.autumn,
+.choice-button.season-autumn {
+  --kingdom-frame: url("./assets/ui-kingdom-frame-autumn.png");
+}
+
+.region-label.kingdom-marker.winter,
+.choice-button.season-winter {
+  --kingdom-frame: url("./assets/ui-kingdom-frame-winter.png");
+}
+
+.region-label.kingdom-marker.spring,
+.region-label.kingdom-marker.summer,
+.region-label.kingdom-marker.autumn,
+.region-label.kingdom-marker.winter {
+  background: transparent;
+  background-image: var(--kingdom-frame);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 100% 100%;
+}
+
+.region-label.kingdom-marker:hover,
+.region-label.kingdom-marker:focus-visible,
+.region-label.kingdom-marker.active,
+.choice-button:hover,
+.choice-button:focus-visible {
+  filter:
+    brightness(1.12)
+    saturate(1.1)
+    drop-shadow(0 0 12px rgba(255, 231, 130, 0.62));
+}
+
+@media (max-width: 700px) {
+  .map-title-logo {
+    width: clamp(112px, 29vw, 136px);
+  }
+
+  .region-label.kingdom-marker {
+    min-width: 118px;
+    min-height: 40px;
+    padding: 0.38em 0.65em 0.42em 1.95em;
+    font-size: 0.8rem;
+  }
+
+  .tower-marker {
+    z-index: 7;
+  }
+
+  .choice-button {
+    min-height: 52px;
+    padding: 0.3em 1.6em 0.38em 3.6em;
+    font-size: 1.16rem;
+  }
+}
+
+.home-choice-grid {
+  gap: clamp(8px, 1.6vw, 12px);
+}
+
+.home-choice-grid .choice-button {
+  min-height: clamp(58px, 7.2vw, 72px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.12em 3.2em 0.18em 4.8em;
+  background-color: transparent;
+  background-image: var(--kingdom-frame);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 100% 100%;
+}
+
+.home-choice-grid .choice-button > span {
+  display: block;
+  min-height: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  color: inherit;
+  box-shadow: none;
+  line-height: 1;
+}
+
+.home-choice-grid .choice-icon,
+.home-choice-grid .choice-arrow {
+  display: none !important;
+}
+
+@media (max-width: 700px) {
+  .home-choice-grid {
+    gap: 8px;
+  }
+
+  .home-choice-grid .choice-button {
+    min-height: 54px;
+    padding: 0.1em 2.2em 0.18em 3.65em;
+    font-size: 1.1rem;
+  }
+}

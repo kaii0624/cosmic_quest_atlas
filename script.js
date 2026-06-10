@@ -530,9 +530,7 @@ function renderPanel() {
         ${HOME_CHOICES.map(
           (choice) => `
             <button class="choice-button ${choice.className}" type="button" data-menu-kingdom="${choice.id}">
-              <span class="choice-icon" aria-hidden="true">${choice.icon}</span>
               <span>${choice.label}</span>
-              <span class="choice-arrow" aria-hidden="true">✦</span>
             </button>
           `
         ).join("")}
