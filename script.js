@@ -454,7 +454,9 @@ function goHome() {
 
 function renderMap() {
   gameShell.dataset.mode = state.mode;
+  gameShell.dataset.kingdom = state.kingdomId ?? "";
   mapStage.className = `map-stage mode-${state.mode}`;
+  mapStage.dataset.kingdom = state.kingdomId ?? "";
   storyScene.dataset.bg = state.battleBg;
   homeButton.hidden = state.mode !== "detail";
   homeButton.classList.toggle("is-visible", state.mode === "detail");
@@ -496,6 +498,7 @@ function renderStoryPoints(points) {
     const button = document.createElement("button");
     button.type = "button";
     button.className = `story-point ${point.locked ? "locked" : ""}`;
+    button.dataset.pointId = point.id;
     button.dataset.label = point.label;
     button.style.left = `${point.x}%`;
     button.style.top = `${point.y}%`;
@@ -513,6 +516,7 @@ function renderStoryPoints(points) {
 
 function renderPanel() {
   guidePanel.dataset.panelMode = state.mode;
+  guidePanel.dataset.kingdom = state.kingdomId ?? "";
 
   if (state.mode === "home") {
     guidePanel.classList.remove("is-hidden");
@@ -545,6 +549,33 @@ function renderPanel() {
     storyPanel.classList.add("is-hidden");
     storyTextPanel.classList.add("is-hidden");
     scrollPanel.classList.remove("is-hidden");
+
+    if (state.kingdomId === "winter") {
+      guidePanel.innerHTML = `
+        <div class="winter-detail-guide">
+          <section class="winter-scroll-banner" aria-label="冬の星図">
+            <h2>${kingdom.detailTitle}</h2>
+            <p>${kingdom.detailText}</p>
+          </section>
+          <div class="winter-star-orb-grid" aria-label="冬の星">
+            <button class="winter-star-orb-button betelgeuse locked" type="button" data-guide-title="ベテルギウス" data-guide-note="${kingdom.points[1].note}">
+              <span class="winter-star-orb" aria-hidden="true"></span>
+              <span class="winter-star-label">ベテルギウス</span>
+            </button>
+            <button class="winter-star-orb-button rigel" type="button" data-story-id="rigel">
+              <span class="winter-star-orb" aria-hidden="true"></span>
+              <span class="winter-star-label">青白き巨星リゲル</span>
+            </button>
+            <button class="winter-star-orb-button sirius locked" type="button" data-guide-title="シリウス" data-guide-note="${kingdom.points[2].note}">
+              <span class="winter-star-orb" aria-hidden="true"></span>
+              <span class="winter-star-label">シリウス</span>
+            </button>
+          </div>
+        </div>
+      `;
+      return;
+    }
+
     guidePanel.innerHTML = `
       <h2>${kingdom.detailTitle}</h2>
       <p>${kingdom.detailText}</p>
@@ -656,9 +687,22 @@ kingdomButtons.forEach((button) => {
 towerButton.addEventListener("click", goHome);
 
 guidePanel.addEventListener("click", (event) => {
-  const button = event.target.closest("[data-menu-kingdom]");
-  if (!button) return;
-  selectKingdom(button.dataset.menuKingdom);
+  const menuButton = event.target.closest("[data-menu-kingdom]");
+  if (menuButton) {
+    selectKingdom(menuButton.dataset.menuKingdom);
+    return;
+  }
+
+  const storyButton = event.target.closest("[data-story-id]");
+  if (storyButton) {
+    openStory(storyButton.dataset.storyId);
+    return;
+  }
+
+  const guideButton = event.target.closest("[data-guide-title]");
+  if (guideButton) {
+    renderGuideNote(guideButton.dataset.guideTitle, guideButton.dataset.guideNote);
+  }
 });
 
 battleBgButtons.forEach((button) => {
