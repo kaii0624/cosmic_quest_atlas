@@ -3919,9 +3919,10 @@ button {
 
 .game-shell[data-mode="story"][data-kingdom="winter"] .story-panel {
   min-height: clamp(150px, 20vw, 220px);
-  display: grid;
-  align-content: center;
-  justify-items: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   padding: clamp(38px, 5vw, 60px) clamp(42px, 7vw, 82px) clamp(30px, 4.4vw, 52px);
   border: 0;
   border-radius: 0;
@@ -3936,6 +3937,10 @@ button {
 }
 
 .game-shell[data-mode="story"][data-kingdom="winter"] .story-panel .stage-type {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
   min-width: 112px;
   margin: 0 0 9px;
   padding: 5px 18px 6px;
@@ -3947,24 +3952,34 @@ button {
   clip-path: polygon(8% 0, 92% 0, 100% 50%, 92% 100%, 8% 100%, 0 50%);
   font-size: clamp(0.76rem, 1.9vw, 1.02rem);
   letter-spacing: 0.04em;
+  white-space: nowrap;
   text-shadow: 0 2px 0 rgba(6, 4, 2, 0.98);
 }
 
 .game-shell[data-mode="story"][data-kingdom="winter"] .story-panel h2 {
+  flex: 0 0 auto;
   margin: 0 0 7px;
+  width: 100%;
   color: #ffe5a0;
   font-size: clamp(1.75rem, 5.5vw, 3.2rem);
   line-height: 1.08;
   letter-spacing: 0;
+  text-align: center;
+  white-space: nowrap;
   text-shadow:
     0 3px 0 rgba(7, 4, 2, 0.96),
     0 0 12px rgba(255, 228, 137, 0.34);
 }
 
 .game-shell[data-mode="story"][data-kingdom="winter"] .story-panel p {
+  flex: 0 0 auto;
+  width: 100%;
+  margin: 0;
   color: #fff0bc;
   font-size: clamp(0.96rem, 2.7vw, 1.28rem);
   line-height: 1.24;
+  text-align: center;
+  white-space: nowrap;
   text-shadow: 0 2px 0 rgba(7, 4, 2, 0.96);
 }
 
@@ -4158,12 +4173,10 @@ button {
 
   .game-shell[data-mode="story"][data-kingdom="winter"] .story-panel {
     min-height: 154px;
-    align-content: center;
-    padding: 46px 42px 26px;
+    padding: 46px 34px 26px;
   }
 
   .game-shell[data-mode="story"][data-kingdom="winter"] .story-panel .stage-type {
-    justify-self: center;
     min-width: 82px;
     margin-bottom: 5px;
     padding: 3px 12px 4px;
@@ -4171,16 +4184,12 @@ button {
   }
 
   .game-shell[data-mode="story"][data-kingdom="winter"] .story-panel h2 {
-    width: 100%;
     margin-bottom: 4px;
-    font-size: 1.26rem;
-    text-align: center;
+    font-size: 1.2rem;
   }
 
   .game-shell[data-mode="story"][data-kingdom="winter"] .story-panel p {
-    width: 100%;
-    font-size: 0.72rem;
-    text-align: center;
+    font-size: 0.66rem;
   }
 
   .game-shell[data-mode="story"][data-kingdom="winter"] .map-stage {
