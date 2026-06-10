@@ -3900,3 +3900,382 @@ button {
     padding: 12px 12px 11px;
   }
 }
+
+.game-shell[data-mode="story"][data-kingdom="winter"] {
+  width: min(980px, calc(100% - 18px));
+  grid-template-columns: minmax(0, 1fr);
+  gap: 12px;
+}
+
+.game-shell[data-mode="story"][data-kingdom="winter"] .codex-panel {
+  grid-column: 1;
+  grid-row: auto;
+  order: -3;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
+.game-shell[data-mode="story"][data-kingdom="winter"] .story-panel {
+  min-height: clamp(150px, 20vw, 220px);
+  display: grid;
+  align-content: center;
+  justify-items: center;
+  padding: clamp(38px, 5vw, 60px) clamp(42px, 7vw, 82px) clamp(30px, 4.4vw, 52px);
+  border: 0;
+  border-radius: 0;
+  color: #ffe6a2;
+  background: transparent url("./assets/ui-battle-title-frame.png") center / 100% 100% no-repeat;
+  box-shadow: none;
+  filter:
+    drop-shadow(0 8px 0 rgba(5, 5, 13, 0.68))
+    drop-shadow(0 0 18px rgba(255, 221, 112, 0.27));
+  font-family: "Hiragino Mincho ProN", "YuMincho", "Yu Mincho", serif;
+  text-align: center;
+}
+
+.game-shell[data-mode="story"][data-kingdom="winter"] .story-panel .stage-type {
+  min-width: 112px;
+  margin: 0 0 9px;
+  padding: 5px 18px 6px;
+  border: 1px solid rgba(255, 228, 139, 0.86);
+  border-radius: 0;
+  color: #ffeab0;
+  background:
+    linear-gradient(90deg, rgba(12, 29, 61, 0.9), rgba(20, 47, 92, 0.96), rgba(12, 29, 61, 0.9));
+  clip-path: polygon(8% 0, 92% 0, 100% 50%, 92% 100%, 8% 100%, 0 50%);
+  font-size: clamp(0.76rem, 1.9vw, 1.02rem);
+  letter-spacing: 0.04em;
+  text-shadow: 0 2px 0 rgba(6, 4, 2, 0.98);
+}
+
+.game-shell[data-mode="story"][data-kingdom="winter"] .story-panel h2 {
+  margin: 0 0 7px;
+  color: #ffe5a0;
+  font-size: clamp(1.75rem, 5.5vw, 3.2rem);
+  line-height: 1.08;
+  letter-spacing: 0;
+  text-shadow:
+    0 3px 0 rgba(7, 4, 2, 0.96),
+    0 0 12px rgba(255, 228, 137, 0.34);
+}
+
+.game-shell[data-mode="story"][data-kingdom="winter"] .story-panel p {
+  color: #fff0bc;
+  font-size: clamp(0.96rem, 2.7vw, 1.28rem);
+  line-height: 1.24;
+  text-shadow: 0 2px 0 rgba(7, 4, 2, 0.96);
+}
+
+.game-shell[data-mode="story"][data-kingdom="winter"] .map-stage {
+  grid-column: 1;
+  order: -2;
+  min-height: auto;
+  aspect-ratio: 16 / 10;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
+.game-shell[data-mode="story"][data-kingdom="winter"] .story-scene {
+  overflow: hidden;
+  border-radius: 4px;
+  background: #030817;
+}
+
+.game-shell[data-mode="story"][data-kingdom="winter"] .story-scene::before {
+  inset: 0;
+  z-index: 8;
+  border: 0;
+  background: transparent url("./assets/ui-battle-scene-frame.png") center / 100% 100% no-repeat;
+  box-shadow: none;
+}
+
+.game-shell[data-mode="story"][data-kingdom="winter"] .battle-screen {
+  inset: 2.8% 2.5%;
+  border-radius: 2px;
+}
+
+.game-shell[data-mode="story"][data-kingdom="winter"] .battle-screen::after {
+  background:
+    radial-gradient(circle at 76% 17%, transparent 0 24%, rgba(4, 8, 25, 0.15) 50%, rgba(2, 5, 18, 0.42) 100%),
+    linear-gradient(180deg, rgba(3, 8, 28, 0.04), rgba(3, 8, 28, 0.28));
+}
+
+.game-shell[data-mode="story"][data-kingdom="winter"] .status-panel {
+  border: 0;
+  border-radius: 0;
+  color: #ffe8a7;
+  background: transparent center / 100% 100% no-repeat;
+  box-shadow: none;
+  filter:
+    drop-shadow(0 5px 0 rgba(3, 5, 13, 0.56))
+    drop-shadow(0 0 10px rgba(255, 221, 118, 0.22));
+  font-family: "Hiragino Mincho ProN", "YuMincho", "Yu Mincho", serif;
+  text-shadow: 0 2px 0 rgba(4, 3, 2, 0.92);
+}
+
+.game-shell[data-mode="story"][data-kingdom="winter"] .target-status-panel {
+  top: 7%;
+  left: 5.5%;
+  width: min(430px, 46%);
+  padding: clamp(14px, 1.8vw, 22px) clamp(16px, 2vw, 26px) clamp(14px, 1.8vw, 22px);
+  background-image: url("./assets/ui-battle-target-status-frame.png");
+}
+
+.game-shell[data-mode="story"][data-kingdom="winter"] .status-object {
+  grid-template-columns: clamp(58px, 8vw, 86px) 1fr;
+  gap: clamp(8px, 1.4vw, 14px);
+}
+
+.game-shell[data-mode="story"][data-kingdom="winter"] .status-object img {
+  width: 100%;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+  filter: drop-shadow(0 0 8px rgba(139, 205, 255, 0.32));
+}
+
+.game-shell[data-mode="story"][data-kingdom="winter"] .status-object strong,
+.game-shell[data-mode="story"][data-kingdom="winter"] .observer-status-panel > strong {
+  color: #ffe6a2;
+  font-size: clamp(0.86rem, 2.1vw, 1.18rem);
+  line-height: 1.12;
+}
+
+.game-shell[data-mode="story"][data-kingdom="winter"] .status-stats {
+  gap: clamp(3px, 0.7vw, 6px);
+}
+
+.game-shell[data-mode="story"][data-kingdom="winter"] .status-stats div {
+  grid-template-columns: minmax(54px, auto) 1fr;
+  gap: clamp(5px, 0.9vw, 10px);
+  border-top: 1px solid rgba(255, 226, 143, 0.2);
+  padding-top: 3px;
+}
+
+.game-shell[data-mode="story"][data-kingdom="winter"] .status-stats dt span {
+  color: #aee5ff;
+  text-shadow: 0 0 8px rgba(126, 208, 255, 0.55);
+}
+
+.game-shell[data-mode="story"][data-kingdom="winter"] .status-meter {
+  height: clamp(8px, 1.3vw, 13px);
+  border: 1px solid rgba(255, 228, 141, 0.72);
+  background: rgba(7, 8, 18, 0.88);
+  box-shadow: inset 0 0 0 1px rgba(1, 2, 8, 0.8);
+}
+
+.game-shell[data-mode="story"][data-kingdom="winter"] .observer-status-panel {
+  right: 5%;
+  bottom: 6%;
+  width: min(400px, 43%);
+  padding: clamp(19px, 2.7vw, 32px) clamp(24px, 3.2vw, 42px) clamp(15px, 2.1vw, 26px);
+  background-image: url("./assets/ui-battle-observer-status-frame.png");
+}
+
+.game-shell[data-mode="story"][data-kingdom="winter"] .observer-stats div {
+  grid-template-columns: minmax(82px, auto) 64px 1fr;
+  gap: 8px;
+}
+
+.game-shell[data-mode="story"][data-kingdom="winter"] .enemy-sprite.story-rigel {
+  top: 8%;
+  right: 7%;
+  width: min(42%, 430px);
+}
+
+.game-shell[data-mode="story"][data-kingdom="winter"] .observer-sprite {
+  left: 9%;
+  bottom: 8%;
+  width: min(31%, 320px);
+}
+
+.game-shell[data-mode="story"][data-kingdom="winter"] .story-text-panel {
+  grid-column: 1;
+  order: -1;
+  padding: clamp(28px, 4vw, 44px) clamp(36px, 6vw, 72px) clamp(30px, 4.5vw, 50px);
+  border: 0;
+  border-radius: 0;
+  color: #2b1a0f;
+  background: transparent url("./assets/ui-battle-dialogue-frame.png") center / 100% 100% no-repeat;
+  box-shadow: none;
+  filter:
+    drop-shadow(0 8px 0 rgba(22, 9, 4, 0.62))
+    drop-shadow(0 0 14px rgba(255, 221, 116, 0.22));
+  font-family: "Hiragino Mincho ProN", "YuMincho", "Yu Mincho", serif;
+}
+
+.game-shell[data-mode="story"][data-kingdom="winter"] .story-advance {
+  min-height: 132px;
+  padding: 8px 34px 10px 10px;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+  color: #2a190e;
+}
+
+.game-shell[data-mode="story"][data-kingdom="winter"] .story-speaker {
+  margin-bottom: 12px;
+  color: #153a50;
+  font-size: clamp(1.05rem, 2.8vw, 1.55rem);
+  line-height: 1.16;
+}
+
+.game-shell[data-mode="story"][data-kingdom="winter"] .story-line {
+  color: #2b1a0f;
+  font-size: clamp(1rem, 2.6vw, 1.32rem);
+  line-height: 1.64;
+}
+
+.game-shell[data-mode="story"][data-kingdom="winter"] .story-cue {
+  right: 8px;
+  bottom: 2px;
+  color: #3b2917;
+}
+
+.reward-card {
+  padding-top: clamp(46px, 8vw, 72px);
+}
+
+.reward-kicker {
+  margin-bottom: 4px;
+}
+
+.reward-card h2 {
+  font-size: clamp(1.42rem, 5.5vw, 2.35rem);
+}
+
+@media (max-width: 700px) {
+  .game-shell[data-mode="story"][data-kingdom="winter"] {
+    width: min(100% - 12px, 980px);
+    gap: 8px;
+  }
+
+  .game-shell[data-mode="story"][data-kingdom="winter"] .story-panel {
+    min-height: 154px;
+    align-content: center;
+    padding: 46px 42px 26px;
+  }
+
+  .game-shell[data-mode="story"][data-kingdom="winter"] .story-panel .stage-type {
+    justify-self: center;
+    min-width: 82px;
+    margin-bottom: 5px;
+    padding: 3px 12px 4px;
+    font-size: 0.58rem;
+  }
+
+  .game-shell[data-mode="story"][data-kingdom="winter"] .story-panel h2 {
+    width: 100%;
+    margin-bottom: 4px;
+    font-size: 1.26rem;
+    text-align: center;
+  }
+
+  .game-shell[data-mode="story"][data-kingdom="winter"] .story-panel p {
+    width: 100%;
+    font-size: 0.72rem;
+    text-align: center;
+  }
+
+  .game-shell[data-mode="story"][data-kingdom="winter"] .map-stage {
+    aspect-ratio: 4 / 3;
+  }
+
+  .game-shell[data-mode="story"][data-kingdom="winter"] .battle-screen {
+    inset: 3.5% 3.2%;
+  }
+
+  .game-shell[data-mode="story"][data-kingdom="winter"] .target-status-panel {
+    top: 5.6%;
+    left: 4.8%;
+    width: 47%;
+    padding: 9px 10px 9px;
+  }
+
+  .game-shell[data-mode="story"][data-kingdom="winter"] .status-object {
+    grid-template-columns: 40px 1fr;
+    gap: 6px;
+  }
+
+  .game-shell[data-mode="story"][data-kingdom="winter"] .status-object strong,
+  .game-shell[data-mode="story"][data-kingdom="winter"] .observer-status-panel > strong {
+    margin-bottom: 3px;
+    font-size: 0.62rem;
+  }
+
+  .game-shell[data-mode="story"][data-kingdom="winter"] .status-stats {
+    gap: 1px;
+  }
+
+  .game-shell[data-mode="story"][data-kingdom="winter"] .status-stats div {
+    grid-template-columns: minmax(34px, auto) 1fr;
+    gap: 4px;
+    padding-top: 1px;
+    font-size: 0.48rem;
+  }
+
+  .game-shell[data-mode="story"][data-kingdom="winter"] .target-status-panel .status-meter {
+    margin-top: 3px;
+  }
+
+  .game-shell[data-mode="story"][data-kingdom="winter"] .observer-status-panel {
+    right: 4.4%;
+    bottom: 4.4%;
+    width: 53%;
+    min-height: 96px;
+    padding: 23px 18px 11px;
+  }
+
+  .game-shell[data-mode="story"][data-kingdom="winter"] .observer-stats div {
+    grid-template-columns: minmax(50px, auto) 34px 1fr;
+    gap: 4px;
+    font-size: 0.5rem;
+    line-height: 1.06;
+  }
+
+  .game-shell[data-mode="story"][data-kingdom="winter"] .observer-stats .status-meter {
+    height: 7px;
+  }
+
+  .game-shell[data-mode="story"][data-kingdom="winter"] .enemy-sprite.story-rigel {
+    top: 14%;
+    right: 6%;
+    width: 43%;
+  }
+
+  .game-shell[data-mode="story"][data-kingdom="winter"] .observer-sprite {
+    left: 8%;
+    bottom: 8%;
+    width: 34%;
+    max-width: none;
+  }
+
+  .game-shell[data-mode="story"][data-kingdom="winter"] .story-text-panel {
+    padding: 27px 28px 28px;
+  }
+
+  .game-shell[data-mode="story"][data-kingdom="winter"] .story-advance {
+    min-height: 116px;
+    padding: 5px 28px 5px 5px;
+  }
+
+  .game-shell[data-mode="story"][data-kingdom="winter"] .story-speaker {
+    margin-bottom: 7px;
+    font-size: 0.92rem;
+  }
+
+  .game-shell[data-mode="story"][data-kingdom="winter"] .story-line {
+    font-size: 0.88rem;
+    line-height: 1.52;
+  }
+
+  .reward-card {
+    padding-top: 46px;
+  }
+}
