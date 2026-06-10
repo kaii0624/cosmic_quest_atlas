@@ -343,6 +343,19 @@ const STORIES = {
     },
     rule: "能力：青白い光で観測者を惑わせ、近さだけでは説明できない明るさを示す。",
     clearRule: "攻略法：星の色から表面温度を読み、リゲルが高温で大光度の星だと見破る。",
+    reward: {
+      id: "rigel-color-luminosity-scroll",
+      title: "星色と大光度の巻物",
+      message: "リゲルを観測してゲットしました。",
+      image: "./assets/reward-scroll-rigel-luminosity.png",
+      knowledgeTitle: "リゲルで覚えること",
+      knowledge: [
+        "青白い恒星ほど表面温度が高い。",
+        "リゲルは約1.2万Kの青色超巨星。",
+        "見かけの明るさは距離だけでなく、本来の光度にも左右される。",
+        "HR図では、高温で大光度の星は左上側に位置する。"
+      ]
+    },
     lines: [
       {
         speaker: "青白き巨星リゲル",
@@ -393,6 +406,13 @@ const storyTextLine = document.querySelector("#storyTextLine");
 const guidePanel = document.querySelector("#guidePanel");
 const storyPanel = document.querySelector("#storyPanel");
 const scrollPanel = document.querySelector(".scroll-panel");
+const rewardPopup = document.querySelector("#rewardPopup");
+const rewardTitle = document.querySelector("#rewardTitle");
+const rewardMessage = document.querySelector("#rewardMessage");
+const rewardImage = document.querySelector("#rewardImage");
+const rewardKnowledgeTitle = document.querySelector("#rewardKnowledgeTitle");
+const rewardKnowledgeList = document.querySelector("#rewardKnowledgeList");
+const rewardCloseButton = document.querySelector("#rewardCloseButton");
 const enemySprite = document.querySelector("#enemySprite");
 const targetStatusThumb = document.querySelector("#targetStatusThumb");
 const targetStatusName = document.querySelector("#targetStatusName");
@@ -405,6 +425,7 @@ const storyNameEl = document.querySelector("#storyName");
 const storySubtitleEl = document.querySelector("#storySubtitle");
 const kingdomButtons = [...document.querySelectorAll("[data-kingdom]")];
 const battleBgButtons = [...document.querySelectorAll("[data-battle-bg]")];
+const claimedRewards = new Set();
 
 const HOME_CHOICES = [
   { id: "spring", icon: "✤", label: "春の王国", className: "season-spring" },
@@ -415,6 +436,7 @@ const HOME_CHOICES = [
 
 function selectKingdom(kingdomId) {
   const kingdom = KINGDOMS[kingdomId];
+  hideReward();
 
   if (!kingdom.points) {
     state.mode = "home";
@@ -436,6 +458,7 @@ function selectKingdom(kingdomId) {
 
 function openStory(storyId) {
   const story = STORIES[storyId];
+  hideReward();
   state.mode = "story";
   state.kingdomId = story.kingdomId;
   state.storyId = storyId;
@@ -445,6 +468,7 @@ function openStory(storyId) {
 }
 
 function goHome() {
+  hideReward();
   state.mode = "home";
   state.kingdomId = null;
   state.storyId = null;
@@ -555,7 +579,7 @@ function renderPanel() {
     guidePanel.classList.remove("is-hidden");
     storyPanel.classList.add("is-hidden");
     storyTextPanel.classList.add("is-hidden");
-    scrollPanel.classList.remove("is-hidden");
+    scrollPanel.classList.toggle("is-hidden", state.kingdomId === "winter");
 
     if (state.kingdomId === "winter") {
       guidePanel.innerHTML = `
@@ -602,7 +626,7 @@ function renderGuideNote(title, note) {
   guidePanel.classList.remove("is-hidden");
   storyPanel.classList.add("is-hidden");
   storyTextPanel.classList.add("is-hidden");
-  scrollPanel.classList.remove("is-hidden");
+  scrollPanel.classList.toggle("is-hidden", state.kingdomId === "winter");
   guidePanel.innerHTML = `
     <h2>${title}</h2>
     <p>${note}</p>
@@ -666,6 +690,39 @@ function renderBattleBgButtons() {
   });
 }
 
+function showReward(reward) {
+  if (!reward) return;
+
+  rewardTitle.textContent = reward.title;
+  rewardMessage.textContent = reward.message;
+  rewardImage.src = withAssetVersion(reward.image);
+  rewardImage.alt = `${reward.title}の画像`;
+  rewardKnowledgeTitle.textContent = reward.knowledgeTitle;
+  rewardKnowledgeList.innerHTML = reward.knowledge
+    .map((item) => `<li>${item}</li>`)
+    .join("");
+  rewardPopup.classList.remove("is-hidden");
+  rewardCloseButton.focus();
+}
+
+function hideReward() {
+  rewardPopup.classList.add("is-hidden");
+}
+
+function finishStory(story) {
+  const reward = story.reward;
+
+  state.mode = "detail";
+  state.storyId = null;
+  state.lineIndex = 0;
+  render();
+
+  if (reward && !claimedRewards.has(reward.id)) {
+    claimedRewards.add(reward.id);
+    showReward(reward);
+  }
+}
+
 function nextStoryLine() {
   if (state.mode !== "story") return;
   const story = STORIES[state.storyId];
@@ -676,10 +733,7 @@ function nextStoryLine() {
     return;
   }
 
-  state.mode = "detail";
-  state.storyId = null;
-  state.lineIndex = 0;
-  render();
+  finishStory(story);
 }
 
 function render() {
@@ -721,5 +775,17 @@ battleBgButtons.forEach((button) => {
 
 homeButton.addEventListener("click", goHome);
 storyAdvanceButton.addEventListener("click", nextStoryLine);
+rewardCloseButton.addEventListener("click", hideReward);
+rewardPopup.addEventListener("click", (event) => {
+  if (event.target.closest("[data-reward-close]")) {
+    hideReward();
+  }
+});
+
+document.addEventListener("keydown", (event) => {
+  if (event.key === "Escape" && !rewardPopup.classList.contains("is-hidden")) {
+    hideReward();
+  }
+});
 
 render();

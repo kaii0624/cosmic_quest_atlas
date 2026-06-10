@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>COSMIC QUEST</title>
-    <link rel="stylesheet" href="./styles.css?v=winter-detail-v2" />
+    <link rel="stylesheet" href="./styles.css?v=winter-detail-v3" />
   </head>
   <body>
     <div class="star-dust" aria-hidden="true"></div>
@@ -170,6 +170,26 @@
       </aside>
     </main>
 
-    <script src="./script.js?v=winter-detail-v2"></script>
+    <div id="rewardPopup" class="reward-popup is-hidden" role="dialog" aria-modal="true" aria-labelledby="rewardTitle">
+      <button class="reward-backdrop" type="button" aria-label="巻物獲得を閉じる" data-reward-close></button>
+      <section class="reward-card" aria-live="polite">
+        <span class="reward-kicker">SCROLL GET</span>
+        <h2 id="rewardTitle">星色と大光度の巻物</h2>
+        <p id="rewardMessage">ゲットしました。</p>
+        <img
+          id="rewardImage"
+          class="reward-scroll-image"
+          src="./assets/reward-scroll-rigel-luminosity.png"
+          alt="獲得した巻物"
+        />
+        <div class="reward-knowledge">
+          <h3 id="rewardKnowledgeTitle">天文宇宙検定で覚えること</h3>
+          <ul id="rewardKnowledgeList"></ul>
+        </div>
+        <button id="rewardCloseButton" class="reward-close-button" type="button">星図へ戻る</button>
+      </section>
+    </div>
+
+    <script src="./script.js?v=winter-detail-v3"></script>
   </body>
 </html>
