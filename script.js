@@ -452,6 +452,13 @@ function goHome() {
   render();
 }
 
+const assetVersion = new URLSearchParams(window.location.search).get("v");
+
+function withAssetVersion(src) {
+  if (!assetVersion || !src.startsWith("./assets/")) return src;
+  return `${src}${src.includes("?") ? "&" : "?"}v=${encodeURIComponent(assetVersion)}`;
+}
+
 function renderMap() {
   gameShell.dataset.mode = state.mode;
   gameShell.dataset.kingdom = state.kingdomId ?? "";
@@ -476,7 +483,7 @@ function renderMap() {
   if (state.mode === "detail") {
     const kingdom = KINGDOMS[state.kingdomId];
     detailCanvas.dataset.kingdom = state.kingdomId;
-    detailArt.src = kingdom.detailImage;
+    detailArt.src = withAssetVersion(kingdom.detailImage);
     detailArt.alt = kingdom.detailAlt;
     detailTitleName.textContent = kingdom.name;
     renderStoryPoints(kingdom.points);
