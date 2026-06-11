@@ -283,6 +283,16 @@ const STORIES = {
     },
     rule: "能力：半年ごとに翼の位置がわずかにずれて見える。",
     clearRule: "攻略法：年周視差 p を測り、d = 1 / p で距離を読む。",
+    reward: {
+      id: "cygnus-parallax-scroll",
+      title: "年周視差の巻物",
+      message: "白鳥座を観測してゲットしました。",
+      image: "./assets/reward-scroll-cygnus-parallax.png",
+      knowledgeTitle: "",
+      knowledge: [
+        "距離は視差の逆数"
+      ]
+    },
     lines: [
       {
         speaker: "白鳥座キュグヌス",
