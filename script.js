@@ -350,10 +350,9 @@ const STORIES = {
       image: "./assets/reward-scroll-rigel-luminosity.png",
       knowledgeTitle: "リゲルで覚えること",
       knowledge: [
-        "青白い恒星ほど表面温度が高い。",
-        "リゲルは約1.2万Kの青色超巨星。",
-        "見かけの明るさは距離だけでなく、本来の光度にも左右される。",
-        "HR図では、高温で大光度の星は左上側に位置する。"
+        "青白い星は高温",
+        "リゲルは青色超巨星",
+        "HR図では左上"
       ]
     },
     lines: [
