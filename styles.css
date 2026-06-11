@@ -3825,6 +3825,10 @@ button {
   text-shadow: 0 2px 0 rgba(7, 4, 2, 0.9);
 }
 
+.reward-knowledge h3[hidden] {
+  display: none;
+}
+
 .reward-knowledge ul {
   margin: 0;
   padding: 0;
@@ -3850,6 +3854,26 @@ button {
   left: 0;
   color: #8fd9ff;
   text-shadow: 0 0 8px rgba(143, 217, 255, 0.62);
+}
+
+.reward-knowledge ul.single-line {
+  display: block;
+  text-align: center;
+}
+
+.reward-knowledge ul.single-line li {
+  padding-left: 0;
+  color: #ffe9a7;
+  font-size: clamp(1rem, 3vw, 1.18rem);
+  line-height: 1.18;
+  text-align: center;
+  text-shadow:
+    0 2px 0 rgba(5, 3, 2, 0.94),
+    0 0 8px rgba(255, 220, 112, 0.28);
+}
+
+.reward-knowledge ul.single-line li::before {
+  content: none;
 }
 
 .reward-close-button {

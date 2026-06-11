@@ -348,11 +348,9 @@ const STORIES = {
       title: "星色と大光度の巻物",
       message: "リゲルを観測してゲットしました。",
       image: "./assets/reward-scroll-rigel-luminosity.png",
-      knowledgeTitle: "リゲルで覚えること",
+      knowledgeTitle: "",
       knowledge: [
-        "青白い星は高温",
-        "リゲルは超巨星",
-        "HR図は左上"
+        "青白い星ほど高温"
       ]
     },
     lines: [
@@ -697,7 +695,9 @@ function showReward(reward) {
   rewardMessage.textContent = reward.message;
   rewardImage.src = withAssetVersion(reward.image);
   rewardImage.alt = `${reward.title}の画像`;
-  rewardKnowledgeTitle.textContent = reward.knowledgeTitle;
+  rewardKnowledgeTitle.textContent = reward.knowledgeTitle ?? "";
+  rewardKnowledgeTitle.hidden = !reward.knowledgeTitle;
+  rewardKnowledgeList.classList.toggle("single-line", reward.knowledge.length === 1);
   rewardKnowledgeList.innerHTML = reward.knowledge
     .map((item) => `<li>${item}</li>`)
     .join("");
