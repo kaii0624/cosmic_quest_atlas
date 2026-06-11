@@ -431,6 +431,8 @@ const HOME_CHOICES = [
   { id: "winter", icon: "✧", label: "冬の王国", className: "season-winter" }
 ];
 
+const ORB_CLASSES = ["betelgeuse", "rigel", "sirius"];
+
 function selectKingdom(kingdomId) {
   const kingdom = KINGDOMS[kingdomId];
   hideReward();
@@ -557,7 +559,6 @@ function renderPanel() {
         <h2>天球観測塔</h2>
         <span aria-hidden="true"></span>
       </div>
-      <p>星座をたどり、宇宙の奥へ。</p>
       <div class="guide-steps home-choice-grid">
         ${HOME_CHOICES.map(
           (choice) => `
@@ -576,39 +577,33 @@ function renderPanel() {
     guidePanel.classList.remove("is-hidden");
     storyPanel.classList.add("is-hidden");
     storyTextPanel.classList.add("is-hidden");
-    scrollPanel.classList.toggle("is-hidden", state.kingdomId === "winter");
-
-    if (state.kingdomId === "winter") {
-      guidePanel.innerHTML = `
-        <div class="winter-detail-guide">
-          <section class="winter-scroll-banner" aria-label="冬の星図">
-            <h2>${kingdom.detailTitle}</h2>
-            <p>${kingdom.detailText}</p>
-          </section>
-          <div class="winter-star-orb-grid" aria-label="冬の星">
-            <button class="winter-star-orb-button betelgeuse locked" type="button" data-guide-title="ベテルギウス" data-guide-note="${kingdom.points[1].note}">
-              <span class="winter-star-orb" aria-hidden="true"></span>
-              <span class="winter-star-label">ベテルギウス</span>
-            </button>
-            <button class="winter-star-orb-button rigel" type="button" data-story-id="rigel">
-              <span class="winter-star-orb" aria-hidden="true"></span>
-              <span class="winter-star-label">青白き巨星リゲル</span>
-            </button>
-            <button class="winter-star-orb-button sirius locked" type="button" data-guide-title="シリウス" data-guide-note="${kingdom.points[2].note}">
-              <span class="winter-star-orb" aria-hidden="true"></span>
-              <span class="winter-star-label">シリウス</span>
-            </button>
-          </div>
-        </div>
-      `;
-      return;
-    }
+    scrollPanel.classList.add("is-hidden");
 
     guidePanel.innerHTML = `
-      <h2>${kingdom.detailTitle}</h2>
-      <p>${kingdom.detailText}</p>
-      <div class="guide-steps">
-        ${kingdom.steps.map((step) => `<span>${step}</span>`).join("")}
+      <div class="winter-detail-guide">
+        <section class="winter-scroll-banner" aria-label="${kingdom.detailTitle}">
+          <h2>${kingdom.detailTitle}</h2>
+          <p>${kingdom.detailText}</p>
+        </section>
+        <div class="winter-star-orb-grid" aria-label="${kingdom.name}の星">
+          ${kingdom.points
+            .map((point, index) => {
+              const orbClass = ORB_CLASSES[index % ORB_CLASSES.length];
+              const lockedClass = point.locked ? " locked" : "";
+              const storyAttr = point.storyId
+                ? `data-story-id="${point.storyId}"`
+                : `data-guide-title="${point.label}" data-guide-note="${point.note}"`;
+              const label = point.id === "rigel" ? "青白き巨星リゲル" : point.label;
+
+              return `
+                <button class="winter-star-orb-button ${orbClass}${lockedClass}" type="button" ${storyAttr}>
+                  <span class="winter-star-orb" aria-hidden="true"></span>
+                  <span class="winter-star-label">${label}</span>
+                </button>
+              `;
+            })
+            .join("")}
+        </div>
       </div>
     `;
     return;
@@ -623,7 +618,7 @@ function renderGuideNote(title, note) {
   guidePanel.classList.remove("is-hidden");
   storyPanel.classList.add("is-hidden");
   storyTextPanel.classList.add("is-hidden");
-  scrollPanel.classList.toggle("is-hidden", state.kingdomId === "winter");
+  scrollPanel.classList.add("is-hidden");
   guidePanel.innerHTML = `
     <h2>${title}</h2>
     <p>${note}</p>
@@ -669,8 +664,8 @@ function renderStory() {
   storySceneNameEl.textContent = story.name;
   storyTypeEl.textContent = story.type;
   storyNameEl.textContent = story.name;
-  storySubtitleEl.textContent = story.subtitle ?? "";
-  storySubtitleEl.hidden = !story.subtitle;
+  storySubtitleEl.textContent = "";
+  storySubtitleEl.hidden = true;
   storyTextSpeaker.textContent = line.speaker;
   storyTextLine.textContent = line.text;
   storyAdvanceButton.setAttribute(

@@ -995,6 +995,10 @@ button {
     0 0 18px rgba(255, 232, 145, 0.22);
 }
 
+.game-shell[data-mode="home"] .compass-marker {
+  display: none;
+}
+
 .game-shell[data-mode="home"] .world-art {
   filter: saturate(1.08) contrast(1.07) brightness(0.98);
 }
@@ -3068,11 +3072,11 @@ button {
 }
 
 .home-choice-grid {
-  gap: clamp(4px, 0.9vw, 8px);
+  gap: 0;
 }
 
 .home-choice-grid .choice-button {
-  min-height: clamp(50px, 6.2vw, 64px);
+  min-height: clamp(46px, 5.6vw, 58px);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -3082,6 +3086,10 @@ button {
   background-repeat: no-repeat;
   background-position: center;
   background-size: 100% 100%;
+}
+
+.home-choice-grid .choice-button + .choice-button {
+  margin-top: -4px;
 }
 
 .home-choice-grid .choice-button > span {
@@ -3103,13 +3111,17 @@ button {
 
 @media (max-width: 700px) {
   .home-choice-grid {
-    gap: 3px;
+    gap: 0;
   }
 
   .home-choice-grid .choice-button {
-    min-height: 45px;
+    min-height: 41px;
     padding: 0.06em 2em 0.12em 3.25em;
     font-size: 1.02rem;
+  }
+
+  .home-choice-grid .choice-button + .choice-button {
+    margin-top: -5px;
   }
 }
 
@@ -3172,7 +3184,7 @@ button {
 
 .game-shell[data-mode="home"] .info-panel {
   --home-panel-frame: url("./assets/ui-home-panel-frame.png");
-  padding: clamp(30px, 4.4vw, 50px) clamp(32px, 5vw, 62px) clamp(28px, 4vw, 48px);
+  padding: clamp(27px, 4vw, 45px) clamp(32px, 5vw, 62px) clamp(25px, 3.6vw, 43px);
   border: 0;
   border-radius: 0;
   color: #2d1b10;
@@ -3196,7 +3208,7 @@ button {
 
 .game-shell[data-mode="home"] .info-heading {
   gap: 10px;
-  margin: 0 0 clamp(8px, 1.4vw, 14px);
+  margin: 0 0 clamp(10px, 1.7vw, 18px);
 }
 
 .game-shell[data-mode="home"] .info-heading span {
@@ -3210,7 +3222,7 @@ button {
 .game-shell[data-mode="home"] .info-panel h2 {
   color: #302012;
   font-family: "Hiragino Mincho ProN", "YuMincho", "Yu Mincho", serif;
-  font-size: clamp(2rem, 5.3vw, 3rem);
+  font-size: clamp(1.6rem, 4.25vw, 2.4rem);
   font-weight: 900;
   line-height: 1.02;
   letter-spacing: 0;
@@ -3245,17 +3257,17 @@ button {
 
 @media (max-width: 700px) {
   .game-shell[data-mode="home"] .info-panel {
-    padding: 20px 24px 24px;
+    padding: 18px 24px 21px;
   }
 
   .game-shell[data-mode="home"] .info-heading {
     gap: 7px;
-    margin-bottom: 8px;
+    margin-bottom: 9px;
   }
 
   .game-shell[data-mode="home"] .info-heading h2,
   .game-shell[data-mode="home"] .info-panel h2 {
-    font-size: 1.92rem;
+    font-size: 1.54rem;
   }
 
   .game-shell[data-mode="home"] .info-panel p {
@@ -3382,7 +3394,7 @@ button {
     drop-shadow(0 0 18px rgba(255, 225, 125, 0.5));
 }
 
-.detail-canvas[data-kingdom="winter"] .story-point {
+.detail-canvas[data-kingdom] .story-point {
   --point-orb: url("./assets/ui-star-orb-rigel.png");
   width: clamp(42px, 6vw, 58px);
   height: clamp(42px, 6vw, 58px);
@@ -3395,15 +3407,15 @@ button {
     drop-shadow(0 4px 0 rgba(7, 5, 8, 0.52));
 }
 
-.detail-canvas[data-kingdom="winter"] .story-point[data-point-id="betelgeuse-preview"] {
+.detail-canvas[data-kingdom] .story-point:nth-child(3n + 1) {
   --point-orb: url("./assets/ui-star-orb-betelgeuse.png");
 }
 
-.detail-canvas[data-kingdom="winter"] .story-point[data-point-id="sirius-preview"] {
+.detail-canvas[data-kingdom] .story-point:nth-child(3n) {
   --point-orb: url("./assets/ui-star-orb-sirius.png");
 }
 
-.detail-canvas[data-kingdom="winter"] .story-point::after {
+.detail-canvas[data-kingdom] .story-point::after {
   top: calc(100% + 2px);
   left: 50%;
   width: max-content;
@@ -3424,19 +3436,19 @@ button {
   transform: translateX(-50%);
 }
 
-.detail-canvas[data-kingdom="winter"] .story-point.locked {
+.detail-canvas[data-kingdom] .story-point.locked {
   opacity: 0.96;
 }
 
-.game-shell[data-mode="detail"][data-kingdom="winter"] .info-panel {
+.game-shell[data-mode="detail"] .info-panel {
   padding: 0;
   border: 0;
   background: transparent;
   box-shadow: none;
 }
 
-.game-shell[data-mode="detail"][data-kingdom="winter"] .info-panel::before,
-.game-shell[data-mode="detail"][data-kingdom="winter"] .info-panel::after {
+.game-shell[data-mode="detail"] .info-panel::before,
+.game-shell[data-mode="detail"] .info-panel::after {
   display: none;
   content: none;
 }
@@ -3644,12 +3656,12 @@ button {
     font-size: 0.7rem;
   }
 
-  .detail-canvas[data-kingdom="winter"] .story-point {
+  .detail-canvas[data-kingdom] .story-point {
     width: 38px;
     height: 38px;
   }
 
-  .detail-canvas[data-kingdom="winter"] .story-point::after {
+  .detail-canvas[data-kingdom] .story-point::after {
     min-width: 72px;
     padding: 4px 10px 5px;
     font-size: 0.58rem;
@@ -3731,9 +3743,11 @@ button {
 .reward-card {
   position: relative;
   width: min(520px, 94vw);
+  min-height: min(510px, calc(100dvh - 20px));
   max-height: calc(100dvh - 20px);
   overflow: hidden;
   display: grid;
+  align-content: center;
   justify-items: center;
   gap: clamp(6px, 1.5vw, 10px);
   padding: clamp(26px, 4.5vw, 40px) clamp(24px, 5vw, 44px) clamp(22px, 4vw, 34px);
@@ -3794,7 +3808,7 @@ button {
 
 .reward-scroll-image {
   position: relative;
-  width: min(64%, 240px);
+  width: min(40%, 145px);
   margin: 0 auto;
   display: block;
   filter:
@@ -3808,12 +3822,14 @@ button {
   justify-self: center;
   margin: 0;
   padding: 12px 14px 11px;
-  color: #ead9b3;
+  color: #5a3517;
   background:
-    linear-gradient(180deg, rgba(15, 36, 67, 0.96), rgba(5, 13, 31, 0.98));
-  border: 1px solid rgba(230, 183, 88, 0.72);
+    radial-gradient(circle at 50% 15%, rgba(255, 239, 177, 0.32), transparent 44%),
+    linear-gradient(180deg, rgba(103, 57, 24, 0.96), rgba(48, 25, 13, 0.98));
+  border: 1px solid rgba(255, 211, 113, 0.82);
   box-shadow:
-    inset 0 0 0 1px rgba(255, 234, 151, 0.22),
+    inset 0 0 0 1px rgba(255, 238, 169, 0.32),
+    inset 0 0 18px rgba(255, 207, 93, 0.12),
     0 4px 0 rgba(39, 20, 6, 0.48);
 }
 
@@ -3913,6 +3929,7 @@ button {
 
   .reward-card {
     width: min(100%, 388px);
+    min-height: min(386px, calc(100dvh - 12px));
     max-height: calc(100dvh - 12px);
     gap: 5px;
     padding: 28px 22px 20px;
@@ -3933,7 +3950,7 @@ button {
   }
 
   .reward-scroll-image {
-    width: min(58%, 190px);
+    width: min(36%, 115px);
   }
 
   .reward-knowledge {
@@ -3958,13 +3975,13 @@ button {
   }
 }
 
-.game-shell[data-mode="story"][data-kingdom="winter"] {
+.game-shell[data-mode="story"] {
   width: min(980px, calc(100% - 18px));
   grid-template-columns: minmax(0, 1fr);
   gap: 12px;
 }
 
-.game-shell[data-mode="story"][data-kingdom="winter"] .codex-panel {
+.game-shell[data-mode="story"] .codex-panel {
   grid-column: 1;
   grid-row: auto;
   order: -3;
@@ -3974,7 +3991,7 @@ button {
   box-shadow: none;
 }
 
-.game-shell[data-mode="story"][data-kingdom="winter"] .story-panel {
+.game-shell[data-mode="story"] .story-panel {
   min-height: clamp(150px, 20vw, 220px);
   display: flex;
   flex-direction: column;
@@ -3993,7 +4010,7 @@ button {
   text-align: center;
 }
 
-.game-shell[data-mode="story"][data-kingdom="winter"] .story-panel .stage-type {
+.game-shell[data-mode="story"] .story-panel .stage-type {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -4013,7 +4030,7 @@ button {
   text-shadow: 0 2px 0 rgba(6, 4, 2, 0.98);
 }
 
-.game-shell[data-mode="story"][data-kingdom="winter"] .story-panel h2 {
+.game-shell[data-mode="story"] .story-panel h2 {
   flex: 0 0 auto;
   margin: 0 0 7px;
   width: 100%;
@@ -4028,7 +4045,7 @@ button {
     0 0 12px rgba(255, 228, 137, 0.34);
 }
 
-.game-shell[data-mode="story"][data-kingdom="winter"] .story-panel p {
+.game-shell[data-mode="story"] .story-panel p {
   flex: 0 0 auto;
   width: 100%;
   margin: 0;
@@ -4040,7 +4057,7 @@ button {
   text-shadow: 0 2px 0 rgba(7, 4, 2, 0.96);
 }
 
-.game-shell[data-mode="story"][data-kingdom="winter"] .map-stage {
+.game-shell[data-mode="story"] .map-stage {
   grid-column: 1;
   order: -2;
   min-height: auto;
@@ -4051,13 +4068,13 @@ button {
   box-shadow: none;
 }
 
-.game-shell[data-mode="story"][data-kingdom="winter"] .story-scene {
+.game-shell[data-mode="story"] .story-scene {
   overflow: hidden;
   border-radius: 4px;
   background: #030817;
 }
 
-.game-shell[data-mode="story"][data-kingdom="winter"] .story-scene::before {
+.game-shell[data-mode="story"] .story-scene::before {
   inset: 0;
   z-index: 8;
   border: 0;
@@ -4065,18 +4082,18 @@ button {
   box-shadow: none;
 }
 
-.game-shell[data-mode="story"][data-kingdom="winter"] .battle-screen {
+.game-shell[data-mode="story"] .battle-screen {
   inset: 2.8% 2.5%;
   border-radius: 2px;
 }
 
-.game-shell[data-mode="story"][data-kingdom="winter"] .battle-screen::after {
+.game-shell[data-mode="story"] .battle-screen::after {
   background:
     radial-gradient(circle at 76% 17%, transparent 0 24%, rgba(4, 8, 25, 0.15) 50%, rgba(2, 5, 18, 0.42) 100%),
     linear-gradient(180deg, rgba(3, 8, 28, 0.04), rgba(3, 8, 28, 0.28));
 }
 
-.game-shell[data-mode="story"][data-kingdom="winter"] .status-panel {
+.game-shell[data-mode="story"] .status-panel {
   border: 0;
   border-radius: 0;
   color: #ffe8a7;
@@ -4089,7 +4106,7 @@ button {
   text-shadow: 0 2px 0 rgba(4, 3, 2, 0.92);
 }
 
-.game-shell[data-mode="story"][data-kingdom="winter"] .target-status-panel {
+.game-shell[data-mode="story"] .target-status-panel {
   top: 7%;
   left: 5.5%;
   width: min(430px, 46%);
@@ -4097,12 +4114,12 @@ button {
   background-image: url("./assets/ui-battle-target-status-frame.png");
 }
 
-.game-shell[data-mode="story"][data-kingdom="winter"] .status-object {
+.game-shell[data-mode="story"] .status-object {
   grid-template-columns: clamp(58px, 8vw, 86px) 1fr;
   gap: clamp(8px, 1.4vw, 14px);
 }
 
-.game-shell[data-mode="story"][data-kingdom="winter"] .status-object img {
+.game-shell[data-mode="story"] .status-object img {
   width: 100%;
   border: 0;
   border-radius: 0;
@@ -4111,37 +4128,37 @@ button {
   filter: drop-shadow(0 0 8px rgba(139, 205, 255, 0.32));
 }
 
-.game-shell[data-mode="story"][data-kingdom="winter"] .status-object strong,
-.game-shell[data-mode="story"][data-kingdom="winter"] .observer-status-panel > strong {
+.game-shell[data-mode="story"] .status-object strong,
+.game-shell[data-mode="story"] .observer-status-panel > strong {
   color: #ffe6a2;
   font-size: clamp(0.86rem, 2.1vw, 1.18rem);
   line-height: 1.12;
 }
 
-.game-shell[data-mode="story"][data-kingdom="winter"] .status-stats {
+.game-shell[data-mode="story"] .status-stats {
   gap: clamp(3px, 0.7vw, 6px);
 }
 
-.game-shell[data-mode="story"][data-kingdom="winter"] .status-stats div {
+.game-shell[data-mode="story"] .status-stats div {
   grid-template-columns: minmax(54px, auto) 1fr;
   gap: clamp(5px, 0.9vw, 10px);
   border-top: 1px solid rgba(255, 226, 143, 0.2);
   padding-top: 3px;
 }
 
-.game-shell[data-mode="story"][data-kingdom="winter"] .status-stats dt span {
+.game-shell[data-mode="story"] .status-stats dt span {
   color: #aee5ff;
   text-shadow: 0 0 8px rgba(126, 208, 255, 0.55);
 }
 
-.game-shell[data-mode="story"][data-kingdom="winter"] .status-meter {
+.game-shell[data-mode="story"] .status-meter {
   height: clamp(8px, 1.3vw, 13px);
   border: 1px solid rgba(255, 228, 141, 0.72);
   background: rgba(7, 8, 18, 0.88);
   box-shadow: inset 0 0 0 1px rgba(1, 2, 8, 0.8);
 }
 
-.game-shell[data-mode="story"][data-kingdom="winter"] .observer-status-panel {
+.game-shell[data-mode="story"] .observer-status-panel {
   right: 5%;
   bottom: 6%;
   width: min(400px, 43%);
@@ -4149,24 +4166,24 @@ button {
   background-image: url("./assets/ui-battle-observer-status-frame.png");
 }
 
-.game-shell[data-mode="story"][data-kingdom="winter"] .observer-stats div {
+.game-shell[data-mode="story"] .observer-stats div {
   grid-template-columns: minmax(82px, auto) 64px 1fr;
   gap: 8px;
 }
 
-.game-shell[data-mode="story"][data-kingdom="winter"] .enemy-sprite.story-rigel {
+.game-shell[data-mode="story"] .enemy-sprite.story-rigel {
   top: 8%;
   right: 7%;
   width: min(42%, 430px);
 }
 
-.game-shell[data-mode="story"][data-kingdom="winter"] .observer-sprite {
+.game-shell[data-mode="story"] .observer-sprite {
   left: 9%;
   bottom: 8%;
   width: min(31%, 320px);
 }
 
-.game-shell[data-mode="story"][data-kingdom="winter"] .story-text-panel {
+.game-shell[data-mode="story"] .story-text-panel {
   grid-column: 1;
   order: -1;
   padding: clamp(28px, 4vw, 44px) clamp(36px, 6vw, 72px) clamp(30px, 4.5vw, 50px);
@@ -4181,7 +4198,7 @@ button {
   font-family: "Hiragino Mincho ProN", "YuMincho", "Yu Mincho", serif;
 }
 
-.game-shell[data-mode="story"][data-kingdom="winter"] .story-advance {
+.game-shell[data-mode="story"] .story-advance {
   min-height: 132px;
   padding: 8px 34px 10px 10px;
   border: 0;
@@ -4191,20 +4208,20 @@ button {
   color: #2a190e;
 }
 
-.game-shell[data-mode="story"][data-kingdom="winter"] .story-speaker {
+.game-shell[data-mode="story"] .story-speaker {
   margin-bottom: 12px;
   color: #153a50;
   font-size: clamp(1.05rem, 2.8vw, 1.55rem);
   line-height: 1.16;
 }
 
-.game-shell[data-mode="story"][data-kingdom="winter"] .story-line {
+.game-shell[data-mode="story"] .story-line {
   color: #2b1a0f;
   font-size: clamp(1rem, 2.6vw, 1.32rem);
   line-height: 1.64;
 }
 
-.game-shell[data-mode="story"][data-kingdom="winter"] .story-cue {
+.game-shell[data-mode="story"] .story-cue {
   right: 8px;
   bottom: 2px;
   color: #3b2917;
@@ -4223,74 +4240,74 @@ button {
 }
 
 @media (max-width: 700px) {
-  .game-shell[data-mode="story"][data-kingdom="winter"] {
+  .game-shell[data-mode="story"] {
     width: min(100% - 12px, 980px);
     gap: 8px;
   }
 
-  .game-shell[data-mode="story"][data-kingdom="winter"] .story-panel {
+  .game-shell[data-mode="story"] .story-panel {
     min-height: 154px;
     padding: 46px 34px 26px;
   }
 
-  .game-shell[data-mode="story"][data-kingdom="winter"] .story-panel .stage-type {
+  .game-shell[data-mode="story"] .story-panel .stage-type {
     min-width: 82px;
     margin-bottom: 5px;
     padding: 3px 12px 4px;
     font-size: 0.58rem;
   }
 
-  .game-shell[data-mode="story"][data-kingdom="winter"] .story-panel h2 {
+  .game-shell[data-mode="story"] .story-panel h2 {
     margin-bottom: 4px;
     font-size: 1.2rem;
   }
 
-  .game-shell[data-mode="story"][data-kingdom="winter"] .story-panel p {
+  .game-shell[data-mode="story"] .story-panel p {
     font-size: 0.66rem;
   }
 
-  .game-shell[data-mode="story"][data-kingdom="winter"] .map-stage {
+  .game-shell[data-mode="story"] .map-stage {
     aspect-ratio: 4 / 3;
   }
 
-  .game-shell[data-mode="story"][data-kingdom="winter"] .battle-screen {
+  .game-shell[data-mode="story"] .battle-screen {
     inset: 3.5% 3.2%;
   }
 
-  .game-shell[data-mode="story"][data-kingdom="winter"] .target-status-panel {
+  .game-shell[data-mode="story"] .target-status-panel {
     top: 5.6%;
     left: 4.8%;
     width: 47%;
     padding: 9px 10px 9px;
   }
 
-  .game-shell[data-mode="story"][data-kingdom="winter"] .status-object {
+  .game-shell[data-mode="story"] .status-object {
     grid-template-columns: 40px 1fr;
     gap: 6px;
   }
 
-  .game-shell[data-mode="story"][data-kingdom="winter"] .status-object strong,
-  .game-shell[data-mode="story"][data-kingdom="winter"] .observer-status-panel > strong {
+  .game-shell[data-mode="story"] .status-object strong,
+  .game-shell[data-mode="story"] .observer-status-panel > strong {
     margin-bottom: 3px;
     font-size: 0.62rem;
   }
 
-  .game-shell[data-mode="story"][data-kingdom="winter"] .status-stats {
+  .game-shell[data-mode="story"] .status-stats {
     gap: 1px;
   }
 
-  .game-shell[data-mode="story"][data-kingdom="winter"] .status-stats div {
+  .game-shell[data-mode="story"] .status-stats div {
     grid-template-columns: minmax(34px, auto) 1fr;
     gap: 4px;
     padding-top: 1px;
     font-size: 0.48rem;
   }
 
-  .game-shell[data-mode="story"][data-kingdom="winter"] .target-status-panel .status-meter {
+  .game-shell[data-mode="story"] .target-status-panel .status-meter {
     margin-top: 3px;
   }
 
-  .game-shell[data-mode="story"][data-kingdom="winter"] .observer-status-panel {
+  .game-shell[data-mode="story"] .observer-status-panel {
     right: 4.4%;
     bottom: 4.4%;
     width: 53%;
@@ -4298,45 +4315,45 @@ button {
     padding: 23px 18px 11px;
   }
 
-  .game-shell[data-mode="story"][data-kingdom="winter"] .observer-stats div {
+  .game-shell[data-mode="story"] .observer-stats div {
     grid-template-columns: minmax(50px, auto) 34px 1fr;
     gap: 4px;
     font-size: 0.5rem;
     line-height: 1.06;
   }
 
-  .game-shell[data-mode="story"][data-kingdom="winter"] .observer-stats .status-meter {
+  .game-shell[data-mode="story"] .observer-stats .status-meter {
     height: 7px;
   }
 
-  .game-shell[data-mode="story"][data-kingdom="winter"] .enemy-sprite.story-rigel {
+  .game-shell[data-mode="story"] .enemy-sprite.story-rigel {
     top: 14%;
     right: 6%;
     width: 43%;
   }
 
-  .game-shell[data-mode="story"][data-kingdom="winter"] .observer-sprite {
+  .game-shell[data-mode="story"] .observer-sprite {
     left: 8%;
     bottom: 8%;
     width: 34%;
     max-width: none;
   }
 
-  .game-shell[data-mode="story"][data-kingdom="winter"] .story-text-panel {
+  .game-shell[data-mode="story"] .story-text-panel {
     padding: 27px 28px 28px;
   }
 
-  .game-shell[data-mode="story"][data-kingdom="winter"] .story-advance {
+  .game-shell[data-mode="story"] .story-advance {
     min-height: 116px;
     padding: 5px 28px 5px 5px;
   }
 
-  .game-shell[data-mode="story"][data-kingdom="winter"] .story-speaker {
+  .game-shell[data-mode="story"] .story-speaker {
     margin-bottom: 7px;
     font-size: 0.92rem;
   }
 
-  .game-shell[data-mode="story"][data-kingdom="winter"] .story-line {
+  .game-shell[data-mode="story"] .story-line {
     font-size: 0.88rem;
     line-height: 1.52;
   }
