@@ -3804,7 +3804,8 @@ button {
 
 .reward-knowledge {
   position: relative;
-  width: 100%;
+  width: min(84%, 330px);
+  justify-self: center;
   margin: 0;
   padding: 12px 14px 11px;
   color: #ead9b3;
@@ -3839,6 +3840,8 @@ button {
   font-size: clamp(0.8rem, 2.3vw, 0.94rem);
   font-weight: 800;
   line-height: 1.28;
+  white-space: nowrap;
+  overflow: hidden;
 }
 
 .reward-knowledge li::before {
@@ -3910,6 +3913,7 @@ button {
   }
 
   .reward-knowledge {
+    width: min(76%, 268px);
     padding: 9px 11px 8px;
   }
 

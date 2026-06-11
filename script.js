@@ -351,8 +351,8 @@ const STORIES = {
       knowledgeTitle: "リゲルで覚えること",
       knowledge: [
         "青白い星は高温",
-        "リゲルは青色超巨星",
-        "HR図では左上"
+        "リゲルは超巨星",
+        "HR図は左上"
       ]
     },
     lines: [
