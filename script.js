@@ -395,6 +395,7 @@ const state = {
   lineIndex: 0,
   battleBg: "autumn",
   homeTab: "home",
+  homeKingdomId: "autumn",
   selectedObserveId: null,
   selectedScrollId: null
 };
@@ -459,6 +460,48 @@ const HOME_CHOICES = [
   { id: "winter", icon: "✧", label: "冬の王国", className: "season-winter" }
 ];
 
+const HOME_KINGDOM_DETAILS = {
+  tower: {
+    icon: "✦",
+    card: "./assets/map-kingdom-card-tower.png",
+    title: "天球観測塔",
+    description: "四季の星図を結び、星座の奥にある恒星、星雲、銀河への入口を示す。",
+    enterId: null
+  },
+  spring: {
+    icon: "✤",
+    card: "./assets/map-kingdom-card-spring.png",
+    title: "春の王国",
+    description: "花と星明かりの森に、二重星と春の銀河が眠る。",
+    action: "春の王国へ進む",
+    enterId: "spring"
+  },
+  summer: {
+    icon: "☉",
+    card: "./assets/map-kingdom-card-summer.png",
+    title: "夏の王国",
+    description: "天の川が流れ、白鳥座が距離の小さなずれを告げる。",
+    action: "夏の王国へ進む",
+    enterId: "summer"
+  },
+  autumn: {
+    icon: "✦",
+    card: "./assets/map-kingdom-card-autumn.png",
+    title: "秋の王国",
+    description: "神話と銀河が重なり、変光星と深い宇宙へ続く。",
+    action: "秋の王国へ進む",
+    enterId: "autumn"
+  },
+  winter: {
+    icon: "✧",
+    card: "./assets/map-kingdom-card-winter.png",
+    title: "冬の王国",
+    description: "青白い巨星と赤い星が、温度と光度の違いを見せる。",
+    action: "冬の王国へ進む",
+    enterId: "winter"
+  }
+};
+
 const ORB_CLASSES = ["betelgeuse", "rigel", "sirius"];
 
 const HOME_TABS = [
@@ -518,6 +561,8 @@ function getObservableItems() {
         kingdomId,
         kingdomName: kingdom.name,
         title: point.id === "rigel" ? "青白き巨星リゲル" : point.label,
+        enemyImage: story?.enemy?.normal ?? story?.portrait ?? "",
+        enemyAlt: story?.name ?? point.label,
         lesson: story?.clearRule ?? point.note ?? kingdom.detailText,
         description: story
           ? `${story.lead}${status ? ` ${status}` : ""}`
@@ -534,8 +579,22 @@ function getSelectedObservableItem() {
   return selected;
 }
 
+function chooseHomeKingdom(kingdomId) {
+  if (!HOME_KINGDOM_DETAILS[kingdomId]) return;
+  hideReward();
+  state.mode = "home";
+  state.homeTab = "home";
+  state.homeKingdomId = kingdomId;
+  state.kingdomId = null;
+  state.storyId = null;
+  state.lineIndex = 0;
+  state.battleBg = kingdomId;
+  render();
+}
+
 function selectKingdom(kingdomId) {
   const kingdom = KINGDOMS[kingdomId];
+  if (!kingdom) return;
   hideReward();
 
   if (!kingdom.points) {
@@ -612,18 +671,24 @@ function renderAppScreen() {
 function renderMap() {
   gameShell.dataset.mode = state.mode;
   gameShell.dataset.kingdom = state.kingdomId ?? "";
+  gameShell.dataset.homeKingdom = state.homeKingdomId;
   mapStage.className = `map-stage mode-${state.mode}`;
   mapStage.dataset.kingdom = state.kingdomId ?? "";
+  mapStage.dataset.homeKingdom = state.homeKingdomId;
   storyScene.dataset.bg = state.battleBg;
   const isDetailMode = state.mode === "detail";
   homeButton.hidden = !isDetailMode;
   homeButton.classList.toggle("is-visible", isDetailMode);
 
   kingdomButtons.forEach((button) => {
-    const active = button.dataset.kingdom === state.kingdomId && (state.mode === "detail" || state.mode === "story");
+    const active =
+      (state.mode === "home" && button.dataset.kingdom === state.homeKingdomId)
+      || (button.dataset.kingdom === state.kingdomId && (state.mode === "detail" || state.mode === "story"));
     button.classList.toggle("active", active);
     button.setAttribute("aria-pressed", active ? "true" : "false");
   });
+  towerButton.classList.toggle("active", state.mode === "home" && state.homeKingdomId === "tower");
+  towerButton.setAttribute("aria-pressed", state.mode === "home" && state.homeKingdomId === "tower" ? "true" : "false");
 
   if (state.mode === "home") {
     appScreen.innerHTML = "";
@@ -712,6 +777,31 @@ function renderHomeKingdoms() {
   `;
 }
 
+function renderHomeSelectionPanel() {
+  const detail = HOME_KINGDOM_DETAILS[state.homeKingdomId] ?? HOME_KINGDOM_DETAILS.autumn;
+
+  return `
+    <section class="home-selection-panel ${state.homeKingdomId}" aria-label="${detail.title}の説明">
+      <figure class="home-selection-card">
+        <img src="${withAssetVersion(detail.card)}" alt="${detail.title}の星域" />
+      </figure>
+      <div class="home-selection-copy">
+        <h2><span aria-hidden="true">${detail.icon}</span>${detail.title}<span aria-hidden="true">${detail.icon}</span></h2>
+        <p>${detail.description}</p>
+        ${detail.enterId
+          ? `
+            <div class="home-selection-actions">
+              <button class="home-enter-button" type="button" data-home-enter="${detail.enterId}">
+                ${detail.action}
+              </button>
+            </div>
+          `
+          : ""}
+      </div>
+    </section>
+  `;
+}
+
 function renderObserveTab() {
   const items = getObservableItems();
   const selected = getSelectedObservableItem();
@@ -742,11 +832,16 @@ function renderObserveTab() {
             .join("")}
         </div>
       </div>
-      <section class="observe-detail screen-detail-panel" aria-label="天体の説明">
-        <span class="screen-detail-kicker">${selected.kingdomName}</span>
-        <h3>${selected.title}</h3>
-        <strong>${selected.lesson}</strong>
-        <p>${selected.description}</p>
+      <section class="observe-detail screen-detail-panel${selected.enemyImage ? " has-enemy" : ""}" aria-label="天体の説明">
+        ${selected.enemyImage
+          ? `<img class="observe-detail-enemy" src="${withAssetVersion(selected.enemyImage)}" alt="${selected.enemyAlt}" />`
+          : ""}
+        <div class="observe-detail-copy">
+          <span class="screen-detail-kicker">${selected.kingdomName}</span>
+          <h3>${selected.title}</h3>
+          <strong>${selected.lesson}</strong>
+          <p>${selected.description}</p>
+        </div>
       </section>
     </section>
   `;
@@ -818,6 +913,7 @@ function renderSettingsTab() {
 function renderHomePanel() {
   guidePanel.innerHTML = `
     <div class="home-panel-shell">
+      ${state.mode === "home" ? renderHomeSelectionPanel() : ""}
       ${renderHomeNav()}
     </div>
   `;
@@ -1003,46 +1099,86 @@ function render() {
   renderPanel();
 }
 
+function getEventElement(event) {
+  return event.target instanceof Element ? event.target : event.target?.parentElement;
+}
+
 kingdomButtons.forEach((button) => {
-  button.addEventListener("click", () => selectKingdom(button.dataset.kingdom));
+  button.addEventListener("click", () => {
+    if (state.mode === "home") {
+      chooseHomeKingdom(button.dataset.kingdom);
+      return;
+    }
+
+    selectKingdom(button.dataset.kingdom);
+  });
 });
 
-towerButton.addEventListener("click", goHome);
+mapStage.addEventListener("click", (event) => {
+  const target = getEventElement(event);
+  const homeKingdomButton = target?.closest("[data-home-kingdom]");
+  if (!homeKingdomButton || state.mode !== "home") return;
+  chooseHomeKingdom(homeKingdomButton.dataset.homeKingdom);
+});
+
+towerButton.addEventListener("click", () => chooseHomeKingdom("tower"));
+
+document.addEventListener(
+  "pointerup",
+  (event) => {
+    const target = getEventElement(event);
+    const homeEnterButton = target?.closest("[data-home-enter]");
+    if (!homeEnterButton) return;
+
+    event.preventDefault();
+    event.stopPropagation();
+    selectKingdom(homeEnterButton.dataset.homeEnter);
+  },
+  true
+);
 
 guidePanel.addEventListener("click", (event) => {
-  const homeTabButton = event.target.closest("[data-home-tab]");
+  const target = getEventElement(event);
+  const homeTabButton = target?.closest("[data-home-tab]");
   if (homeTabButton) {
     openAppScreen(homeTabButton.dataset.homeTab);
     return;
   }
 
-  const menuButton = event.target.closest("[data-menu-kingdom]");
-  if (menuButton) {
-    selectKingdom(menuButton.dataset.menuKingdom);
+  const homeEnterButton = target?.closest("[data-home-enter]");
+  if (homeEnterButton) {
+    selectKingdom(homeEnterButton.dataset.homeEnter);
     return;
   }
 
-  const storyButton = event.target.closest("[data-story-id]");
+  const menuButton = target?.closest("[data-menu-kingdom]");
+  if (menuButton) {
+    chooseHomeKingdom(menuButton.dataset.menuKingdom);
+    return;
+  }
+
+  const storyButton = target?.closest("[data-story-id]");
   if (storyButton) {
     openStory(storyButton.dataset.storyId);
     return;
   }
 
-  const guideButton = event.target.closest("[data-guide-title]");
+  const guideButton = target?.closest("[data-guide-title]");
   if (guideButton) {
     renderGuideNote(guideButton.dataset.guideTitle, guideButton.dataset.guideNote);
   }
 });
 
 appScreen.addEventListener("click", (event) => {
-  const observeButton = event.target.closest("[data-observe-id]");
+  const target = getEventElement(event);
+  const observeButton = target?.closest("[data-observe-id]");
   if (observeButton) {
     state.selectedObserveId = observeButton.dataset.observeId;
     renderMap();
     return;
   }
 
-  const scrollButton = event.target.closest("[data-scroll-id]");
+  const scrollButton = target?.closest("[data-scroll-id]");
   if (scrollButton) {
     state.selectedScrollId = scrollButton.dataset.scrollId;
     renderMap();
@@ -1061,7 +1197,8 @@ homeButton.addEventListener("click", goHome);
 storyAdvanceButton.addEventListener("click", nextStoryLine);
 rewardCloseButton.addEventListener("click", hideReward);
 rewardPopup.addEventListener("click", (event) => {
-  if (event.target.closest("[data-reward-close]")) {
+  const target = getEventElement(event);
+  if (target?.closest("[data-reward-close]")) {
     hideReward();
   }
 });

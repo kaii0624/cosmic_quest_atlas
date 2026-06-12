@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>COSMIC QUEST</title>
-    <link rel="stylesheet" href="./styles.css?v=settings-compact-v1" />
+    <link rel="stylesheet" href="./styles.css?v=home-tower-frame-v2" />
   </head>
   <body>
     <div class="star-dust" aria-hidden="true"></div>
@@ -13,9 +13,22 @@
         <div id="mapCanvas" class="map-canvas">
           <img
             class="world-art"
-            src="./assets/sky-continent-map.png"
+            src="./assets/sky-continent-map.png?v=home-tower-frame-v2"
             alt="天空の大陸の星空RPGワールドマップ"
           />
+          <div class="kingdom-layer-stack" aria-hidden="true">
+            <img class="kingdom-cutout tower" src="./assets/map-kingdom-layer-tower.png" alt="" />
+            <img class="kingdom-cutout spring" src="./assets/map-kingdom-layer-spring.png" alt="" />
+            <img class="kingdom-cutout summer" src="./assets/map-kingdom-layer-summer.png" alt="" />
+            <img class="kingdom-cutout autumn" src="./assets/map-kingdom-layer-autumn.png" alt="" />
+            <img class="kingdom-cutout winter" src="./assets/map-kingdom-layer-winter.png" alt="" />
+          </div>
+          <div class="kingdom-hotspots" aria-label="王国選択">
+            <button class="kingdom-hotspot spring" type="button" data-home-kingdom="spring" aria-label="春の王国を選ぶ"></button>
+            <button class="kingdom-hotspot summer" type="button" data-home-kingdom="summer" aria-label="夏の王国を選ぶ"></button>
+            <button class="kingdom-hotspot autumn" type="button" data-home-kingdom="autumn" aria-label="秋の王国を選ぶ"></button>
+            <button class="kingdom-hotspot winter" type="button" data-home-kingdom="winter" aria-label="冬の王国を選ぶ"></button>
+          </div>
           <svg class="route-layer" viewBox="0 0 100 100" aria-hidden="true">
             <path id="routePath" d="" />
           </svg>
@@ -34,7 +47,7 @@
           <button class="region-label kingdom-marker summer" type="button" data-kingdom="summer">夏の王国</button>
           <button class="region-label kingdom-marker autumn" type="button" data-kingdom="autumn">秋の王国</button>
           <button class="region-label kingdom-marker winter" type="button" data-kingdom="winter">冬の王国</button>
-          <button id="towerButton" class="tower-label tower-marker" type="button">天球観測塔</button>
+          <button id="towerButton" class="tower-label tower-marker" type="button" data-home-kingdom="tower">天球観測塔</button>
         </div>
         <div id="detailCanvas" class="detail-canvas" aria-label="星域MAP">
           <img
@@ -184,6 +197,6 @@
       </section>
     </div>
 
-    <script src="./script.js?v=settings-compact-v1"></script>
+    <script src="./script.js?v=home-tower-frame-v2"></script>
   </body>
 </html>
