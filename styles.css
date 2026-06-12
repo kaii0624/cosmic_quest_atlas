@@ -952,9 +952,28 @@ button {
   margin: max(8px, env(safe-area-inset-top)) auto max(10px, env(safe-area-inset-bottom));
 }
 
+.game-shell[data-mode="observe"],
+.game-shell[data-mode="library"],
+.game-shell[data-mode="settings"] {
+  grid-template-columns: minmax(0, min(100%, 820px));
+  gap: 10px;
+  justify-content: center;
+  width: min(100% - 18px, 820px);
+  margin: max(8px, env(safe-area-inset-top)) auto max(10px, env(safe-area-inset-bottom));
+}
+
 .game-shell[data-mode="home"] .map-stage,
 .game-shell[data-mode="home"] .story-text-panel,
-.game-shell[data-mode="home"] .codex-panel {
+.game-shell[data-mode="home"] .codex-panel,
+.game-shell[data-mode="observe"] .map-stage,
+.game-shell[data-mode="observe"] .story-text-panel,
+.game-shell[data-mode="observe"] .codex-panel,
+.game-shell[data-mode="library"] .map-stage,
+.game-shell[data-mode="library"] .story-text-panel,
+.game-shell[data-mode="library"] .codex-panel,
+.game-shell[data-mode="settings"] .map-stage,
+.game-shell[data-mode="settings"] .story-text-panel,
+.game-shell[data-mode="settings"] .codex-panel {
   grid-column: 1;
 }
 
@@ -975,24 +994,41 @@ button {
     inset 0 0 64px rgba(255, 219, 94, 0.24);
 }
 
-.game-shell[data-mode="home"] .map-stage::before {
-  inset: 8.4%;
-  border: 3px double rgba(246, 207, 95, 0.95);
-  border-radius: 50%;
+.game-shell[data-mode="observe"] .map-stage,
+.game-shell[data-mode="library"] .map-stage,
+.game-shell[data-mode="settings"] .map-stage {
+  grid-row: 1;
+  width: 100%;
+  min-width: 0;
+  min-height: min(720px, calc(100vh - 118px));
+  aspect-ratio: auto;
+  border-width: 4px;
+  border-color: rgba(238, 184, 74, 0.95);
+  border-radius: 14px;
+  background:
+    radial-gradient(circle at 50% 0%, rgba(91, 151, 235, 0.22), transparent 52%),
+    linear-gradient(180deg, #071633, #030918);
   box-shadow:
-    inset 0 0 0 7px rgba(7, 12, 34, 0.35),
-    inset 0 0 24px rgba(255, 232, 144, 0.28),
-    0 0 22px rgba(255, 221, 97, 0.2);
+    0 20px 42px rgba(0, 0, 0, 0.54),
+    0 0 0 2px rgba(44, 22, 8, 0.92),
+    inset 0 0 0 6px rgba(21, 15, 27, 0.82),
+    inset 0 0 64px rgba(255, 219, 94, 0.18);
 }
 
+.map-stage.mode-observe::before,
+.map-stage.mode-observe::after,
+.map-stage.mode-library::before,
+.map-stage.mode-library::after,
+.map-stage.mode-settings::before,
+.map-stage.mode-settings::after {
+  display: none;
+  content: none;
+}
+
+.game-shell[data-mode="home"] .map-stage::before,
 .game-shell[data-mode="home"] .map-stage::after {
-  inset: 11.2%;
-  border: 1px solid rgba(255, 232, 145, 0.68);
-  border-radius: 50%;
-  opacity: 0.92;
-  box-shadow:
-    inset 0 0 0 1px rgba(116, 69, 21, 0.62),
-    0 0 18px rgba(255, 232, 145, 0.22);
+  display: none;
+  content: none;
 }
 
 .game-shell[data-mode="home"] .compass-marker {
@@ -1013,8 +1049,43 @@ button {
   overflow: visible;
 }
 
+.game-shell[data-mode="observe"] .codex-panel,
+.game-shell[data-mode="library"] .codex-panel,
+.game-shell[data-mode="settings"] .codex-panel {
+  position: fixed;
+  left: 50%;
+  right: auto;
+  bottom: max(8px, env(safe-area-inset-bottom));
+  z-index: 80;
+  width: min(820px, calc(100% - 18px));
+  transform: translateX(-50%);
+  grid-row: auto;
+  min-height: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+  overflow: visible;
+}
+
+.game-shell[data-mode="home"] .codex-panel {
+  position: fixed;
+  left: 50%;
+  right: auto;
+  bottom: max(8px, env(safe-area-inset-bottom));
+  z-index: 80;
+  width: min(820px, calc(100% - 18px));
+  transform: translateX(-50%);
+}
+
 .game-shell[data-mode="home"] .scroll-panel,
-.game-shell[data-mode="home"] .story-text-panel {
+.game-shell[data-mode="home"] .story-text-panel,
+.game-shell[data-mode="observe"] .scroll-panel,
+.game-shell[data-mode="observe"] .story-text-panel,
+.game-shell[data-mode="library"] .scroll-panel,
+.game-shell[data-mode="library"] .story-text-panel,
+.game-shell[data-mode="settings"] .scroll-panel,
+.game-shell[data-mode="settings"] .story-text-panel {
   display: none !important;
 }
 
@@ -1994,17 +2065,32 @@ button {
 
 .map-stage.mode-home .detail-canvas,
 .map-stage.mode-home .story-scene,
+.map-stage.mode-home .app-screen,
 .map-stage.mode-detail .map-canvas,
 .map-stage.mode-detail .story-scene,
+.map-stage.mode-detail .app-screen,
 .map-stage.mode-story .map-canvas,
-.map-stage.mode-story .detail-canvas {
+.map-stage.mode-story .detail-canvas,
+.map-stage.mode-story .app-screen,
+.map-stage.mode-observe .map-canvas,
+.map-stage.mode-observe .detail-canvas,
+.map-stage.mode-observe .story-scene,
+.map-stage.mode-library .map-canvas,
+.map-stage.mode-library .detail-canvas,
+.map-stage.mode-library .story-scene,
+.map-stage.mode-settings .map-canvas,
+.map-stage.mode-settings .detail-canvas,
+.map-stage.mode-settings .story-scene {
   opacity: 0;
   pointer-events: none;
 }
 
 .map-stage.mode-home .map-canvas,
 .map-stage.mode-detail .detail-canvas,
-.map-stage.mode-story .story-scene {
+.map-stage.mode-story .story-scene,
+.map-stage.mode-observe .app-screen,
+.map-stage.mode-library .app-screen,
+.map-stage.mode-settings .app-screen {
   opacity: 1;
   pointer-events: auto;
 }
@@ -2035,7 +2121,8 @@ button {
 }
 
 .detail-canvas,
-.story-scene {
+.story-scene,
+.app-screen {
   position: absolute;
   inset: 0;
   z-index: 4;
@@ -2044,6 +2131,175 @@ button {
   transition:
     opacity 340ms ease,
     transform 540ms cubic-bezier(0.18, 0.82, 0.18, 1);
+}
+
+.app-screen {
+  z-index: 6;
+  display: grid;
+  padding: clamp(18px, 4vw, 36px);
+  color: #ffeab2;
+  background:
+    radial-gradient(circle at 18% 15%, rgba(81, 144, 221, 0.34), transparent 25%),
+    radial-gradient(circle at 86% 7%, rgba(255, 218, 113, 0.16), transparent 22%),
+    linear-gradient(180deg, rgba(4, 12, 32, 0.96), rgba(9, 20, 53, 0.98)),
+    #061238;
+  overflow: hidden;
+}
+
+.app-screen::before {
+  content: "";
+  position: absolute;
+  inset: 12px;
+  pointer-events: none;
+  border: 2px solid rgba(246, 205, 100, 0.82);
+  border-radius: 10px;
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 239, 166, 0.26),
+    inset 0 0 34px rgba(255, 217, 110, 0.12);
+}
+
+.app-screen-panel {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr) auto;
+  gap: clamp(12px, 2.5vw, 18px);
+  height: 100%;
+  min-width: 0;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.app-screen-header {
+  display: grid;
+  justify-items: center;
+  gap: 3px;
+  padding: 8px 14px 12px;
+  border-bottom: 1px solid rgba(246, 205, 100, 0.46);
+  text-align: center;
+}
+
+.app-screen-header span {
+  color: #8fc8ff;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(0.68rem, 2vw, 0.86rem);
+  font-weight: 900;
+  letter-spacing: 0.12em;
+  text-shadow: 0 0 8px rgba(92, 177, 255, 0.45);
+}
+
+.app-screen-header h2 {
+  margin: 0;
+  color: #ffe8a5;
+  font-family: "Hiragino Mincho ProN", "YuMincho", "Yu Mincho", serif;
+  font-size: clamp(1.72rem, 5.2vw, 2.7rem);
+  font-weight: 900;
+  line-height: 1.04;
+  text-shadow:
+    0 2px 0 rgba(0, 0, 0, 0.92),
+    0 0 13px rgba(255, 226, 129, 0.34);
+}
+
+.app-screen-header p {
+  margin: 0;
+  color: rgba(255, 239, 185, 0.84);
+  font-family: "Hiragino Mincho ProN", "YuMincho", "Yu Mincho", serif;
+  font-size: clamp(0.76rem, 2.1vw, 0.96rem);
+  font-weight: 800;
+  line-height: 1.35;
+}
+
+.app-scroll-area {
+  min-width: 0;
+  min-height: 0;
+  overflow: auto;
+  padding: 2px 4px 8px;
+  scrollbar-width: thin;
+}
+
+.app-observe-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(9px, 2vw, 15px);
+  overflow: visible;
+  padding: 0 2px 4px;
+}
+
+.app-observe-grid .winter-star-orb-button {
+  min-width: 0;
+}
+
+.app-observe-grid .winter-star-orb {
+  width: min(100%, 116px);
+}
+
+.app-observe-grid .winter-star-orb-button.locked {
+  cursor: default;
+}
+
+.app-observe-grid .winter-star-orb-button.locked .winter-star-orb,
+.app-observe-grid .winter-star-orb-button.locked .winter-star-label,
+.app-observe-grid .winter-star-orb-button.locked .observe-kingdom-name {
+  filter: grayscale(0.74) brightness(0.72);
+  opacity: 0.7;
+}
+
+.screen-detail-panel {
+  position: relative;
+  z-index: 1;
+  min-height: clamp(132px, 22vh, 178px);
+  max-height: clamp(132px, 24vh, 190px);
+  overflow: auto;
+  border: 1px solid rgba(121, 78, 31, 0.48);
+  border-radius: 10px;
+  color: #332111;
+  background:
+    radial-gradient(circle at 82% 22%, rgba(255, 255, 255, 0.24), transparent 22%),
+    linear-gradient(180deg, rgba(255, 234, 184, 0.96), rgba(211, 159, 88, 0.96));
+  box-shadow:
+    inset 0 0 0 2px rgba(92, 54, 19, 0.18),
+    0 4px 0 rgba(38, 17, 7, 0.42);
+}
+
+.observe-detail.screen-detail-panel {
+  display: block;
+  padding: clamp(10px, 2.5vw, 16px);
+}
+
+.screen-detail-kicker {
+  display: inline-grid;
+  margin-bottom: 3px;
+  padding: 2px 8px;
+  border-radius: 999px;
+  color: #f8e9b8;
+  background: #142c57;
+  font-size: 0.62rem;
+  font-weight: 900;
+}
+
+.screen-detail-panel h3 {
+  margin: 0 0 4px;
+  font-family: "Hiragino Mincho ProN", "YuMincho", "Yu Mincho", serif;
+  font-size: clamp(0.94rem, 2.5vw, 1.2rem);
+  font-weight: 900;
+  line-height: 1.16;
+}
+
+.screen-detail-panel strong {
+  display: block;
+  margin-bottom: 4px;
+  color: #17345f;
+  font-size: clamp(0.72rem, 1.9vw, 0.92rem);
+  line-height: 1.22;
+}
+
+.screen-detail-panel p {
+  margin: 0;
+  color: #4a321f;
+  font-size: clamp(0.66rem, 1.8vw, 0.83rem);
+  font-weight: 800;
+  line-height: 1.42;
+  text-align: left;
 }
 
 .map-stage.mode-detail .detail-canvas {
@@ -3256,9 +3512,417 @@ button {
     0 0 8px rgba(255, 219, 113, 0.38);
 }
 
+.game-shell[data-mode="home"] .info-panel,
+.game-shell[data-mode="observe"] .info-panel,
+.game-shell[data-mode="library"] .info-panel,
+.game-shell[data-mode="settings"] .info-panel {
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+  filter: none;
+}
+
+.game-shell[data-mode="home"] .info-panel::before,
+.game-shell[data-mode="home"] .info-panel::after,
+.game-shell[data-mode="observe"] .info-panel::before,
+.game-shell[data-mode="observe"] .info-panel::after,
+.game-shell[data-mode="library"] .info-panel::before,
+.game-shell[data-mode="library"] .info-panel::after,
+.game-shell[data-mode="settings"] .info-panel::before,
+.game-shell[data-mode="settings"] .info-panel::after {
+  display: none;
+  content: none;
+}
+
+.home-panel-shell {
+  display: grid;
+  gap: clamp(9px, 2vw, 14px);
+  min-width: 0;
+}
+
+.home-nav-bar {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: clamp(3px, 1vw, 8px);
+  padding: 3px;
+  border: 1px solid rgba(247, 206, 94, 0.5);
+  border-radius: 8px;
+  background:
+    linear-gradient(90deg, rgba(8, 17, 39, 0.92), rgba(22, 20, 44, 0.92)),
+    radial-gradient(circle at 50% 0, rgba(255, 225, 126, 0.18), transparent 54%);
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 235, 153, 0.18),
+    0 4px 0 rgba(24, 11, 5, 0.6);
+}
+
+.home-nav-button {
+  --tab-art: url("./assets/ui-tab-home.png");
+  position: relative;
+  min-width: 0;
+  min-height: clamp(64px, 11vw, 92px);
+  display: grid;
+  align-items: end;
+  justify-items: center;
+  padding: 0 3px 7px;
+  border: 0;
+  border-radius: 8px;
+  color: #efe2c2;
+  background: #07142d var(--tab-art) center / cover no-repeat;
+  box-shadow:
+    inset 0 -22px 24px rgba(0, 0, 0, 0.42),
+    0 2px 0 rgba(10, 5, 2, 0.68);
+  cursor: pointer;
+  filter: brightness(0.78) saturate(0.88);
+  overflow: hidden;
+  transition:
+    filter 160ms ease,
+    transform 160ms ease;
+}
+
+.home-nav-button::after {
+  content: "";
+  position: absolute;
+  inset: auto 8% 4px;
+  height: 2px;
+  border-radius: 999px;
+  background: rgba(255, 221, 111, 0.0);
+  box-shadow: none;
+  transition:
+    background 160ms ease,
+    box-shadow 160ms ease;
+}
+
+.home-nav-button span {
+  position: relative;
+  z-index: 1;
+  max-width: 100%;
+  color: inherit;
+  font-family: "Hiragino Mincho ProN", "YuMincho", "Yu Mincho", serif;
+  font-size: clamp(0.64rem, 1.9vw, 0.95rem);
+  font-weight: 900;
+  line-height: 1.08;
+  text-align: center;
+  text-shadow:
+    0 2px 0 rgba(0, 0, 0, 0.98),
+    0 0 8px rgba(255, 225, 132, 0.25);
+}
+
+.home-nav-button.tab-observe {
+  --tab-art: url("./assets/ui-tab-observe.png");
+}
+
+.home-nav-button.tab-library {
+  --tab-art: url("./assets/ui-tab-library.png");
+}
+
+.home-nav-button.tab-settings {
+  --tab-art: url("./assets/ui-tab-settings.png");
+}
+
+.home-nav-button.active,
+.home-nav-button:hover,
+.home-nav-button:focus-visible {
+  color: #ffe9a5;
+  outline: none;
+  filter: brightness(1.08) saturate(1.08);
+  transform: translateY(-1px);
+}
+
+.home-nav-button.active::after,
+.home-nav-button:focus-visible::after {
+  background: rgba(255, 232, 139, 0.92);
+  box-shadow: 0 0 12px rgba(255, 224, 112, 0.82);
+}
+
+.home-tab-content {
+  min-height: 0;
+  min-width: 0;
+  overflow: hidden;
+}
+
+.home-choice-grid.compact {
+  gap: clamp(5px, 1.2vw, 8px);
+}
+
+.home-choice-grid.compact .choice-button {
+  min-height: clamp(42px, 7vw, 56px);
+}
+
+.observe-orb-grid,
+.library-scroll-grid {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(92px, 1fr);
+  gap: clamp(7px, 1.8vw, 12px);
+  max-width: 100%;
+  min-width: 0;
+  overflow-x: auto;
+  padding: 2px 2px 9px;
+  scrollbar-width: thin;
+}
+
+.observe-tab .winter-star-orb-button {
+  min-width: 92px;
+}
+
+.observe-tab .winter-star-orb {
+  width: min(100%, 92px);
+}
+
+.observe-tab .winter-star-label {
+  min-height: 27px;
+  padding: 4px 5px;
+  font-size: clamp(0.63rem, 1.7vw, 0.78rem);
+}
+
+.observe-kingdom-name {
+  color: rgba(255, 237, 178, 0.76);
+  font-family: "Hiragino Mincho ProN", "YuMincho", "Yu Mincho", serif;
+  font-size: 0.62rem;
+  font-weight: 800;
+  line-height: 1;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.95);
+}
+
+.library-tab {
+  display: grid;
+  gap: clamp(8px, 1.8vw, 12px);
+  min-width: 0;
+}
+
+.library-scroll-card {
+  min-width: 94px;
+  display: grid;
+  gap: 3px;
+  justify-items: center;
+  padding: 7px 6px 8px;
+  border: 1px solid rgba(244, 200, 95, 0.72);
+  border-radius: 8px;
+  color: #ffe9aa;
+  background:
+    linear-gradient(180deg, rgba(11, 23, 52, 0.94), rgba(5, 12, 31, 0.96)),
+    radial-gradient(circle at 50% 20%, rgba(255, 221, 110, 0.18), transparent 55%);
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 235, 153, 0.18),
+    0 4px 0 rgba(20, 8, 4, 0.52);
+  cursor: pointer;
+}
+
+.library-scroll-card img {
+  width: 56px;
+  height: 56px;
+  object-fit: contain;
+  filter: drop-shadow(0 0 8px rgba(255, 222, 122, 0.25));
+}
+
+.library-scroll-card span {
+  max-width: 100%;
+  font-family: "Hiragino Mincho ProN", "YuMincho", "Yu Mincho", serif;
+  font-size: 0.62rem;
+  font-weight: 900;
+  line-height: 1.15;
+  text-align: center;
+}
+
+.library-scroll-card small {
+  color: rgba(255, 236, 177, 0.72);
+  font-size: 0.58rem;
+  font-weight: 800;
+}
+
+.library-scroll-card.locked {
+  cursor: default;
+  filter: grayscale(0.82) brightness(0.62);
+}
+
+.library-scroll-card.selected,
+.library-scroll-card.unlocked:hover,
+.library-scroll-card.unlocked:focus-visible {
+  outline: none;
+  filter: brightness(1.1) saturate(1.08);
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 243, 178, 0.62),
+    0 4px 0 rgba(20, 8, 4, 0.52),
+    0 0 16px rgba(95, 185, 255, 0.38);
+}
+
+.library-detail {
+  display: grid;
+  grid-template-columns: 84px minmax(0, 1fr);
+  gap: 10px;
+  align-items: center;
+  padding: 10px 12px;
+  border: 1px solid rgba(121, 78, 31, 0.48);
+  border-radius: 9px;
+  color: #332111;
+  background:
+    radial-gradient(circle at 82% 22%, rgba(255, 255, 255, 0.24), transparent 22%),
+    linear-gradient(180deg, rgba(255, 234, 184, 0.95), rgba(211, 159, 88, 0.95));
+  box-shadow:
+    inset 0 0 0 2px rgba(92, 54, 19, 0.18),
+    0 4px 0 rgba(38, 17, 7, 0.42);
+}
+
+.library-detail img {
+  width: 84px;
+  height: 84px;
+  object-fit: contain;
+  filter: drop-shadow(0 0 10px rgba(40, 96, 180, 0.32));
+}
+
+.library-detail-kicker {
+  display: inline-grid;
+  margin-bottom: 2px;
+  padding: 2px 8px;
+  border-radius: 999px;
+  color: #f8e9b8;
+  background: #142c57;
+  font-size: 0.62rem;
+  font-weight: 900;
+}
+
+.library-detail h3 {
+  margin: 0 0 4px;
+  font-family: "Hiragino Mincho ProN", "YuMincho", "Yu Mincho", serif;
+  font-size: clamp(0.9rem, 2.4vw, 1.18rem);
+  font-weight: 900;
+  line-height: 1.18;
+}
+
+.library-detail strong {
+  display: block;
+  margin-bottom: 4px;
+  color: #17345f;
+  font-size: clamp(0.74rem, 1.9vw, 0.92rem);
+  line-height: 1.2;
+}
+
+.library-detail p {
+  margin: 0;
+  color: #4a321f;
+  font-size: clamp(0.68rem, 1.8vw, 0.83rem);
+  font-weight: 800;
+  line-height: 1.45;
+  text-align: left;
+}
+
+.settings-menu {
+  display: grid;
+  gap: 7px;
+}
+
+.settings-menu button {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 42px;
+  padding: 7px 14px;
+  border: 1px solid rgba(244, 200, 95, 0.68);
+  border-radius: 7px;
+  color: #ffe9aa;
+  background: linear-gradient(180deg, rgba(13, 33, 66, 0.96), rgba(5, 14, 34, 0.98));
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 235, 153, 0.14),
+    0 3px 0 rgba(19, 9, 4, 0.55);
+  font-family: "Hiragino Mincho ProN", "YuMincho", "Yu Mincho", serif;
+  font-weight: 900;
+}
+
+.settings-menu strong {
+  color: #8fc8ff;
+  font-size: 0.82rem;
+}
+
+.settings-tab {
+  grid-template-rows: auto auto minmax(0, 1fr);
+  align-content: start;
+}
+
+.app-screen .library-scroll-grid {
+  grid-auto-flow: row;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  overflow: visible;
+  padding: 0;
+}
+
+.app-screen .app-observe-grid {
+  grid-auto-flow: row;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-auto-columns: initial;
+  overflow: visible;
+  padding: 0 2px 4px;
+}
+
+.app-screen .app-observe-grid .winter-star-orb-button {
+  min-width: 0;
+}
+
+.app-screen .app-observe-grid .winter-star-orb {
+  width: min(100%, 112px);
+}
+
+.app-screen .app-observe-grid .winter-star-orb-button.selected .winter-star-orb,
+.app-screen .app-observe-grid .winter-star-orb-button:hover .winter-star-orb,
+.app-screen .app-observe-grid .winter-star-orb-button:focus-visible .winter-star-orb {
+  filter:
+    brightness(1.16)
+    drop-shadow(0 7px 0 rgba(8, 5, 8, 0.48))
+    drop-shadow(0 0 22px rgba(255, 226, 132, 0.58));
+}
+
+.app-screen .app-observe-grid .winter-star-orb-button.selected .winter-star-label {
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 243, 178, 0.72),
+    0 3px 0 rgba(18, 9, 4, 0.62),
+    0 0 13px rgba(95, 185, 255, 0.38);
+}
+
+.app-screen .library-scroll-card {
+  min-width: 0;
+  min-height: 116px;
+  align-content: center;
+}
+
+.app-screen .library-scroll-card img {
+  width: 66px;
+  height: 66px;
+}
+
+.app-screen .library-detail {
+  grid-template-columns: 96px minmax(0, 1fr);
+  padding: clamp(10px, 2.5vw, 16px);
+}
+
+.app-screen .library-detail img {
+  width: 96px;
+  height: 96px;
+}
+
+.app-screen .settings-menu {
+  width: min(100%, 420px);
+  justify-self: center;
+  align-self: start;
+  gap: 7px;
+}
+
+.app-screen .settings-menu button {
+  min-height: 44px;
+  padding: 7px 14px;
+  border-radius: 8px;
+  font-size: clamp(0.84rem, 2.2vw, 0.98rem);
+}
+
 @media (max-width: 700px) {
   .game-shell[data-mode="home"] .info-panel {
-    padding: 18px 24px 21px;
+    padding: 0;
+  }
+
+  .game-shell[data-mode="observe"] .info-panel,
+  .game-shell[data-mode="library"] .info-panel,
+  .game-shell[data-mode="settings"] .info-panel {
+    padding: 0;
   }
 
   .game-shell[data-mode="home"] .info-heading {
@@ -3279,6 +3943,161 @@ button {
 
   .game-shell[data-mode="home"] .home-choice-grid {
     width: min(100%, 650px);
+  }
+
+  .home-nav-bar {
+    gap: 2px;
+    padding: 2px;
+  }
+
+  .home-nav-button {
+    min-height: 63px;
+    padding-bottom: 6px;
+    border-radius: 7px;
+  }
+
+  .home-nav-button span {
+    font-size: 0.62rem;
+  }
+
+  .game-shell[data-mode="home"] .codex-panel,
+  .game-shell[data-mode="observe"] .codex-panel,
+  .game-shell[data-mode="library"] .codex-panel,
+  .game-shell[data-mode="settings"] .codex-panel {
+    bottom: max(6px, env(safe-area-inset-bottom));
+    width: min(100% - 12px, 820px);
+  }
+
+  .home-choice-grid.compact .choice-button {
+    min-height: 41px;
+    font-size: 0.95rem;
+  }
+
+  .observe-orb-grid,
+  .library-scroll-grid {
+    grid-auto-columns: 88px;
+    gap: 6px;
+    padding-bottom: 7px;
+  }
+
+  .app-screen {
+    padding: 16px 14px;
+  }
+
+  .app-screen-panel {
+    gap: 9px;
+  }
+
+  .app-screen-header {
+    padding: 7px 8px 10px;
+  }
+
+  .app-screen-header h2 {
+    font-size: 1.55rem;
+  }
+
+  .app-screen-header p {
+    font-size: 0.68rem;
+    line-height: 1.28;
+  }
+
+  .app-scroll-area {
+    padding: 0 2px 5px;
+  }
+
+  .app-observe-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 7px 5px;
+    padding: 0;
+  }
+
+  .app-observe-grid .winter-star-orb {
+    width: min(100%, 82px);
+  }
+
+  .app-screen .library-scroll-grid {
+    grid-auto-flow: row;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 7px;
+    padding: 0;
+  }
+
+  .app-screen .library-scroll-card {
+    min-height: 100px;
+  }
+
+  .app-screen .library-scroll-card img {
+    width: 54px;
+    height: 54px;
+  }
+
+  .app-screen .library-detail {
+    grid-template-columns: 74px minmax(0, 1fr);
+    padding: 9px 10px;
+  }
+
+  .app-screen .library-detail img {
+    width: 74px;
+    height: 74px;
+  }
+
+  .app-screen .settings-menu {
+    width: min(100%, 340px);
+    gap: 6px;
+  }
+
+  .app-screen .settings-menu button {
+    min-height: 40px;
+    padding: 6px 12px;
+    font-size: 0.84rem;
+  }
+
+  .screen-detail-panel {
+    min-height: 124px;
+    max-height: 150px;
+  }
+
+  .observe-detail.screen-detail-panel {
+    padding: 9px 10px;
+  }
+
+  .observe-tab .winter-star-orb {
+    width: 78px;
+  }
+
+  .observe-tab .winter-star-label {
+    min-height: 25px;
+    font-size: 0.6rem;
+  }
+
+  .observe-kingdom-name {
+    font-size: 0.56rem;
+  }
+
+  .library-scroll-card {
+    min-width: 88px;
+    padding: 6px 5px 7px;
+  }
+
+  .library-scroll-card img {
+    width: 48px;
+    height: 48px;
+  }
+
+  .library-detail {
+    grid-template-columns: 70px minmax(0, 1fr);
+    gap: 8px;
+    padding: 8px 10px;
+  }
+
+  .library-detail img {
+    width: 70px;
+    height: 70px;
+  }
+
+  .library-detail p {
+    font-size: 0.64rem;
+    line-height: 1.38;
   }
 }
 

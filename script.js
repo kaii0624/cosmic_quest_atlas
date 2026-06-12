@@ -393,7 +393,10 @@ const state = {
   kingdomId: null,
   storyId: null,
   lineIndex: 0,
-  battleBg: "autumn"
+  battleBg: "autumn",
+  homeTab: "home",
+  selectedObserveId: null,
+  selectedScrollId: null
 };
 
 const gameShell = document.querySelector(".game-shell");
@@ -402,6 +405,7 @@ const detailCanvas = document.querySelector("#detailCanvas");
 const detailArt = document.querySelector("#detailArt");
 const detailTitleName = document.querySelector("#detailTitleName");
 const storyScene = document.querySelector("#storyScene");
+const appScreen = document.querySelector("#appScreen");
 const detailRoutePath = document.querySelector("#detailRoutePath");
 const storyPointsEl = document.querySelector("#storyPoints");
 const homeButton = document.querySelector("#homeButton");
@@ -432,7 +436,21 @@ const storyNameEl = document.querySelector("#storyName");
 const storySubtitleEl = document.querySelector("#storySubtitle");
 const kingdomButtons = [...document.querySelectorAll("[data-kingdom]")];
 const battleBgButtons = [...document.querySelectorAll("[data-battle-bg]")];
-const claimedRewards = new Set();
+const REWARD_STORAGE_KEY = "cosmicQuest.claimedRewards";
+
+function loadClaimedRewards() {
+  try {
+    return JSON.parse(localStorage.getItem(REWARD_STORAGE_KEY) ?? "[]");
+  } catch {
+    return [];
+  }
+}
+
+const claimedRewards = new Set(loadClaimedRewards());
+
+function saveClaimedRewards() {
+  localStorage.setItem(REWARD_STORAGE_KEY, JSON.stringify([...claimedRewards]));
+}
 
 const HOME_CHOICES = [
   { id: "spring", icon: "✤", label: "春の王国", className: "season-spring" },
@@ -442,6 +460,79 @@ const HOME_CHOICES = [
 ];
 
 const ORB_CLASSES = ["betelgeuse", "rigel", "sirius"];
+
+const HOME_TABS = [
+  { id: "home", label: "ホーム" },
+  { id: "observe", label: "天体を見る" },
+  { id: "library", label: "図書館" },
+  { id: "settings", label: "設定" }
+];
+
+const APP_SCREEN_MODES = new Set(["observe", "library", "settings"]);
+
+const LIBRARY_SCROLLS = [
+  {
+    id: "rigel-color-luminosity-scroll",
+    title: "星色と大光度の巻物",
+    period: "冬の王国",
+    image: "./assets/reward-scroll-rigel-luminosity.png",
+    lesson: "青白い星ほど高温",
+    description: "リゲルは青白く高温で、遠くにあっても強く輝く大光度星。星の色は表面温度を読む手がかりになる。"
+  },
+  {
+    id: "cygnus-parallax-scroll",
+    title: "年周視差の巻物",
+    period: "夏の王国",
+    image: "./assets/reward-scroll-cygnus-parallax.png",
+    lesson: "距離は視差の逆数",
+    description: "半年後の見かけのずれを年周視差という。視差 p を秒角で測れば、距離 d はパーセクで 1 / p になる。"
+  },
+  {
+    id: "algol-eclipse-scroll",
+    title: "食変光星の巻物",
+    period: "秋の王国",
+    image: "./assets/equation-scroll-binary.png",
+    lesson: "食で光度が下がる",
+    description: "アルゴルの暗くなる周期は、伴星が前を通って主星の光を隠す食で説明できる。",
+    locked: true
+  },
+  {
+    id: "mizar-double-star-scroll",
+    title: "二重星の巻物",
+    period: "春の王国",
+    image: "./assets/equation-scroll-parallax.png",
+    lesson: "近くに見えても別距離",
+    description: "星座の星は見かけの並び。二重星や連星を観測すると、点に見える星の奥行きがほどける。",
+    locked: true
+  }
+];
+
+function getObservableItems() {
+  return Object.entries(KINGDOMS).flatMap(([kingdomId, kingdom]) =>
+    kingdom.points.map((point) => {
+      const story = point.storyId ? STORIES[point.storyId] : null;
+      const status = story?.status?.rows?.map((row) => `${row.label}: ${row.value}`).join(" / ");
+
+      return {
+        ...point,
+        kingdomId,
+        kingdomName: kingdom.name,
+        title: point.id === "rigel" ? "青白き巨星リゲル" : point.label,
+        lesson: story?.clearRule ?? point.note ?? kingdom.detailText,
+        description: story
+          ? `${story.lead}${status ? ` ${status}` : ""}`
+          : point.note ?? kingdom.detailText
+      };
+    })
+  );
+}
+
+function getSelectedObservableItem() {
+  const items = getObservableItems();
+  const selected = items.find((item) => item.id === state.selectedObserveId) ?? items[0];
+  state.selectedObserveId = selected.id;
+  return selected;
+}
 
 function selectKingdom(kingdomId) {
   const kingdom = KINGDOMS[kingdomId];
@@ -482,6 +573,22 @@ function goHome() {
   state.kingdomId = null;
   state.storyId = null;
   state.lineIndex = 0;
+  state.homeTab = "home";
+  render();
+}
+
+function openAppScreen(screenId) {
+  if (screenId === "home") {
+    goHome();
+    return;
+  }
+
+  hideReward();
+  state.mode = screenId;
+  state.homeTab = screenId;
+  state.kingdomId = null;
+  state.storyId = null;
+  state.lineIndex = 0;
   render();
 }
 
@@ -492,28 +599,48 @@ function withAssetVersion(src) {
   return `${src}${src.includes("?") ? "&" : "?"}v=${encodeURIComponent(assetVersion)}`;
 }
 
+function renderAppScreen() {
+  const renderers = {
+    observe: renderObserveTab,
+    library: renderLibraryTab,
+    settings: renderSettingsTab
+  };
+
+  appScreen.innerHTML = renderers[state.mode]?.() ?? "";
+}
+
 function renderMap() {
   gameShell.dataset.mode = state.mode;
   gameShell.dataset.kingdom = state.kingdomId ?? "";
   mapStage.className = `map-stage mode-${state.mode}`;
   mapStage.dataset.kingdom = state.kingdomId ?? "";
   storyScene.dataset.bg = state.battleBg;
-  homeButton.hidden = state.mode !== "detail";
-  homeButton.classList.toggle("is-visible", state.mode === "detail");
+  const isDetailMode = state.mode === "detail";
+  homeButton.hidden = !isDetailMode;
+  homeButton.classList.toggle("is-visible", isDetailMode);
 
   kingdomButtons.forEach((button) => {
-    const active = button.dataset.kingdom === state.kingdomId && state.mode !== "home";
+    const active = button.dataset.kingdom === state.kingdomId && (state.mode === "detail" || state.mode === "story");
     button.classList.toggle("active", active);
     button.setAttribute("aria-pressed", active ? "true" : "false");
   });
 
   if (state.mode === "home") {
+    appScreen.innerHTML = "";
     storyPointsEl.innerHTML = "";
     detailRoutePath.setAttribute("d", "");
     return;
   }
 
+  if (APP_SCREEN_MODES.has(state.mode)) {
+    storyPointsEl.innerHTML = "";
+    detailRoutePath.setAttribute("d", "");
+    renderAppScreen();
+    return;
+  }
+
   if (state.mode === "detail") {
+    appScreen.innerHTML = "";
     const kingdom = KINGDOMS[state.kingdomId];
     detailCanvas.dataset.kingdom = state.kingdomId;
     detailArt.src = withAssetVersion(kingdom.detailImage);
@@ -523,6 +650,7 @@ function renderMap() {
     return;
   }
 
+  appScreen.innerHTML = "";
   storyPointsEl.innerHTML = "";
   detailRoutePath.setAttribute("d", "");
 }
@@ -554,22 +682,24 @@ function renderStoryPoints(points) {
   });
 }
 
-function renderPanel() {
-  guidePanel.dataset.panelMode = state.mode;
-  guidePanel.dataset.kingdom = state.kingdomId ?? "";
+function renderHomeNav() {
+  return `
+    <nav class="home-nav-bar" aria-label="ホームメニュー">
+      ${HOME_TABS.map(
+        (tab) => `
+          <button class="home-nav-button tab-${tab.id}${state.homeTab === tab.id ? " active" : ""}" type="button" data-home-tab="${tab.id}" aria-pressed="${state.homeTab === tab.id ? "true" : "false"}">
+            <span>${tab.label}</span>
+          </button>
+        `
+      ).join("")}
+    </nav>
+  `;
+}
 
-  if (state.mode === "home") {
-    guidePanel.classList.remove("is-hidden");
-    storyPanel.classList.add("is-hidden");
-    storyTextPanel.classList.add("is-hidden");
-    scrollPanel.classList.add("is-hidden");
-    guidePanel.innerHTML = `
-      <div class="info-heading">
-        <span aria-hidden="true"></span>
-        <h2>天球観測塔</h2>
-        <span aria-hidden="true"></span>
-      </div>
-      <div class="guide-steps home-choice-grid">
+function renderHomeKingdoms() {
+  return `
+    <div class="home-tab-content home-tab-kingdoms">
+      <div class="guide-steps home-choice-grid compact">
         ${HOME_CHOICES.map(
           (choice) => `
             <button class="choice-button ${choice.className}" type="button" data-menu-kingdom="${choice.id}">
@@ -578,7 +708,132 @@ function renderPanel() {
           `
         ).join("")}
       </div>
-    `;
+    </div>
+  `;
+}
+
+function renderObserveTab() {
+  const items = getObservableItems();
+  const selected = getSelectedObservableItem();
+
+  return `
+    <section class="app-screen-panel observe-tab">
+      <div class="app-screen-header">
+        <span>OBSERVE</span>
+        <h2>天体を見る</h2>
+        <p>星座の入口から、観測できる天体を選ぶ。</p>
+      </div>
+      <div class="app-scroll-area">
+        <div class="observe-orb-grid app-observe-grid" aria-label="天体一覧">
+          ${items
+            .map((item, index) => {
+              const orbClass = ORB_CLASSES[index % ORB_CLASSES.length];
+              const lockedClass = item.locked ? " locked" : "";
+              const selectedClass = selected.id === item.id ? " selected" : "";
+
+              return `
+                <button class="winter-star-orb-button ${orbClass}${lockedClass}${selectedClass}" type="button" data-observe-id="${item.id}">
+                  <span class="winter-star-orb" aria-hidden="true"></span>
+                  <span class="winter-star-label">${item.label}</span>
+                  <span class="observe-kingdom-name">${item.kingdomName}</span>
+                </button>
+              `;
+            })
+            .join("")}
+        </div>
+      </div>
+      <section class="observe-detail screen-detail-panel" aria-label="天体の説明">
+        <span class="screen-detail-kicker">${selected.kingdomName}</span>
+        <h3>${selected.title}</h3>
+        <strong>${selected.lesson}</strong>
+        <p>${selected.description}</p>
+      </section>
+    </section>
+  `;
+}
+
+function getSelectedLibraryScroll() {
+  const unlocked = LIBRARY_SCROLLS.find((scroll) => claimedRewards.has(scroll.id));
+  const requested = LIBRARY_SCROLLS.find((scroll) => scroll.id === state.selectedScrollId);
+  const selected = requested ?? unlocked ?? LIBRARY_SCROLLS[0];
+  state.selectedScrollId = selected.id;
+  return selected;
+}
+
+function renderLibraryTab() {
+  const selected = getSelectedLibraryScroll();
+  const selectedUnlocked = claimedRewards.has(selected.id);
+
+  return `
+    <section class="app-screen-panel library-tab">
+      <div class="app-screen-header">
+        <span>ARCHIVE</span>
+        <h2>図書館</h2>
+        <p>集めた巻物を開き、観測知識を読み返す。</p>
+      </div>
+      <div class="app-scroll-area">
+        <div class="library-scroll-grid" aria-label="巻物一覧">
+          ${LIBRARY_SCROLLS.map((scroll) => {
+            const unlocked = claimedRewards.has(scroll.id);
+            return `
+              <button class="library-scroll-card${unlocked ? " unlocked" : " locked"}${selected.id === scroll.id ? " selected" : ""}" type="button" ${unlocked ? `data-scroll-id="${scroll.id}"` : 'aria-disabled="true"'}>
+                <img src="${withAssetVersion(scroll.image)}" alt="${scroll.title}" />
+                <span>${scroll.title}</span>
+                <small>${unlocked ? scroll.period : "未獲得"}</small>
+              </button>
+            `;
+          }).join("")}
+        </div>
+      </div>
+      <section class="library-detail screen-detail-panel" aria-label="巻物の詳細">
+        <img src="${withAssetVersion(selected.image)}" alt="${selected.title}" />
+        <div>
+          <span class="screen-detail-kicker">${selectedUnlocked ? "獲得済み" : "未獲得"}</span>
+          <h3>${selected.title}</h3>
+          <strong>${selectedUnlocked ? selected.lesson : "物語を進めて解放"}</strong>
+          <p>${selectedUnlocked ? selected.description : `${selected.period}の物語を観測すると、この巻物の解説が読める。`}</p>
+        </div>
+      </section>
+    </section>
+  `;
+}
+
+function renderSettingsTab() {
+  return `
+    <section class="app-screen-panel settings-tab">
+      <div class="app-screen-header">
+        <span>CONFIG</span>
+        <h2>設定</h2>
+        <p>表示と演出の状態を確認する。</p>
+      </div>
+      <div class="settings-menu">
+        <button type="button"><span>音量</span><strong>ON</strong></button>
+        <button type="button"><span>演出</span><strong>標準</strong></button>
+        <button type="button"><span>データ</span><strong>保存中</strong></button>
+      </div>
+    </section>
+  `;
+}
+
+function renderHomePanel() {
+  guidePanel.innerHTML = `
+    <div class="home-panel-shell">
+      ${renderHomeNav()}
+    </div>
+  `;
+}
+
+function renderPanel() {
+  guidePanel.dataset.panelMode = state.mode;
+  guidePanel.dataset.kingdom = state.kingdomId ?? "";
+  guidePanel.dataset.homeTab = state.homeTab;
+
+  if (state.mode === "home" || APP_SCREEN_MODES.has(state.mode)) {
+    guidePanel.classList.remove("is-hidden");
+    storyPanel.classList.add("is-hidden");
+    storyTextPanel.classList.add("is-hidden");
+    scrollPanel.classList.add("is-hidden");
+    renderHomePanel();
     return;
   }
 
@@ -724,6 +979,8 @@ function finishStory(story) {
 
   if (reward && !claimedRewards.has(reward.id)) {
     claimedRewards.add(reward.id);
+    saveClaimedRewards();
+    state.selectedScrollId = reward.id;
     showReward(reward);
   }
 }
@@ -753,6 +1010,12 @@ kingdomButtons.forEach((button) => {
 towerButton.addEventListener("click", goHome);
 
 guidePanel.addEventListener("click", (event) => {
+  const homeTabButton = event.target.closest("[data-home-tab]");
+  if (homeTabButton) {
+    openAppScreen(homeTabButton.dataset.homeTab);
+    return;
+  }
+
   const menuButton = event.target.closest("[data-menu-kingdom]");
   if (menuButton) {
     selectKingdom(menuButton.dataset.menuKingdom);
@@ -768,6 +1031,22 @@ guidePanel.addEventListener("click", (event) => {
   const guideButton = event.target.closest("[data-guide-title]");
   if (guideButton) {
     renderGuideNote(guideButton.dataset.guideTitle, guideButton.dataset.guideNote);
+  }
+});
+
+appScreen.addEventListener("click", (event) => {
+  const observeButton = event.target.closest("[data-observe-id]");
+  if (observeButton) {
+    state.selectedObserveId = observeButton.dataset.observeId;
+    renderMap();
+    return;
+  }
+
+  const scrollButton = event.target.closest("[data-scroll-id]");
+  if (scrollButton) {
+    state.selectedScrollId = scrollButton.dataset.scrollId;
+    renderMap();
+    return;
   }
 });
 

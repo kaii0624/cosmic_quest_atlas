@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>COSMIC QUEST</title>
-    <link rel="stylesheet" href="./styles.css?v=cygnus-reward-v1" />
+    <link rel="stylesheet" href="./styles.css?v=settings-compact-v1" />
   </head>
   <body>
     <div class="star-dust" aria-hidden="true"></div>
@@ -105,6 +105,7 @@
             <strong id="storySceneName">悪魔の首アルゴル</strong>
           </div>
         </div>
+        <div id="appScreen" class="app-screen" aria-label="メニュー画面"></div>
         <button id="homeButton" class="map-home-button" type="button">戻る</button>
       </section>
 
@@ -120,24 +121,21 @@
 
       <aside class="codex-panel" aria-label="観測手帳">
         <section id="guidePanel" class="guide-panel info-panel ornate-frame" aria-live="polite">
-          <div class="info-heading">
-            <span aria-hidden="true"></span>
-            <h2>天球観測塔</h2>
-            <span aria-hidden="true"></span>
-          </div>
-          <div class="guide-steps home-choice-grid">
-            <button class="choice-button season-spring" type="button" data-menu-kingdom="spring">
-              <span>春の王国</span>
-            </button>
-            <button class="choice-button season-summer" type="button" data-menu-kingdom="summer">
-              <span>夏の王国</span>
-            </button>
-            <button class="choice-button season-autumn" type="button" data-menu-kingdom="autumn">
-              <span>秋の王国</span>
-            </button>
-            <button class="choice-button season-winter" type="button" data-menu-kingdom="winter">
-              <span>冬の王国</span>
-            </button>
+          <div class="home-panel-shell">
+            <nav class="home-nav-bar" aria-label="ホームメニュー">
+              <button class="home-nav-button tab-home active" type="button" data-home-tab="home" aria-pressed="true">
+                <span>ホーム</span>
+              </button>
+              <button class="home-nav-button tab-observe" type="button" data-home-tab="observe" aria-pressed="false">
+                <span>天体を見る</span>
+              </button>
+              <button class="home-nav-button tab-library" type="button" data-home-tab="library" aria-pressed="false">
+                <span>図書館</span>
+              </button>
+              <button class="home-nav-button tab-settings" type="button" data-home-tab="settings" aria-pressed="false">
+                <span>設定</span>
+              </button>
+            </nav>
           </div>
         </section>
 
@@ -186,6 +184,6 @@
       </section>
     </div>
 
-    <script src="./script.js?v=cygnus-reward-v1"></script>
+    <script src="./script.js?v=settings-compact-v1"></script>
   </body>
 </html>
