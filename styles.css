@@ -7063,3 +7063,203 @@ button {
     font-size: 1.08rem !important;
   }
 }
+
+/* Quest/detail polish and transparent regenerated UI assets. */
+.home-selection-actions {
+  transform: translateY(-0.95rem);
+}
+
+.quest-card {
+  overflow: visible;
+  background-image: url("./assets/ui-quest-flyer-card.png?v=quest-ui-v3") !important;
+  background-size: 100% 100% !important;
+  padding-inline: clamp(18px, 3.4vw, 34px);
+}
+
+.quest-requirement,
+.quest-evidence-row,
+.quest-selected-slot {
+  background-image: url("./assets/ui-quest-requirement-slot.png?v=quest-ui-v3") !important;
+  background-size: 100% 100% !important;
+}
+
+.quest-requirement img,
+.quest-evidence-row img,
+.quest-selected-slot img {
+  background: transparent;
+}
+
+.quest-main-layout {
+  display: block;
+}
+
+.quest-main-image-card {
+  position: relative;
+}
+
+.quest-requester-status {
+  position: absolute;
+  z-index: 3;
+  top: clamp(14px, 2.2vw, 22px);
+  left: clamp(14px, 2.2vw, 22px);
+  width: min(43%, 300px);
+  max-height: calc(100% - clamp(28px, 4.4vw, 44px));
+  display: block;
+  padding: clamp(8px, 1.8vw, 13px) clamp(9px, 1.8vw, 14px);
+  overflow: auto;
+  color: #f9e9b6;
+  background:
+    linear-gradient(180deg, rgba(6, 16, 38, 0.82), rgba(2, 7, 18, 0.88)),
+    radial-gradient(circle at 50% 0, rgba(255, 223, 125, 0.16), transparent 58%);
+  border: 1px solid rgba(238, 194, 91, 0.74);
+  border-radius: 6px;
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 239, 166, 0.12),
+    0 3px 0 rgba(16, 8, 4, 0.42);
+}
+
+.quest-requester-status img {
+  display: none !important;
+}
+
+.quest-requester-status dl {
+  gap: 4px;
+}
+
+.quest-requester-status div {
+  gap: 1px;
+  padding-top: 4px;
+}
+
+.quest-requester-status div:first-child {
+  padding-top: 0;
+  border-top: 0;
+}
+
+.quest-requester-status dt {
+  font-size: clamp(0.48rem, 1.25vw, 0.62rem);
+}
+
+.quest-requester-status dd {
+  font-size: clamp(0.52rem, 1.4vw, 0.68rem);
+  line-height: 1.2;
+}
+
+.quest-dialogue-panel .screen-detail-kicker {
+  display: none;
+}
+
+.quest-evidence-board {
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) !important;
+  align-items: start;
+}
+
+@media (max-width: 700px) {
+  .home-selection-actions {
+    transform: translateY(-0.82rem);
+  }
+
+  .quest-card {
+    background-size: 100% 100% !important;
+    padding: 18px 14px 17px;
+  }
+
+  .quest-requester-status {
+    top: 14px;
+    left: 14px;
+    width: 48%;
+    padding: 7px 8px;
+  }
+
+  .quest-requester-status dl {
+    gap: 3px;
+  }
+
+  .quest-requester-status div {
+    padding-top: 3px;
+  }
+
+  .quest-requester-status dt {
+    font-size: 0.48rem;
+  }
+
+  .quest-requester-status dd {
+    font-size: 0.52rem;
+    line-height: 1.16;
+  }
+
+  .quest-evidence-board {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) !important;
+    gap: 6px;
+  }
+
+  .quest-evidence-column,
+  .quest-selected-column {
+    padding: 7px;
+  }
+
+  .quest-evidence-column h3,
+  .quest-selected-column h3 {
+    font-size: 0.66rem;
+    line-height: 1.12;
+  }
+
+  .quest-evidence-column header span,
+  .quest-selected-column header span {
+    font-size: 0.48rem;
+  }
+
+  .quest-evidence-list {
+    max-height: 300px;
+    gap: 5px;
+  }
+
+  .quest-evidence-row {
+    min-height: 54px;
+    grid-template-columns: 32px minmax(0, 1fr) 28px;
+    gap: 5px;
+    padding: 6px 6px;
+  }
+
+  .quest-evidence-copy strong,
+  .quest-selected-slot strong {
+    font-size: 0.58rem;
+  }
+
+  .quest-evidence-stars {
+    font-size: 0.52rem;
+  }
+
+  .quest-evidence-row b {
+    min-width: 28px;
+    padding: 3px 4px;
+    font-size: 0.46rem;
+  }
+
+  .quest-selected-list {
+    gap: 5px;
+  }
+
+  .quest-selected-slot {
+    min-height: 52px;
+    grid-template-columns: 30px minmax(0, 1fr) 24px;
+    gap: 5px;
+    padding: 6px;
+  }
+
+  .quest-selected-slot button {
+    width: 22px;
+    height: 22px;
+    font-size: 0.68rem;
+  }
+
+  .quest-selected-column > p {
+    font-size: 0.56rem;
+    line-height: 1.28;
+  }
+
+  .quest-combine-button {
+    min-height: 52px;
+    font-size: 0.82rem;
+  }
+}

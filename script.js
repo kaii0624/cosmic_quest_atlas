@@ -1673,32 +1673,30 @@ function renderQuestDetail(quest) {
       </div>
       <div class="quest-detail-scroll app-scroll-area">
         <section class="quest-main-layout" aria-label="${quest.title}のメイン画面">
-          <aside class="quest-requester-status" aria-label="依頼主ステータス">
-            <img src="${withAssetVersion(quest.requesterImage)}" alt="${quest.requester}" />
-            <dl>
-              <div>
-                <dt>出生年</dt>
-                <dd>${requesterStats.birthYear}</dd>
-              </div>
-              <div>
-                <dt>本名</dt>
-                <dd>${requesterStats.fullName}</dd>
-              </div>
-              <div>
-                <dt>功績</dt>
-                <dd>${requesterStats.achievement}</dd>
-              </div>
-            </dl>
-          </aside>
           <figure class="quest-main-image-card">
             <img src="${withAssetVersion(quest.mainImage)}" alt="${quest.title}の観測場面" />
+            <figcaption class="quest-requester-status" aria-label="依頼主ステータス">
+              <dl>
+                <div>
+                  <dt>出生年</dt>
+                  <dd>${requesterStats.birthYear}</dd>
+                </div>
+                <div>
+                  <dt>本名</dt>
+                  <dd>${requesterStats.fullName}</dd>
+                </div>
+                <div>
+                  <dt>功績</dt>
+                  <dd>${requesterStats.achievement}</dd>
+                </div>
+              </dl>
+            </figcaption>
           </figure>
         </section>
 
         <section class="quest-dialogue-panel screen-detail-panel" aria-label="${quest.requester}との会話">
           <img src="${withAssetVersion(quest.requesterImage)}" alt="" aria-hidden="true" />
           <div>
-            <span class="screen-detail-kicker">${quest.requester}</span>
             <h3>${quest.title}</h3>
             <strong>${quest.objective}</strong>
             <p>${quest.conversation}</p>
