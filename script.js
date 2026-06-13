@@ -883,6 +883,81 @@ const HOME_TABS = [
 
 const APP_SCREEN_MODES = new Set(["observe", "quests", "library", "settings"]);
 
+const OBSERVE_COPY = {
+  mizar: {
+    lesson: "肉眼と望遠鏡で二重星を見分ける",
+    description: "北斗七星の柄に並ぶ二重星を観測。"
+  },
+  "arcturus-preview": {
+    lesson: "橙色巨星の色と温度を読む",
+    description: "春の大曲線で見つかる明るい巨星。"
+  },
+  "spica-preview": {
+    lesson: "青白い星は高温のしるし",
+    description: "おとめ座で輝く春の一等星。"
+  },
+  cygnus: {
+    lesson: "背景星とのずれで距離を測る",
+    description: "天の川に浮かぶ白鳥座の年周視差。"
+  },
+  "deneb-preview": {
+    lesson: "遠い星でも大光度なら明るい",
+    description: "白鳥の尾に輝く遠方の一等星。"
+  },
+  "albireo-preview": {
+    lesson: "星の色は温度の手がかり",
+    description: "青と橙の対比で表面温度を読む。"
+  },
+  "cygni61-preview": {
+    lesson: "近い恒星は視差が測りやすい",
+    description: "年周視差測定で重要な近い恒星。"
+  },
+  algol: {
+    lesson: "周期的な暗化は食で起こる",
+    description: "伴星が主星を隠す食変光星。"
+  },
+  "mira-preview": {
+    lesson: "脈動で明るさが変わる",
+    description: "くじら座で長周期に明滅する変光星。"
+  },
+  "m31-preview": {
+    lesson: "星座の奥に銀河がある",
+    description: "アンドロメダ座方向の隣の大銀河。"
+  },
+  rigel: {
+    lesson: "青白い星ほど高温",
+    description: "オリオン座の足で輝く青白い巨星。"
+  },
+  "betelgeuse-preview": {
+    lesson: "赤い星は表面温度が低い",
+    description: "赤色超巨星として進化を読む。"
+  },
+  "sirius-preview": {
+    lesson: "見かけの明るさは距離も効く",
+    description: "近いため非常に明るい白い一等星。"
+  },
+  venus: {
+    lesson: "内惑星は満ち欠けする",
+    description: "太陽との位置で照らされた面が変わる。"
+  },
+  mars: {
+    lesson: "逆行は追い越しで起こる見かけ",
+    description: "地球が内側から追い越すと戻って見える。"
+  },
+  jupiter: {
+    lesson: "衛星は惑星のまわりを回る",
+    description: "小さな点の並び替わりが衛星を示す。"
+  },
+  saturn: {
+    lesson: "Pの2乗はaの3乗に比例",
+    description: "遠い惑星ほど公転周期が長い。"
+  },
+  neptune: {
+    lesson: "軌道のずれから惑星を予測",
+    description: "計算で位置を求め観測で確認された。"
+  }
+};
+
 const LIBRARY_SCROLLS = [
   {
     id: "rigel-color-luminosity-scroll",
@@ -1215,6 +1290,7 @@ function getObservableItems() {
     kingdom.points.map((point) => {
       const story = point.storyId ? STORIES[point.storyId] : null;
       const status = story?.status?.rows?.map((row) => `${row.label}: ${row.value}`).join(" / ");
+      const observeCopy = OBSERVE_COPY[point.id] ?? {};
 
       return {
         ...point,
@@ -1225,10 +1301,10 @@ function getObservableItems() {
         title: story?.name ?? (point.id === "rigel" ? "青白き巨星リゲル" : point.label),
         enemyImage: story?.enemy?.normal ?? story?.portrait ?? "",
         enemyAlt: story?.name ?? point.label,
-        lesson: story?.clearRule ?? point.note ?? kingdom.detailText,
-        description: story
+        lesson: observeCopy.lesson ?? story?.clearRule ?? point.note ?? kingdom.detailText,
+        description: observeCopy.description ?? (story
           ? `${story.lead}${status ? ` ${status}` : ""}`
-          : point.note ?? kingdom.detailText
+          : point.note ?? kingdom.detailText)
       };
     })
   );
@@ -1551,7 +1627,7 @@ function renderQuestRequirement(requirement) {
 
 function renderQuestCard(quest) {
   const progress = getQuestProgress(quest);
-  const status = progress.open ? "OPEN" : "LOCKED";
+  const status = progress.open ? "OPEN" : "";
 
   return `
     <button class="quest-card${progress.open ? " open" : " locked"}" type="button" data-quest-id="${quest.id}">
@@ -1563,7 +1639,7 @@ function renderQuestCard(quest) {
         <span class="quest-title-row">
           <span class="quest-number">${quest.number}</span>
           <strong>${quest.title}</strong>
-          <em>${status}</em>
+          ${status ? `<em>${status}</em>` : ""}
         </span>
         <span class="quest-summary">${quest.summary}</span>
         <span class="quest-required-title">必要な証拠</span>

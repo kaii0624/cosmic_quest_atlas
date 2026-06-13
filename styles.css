@@ -6957,9 +6957,30 @@ button {
     height: 68px;
   }
 
-  .library-tab .library-scroll-card span {
-    min-height: 30px;
-    font-size: 0.52rem;
+.library-tab .library-scroll-card span {
+  min-height: 30px;
+  font-size: 0.52rem;
+  }
+}
+
+/* Home selection refinement: smaller title and higher enter button. */
+.home-selection-copy h2 {
+  font-size: clamp(0.82rem, 2.8vw, 1.26rem);
+  transform: translateY(0.24em);
+}
+
+.home-selection-actions {
+  transform: translateY(-0.44rem);
+}
+
+@media (max-width: 700px) {
+  .home-selection-copy h2 {
+    font-size: 0.75rem;
+    transform: translateY(0.24em);
+  }
+
+  .home-selection-actions {
+    transform: translateY(-0.34rem);
   }
 }
 
@@ -7028,5 +7049,17 @@ button {
   .app-screen .library-scroll-card img {
     width: 96px;
     height: 96px;
+  }
+}
+
+/* Last-pass home title scale for mobile text inflation. */
+.home-selection-copy h2 {
+  font-size: clamp(0.9rem, 2.5vw, 1.2rem) !important;
+  transform: translateY(0.24em);
+}
+
+@media (max-width: 700px) {
+  .home-selection-copy h2 {
+    font-size: 1.08rem !important;
   }
 }
