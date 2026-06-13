@@ -1669,7 +1669,6 @@ function renderQuestDetail(quest) {
         <button class="quest-back-button" type="button" data-quest-back aria-label="クエスト一覧へ戻る">←</button>
         <span>QUEST ${quest.number}</span>
         <h2>${quest.title}</h2>
-        <p>巻物と観測技術を組み合わせよう</p>
       </div>
       <div class="quest-detail-scroll app-scroll-area">
         <section class="quest-main-layout" aria-label="${quest.title}のメイン画面">
@@ -1705,20 +1704,12 @@ function renderQuestDetail(quest) {
 
         <section class="quest-evidence-board" aria-label="巻物と観測技術の選択">
           <div class="quest-evidence-column">
-            <header>
-              <h3>手持ちの巻物・観測技術</h3>
-              <span>タップで選択</span>
-            </header>
             <div class="quest-evidence-list">
               ${evidenceOptions.map((evidence) => renderQuestEvidenceRow(quest, evidence)).join("")}
             </div>
           </div>
 
           <div class="quest-selected-column">
-            <header>
-              <h3>選んだ証拠</h3>
-              <span>最大4つまで</span>
-            </header>
             <div class="quest-selected-list">
               ${selectedSlots.map((evidenceId, index) => renderSelectedEvidenceSlot(quest, evidenceId, index)).join("")}
             </div>
@@ -1743,7 +1734,7 @@ function renderQuestTab() {
 
   return `
     <section class="app-screen-panel quest-tab">
-      <div class="quest-board-title">
+      <div class="app-screen-header quest-list-header">
         <span>QUEST</span>
         <h2>クエスト一覧</h2>
       </div>

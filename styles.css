@@ -7064,6 +7064,59 @@ button {
   }
 }
 
+/* Quest list compact header/card pass. */
+.quest-list-header {
+  padding-bottom: clamp(8px, 1.8vw, 12px);
+}
+
+.quest-list-header p {
+  display: none;
+}
+
+.quest-card {
+  min-height: clamp(142px, 21.6vw, 179px);
+  padding-block: clamp(14px, 2.4vw, 20px);
+}
+
+@media (max-width: 700px) {
+  .quest-card {
+    min-height: 176px;
+    padding-block: 14px;
+  }
+
+  .quest-requester img {
+    width: 66px;
+  }
+
+  .quest-requester span {
+    min-width: 76px;
+    font-size: 0.48rem;
+  }
+
+  .quest-requester strong {
+    font-size: 0.6rem;
+  }
+
+  .quest-card-copy {
+    gap: 4px;
+  }
+
+  .quest-summary {
+    font-size: 0.6rem;
+    line-height: 1.22;
+  }
+
+  .quest-requirements {
+    gap: 3px;
+  }
+
+  .quest-requirement {
+    min-height: 34px;
+    grid-template-columns: 22px minmax(0, 1fr) 14px;
+    padding: 4px 6px;
+  }
+}
+
 /* Quest/detail polish and transparent regenerated UI assets. */
 .home-selection-actions {
   transform: translateY(-0.95rem);
