@@ -7316,3 +7316,125 @@ button {
     font-size: 0.82rem;
   }
 }
+
+/* Shared bottom detail panels for home, observe, library, and quests. */
+.home-selection-panel.app-detail-panel {
+  grid-template-columns: minmax(86px, 28%) minmax(0, 1fr);
+  padding-top: clamp(21px, 3.4vw, 31px);
+}
+
+.home-selection-panel.app-detail-panel .home-selection-card img {
+  object-fit: contain;
+  background:
+    radial-gradient(circle at 50% 45%, rgba(20, 72, 134, 0.2), transparent 58%),
+    rgba(20, 13, 18, 0.08);
+}
+
+.home-selection-panel.observe-detail-panel .home-selection-card img,
+.home-selection-panel.quest-detail-panel .home-selection-card img,
+.home-selection-panel.quest-dialogue-detail-panel .home-selection-card img {
+  padding: 6px;
+}
+
+.home-selection-panel.library-detail-panel .home-selection-card img {
+  padding: 4px;
+}
+
+.home-selection-panel.app-detail-panel .home-selection-copy h2 {
+  font-size: clamp(1rem, 3.3vw, 1.55rem);
+  justify-content: flex-start;
+  text-align: left;
+}
+
+.home-selection-panel.app-detail-panel .home-selection-copy p {
+  font-size: clamp(0.72rem, 2vw, 0.9rem);
+  line-height: 1.46;
+}
+
+.home-selection-panel.app-detail-panel .home-selection-copy p strong {
+  display: block;
+  margin-bottom: 3px;
+  color: #172f59;
+  font-size: 0.98em;
+}
+
+.home-selection-panel.quest-detail-panel .home-selection-actions {
+  width: min(80%, 330px);
+  transform: translateY(-0.45rem);
+}
+
+.home-selection-panel.quest-dialogue-detail-panel {
+  grid-template-columns: minmax(78px, 22%) minmax(0, 1fr);
+}
+
+.quest-title-row {
+  grid-template-columns: auto minmax(0, 1fr);
+}
+
+.quest-card.selected {
+  transform: translateY(-2px);
+  filter:
+    brightness(1.07)
+    saturate(1.04)
+    drop-shadow(0 6px 0 rgba(16, 8, 4, 0.58))
+    drop-shadow(0 0 20px rgba(255, 224, 125, 0.32));
+}
+
+.quest-card.locked.selected {
+  filter:
+    grayscale(0.34)
+    brightness(0.9)
+    drop-shadow(0 6px 0 rgba(16, 8, 4, 0.58))
+    drop-shadow(0 0 14px rgba(255, 224, 125, 0.2));
+}
+
+.quest-card.selected::after {
+  content: "";
+  position: absolute;
+  inset: clamp(8px, 1.8vw, 14px);
+  border: 1px solid rgba(255, 221, 113, 0.58);
+  border-radius: 6px;
+  pointer-events: none;
+  box-shadow: inset 0 0 18px rgba(255, 221, 113, 0.18);
+}
+
+.quest-card .quest-title-row em,
+.quest-card .quest-summary,
+.quest-card .quest-required-title {
+  display: none !important;
+}
+
+.codex-panel[data-quest-detail="true"] .home-panel-shell {
+  gap: 0;
+}
+
+@media (max-width: 700px) {
+  .home-selection-panel.app-detail-panel {
+    grid-template-columns: 78px minmax(0, 1fr);
+    gap: 8px;
+    padding: 19px 17px 17px;
+  }
+
+  .home-selection-panel.app-detail-panel .home-selection-copy h2 {
+    font-size: 0.95rem;
+    line-height: 1.14;
+  }
+
+  .home-selection-panel.app-detail-panel .home-selection-copy p {
+    font-size: 0.66rem;
+    line-height: 1.36;
+  }
+
+  .home-selection-panel.quest-detail-panel .home-selection-actions {
+    width: min(82%, 260px);
+    transform: translateY(-0.24rem);
+  }
+
+  .home-selection-panel.quest-dialogue-detail-panel {
+    grid-template-columns: 64px minmax(0, 1fr);
+  }
+
+  .quest-card {
+    min-height: 150px;
+  }
+}

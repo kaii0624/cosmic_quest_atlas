@@ -765,6 +765,7 @@ const state = {
   selectedObserveId: null,
   selectedScrollId: null,
   selectedQuestId: null,
+  focusedQuestId: null,
   selectedQuestEvidence: {}
 };
 
@@ -1170,6 +1171,12 @@ function getSelectedQuest() {
   return QUESTS.find((quest) => quest.id === state.selectedQuestId) ?? QUESTS[0];
 }
 
+function getFocusedQuest() {
+  const focused = QUESTS.find((quest) => quest.id === state.focusedQuestId) ?? QUESTS[0];
+  state.focusedQuestId = focused.id;
+  return focused;
+}
+
 function getScrollById(scrollId) {
   return LIBRARY_SCROLLS.find((scroll) => scroll.id === scrollId);
 }
@@ -1378,6 +1385,12 @@ function goHome() {
   render();
 }
 
+function openQuest(questId) {
+  state.focusedQuestId = questId;
+  state.selectedQuestId = questId;
+  render();
+}
+
 function openAppScreen(screenId) {
   if (screenId === "home") {
     goHome();
@@ -1391,6 +1404,9 @@ function openAppScreen(screenId) {
   state.storyId = null;
   state.lineIndex = 0;
   state.selectedQuestId = screenId === "quests" ? null : state.selectedQuestId;
+  if (screenId === "quests") {
+    getFocusedQuest();
+  }
   render();
 }
 
@@ -1561,6 +1577,93 @@ function renderHomeSelectionPanel() {
   `;
 }
 
+function renderObserveSelectionPanel() {
+  const selected = getSelectedObservableItem();
+
+  return `
+    <section class="home-selection-panel app-detail-panel observe-detail-panel ${selected.kingdomId}" aria-label="${selected.title}の説明">
+      <figure class="home-selection-card app-detail-card">
+        ${selected.enemyImage
+          ? `<img src="${withAssetVersion(selected.enemyImage)}" alt="${selected.enemyAlt}" />`
+          : `<img src="${withAssetVersion(HOME_KINGDOM_DETAILS[selected.kingdomId]?.card ?? HOME_KINGDOM_DETAILS.autumn.card)}" alt="${selected.title}" />`}
+      </figure>
+      <div class="home-selection-copy app-detail-copy">
+        <h2>${selected.title}</h2>
+        <p><strong>${selected.lesson}</strong>${selected.description}</p>
+      </div>
+    </section>
+  `;
+}
+
+function renderLibrarySelectionPanel() {
+  const selected = getSelectedLibraryScroll();
+  const selectedUnlocked = claimedRewards.has(selected.id);
+
+  return `
+    <section class="home-selection-panel app-detail-panel library-detail-panel ${selected.tier ?? "major"}-tier" aria-label="${selected.title}の説明">
+      <figure class="home-selection-card app-detail-card">
+        <img src="${withAssetVersion(selected.image)}" alt="${selected.title}" />
+      </figure>
+      <div class="home-selection-copy app-detail-copy">
+        <h2>${selected.title}</h2>
+        <p>${selectedUnlocked ? selected.description : `${selected.period}の物語を観測すると、この巻物の解説が読める。`}</p>
+      </div>
+    </section>
+  `;
+}
+
+function renderQuestSelectionPanel() {
+  const quest = getFocusedQuest();
+
+  return `
+    <section class="home-selection-panel app-detail-panel quest-detail-panel" aria-label="${quest.title}の説明">
+      <figure class="home-selection-card app-detail-card">
+        <img src="${withAssetVersion(quest.requesterImage)}" alt="${quest.requester}" />
+      </figure>
+      <div class="home-selection-copy app-detail-copy">
+        <h2>${quest.title}</h2>
+        <p>${quest.summary}</p>
+        <div class="home-selection-actions">
+          <button class="home-enter-button" type="button" data-quest-open="${quest.id}">
+            クエストを受ける
+          </button>
+        </div>
+      </div>
+    </section>
+  `;
+}
+
+function renderQuestDetailPanel() {
+  const quest = getSelectedQuest();
+
+  return `
+    <section class="home-selection-panel app-detail-panel quest-dialogue-detail-panel" aria-label="${quest.requester}との会話">
+      <figure class="home-selection-card app-detail-card">
+        <img src="${withAssetVersion(quest.requesterImage)}" alt="${quest.requester}" />
+      </figure>
+      <div class="home-selection-copy app-detail-copy">
+        <h2>${quest.title}</h2>
+        <p><strong>${quest.objective}</strong>${quest.conversation}</p>
+      </div>
+    </section>
+  `;
+}
+
+function renderGuideDetailPanel() {
+  if (state.mode === "home") return renderHomeSelectionPanel();
+  if (state.mode === "observe") return renderObserveSelectionPanel();
+  if (state.mode === "library") return renderLibrarySelectionPanel();
+  if (state.mode === "quests") {
+    return state.selectedQuestId ? renderQuestDetailPanel() : renderQuestSelectionPanel();
+  }
+
+  return "";
+}
+
+function shouldRenderHomeNav() {
+  return !(state.mode === "quests" && state.selectedQuestId);
+}
+
 function renderObserveTab() {
   const items = getObservableItems();
   const selected = getSelectedObservableItem();
@@ -1590,20 +1693,10 @@ function renderObserveTab() {
                   <span class="observe-kingdom-name">${item.kingdomName}</span>
                 </button>
               `;
-            })
+          })
             .join("")}
         </div>
       </div>
-      <section class="observe-detail screen-detail-panel${selected.enemyImage ? " has-enemy" : ""}" aria-label="天体の説明">
-        ${selected.enemyImage
-          ? `<img class="observe-detail-enemy" src="${withAssetVersion(selected.enemyImage)}" alt="${selected.enemyAlt}" />`
-          : ""}
-        <div class="observe-detail-copy">
-          <h3>${selected.title}</h3>
-          <strong>${selected.lesson}</strong>
-          <p>${selected.description}</p>
-        </div>
-      </section>
     </section>
   `;
 }
@@ -1627,10 +1720,10 @@ function renderQuestRequirement(requirement) {
 
 function renderQuestCard(quest) {
   const progress = getQuestProgress(quest);
-  const status = progress.open ? "OPEN" : "";
+  const selected = (state.focusedQuestId ?? QUESTS[0].id) === quest.id;
 
   return `
-    <button class="quest-card${progress.open ? " open" : " locked"}" type="button" data-quest-id="${quest.id}">
+    <button class="quest-card${progress.open ? " open" : " locked"}${selected ? " selected" : ""}" type="button" data-quest-id="${quest.id}" aria-pressed="${selected ? "true" : "false"}">
       <span class="quest-requester">
         <img src="${withAssetVersion(quest.requesterImage)}" alt="${quest.requester}" />
         <span>依頼主<br><strong>${quest.requester}</strong></span>
@@ -1639,10 +1732,7 @@ function renderQuestCard(quest) {
         <span class="quest-title-row">
           <span class="quest-number">${quest.number}</span>
           <strong>${quest.title}</strong>
-          ${status ? `<em>${status}</em>` : ""}
         </span>
-        <span class="quest-summary">${quest.summary}</span>
-        <span class="quest-required-title">必要な証拠</span>
         <span class="quest-requirements">
           ${quest.requiredScrolls.map(renderQuestRequirement).join("")}
         </span>
@@ -1693,15 +1783,6 @@ function renderQuestDetail(quest) {
           </figure>
         </section>
 
-        <section class="quest-dialogue-panel screen-detail-panel" aria-label="${quest.requester}との会話">
-          <img src="${withAssetVersion(quest.requesterImage)}" alt="" aria-hidden="true" />
-          <div>
-            <h3>${quest.title}</h3>
-            <strong>${quest.objective}</strong>
-            <p>${quest.conversation}</p>
-          </div>
-        </section>
-
         <section class="quest-evidence-board" aria-label="巻物と観測技術の選択">
           <div class="quest-evidence-column">
             <div class="quest-evidence-list">
@@ -1731,6 +1812,8 @@ function renderQuestTab() {
   if (selectedQuest) {
     return renderQuestDetail(selectedQuest);
   }
+
+  getFocusedQuest();
 
   return `
     <section class="app-screen-panel quest-tab">
@@ -1778,14 +1861,6 @@ function renderLibraryTab() {
           }).join("")}
         </div>
       </div>
-      <section class="library-detail screen-detail-panel" aria-label="巻物の詳細">
-        <img src="${withAssetVersion(selected.image)}" alt="${selected.title}" />
-        <div>
-          <h3>${selected.title}</h3>
-          <strong>${selectedUnlocked ? selected.lesson : "物語を進めて解放"}</strong>
-          <p>${selectedUnlocked ? selected.description : `${selected.period}の物語を観測すると、この巻物の解説が読める。`}</p>
-        </div>
-      </section>
     </section>
   `;
 }
@@ -1808,10 +1883,13 @@ function renderSettingsTab() {
 }
 
 function renderHomePanel() {
+  const detailPanel = renderGuideDetailPanel();
+  const navPanel = shouldRenderHomeNav() ? renderHomeNav() : "";
+  guidePanel.dataset.questDetail = state.mode === "quests" && state.selectedQuestId ? "true" : "false";
   guidePanel.innerHTML = `
     <div class="home-panel-shell">
-      ${state.mode === "home" ? renderHomeSelectionPanel() : ""}
-      ${renderHomeNav()}
+      ${detailPanel}
+      ${navPanel}
     </div>
   `;
 }
@@ -2031,11 +2109,20 @@ document.addEventListener(
   (event) => {
     const target = getEventElement(event);
     const homeEnterButton = target?.closest("[data-home-enter]");
-    if (!homeEnterButton) return;
+    const questOpenButton = target?.closest("[data-quest-open]");
 
-    event.preventDefault();
-    event.stopPropagation();
-    selectKingdom(homeEnterButton.dataset.homeEnter);
+    if (homeEnterButton) {
+      event.preventDefault();
+      event.stopPropagation();
+      selectKingdom(homeEnterButton.dataset.homeEnter);
+      return;
+    }
+
+    if (questOpenButton) {
+      event.preventDefault();
+      event.stopPropagation();
+      openQuest(questOpenButton.dataset.questOpen);
+    }
   },
   true
 );
@@ -2051,6 +2138,12 @@ guidePanel.addEventListener("click", (event) => {
   const homeEnterButton = target?.closest("[data-home-enter]");
   if (homeEnterButton) {
     selectKingdom(homeEnterButton.dataset.homeEnter);
+    return;
+  }
+
+  const questOpenButton = target?.closest("[data-quest-open]");
+  if (questOpenButton) {
+    openQuest(questOpenButton.dataset.questOpen);
     return;
   }
 
@@ -2077,7 +2170,7 @@ appScreen.addEventListener("click", (event) => {
   const questBackButton = target?.closest("[data-quest-back]");
   if (questBackButton) {
     state.selectedQuestId = null;
-    renderMap();
+    render();
     return;
   }
 
@@ -2095,22 +2188,23 @@ appScreen.addEventListener("click", (event) => {
 
   const questButton = target?.closest("[data-quest-id]");
   if (questButton) {
-    state.selectedQuestId = questButton.dataset.questId;
-    renderMap();
+    state.focusedQuestId = questButton.dataset.questId;
+    state.selectedQuestId = null;
+    render();
     return;
   }
 
   const observeButton = target?.closest("[data-observe-id]");
   if (observeButton) {
     state.selectedObserveId = observeButton.dataset.observeId;
-    renderMap();
+    render();
     return;
   }
 
   const scrollButton = target?.closest("[data-scroll-id]");
   if (scrollButton) {
     state.selectedScrollId = scrollButton.dataset.scrollId;
-    renderMap();
+    render();
     return;
   }
 });
