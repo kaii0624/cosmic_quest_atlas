@@ -1494,7 +1494,6 @@ function renderObserveTab() {
       <div class="app-screen-header">
         <span>OBSERVE</span>
         <h2>天体を見る</h2>
-        <p>星座の入口から、観測できる天体を選ぶ。</p>
       </div>
       <div class="app-scroll-area">
         <div class="observe-orb-grid app-observe-grid" aria-label="天体一覧">
@@ -1524,7 +1523,6 @@ function renderObserveTab() {
           ? `<img class="observe-detail-enemy" src="${withAssetVersion(selected.enemyImage)}" alt="${selected.enemyAlt}" />`
           : ""}
         <div class="observe-detail-copy">
-          <span class="screen-detail-kicker">${selected.kingdomName}</span>
           <h3>${selected.title}</h3>
           <strong>${selected.lesson}</strong>
           <p>${selected.description}</p>
@@ -1674,21 +1672,12 @@ function renderQuestTab() {
       <div class="quest-board-title">
         <span>QUEST</span>
         <h2>クエスト一覧</h2>
-        <p>巻物や観測事実を集めて、新たな依頼を解放しましょう。</p>
       </div>
       <div class="app-scroll-area quest-list-scroll">
         <div class="quest-list" aria-label="依頼掲示板">
           ${QUESTS.map(renderQuestCard).join("")}
         </div>
       </div>
-      <section class="quest-list-footer screen-detail-panel" aria-label="クエストの説明">
-        <div>
-          <span class="screen-detail-kicker">依頼掲示板</span>
-          <h3>観測から法則へ</h3>
-          <strong>OPEN条件は所持巻物で判定</strong>
-          <p>天体バトルで得た巻物が、発見者たちの大きな法則へつながります。</p>
-        </div>
-      </section>
     </section>
   `;
 }
@@ -1710,7 +1699,6 @@ function renderLibraryTab() {
       <div class="app-screen-header">
         <span>ARCHIVE</span>
         <h2>図書館</h2>
-        <p>集めた巻物を開き、観測知識を読み返す。</p>
       </div>
       <div class="app-scroll-area">
         <div class="library-scroll-grid" aria-label="巻物一覧">
@@ -1720,7 +1708,6 @@ function renderLibraryTab() {
               <button class="library-scroll-card ${scroll.tier ?? "major"}-tier${unlocked ? " unlocked" : " locked"}${selected.id === scroll.id ? " selected" : ""}" type="button" ${unlocked ? `data-scroll-id="${scroll.id}"` : 'aria-disabled="true"'}>
                 <img src="${withAssetVersion(scroll.image)}" alt="${scroll.title}" />
                 <span>${scroll.title}</span>
-                <small>${unlocked ? scroll.period : "未獲得"}</small>
               </button>
             `;
           }).join("")}
@@ -1729,7 +1716,6 @@ function renderLibraryTab() {
       <section class="library-detail screen-detail-panel" aria-label="巻物の詳細">
         <img src="${withAssetVersion(selected.image)}" alt="${selected.title}" />
         <div>
-          <span class="screen-detail-kicker">${selectedUnlocked ? "獲得済み" : "未獲得"}</span>
           <h3>${selected.title}</h3>
           <strong>${selectedUnlocked ? selected.lesson : "物語を進めて解放"}</strong>
           <p>${selectedUnlocked ? selected.description : `${selected.period}の物語を観測すると、この巻物の解説が読める。`}</p>

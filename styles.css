@@ -6738,3 +6738,295 @@ button {
     padding-top: 28px;
   }
 }
+
+/* UI cleanup: observe, library, home selection, and quest list polish. */
+.observe-tab .app-screen-header,
+.library-tab .app-screen-header {
+  padding-bottom: clamp(8px, 1.8vw, 12px);
+}
+
+.observe-tab .app-screen-header p,
+.library-tab .app-screen-header p,
+.quest-board-title p {
+  display: none;
+}
+
+.observe-tab .winter-star-orb-button {
+  grid-template-rows: clamp(92px, 15vw, 116px) 34px 14px;
+  align-content: start;
+  min-height: clamp(146px, 22vw, 176px);
+}
+
+.observe-tab .winter-star-orb,
+.observe-tab .winter-star-orb-button.planet-item .winter-star-orb {
+  width: clamp(78px, 14vw, 104px);
+  aspect-ratio: 1 / 1.22;
+}
+
+.observe-tab .winter-star-orb-button.planet-item .winter-star-orb {
+  display: grid;
+  place-items: center;
+  background: none;
+}
+
+.observe-tab .winter-star-orb-button.planet-item .winter-star-orb img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.observe-tab .winter-star-label,
+.observe-tab .winter-star-orb-button.planet-item .winter-star-label {
+  height: 34px;
+  min-height: 34px;
+  display: grid;
+  place-items: center;
+  padding: 4px 7px 5px;
+  line-height: 1.08;
+}
+
+.observe-tab .observe-kingdom-name {
+  height: 14px;
+  display: grid;
+  place-items: center;
+}
+
+.observe-detail .screen-detail-kicker,
+.library-detail .screen-detail-kicker,
+.quest-list-footer .screen-detail-kicker {
+  display: none;
+}
+
+.home-selection-copy {
+  align-self: center;
+  padding-top: clamp(4px, 1vw, 8px);
+}
+
+.home-selection-copy h2 {
+  font-size: clamp(1.16rem, 4vw, 1.8rem);
+  transform: translateY(0.18em);
+}
+
+.home-selection-actions {
+  width: min(80%, 288px);
+}
+
+.home-enter-button {
+  width: 100%;
+  justify-self: center;
+  font-size: clamp(0.82rem, 2.3vw, 1rem);
+}
+
+.library-tab .library-scroll-grid {
+  display: grid;
+  grid-auto-flow: row;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(10px, 2.2vw, 16px);
+  overflow: auto;
+  padding: 0 2px 8px;
+}
+
+.library-tab .library-scroll-card,
+.app-screen .library-scroll-card {
+  min-width: 0;
+  min-height: clamp(124px, 20vw, 156px);
+  align-content: start;
+  gap: 7px;
+  padding: 0 4px;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
+.library-tab .library-scroll-card img,
+.app-screen .library-scroll-card img {
+  width: clamp(74px, 13vw, 104px);
+  height: clamp(74px, 13vw, 104px);
+  object-fit: contain;
+}
+
+.library-tab .library-scroll-card span {
+  min-height: 32px;
+  display: grid;
+  place-items: center;
+  padding: 4px 7px 5px;
+  color: #ffe8a5;
+  background:
+    linear-gradient(90deg, transparent 0 7%, rgba(241, 194, 82, 0.95) 7% 8%, transparent 8% 92%, rgba(241, 194, 82, 0.95) 92% 93%, transparent 93%),
+    linear-gradient(180deg, rgba(15, 35, 65, 0.98), rgba(5, 13, 34, 0.98));
+  clip-path: polygon(7% 0, 93% 0, 100% 50%, 93% 100%, 7% 100%, 0 50%);
+  font-size: clamp(0.58rem, 1.6vw, 0.76rem);
+  line-height: 1.08;
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 230, 139, 0.48),
+    0 3px 0 rgba(18, 9, 4, 0.62);
+}
+
+.library-scroll-card small {
+  display: none;
+}
+
+.library-scroll-card.selected,
+.library-scroll-card.unlocked:hover,
+.library-scroll-card.unlocked:focus-visible {
+  box-shadow: none;
+}
+
+.library-scroll-card.selected img,
+.library-scroll-card.unlocked:hover img,
+.library-scroll-card.unlocked:focus-visible img {
+  filter:
+    brightness(1.12)
+    drop-shadow(0 0 18px rgba(95, 185, 255, 0.46));
+}
+
+.quest-list-footer {
+  padding-top: clamp(20px, 3.4vw, 28px);
+}
+
+@media (max-width: 700px) {
+  .home-selection-panel {
+    grid-template-columns: 88px minmax(0, 1fr);
+    gap: 8px;
+    padding: 20px 17px 17px;
+  }
+
+  .home-selection-copy {
+    gap: 5px;
+    padding-top: 5px;
+  }
+
+  .home-selection-copy h2 {
+    gap: 0.28em;
+    font-size: 1.07rem;
+    line-height: 1.06;
+  }
+
+  .home-selection-copy p {
+    font-size: 0.68rem;
+    line-height: 1.36;
+  }
+
+  .home-selection-actions {
+    width: min(80%, 230px);
+  }
+
+  .home-enter-button {
+    min-height: 30px;
+    font-size: 0.76rem;
+  }
+
+  .observe-tab .winter-star-orb-button {
+    grid-template-rows: 80px 30px 12px;
+    min-height: 126px;
+  }
+
+  .observe-tab .winter-star-orb,
+  .observe-tab .winter-star-orb-button.planet-item .winter-star-orb {
+    width: 72px;
+  }
+
+  .observe-tab .winter-star-label,
+  .observe-tab .winter-star-orb-button.planet-item .winter-star-label {
+    height: 30px;
+    min-height: 30px;
+    font-size: 0.56rem;
+  }
+
+  .observe-tab .observe-kingdom-name {
+    height: 12px;
+    font-size: 0.5rem;
+  }
+
+  .library-tab .library-scroll-grid,
+  .app-screen .library-scroll-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 8px 5px;
+  }
+
+  .library-tab .library-scroll-card,
+  .app-screen .library-scroll-card {
+    min-height: 112px;
+    padding: 0 2px;
+  }
+
+  .library-tab .library-scroll-card img,
+  .app-screen .library-scroll-card img {
+    width: 68px;
+    height: 68px;
+  }
+
+  .library-tab .library-scroll-card span {
+    min-height: 30px;
+    font-size: 0.52rem;
+  }
+}
+
+/* Final observe-card sizing override: keep star and planet frames identical. */
+.app-screen .app-observe-grid .winter-star-orb-button,
+.observe-tab .winter-star-orb-button,
+.observe-tab .winter-star-orb-button.planet-item {
+  grid-template-rows: clamp(122px, 17vw, 142px) 34px 14px;
+  min-height: clamp(174px, 24vw, 198px);
+}
+
+.app-screen .app-observe-grid .winter-star-orb,
+.app-screen .app-observe-grid .winter-star-orb-button.planet-item .winter-star-orb,
+.observe-tab .winter-star-orb,
+.observe-tab .winter-star-orb-button.planet-item .winter-star-orb {
+  width: 100%;
+  max-width: 112px;
+  aspect-ratio: 1 / 1.22;
+  height: auto;
+  justify-self: center;
+}
+
+.app-screen .app-observe-grid .winter-star-orb-button.planet-item .winter-star-orb img,
+.observe-tab .winter-star-orb-button.planet-item .winter-star-orb img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+@media (max-width: 700px) {
+  .app-screen .app-observe-grid .winter-star-orb-button,
+  .observe-tab .winter-star-orb-button,
+  .observe-tab .winter-star-orb-button.planet-item {
+    grid-template-rows: 126px 30px 12px;
+    min-height: 174px;
+  }
+
+  .app-screen .app-observe-grid .winter-star-orb,
+  .app-screen .app-observe-grid .winter-star-orb-button.planet-item .winter-star-orb,
+  .observe-tab .winter-star-orb,
+  .observe-tab .winter-star-orb-button.planet-item .winter-star-orb {
+    width: 100%;
+    max-width: 104px;
+  }
+}
+
+/* Library scroll cards should read as asset tiles, not boxed web cards. */
+.library-tab .library-scroll-card,
+.app-screen .library-scroll-card {
+  min-height: clamp(142px, 22vw, 172px);
+}
+
+.library-tab .library-scroll-card img,
+.app-screen .library-scroll-card img {
+  width: clamp(92px, 14vw, 112px);
+  height: clamp(92px, 14vw, 112px);
+}
+
+@media (max-width: 700px) {
+  .library-tab .library-scroll-card,
+  .app-screen .library-scroll-card {
+    min-height: 142px;
+  }
+
+  .library-tab .library-scroll-card img,
+  .app-screen .library-scroll-card img {
+    width: 96px;
+    height: 96px;
+  }
+}
