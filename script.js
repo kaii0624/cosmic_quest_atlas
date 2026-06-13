@@ -16,20 +16,18 @@ const KINGDOMS = {
         storyId: "mizar"
       },
       {
-        id: "arcturus-preview",
+        id: "arcturus",
         x: 28,
         y: 71,
         label: "アルクトゥルス",
-        locked: true,
-        note: "うしかい座の橙色巨星。春の大曲線で見つけ、色と温度を読む。"
+        storyId: "arcturus"
       },
       {
-        id: "spica-preview",
+        id: "spica",
         x: 73,
         y: 76,
         label: "スピカ",
-        locked: true,
-        note: "おとめ座の青白い一等星。春の大曲線の先で、熱い星の色を覚える。"
+        storyId: "spica"
       }
     ]
   },
@@ -50,28 +48,25 @@ const KINGDOMS = {
         storyId: "cygnus"
       },
       {
-        id: "deneb-preview",
+        id: "deneb",
         x: 49,
         y: 78,
         label: "デネブ",
-        locked: true,
-        note: "白鳥の尾に輝く遠方の一等星。明るさは近さだけでは決まらない。"
+        storyId: "deneb"
       },
       {
-        id: "albireo-preview",
+        id: "albireo",
         x: 25,
         y: 42,
         label: "アルビレオ",
-        locked: true,
-        note: "くちばしに輝く色の対比。星の色は温度の手がかりになる。"
+        storyId: "albireo"
       },
       {
-        id: "cygni61-preview",
+        id: "cygni61",
         x: 18,
         y: 82,
         label: "61 Cygni",
-        locked: true,
-        note: "年周視差の歴史で重要な近い恒星。背景の星に対する小さなずれを読む。"
+        storyId: "cygni61"
       }
     ]
   },
@@ -92,20 +87,18 @@ const KINGDOMS = {
         storyId: "algol"
       },
       {
-        id: "mira-preview",
+        id: "mira",
         x: 36,
         y: 70,
         label: "ミラ",
-        locked: true,
-        note: "深い潮のように明滅する、くじら座の心臓。"
+        storyId: "mira"
       },
       {
-        id: "m31-preview",
+        id: "m31",
         x: 84,
         y: 76,
         label: "M31",
-        locked: true,
-        note: "星座の奥に浮かぶ、隣の大銀河。"
+        storyId: "m31"
       }
     ]
   },
@@ -126,20 +119,18 @@ const KINGDOMS = {
         storyId: "rigel"
       },
       {
-        id: "betelgeuse-preview",
+        id: "betelgeuse",
         x: 39,
         y: 32,
         label: "ベテルギウス",
-        locked: true,
-        note: "赤色超巨星。リゲルとの色の違いで、温度と進化段階を比べる。"
+        storyId: "betelgeuse"
       },
       {
-        id: "sirius-preview",
+        id: "sirius",
         x: 78,
         y: 83,
         label: "シリウス",
-        locked: true,
-        note: "近いから明るい白犬王。見かけの明るさと距離の関係を読む。"
+        storyId: "sirius"
       }
     ]
   },
@@ -150,8 +141,17 @@ const KINGDOMS = {
     detailAlt: "天球観測塔と惑星台座の詳細MAP",
     detailTitle: "惑星観測図",
     detailText: "中央塔から惑星の台座を巡り、満ち欠け、逆行、衛星、軌道法則、計算による発見を読む。",
-    steps: ["金星", "火星", "木星", "土星", "海王星"],
+    steps: ["水星", "金星", "地球", "火星", "木星", "土星", "天王星", "海王星"],
     points: [
+      {
+        id: "mercury",
+        x: 34,
+        y: 39,
+        label: "水星",
+        storyId: "mercuryElongation",
+        kind: "planet",
+        asset: "./assets/planet-orb-mercury.png"
+      },
       {
         id: "venus",
         x: 18,
@@ -160,6 +160,15 @@ const KINGDOMS = {
         storyId: "venusPhases",
         kind: "planet",
         asset: "./assets/planet-orb-venus.png"
+      },
+      {
+        id: "earth",
+        x: 64,
+        y: 36,
+        label: "地球",
+        storyId: "earthBaseline",
+        kind: "planet",
+        asset: "./assets/planet-orb-earth.png"
       },
       {
         id: "mars",
@@ -189,6 +198,15 @@ const KINGDOMS = {
         asset: "./assets/planet-orb-saturn.png"
       },
       {
+        id: "uranus",
+        x: 52,
+        y: 84,
+        label: "天王星",
+        storyId: "uranusTilt",
+        kind: "planet",
+        asset: "./assets/planet-orb-uranus.png"
+      },
+      {
         id: "neptune",
         x: 73,
         y: 72,
@@ -198,10 +216,194 @@ const KINGDOMS = {
         asset: "./assets/planet-orb-neptune.png"
       }
     ]
-  }
+  },
+
 };
 
 const PLANET_STORIES = {
+  mercuryElongation: {
+    kingdomId: "tower",
+    battleBg: "planetarium",
+    type: "STORY 19",
+    name: "水星兎メルクリウス",
+    subtitle: "",
+    lead: "太陽の近くを素早く巡る内惑星。見える高さは最大離角で決まる。",
+    mechanic: "innerPlanetElongation",
+    clearAt: 4,
+    portrait: "./assets/planet-enemy-mercury-normal.png",
+    enemy: {
+      normal: "./assets/planet-enemy-mercury-normal.png",
+      elongation: "./assets/planet-enemy-mercury-phenomenon.png"
+    },
+    status: {
+      rows: [
+        { icon: "✦", label: "種類", value: "内惑星" },
+        { icon: "☉", label: "軌道", value: "太陽に最も近い" },
+        { icon: "◇", label: "観測", value: "最大離角" }
+      ],
+      meter: {
+        normal: 62,
+        elongation: 86
+      }
+    },
+    rule: "能力：太陽の光の近くに隠れ、夕方か明け方にだけ姿を出す。",
+    clearRule: "攻略法：内惑星は太陽から大きく離れず、最大離角のころ観測しやすいと読む。",
+    reward: {
+      id: "mercury-elongation-scroll",
+      title: "水星の最大離角",
+      message: "水星を観測してゲットしました。",
+      image: "./assets/reward-scroll-minor-mercury-elongation.png",
+      tier: "minor",
+      knowledgeTitle: "",
+      knowledge: [
+        "内惑星は離角で探す"
+      ]
+    },
+    lines: [
+      {
+        speaker: "水星兎メルクリウス",
+        text: "私は太陽のすぐそばを走る水星の兎。夜中の高い空では待っても会えない。",
+        pattern: "normal"
+      },
+      {
+        speaker: "水星兎メルクリウス",
+        text: "太陽から見かけ上もっとも離れるころを狙え。それが最大離角だ。",
+        pattern: "elongation"
+      },
+      {
+        speaker: "水星兎メルクリウス",
+        text: "夕方の西空、または明け方の東空。短い時間にだけ、私の小さな影を観測できる。",
+        pattern: "elongation"
+      },
+      {
+        speaker: "水星兎メルクリウス",
+        text: "内惑星は太陽との角度で探す。速さではなく、見える位置関係を読め。",
+        pattern: "normal"
+      }
+    ]
+  },
+  earthBaseline: {
+    kingdomId: "tower",
+    battleBg: "planetarium",
+    type: "STORY 20",
+    name: "地球亀テラ",
+    subtitle: "",
+    lead: "観測者の足もとにある惑星。公転軌道そのものが距離測定の物差しになる。",
+    mechanic: "earthOrbitBaseline",
+    clearAt: 4,
+    portrait: "./assets/planet-enemy-earth-normal.png",
+    enemy: {
+      normal: "./assets/planet-enemy-earth-normal.png",
+      baseline: "./assets/planet-enemy-earth-phenomenon.png"
+    },
+    status: {
+      rows: [
+        { icon: "✦", label: "種類", value: "岩石惑星" },
+        { icon: "◎", label: "運動", value: "自転と公転" },
+        { icon: "⌁", label: "基準", value: "年周視差" }
+      ],
+      meter: {
+        normal: 70,
+        baseline: 90
+      }
+    },
+    rule: "能力：足もとの動きを隠し、星だけが動いているように見せる。",
+    clearRule: "攻略法：地球の公転で観測位置が変わり、近い星の年周視差が生まれると読む。",
+    reward: {
+      id: "earth-baseline-scroll",
+      title: "公転基線の巻物",
+      message: "地球を観測してゲットしました。",
+      image: "./assets/reward-scroll-minor-earth-baseline.png",
+      tier: "minor",
+      knowledgeTitle: "",
+      knowledge: [
+        "公転が距離の基線"
+      ]
+    },
+    lines: [
+      {
+        speaker: "地球亀テラ",
+        text: "観測者よ、空ばかり見るな。君が立つ地球もまた、宇宙を動く惑星だ。",
+        pattern: "normal"
+      },
+      {
+        speaker: "地球亀テラ",
+        text: "半年たつと地球は公転軌道の反対側へ移る。観測点が変わるのだ。",
+        pattern: "baseline"
+      },
+      {
+        speaker: "地球亀テラ",
+        text: "その基線があるから、近い恒星は背景に対してわずかにずれる。年周視差の根元は地球の公転だ。",
+        pattern: "baseline"
+      },
+      {
+        speaker: "地球亀テラ",
+        text: "天空の奥行きは、足もとの惑星の動きから測り始める。",
+        pattern: "normal"
+      }
+    ]
+  },
+  uranusTilt: {
+    kingdomId: "tower",
+    battleBg: "planetarium",
+    type: "STORY 21",
+    name: "天王梟ウラノス",
+    subtitle: "",
+    lead: "望遠鏡で惑星として見出された氷の惑星。大きく傾いた自転軸を持つ。",
+    mechanic: "tiltedAxis",
+    clearAt: 4,
+    portrait: "./assets/planet-enemy-uranus-normal.png",
+    enemy: {
+      normal: "./assets/planet-enemy-uranus-normal.png",
+      tilt: "./assets/planet-enemy-uranus-phenomenon.png"
+    },
+    status: {
+      rows: [
+        { icon: "✦", label: "種類", value: "氷巨大惑星" },
+        { icon: "◎", label: "発見", value: "望遠鏡で惑星確認" },
+        { icon: "◇", label: "自転軸", value: "約98度傾く" }
+      ],
+      meter: {
+        normal: 68,
+        tilt: 91
+      }
+    },
+    rule: "能力：横倒しの輪で向きを惑わせ、恒星のふりをする。",
+    clearRule: "攻略法：望遠鏡で恒星と違う動きを追い、自転軸が大きく傾く惑星だと読む。",
+    reward: {
+      id: "uranus-tilt-scroll",
+      title: "天王星の傾き",
+      message: "天王星を観測してゲットしました。",
+      image: "./assets/reward-scroll-minor-uranus-tilt.png",
+      tier: "minor",
+      knowledgeTitle: "",
+      knowledge: [
+        "天王星は横倒し"
+      ]
+    },
+    lines: [
+      {
+        speaker: "天王梟ウラノス",
+        text: "私は淡い青緑の天王星。肉眼の星の列に紛れ、望遠鏡で惑星として見出された。",
+        pattern: "normal"
+      },
+      {
+        speaker: "天王梟ウラノス",
+        text: "私の自転軸は大きく傾く。まるで横倒しで太陽のまわりを巡るように見える。",
+        pattern: "tilt"
+      },
+      {
+        speaker: "天王梟ウラノス",
+        text: "惑星は明るさだけではない。位置の変化、円盤の見え方、軸の向きまで観測するのだ。",
+        pattern: "tilt"
+      },
+      {
+        speaker: "天王梟ウラノス",
+        text: "望遠鏡は、星に見えた点を新しい惑星へ変える。",
+        pattern: "normal"
+      }
+    ]
+  },
   venusPhases: {
     kingdomId: "tower",
     battleBg: "planetarium",
@@ -537,6 +739,17 @@ const STORIES = {
     },
     rule: "能力：ひとつの星に見せかけ、観測精度が上がると相棒が分かれる。",
     clearRule: "攻略法：北斗七星の柄をたどり、ミザールとアルコルを二重星として見分ける。",
+    reward: {
+      id: "mizar-double-star-scroll",
+      title: "二重星の巻物",
+      message: "ミザールを観測してゲットしました。",
+      image: "./assets/equation-scroll-parallax.png",
+      tier: "major",
+      knowledgeTitle: "",
+      knowledge: [
+        "点に見える星を分ける"
+      ]
+    },
     lines: [
       {
         speaker: "双星の門ミザール",
@@ -587,6 +800,17 @@ const STORIES = {
     },
     rule: "能力：数ターンごとに暗くなり、隠れている伴星が現れる。",
     clearRule: "攻略法：光度曲線を読んで「食」のタイミングを見破る。",
+    reward: {
+      id: "algol-eclipse-scroll",
+      title: "食変光星の巻物",
+      message: "アルゴルを観測してゲットしました。",
+      image: "./assets/equation-scroll-binary.png",
+      tier: "major",
+      knowledgeTitle: "",
+      knowledge: [
+        "食で光度が下がる"
+      ]
+    },
     lines: [
       {
         speaker: "悪魔の首アルゴル",
@@ -749,6 +973,366 @@ const STORIES = {
         pattern: "normal"
       }
     ]
+  },
+  arcturus: {
+    kingdomId: "spring",
+    battleBg: "spring",
+    type: "STORY 10",
+    name: "橙の巨星アルクトゥルス",
+    subtitle: "春の大曲線に灯る巨星",
+    lead: "うしかい座で輝く橙色巨星。色から温度と進化を読む春の試練。",
+    mechanic: "giantColor",
+    clearAt: 4,
+    portrait: "./assets/arcturus-enemy-normal.png",
+    enemy: {
+      normal: "./assets/arcturus-enemy-normal.png",
+      giant: "./assets/arcturus-enemy-giant.png"
+    },
+    status: {
+      rows: [
+        { icon: "✦", label: "種類", value: "橙色巨星" },
+        { icon: "⌁", label: "星座", value: "うしかい座" },
+        { icon: "☉", label: "温度", value: "約4300K" }
+      ],
+      meter: { normal: 70, giant: 90 }
+    },
+    rule: "能力：春の大曲線を黄金の弧で隠し、色と温度の関係を試す。",
+    clearRule: "攻略法：橙色は青白い星より低温で、巨星へ進化した姿だと読む。",
+    reward: {
+      id: "arcturus-giant-scroll",
+      title: "橙色巨星の巻物",
+      message: "アルクトゥルスを観測してゲットしました。",
+      image: "./assets/reward-scroll-arcturus-giant.png",
+      tier: "major",
+      knowledgeTitle: "",
+      knowledge: ["橙色巨星は低温"]
+    },
+    lines: [
+      { speaker: "橙の巨星アルクトゥルス", text: "春の大曲線をたどれば、私は橙色に輝いて待っている。", pattern: "normal" },
+      { speaker: "橙の巨星アルクトゥルス", text: "青白い星より私は冷たい。だが大きくふくらんだ巨星だから、春の空で強く目立つ。", pattern: "giant" },
+      { speaker: "橙の巨星アルクトゥルス", text: "色は温度の合図。橙色の光は、星が進化して外層を広げた姿を語る。", pattern: "giant" },
+      { speaker: "橙の巨星アルクトゥルス", text: "星の色を読めば、星座の点は温度と進化を持つ天体へ変わる。", pattern: "normal" }
+    ]
+  },
+  spica: {
+    kingdomId: "spring",
+    battleBg: "spring",
+    type: "STORY 11",
+    name: "青麦の双星スピカ",
+    subtitle: "分光で見破る熱い連星",
+    lead: "おとめ座の青白い一等星。高温の光と、分光で分かる連星性を読む。",
+    mechanic: "spectroscopicBinary",
+    clearAt: 4,
+    portrait: "./assets/spica-enemy-normal.png",
+    enemy: {
+      normal: "./assets/spica-enemy-normal.png",
+      spectrum: "./assets/spica-enemy-spectrum.png"
+    },
+    status: {
+      rows: [
+        { icon: "✦", label: "種類", value: "青白い連星" },
+        { icon: "⌁", label: "星座", value: "おとめ座" },
+        { icon: "◎", label: "観測", value: "スペクトル" }
+      ],
+      meter: { normal: 72, spectrum: 92 }
+    },
+    rule: "能力：一つの青い麦穂に見せかけ、スペクトル線だけを揺らす。",
+    clearRule: "攻略法：青白い色は高温、スペクトル線の変化は近接連星の手がかりだと読む。",
+    reward: {
+      id: "spica-spectrum-scroll",
+      title: "分光連星の巻物",
+      message: "スピカを観測してゲットしました。",
+      image: "./assets/reward-scroll-spica-spectrum.png",
+      tier: "major",
+      knowledgeTitle: "",
+      knowledge: ["スペクトルで連星"]
+    },
+    lines: [
+      { speaker: "青麦の双星スピカ", text: "私は春の大曲線の先、おとめ座の麦穂に青白く光る。", pattern: "normal" },
+      { speaker: "青麦の双星スピカ", text: "青白い星は高温。だが私の秘密は色だけではない。", pattern: "normal" },
+      { speaker: "青麦の双星スピカ", text: "スペクトル線が周期的に揺れる。近い相棒と回るため、光の線がわずかにずれるのだ。", pattern: "spectrum" },
+      { speaker: "青麦の双星スピカ", text: "望遠鏡で分けられない連星も、分光で見破れる。光を細かく分けて読め。", pattern: "spectrum" }
+    ]
+  },
+  deneb: {
+    kingdomId: "summer",
+    battleBg: "summer",
+    type: "STORY 12",
+    name: "遠光の尾デネブ",
+    subtitle: "遠くても輝く大光度星",
+    lead: "白鳥の尾で輝く青白い超巨星。見かけの明るさと本当の明るさを分ける。",
+    mechanic: "absoluteMagnitude",
+    clearAt: 4,
+    portrait: "./assets/deneb-enemy-normal.png",
+    enemy: {
+      normal: "./assets/deneb-enemy-normal.png",
+      luminosity: "./assets/deneb-enemy-luminosity.png"
+    },
+    status: {
+      rows: [
+        { icon: "✦", label: "種類", value: "青白い超巨星" },
+        { icon: "⌁", label: "距離", value: "約2600 ly" },
+        { icon: "☉", label: "特徴", value: "大光度" }
+      ],
+      meter: { normal: 76, luminosity: 96 }
+    },
+    rule: "能力：遠さを光の強さで隠し、近い星のように見せる。",
+    clearRule: "攻略法：見かけの明るさだけでなく距離を考え、デネブが本当に明るい星だと読む。",
+    reward: {
+      id: "deneb-luminosity-scroll",
+      title: "絶対等級の巻物",
+      message: "デネブを観測してゲットしました。",
+      image: "./assets/reward-scroll-deneb-luminosity.png",
+      tier: "major",
+      knowledgeTitle: "",
+      knowledge: ["距離込みで明るさ"]
+    },
+    lines: [
+      { speaker: "遠光の尾デネブ", text: "天の川の白鳥の尾に、私は青白く輝く。", pattern: "normal" },
+      { speaker: "遠光の尾デネブ", text: "近いから明るいのではない。遠く離れてなお見えるほど、私は本当に強く輝く。", pattern: "luminosity" },
+      { speaker: "遠光の尾デネブ", text: "見かけの等級と絶対等級を分けよ。距離を入れて初めて星の力が分かる。", pattern: "luminosity" },
+      { speaker: "遠光の尾デネブ", text: "星座の点の奥には、近い星と遠い超巨星が同じ地図に重なっている。", pattern: "normal" }
+    ]
+  },
+  albireo: {
+    kingdomId: "summer",
+    battleBg: "summer",
+    type: "STORY 13",
+    name: "双彩のくちばしアルビレオ",
+    subtitle: "色の対比で温度を読む",
+    lead: "白鳥のくちばしで青と橙が並ぶ美しい二重星。星の色と温度を読む。",
+    mechanic: "colorContrast",
+    clearAt: 4,
+    portrait: "./assets/albireo-enemy-normal.png",
+    enemy: {
+      normal: "./assets/albireo-enemy-normal.png",
+      color: "./assets/albireo-enemy-color.png"
+    },
+    status: {
+      rows: [
+        { icon: "✦", label: "種類", value: "二重星" },
+        { icon: "◎", label: "色", value: "青と橙" },
+        { icon: "☉", label: "観測", value: "色温度" }
+      ],
+      meter: { normal: 66, color: 90 }
+    },
+    rule: "能力：青と橙の光を混ぜ、温度の違いをぼかす。",
+    clearRule: "攻略法：青い星は高温、橙の星は低温という色の対比を読む。",
+    reward: {
+      id: "albireo-color-scroll",
+      title: "色指数の巻物",
+      message: "アルビレオを観測してゲットしました。",
+      image: "./assets/reward-scroll-albireo-color.png",
+      tier: "major",
+      knowledgeTitle: "",
+      knowledge: ["色は温度の手がかり"]
+    },
+    lines: [
+      { speaker: "双彩のくちばしアルビレオ", text: "白鳥のくちばしを見よ。私は一つではなく、色の違う二つの輝きだ。", pattern: "normal" },
+      { speaker: "双彩のくちばしアルビレオ", text: "青は熱く、橙は冷たい。並べて見ると、星の温度差が目で分かる。", pattern: "color" },
+      { speaker: "双彩のくちばしアルビレオ", text: "色指数は星の色を数で表す道具。温度を読むための観測事実になる。", pattern: "color" },
+      { speaker: "双彩のくちばしアルビレオ", text: "美しさに見とれるだけでは終わらない。色は物理を語る。", pattern: "normal" }
+    ]
+  },
+  cygni61: {
+    kingdomId: "summer",
+    battleBg: "summer",
+    type: "STORY 14",
+    name: "近星の測り手61 Cygni",
+    subtitle: "最初期の年周視差測定",
+    lead: "白鳥座の近い恒星。背景星に対する小さなずれから距離を測る。",
+    mechanic: "parallaxHistory",
+    clearAt: 4,
+    portrait: "./assets/cygni61-enemy-normal.png",
+    enemy: {
+      normal: "./assets/cygni61-enemy-normal.png",
+      parallax: "./assets/cygni61-enemy-parallax.png"
+    },
+    status: {
+      rows: [
+        { icon: "✦", label: "種類", value: "近傍恒星" },
+        { icon: "⌁", label: "距離", value: "約11.4 ly" },
+        { icon: "◎", label: "観測", value: "年周視差" }
+      ],
+      meter: { normal: 68, parallax: 92 }
+    },
+    rule: "能力：小さなずれを星空のざわめきに隠す。",
+    clearRule: "攻略法：半年ごとの位置差を測り、近い星ほど視差が大きいと読む。",
+    reward: {
+      id: "cygni61-parallax-scroll",
+      title: "近傍恒星の巻物",
+      message: "61 Cygniを観測してゲットしました。",
+      image: "./assets/reward-scroll-cygni61-parallax.png",
+      tier: "major",
+      knowledgeTitle: "",
+      knowledge: ["近い星ほど視差大"]
+    },
+    lines: [
+      { speaker: "近星の測り手61 Cygni", text: "私は白鳥座に潜む近い恒星。派手ではないが、距離測定の歴史に名を残した。", pattern: "normal" },
+      { speaker: "近星の測り手61 Cygni", text: "地球が公転すると、近い星は遠い背景星に対してわずかにずれる。", pattern: "parallax" },
+      { speaker: "近星の測り手61 Cygni", text: "その角度が年周視差。小さな角度を測れば、星までの距離がほどける。", pattern: "parallax" },
+      { speaker: "近星の測り手61 Cygni", text: "星座の絵の奥に、本当の距離の層を重ねて見よ。", pattern: "normal" }
+    ]
+  },
+  mira: {
+    kingdomId: "autumn",
+    battleBg: "autumn",
+    type: "STORY 15",
+    name: "脈打つ心臓ミラ",
+    subtitle: "星そのものが膨らみ縮む",
+    lead: "くじら座の長周期変光星。星の脈動で明るさが大きく変わる。",
+    mechanic: "pulsatingVariable",
+    clearAt: 4,
+    portrait: "./assets/mira-enemy-normal.png",
+    enemy: {
+      normal: "./assets/mira-enemy-normal.png",
+      pulse: "./assets/mira-enemy-pulse.png"
+    },
+    status: {
+      rows: [
+        { icon: "✦", label: "種類", value: "脈動変光星" },
+        { icon: "⌁", label: "周期", value: "約332日" },
+        { icon: "☉", label: "星座", value: "くじら座" }
+      ],
+      meter: { normal: 48, pulse: 93 }
+    },
+    rule: "能力：海獣の心臓のように膨張収縮し、明るさを大きく変える。",
+    clearRule: "攻略法：星そのものの脈動で光度が周期的に変わると読む。",
+    reward: {
+      id: "mira-pulsation-scroll",
+      title: "脈動変光星の巻物",
+      message: "ミラを観測してゲットしました。",
+      image: "./assets/reward-scroll-mira-pulsation.png",
+      tier: "major",
+      knowledgeTitle: "",
+      knowledge: ["星が脈動して変光"]
+    },
+    lines: [
+      { speaker: "脈打つ心臓ミラ", text: "私はくじら座の心臓。夜空で消えたように暗くなり、また戻ってくる。", pattern: "normal" },
+      { speaker: "脈打つ心臓ミラ", text: "伴星が隠すのではない。私自身が膨らみ縮み、表面の明るさを変える。", pattern: "pulse" },
+      { speaker: "脈打つ心臓ミラ", text: "約332日の長い周期で脈打つ光。変光星には、食だけでなく脈動もある。", pattern: "pulse" },
+      { speaker: "脈打つ心臓ミラ", text: "光度曲線を追えば、海獣の心臓が刻む時間が見えてくる。", pattern: "normal" }
+    ]
+  },
+  m31: {
+    kingdomId: "autumn",
+    battleBg: "autumn",
+    type: "STORY 16",
+    name: "渦巻く隣国M31",
+    subtitle: "星座の奥にある銀河",
+    lead: "アンドロメダ座方向に見える大銀河。星座の入口の奥に宇宙の階層を見る。",
+    mechanic: "galaxyDepth",
+    clearAt: 4,
+    portrait: "./assets/m31-enemy-normal.png",
+    enemy: {
+      normal: "./assets/m31-enemy-normal.png",
+      depth: "./assets/m31-enemy-depth.png"
+    },
+    status: {
+      rows: [
+        { icon: "✦", label: "種類", value: "渦巻銀河" },
+        { icon: "⌁", label: "距離", value: "約254万 ly" },
+        { icon: "◎", label: "方向", value: "アンドロメダ座" }
+      ],
+      meter: { normal: 82, depth: 98 }
+    },
+    rule: "能力：星座の絵の奥に巨大な銀河を隠す。",
+    clearRule: "攻略法：アンドロメダ座は入口で、その方向の奥にM31銀河があると読む。",
+    reward: {
+      id: "galaxy-distance-scroll",
+      title: "M31銀河距離の巻物",
+      message: "M31を観測してゲットしました。",
+      image: "./assets/reward-scroll-m31-galaxy.png",
+      tier: "major",
+      knowledgeTitle: "",
+      knowledge: ["星座の奥に銀河"]
+    },
+    lines: [
+      { speaker: "渦巻く隣国M31", text: "アンドロメダ座の線をたどった先に、私は淡い雲のように浮かぶ。", pattern: "normal" },
+      { speaker: "渦巻く隣国M31", text: "だが私は星雲ではない。無数の恒星を抱く、天の川の隣の大銀河だ。", pattern: "depth" },
+      { speaker: "渦巻く隣国M31", text: "星座は見かけの地図。方向の奥には、恒星よりはるか遠い銀河の階層がある。", pattern: "depth" },
+      { speaker: "渦巻く隣国M31", text: "入口の星座から、宇宙の奥行きへ進め。", pattern: "normal" }
+    ]
+  },
+  betelgeuse: {
+    kingdomId: "winter",
+    battleBg: "winter",
+    type: "STORY 17",
+    name: "赤肩の超巨星ベテルギウス",
+    subtitle: "赤色超巨星と恒星進化",
+    lead: "オリオンの肩で赤く輝く超巨星。低温で巨大な進化した星を読む。",
+    mechanic: "redSupergiant",
+    clearAt: 4,
+    portrait: "./assets/betelgeuse-enemy-normal.png",
+    enemy: {
+      normal: "./assets/betelgeuse-enemy-normal.png",
+      evolution: "./assets/betelgeuse-enemy-evolution.png"
+    },
+    status: {
+      rows: [
+        { icon: "✦", label: "種類", value: "赤色超巨星" },
+        { icon: "☉", label: "温度", value: "約3500K" },
+        { icon: "⌁", label: "進化", value: "晩期段階" }
+      ],
+      meter: { normal: 74, evolution: 96 }
+    },
+    rule: "能力：赤い外層を広げ、温度と大きさの直感を逆転させる。",
+    clearRule: "攻略法：赤い色は低温、しかし半径が大きい赤色超巨星だと読む。",
+    reward: {
+      id: "betelgeuse-redgiant-scroll",
+      title: "赤色超巨星の巻物",
+      message: "ベテルギウスを観測してゲットしました。",
+      image: "./assets/reward-scroll-betelgeuse-redgiant.png",
+      tier: "major",
+      knowledgeTitle: "",
+      knowledge: ["赤い超巨星は低温巨大"]
+    },
+    lines: [
+      { speaker: "赤肩の超巨星ベテルギウス", text: "オリオンの肩を見よ。私は赤く、ゆっくりと光を変える巨大な星だ。", pattern: "normal" },
+      { speaker: "赤肩の超巨星ベテルギウス", text: "赤は高温ではない。青白いリゲルより表面は低温だ。", pattern: "evolution" },
+      { speaker: "赤肩の超巨星ベテルギウス", text: "それでも明るいのは、外層が大きく広がった超巨星だからだ。", pattern: "evolution" },
+      { speaker: "赤肩の超巨星ベテルギウス", text: "色、温度、半径、進化段階。冬のオリオンは恒星進化の教室になる。", pattern: "normal" }
+    ]
+  },
+  sirius: {
+    kingdomId: "winter",
+    battleBg: "winter",
+    type: "STORY 18",
+    name: "白犬王シリウス",
+    subtitle: "近いから明るい一等星",
+    lead: "おおいぬ座で最も明るく見える恒星。距離と見かけの明るさを読む。",
+    mechanic: "apparentBrightness",
+    clearAt: 4,
+    portrait: "./assets/sirius-enemy-normal.png",
+    enemy: {
+      normal: "./assets/sirius-enemy-normal.png",
+      near: "./assets/sirius-enemy-near.png"
+    },
+    status: {
+      rows: [
+        { icon: "✦", label: "種類", value: "白い主系列星" },
+        { icon: "⌁", label: "距離", value: "約8.6 ly" },
+        { icon: "◎", label: "伴星", value: "白色矮星" }
+      ],
+      meter: { normal: 84, near: 97 }
+    },
+    rule: "能力：圧倒的な見かけの明るさで、本当の光度と距離を混同させる。",
+    clearRule: "攻略法：シリウスは近いため非常に明るく見えると読み、見かけと絶対光度を分ける。",
+    reward: {
+      id: "sirius-brightness-scroll",
+      title: "見かけの明るさの巻物",
+      message: "シリウスを観測してゲットしました。",
+      image: "./assets/reward-scroll-sirius-brightness.png",
+      tier: "major",
+      knowledgeTitle: "",
+      knowledge: ["明るさは距離も効く"]
+    },
+    lines: [
+      { speaker: "白犬王シリウス", text: "私は冬の空で最もまばゆく見える白犬王。だが強さの理由を見誤るな。", pattern: "normal" },
+      { speaker: "白犬王シリウス", text: "私はとても近い。距離が近いほど、同じ光でも強く届く。", pattern: "near" },
+      { speaker: "白犬王シリウス", text: "そばには白色矮星の伴星もいる。明るい点の奥にも、進化した小さな星が隠れる。", pattern: "near" },
+      { speaker: "白犬王シリウス", text: "見かけの明るさだけで判断するな。距離と本当の明るさを分けて読め。", pattern: "normal" }
+    ]
   }
 };
 
@@ -889,11 +1473,11 @@ const OBSERVE_COPY = {
     lesson: "肉眼と望遠鏡で二重星を見分ける",
     description: "北斗七星の柄に並ぶ二重星を観測。"
   },
-  "arcturus-preview": {
+  arcturus: {
     lesson: "橙色巨星の色と温度を読む",
     description: "春の大曲線で見つかる明るい巨星。"
   },
-  "spica-preview": {
+  spica: {
     lesson: "青白い星は高温のしるし",
     description: "おとめ座で輝く春の一等星。"
   },
@@ -901,15 +1485,15 @@ const OBSERVE_COPY = {
     lesson: "背景星とのずれで距離を測る",
     description: "天の川に浮かぶ白鳥座の年周視差。"
   },
-  "deneb-preview": {
+  deneb: {
     lesson: "遠い星でも大光度なら明るい",
     description: "白鳥の尾に輝く遠方の一等星。"
   },
-  "albireo-preview": {
+  albireo: {
     lesson: "星の色は温度の手がかり",
     description: "青と橙の対比で表面温度を読む。"
   },
-  "cygni61-preview": {
+  cygni61: {
     lesson: "近い恒星は視差が測りやすい",
     description: "年周視差測定で重要な近い恒星。"
   },
@@ -917,11 +1501,11 @@ const OBSERVE_COPY = {
     lesson: "周期的な暗化は食で起こる",
     description: "伴星が主星を隠す食変光星。"
   },
-  "mira-preview": {
+  mira: {
     lesson: "脈動で明るさが変わる",
     description: "くじら座で長周期に明滅する変光星。"
   },
-  "m31-preview": {
+  m31: {
     lesson: "星座の奥に銀河がある",
     description: "アンドロメダ座方向の隣の大銀河。"
   },
@@ -929,17 +1513,25 @@ const OBSERVE_COPY = {
     lesson: "青白い星ほど高温",
     description: "オリオン座の足で輝く青白い巨星。"
   },
-  "betelgeuse-preview": {
+  betelgeuse: {
     lesson: "赤い星は表面温度が低い",
     description: "赤色超巨星として進化を読む。"
   },
-  "sirius-preview": {
+  sirius: {
     lesson: "見かけの明るさは距離も効く",
     description: "近いため非常に明るい白い一等星。"
+  },
+  mercury: {
+    lesson: "内惑星は太陽から離れにくい",
+    description: "最大離角のころ夕方や明け方に探す。"
   },
   venus: {
     lesson: "内惑星は満ち欠けする",
     description: "太陽との位置で照らされた面が変わる。"
+  },
+  earth: {
+    lesson: "地球の公転が距離測定の基線",
+    description: "半年後の観測位置差が年周視差を生む。"
   },
   mars: {
     lesson: "逆行は追い越しで起こる見かけ",
@@ -956,6 +1548,10 @@ const OBSERVE_COPY = {
   neptune: {
     lesson: "軌道のずれから惑星を予測",
     description: "計算で位置を求め観測で確認された。"
+  },
+  uranus: {
+    lesson: "天王星は大きく傾いて回る",
+    description: "望遠鏡で惑星と分かり横倒し自転を読む。"
   }
 };
 
@@ -977,6 +1573,78 @@ const LIBRARY_SCROLLS = [
     tier: "major",
     lesson: "距離は視差の逆数",
     description: "半年後の見かけのずれを年周視差という。視差 p を秒角で測れば、距離 d はパーセクで 1 / p になる。"
+  },
+  {
+    id: "arcturus-giant-scroll",
+    title: "橙色巨星の巻物",
+    period: "春の王国",
+    image: "./assets/reward-scroll-arcturus-giant.png",
+    tier: "major",
+    lesson: "橙色巨星は低温",
+    description: "アルクトゥルスは橙色に見える巨星。青白い星より表面温度は低いが、大きくふくらんだため明るく見える。"
+  },
+  {
+    id: "spica-spectrum-scroll",
+    title: "分光連星の巻物",
+    period: "春の王国",
+    image: "./assets/reward-scroll-spica-spectrum.png",
+    tier: "major",
+    lesson: "スペクトルで連星",
+    description: "近すぎて分けて見えない連星も、スペクトル線の周期的なずれから連星だと分かる。"
+  },
+  {
+    id: "deneb-luminosity-scroll",
+    title: "絶対等級の巻物",
+    period: "夏の王国",
+    image: "./assets/reward-scroll-deneb-luminosity.png",
+    tier: "major",
+    lesson: "距離込みで明るさ",
+    description: "デネブは非常に遠いが、本当の光度が大きいため明るく見える。見かけの明るさと絶対等級を分けて読む。"
+  },
+  {
+    id: "albireo-color-scroll",
+    title: "色指数の巻物",
+    period: "夏の王国",
+    image: "./assets/reward-scroll-albireo-color.png",
+    tier: "major",
+    lesson: "色は温度の手がかり",
+    description: "アルビレオの青と橙の対比は、星の色が表面温度を反映することを直感的に示す。"
+  },
+  {
+    id: "cygni61-parallax-scroll",
+    title: "近傍恒星の巻物",
+    period: "夏の王国",
+    image: "./assets/reward-scroll-cygni61-parallax.png",
+    tier: "major",
+    lesson: "近い星ほど視差大",
+    description: "61 Cygniは年周視差測定で重要な近傍恒星。近い恒星ほど背景星に対するずれが大きくなる。"
+  },
+  {
+    id: "mira-pulsation-scroll",
+    title: "脈動変光星の巻物",
+    period: "秋の王国",
+    image: "./assets/reward-scroll-mira-pulsation.png",
+    tier: "major",
+    lesson: "星が脈動して変光",
+    description: "ミラは星そのものが膨張収縮することで明るさを大きく変える長周期の脈動変光星。"
+  },
+  {
+    id: "betelgeuse-redgiant-scroll",
+    title: "赤色超巨星の巻物",
+    period: "冬の王国",
+    image: "./assets/reward-scroll-betelgeuse-redgiant.png",
+    tier: "major",
+    lesson: "赤い超巨星は低温巨大",
+    description: "ベテルギウスは赤色超巨星。赤い色は低温を示すが、半径が非常に大きいため明るく輝く。"
+  },
+  {
+    id: "sirius-brightness-scroll",
+    title: "見かけの明るさの巻物",
+    period: "冬の王国",
+    image: "./assets/reward-scroll-sirius-brightness.png",
+    tier: "major",
+    lesson: "明るさは距離も効く",
+    description: "シリウスは非常に近いため強く明るく見える。見かけの明るさは本当の光度と距離の両方で決まる。"
   },
   {
     id: "venus-phases-scroll",
@@ -1015,6 +1683,33 @@ const LIBRARY_SCROLLS = [
     description: "惑星の公転周期 P の2乗は、軌道長半径 a の3乗に比例する。遠い惑星ほど公転に長い時間がかかる。"
   },
   {
+    id: "mercury-elongation-scroll",
+    title: "水星の最大離角",
+    period: "天球観測塔",
+    image: "./assets/reward-scroll-minor-mercury-elongation.png",
+    tier: "minor",
+    lesson: "内惑星は離角で探す",
+    description: "水星は太陽に近い内惑星なので、太陽からの見かけの角度が最大になる最大離角のころ観測しやすい。"
+  },
+  {
+    id: "earth-baseline-scroll",
+    title: "公転基線の巻物",
+    period: "天球観測塔",
+    image: "./assets/reward-scroll-minor-earth-baseline.png",
+    tier: "minor",
+    lesson: "公転が距離の基線",
+    description: "地球が公転することで観測位置が半年後に変わり、近い恒星の年周視差を測る基線になる。"
+  },
+  {
+    id: "uranus-tilt-scroll",
+    title: "天王星の傾き",
+    period: "天球観測塔",
+    image: "./assets/reward-scroll-minor-uranus-tilt.png",
+    tier: "minor",
+    lesson: "天王星は横倒し",
+    description: "天王星は自転軸が約98度傾くため、横倒しに近い姿で太陽を巡る氷巨大惑星。"
+  },
+  {
     id: "neptune-calculation-scroll",
     title: "計算で見つかった惑星",
     period: "天球観測塔",
@@ -1035,13 +1730,12 @@ const LIBRARY_SCROLLS = [
   },
   {
     id: "galaxy-distance-scroll",
-    title: "遠方銀河の記録",
-    period: "銀河の奥",
-    image: "./assets/reward-scroll-minor-base.png",
-    tier: "minor",
-    lesson: "銀河までの距離",
-    description: "銀河までの距離を測ると、宇宙の広がりや膨張を調べる入口になる。",
-    locked: true
+    title: "M31銀河距離の巻物",
+    period: "秋の王国",
+    image: "./assets/reward-scroll-m31-galaxy.png",
+    tier: "major",
+    lesson: "星座の奥に銀河",
+    description: "M31はアンドロメダ座の方向にある渦巻銀河。星座は入口で、その奥には銀河という大きな構造がある。"
   },
   {
     id: "algol-eclipse-scroll",
@@ -1050,8 +1744,7 @@ const LIBRARY_SCROLLS = [
     image: "./assets/equation-scroll-binary.png",
     tier: "major",
     lesson: "食で光度が下がる",
-    description: "アルゴルの暗くなる周期は、伴星が前を通って主星の光を隠す食で説明できる。",
-    locked: true
+    description: "アルゴルの暗くなる周期は、伴星が前を通って主星の光を隠す食で説明できる。"
   },
   {
     id: "mizar-double-star-scroll",
@@ -1060,8 +1753,7 @@ const LIBRARY_SCROLLS = [
     image: "./assets/equation-scroll-parallax.png",
     tier: "major",
     lesson: "近くに見えても別距離",
-    description: "星座の星は見かけの並び。二重星や連星を観測すると、点に見える星の奥行きがほどける。",
-    locked: true
+    description: "星座の星は見かけの並び。二重星や連星を観測すると、点に見える星の奥行きがほどける。"
   }
 ];
 
@@ -1730,7 +2422,6 @@ function renderQuestCard(quest) {
       </span>
       <span class="quest-card-copy">
         <span class="quest-title-row">
-          <span class="quest-number">${quest.number}</span>
           <strong>${quest.title}</strong>
         </span>
         <span class="quest-requirements">

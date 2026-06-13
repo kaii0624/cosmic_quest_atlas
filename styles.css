@@ -7438,3 +7438,74 @@ button {
     min-height: 150px;
   }
 }
+
+/* Quest list and shared detail panel size pass. */
+.home-selection-panel.app-detail-panel {
+  grid-template-columns: minmax(106px, 34%) minmax(0, 1fr);
+  min-height: clamp(149px, 24vw, 190px);
+  padding: clamp(24px, 3.7vw, 34px) clamp(24px, 4.2vw, 42px) clamp(21px, 3.4vw, 32px);
+}
+
+.home-selection-panel.quest-dialogue-detail-panel {
+  grid-template-columns: minmax(106px, 34%) minmax(0, 1fr);
+}
+
+.quest-card {
+  grid-template-columns: minmax(132px, 34%) minmax(0, 1fr);
+}
+
+.quest-requester img {
+  width: clamp(105px, 25.5vw, 198px);
+  transform: translate(clamp(4px, 1vw, 9px), clamp(3px, 0.8vw, 7px));
+}
+
+.quest-requester span {
+  transform: translateX(clamp(4px, 1vw, 9px));
+}
+
+.quest-card-copy {
+  padding-left: clamp(8px, 2.2vw, 18px);
+}
+
+.home-selection-panel.app-detail-panel .home-selection-copy {
+  padding-left: clamp(8px, 2.2vw, 18px);
+}
+
+.quest-title-row {
+  display: block;
+}
+
+.quest-number {
+  display: none !important;
+}
+
+@media (max-width: 700px) {
+  .home-selection-panel.app-detail-panel,
+  .home-selection-panel.quest-dialogue-detail-panel {
+    grid-template-columns: 96px minmax(0, 1fr);
+    min-height: 149px;
+    padding: 21px 18px 18px;
+  }
+
+  .quest-card {
+    grid-template-columns: minmax(116px, 35%) minmax(0, 1fr);
+    min-height: 166px;
+  }
+
+  .quest-requester img {
+    width: 106px;
+    transform: translate(5px, 4px);
+  }
+
+  .quest-requester span {
+    transform: translateX(5px);
+  }
+
+  .quest-card-copy {
+    padding-left: 10px;
+  }
+
+  .home-selection-panel.app-detail-panel .home-selection-copy {
+    padding-left: 10px;
+  }
+}
