@@ -2214,6 +2214,9 @@ button {
 .map-stage.mode-observe .map-canvas,
 .map-stage.mode-observe .detail-canvas,
 .map-stage.mode-observe .story-scene,
+.map-stage.mode-quests .map-canvas,
+.map-stage.mode-quests .detail-canvas,
+.map-stage.mode-quests .story-scene,
 .map-stage.mode-library .map-canvas,
 .map-stage.mode-library .detail-canvas,
 .map-stage.mode-library .story-scene,
@@ -2228,6 +2231,7 @@ button {
 .map-stage.mode-detail .detail-canvas,
 .map-stage.mode-story .story-scene,
 .map-stage.mode-observe .app-screen,
+.map-stage.mode-quests .app-screen,
 .map-stage.mode-library .app-screen,
 .map-stage.mode-settings .app-screen {
   opacity: 1;
