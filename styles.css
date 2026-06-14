@@ -5856,6 +5856,34 @@ button {
   --orb-image: url("./assets/ui-star-orb-sirius.png");
 }
 
+.winter-star-orb-button.arcturus {
+  --orb-image: url("./assets/ui-star-orb-arcturus.png");
+}
+
+.winter-star-orb-button.spica {
+  --orb-image: url("./assets/ui-star-orb-spica.png");
+}
+
+.winter-star-orb-button.deneb {
+  --orb-image: url("./assets/ui-star-orb-deneb.png");
+}
+
+.winter-star-orb-button.vega {
+  --orb-image: url("./assets/ui-star-orb-vega.png");
+}
+
+.winter-star-orb-button.albireo {
+  --orb-image: url("./assets/ui-star-orb-albireo.png");
+}
+
+.winter-star-orb-button.mira {
+  --orb-image: url("./assets/ui-star-orb-mira.png");
+}
+
+.winter-star-orb-button.galaxy {
+  --orb-image: url("./assets/ui-star-orb-galaxy.png");
+}
+
 .winter-star-orb-button.planet-item .winter-star-orb {
   width: min(100%, 150px);
   aspect-ratio: 1;

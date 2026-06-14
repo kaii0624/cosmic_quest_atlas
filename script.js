@@ -38,14 +38,14 @@ const KINGDOMS = {
     detailAlt: "夏の王国と白鳥座の詳細星図",
     detailTitle: "夏の星図",
     detailText: "天の川の上に白鳥座が羽を広げる。星の位置を何度も測ると、距離の手がかりが現れる。",
-    steps: ["白鳥座キュグヌス", "デネブ", "アルビレオ", "61 Cygni"],
+    steps: ["ベガ", "デネブ", "アルビレオ", "61 Cygni"],
     points: [
       {
-        id: "cygnus",
-        x: 49,
-        y: 46,
-        label: "白鳥座",
-        storyId: "cygnus"
+        id: "vega",
+        x: 74,
+        y: 31,
+        label: "ベガ",
+        storyId: "vega"
       },
       {
         id: "deneb",
@@ -141,12 +141,21 @@ const KINGDOMS = {
     detailAlt: "天球観測塔と惑星台座の詳細MAP",
     detailTitle: "惑星観測図",
     detailText: "中央塔から惑星の台座を巡り、満ち欠け、逆行、衛星、軌道法則、計算による発見を読む。",
-    steps: ["水星", "金星", "地球", "火星", "木星", "土星", "天王星", "海王星"],
+    steps: ["太陽", "水星", "金星", "火星", "木星", "土星", "天王星", "海王星"],
     points: [
       {
+        id: "sun",
+        x: 50,
+        y: 18,
+        label: "太陽",
+        storyId: "sunReference",
+        kind: "planet",
+        asset: "./assets/planet-orb-sun.png"
+      },
+      {
         id: "mercury",
-        x: 34,
-        y: 39,
+        x: 72.6,
+        y: 27.4,
         label: "水星",
         storyId: "mercuryElongation",
         kind: "planet",
@@ -154,26 +163,17 @@ const KINGDOMS = {
       },
       {
         id: "venus",
-        x: 18,
-        y: 48,
+        x: 82,
+        y: 50,
         label: "金星",
         storyId: "venusPhases",
         kind: "planet",
         asset: "./assets/planet-orb-venus.png"
       },
       {
-        id: "earth",
-        x: 64,
-        y: 36,
-        label: "地球",
-        storyId: "earthBaseline",
-        kind: "planet",
-        asset: "./assets/planet-orb-earth.png"
-      },
-      {
         id: "mars",
-        x: 50,
-        y: 20,
+        x: 72.6,
+        y: 72.6,
         label: "火星",
         storyId: "marsRetrograde",
         kind: "planet",
@@ -181,8 +181,8 @@ const KINGDOMS = {
       },
       {
         id: "jupiter",
-        x: 27,
-        y: 73,
+        x: 50,
+        y: 82,
         label: "木星",
         storyId: "jupiterMoons",
         kind: "planet",
@@ -190,8 +190,8 @@ const KINGDOMS = {
       },
       {
         id: "saturn",
-        x: 82,
-        y: 48,
+        x: 27.4,
+        y: 72.6,
         label: "土星",
         storyId: "saturnKepler3",
         kind: "planet",
@@ -199,8 +199,8 @@ const KINGDOMS = {
       },
       {
         id: "uranus",
-        x: 52,
-        y: 84,
+        x: 18,
+        y: 50,
         label: "天王星",
         storyId: "uranusTilt",
         kind: "planet",
@@ -208,8 +208,8 @@ const KINGDOMS = {
       },
       {
         id: "neptune",
-        x: 73,
-        y: 72,
+        x: 27.4,
+        y: 27.4,
         label: "海王星",
         storyId: "neptuneCalculation",
         kind: "planet",
@@ -224,7 +224,7 @@ const PLANET_STORIES = {
   mercuryElongation: {
     kingdomId: "tower",
     battleBg: "planetarium",
-    type: "STORY 19",
+    type: "STORY 20",
     name: "水星兎メルクリウス",
     subtitle: "",
     lead: "太陽の近くを素早く巡る内惑星。見える高さは最大離角で決まる。",
@@ -282,63 +282,61 @@ const PLANET_STORIES = {
       }
     ]
   },
-  earthBaseline: {
+  sunReference: {
     kingdomId: "tower",
     battleBg: "planetarium",
-    type: "STORY 20",
-    name: "地球亀テラ",
+    type: "STORY 21",
+    name: "太陽獅子ソル",
     subtitle: "",
-    lead: "観測者の足もとにある惑星。公転軌道そのものが距離測定の物差しになる。",
-    mechanic: "earthOrbitBaseline",
+    lead: "惑星の中心に輝く恒星。太陽の光度と質量を、星を比べる基準として読む。",
+    mechanic: "solarReference",
     clearAt: 4,
-    portrait: "./assets/planet-enemy-earth-normal.png",
+    portrait: "./assets/planet-enemy-sun-normal.png",
     enemy: {
-      normal: "./assets/planet-enemy-earth-normal.png",
-      baseline: "./assets/planet-enemy-earth-phenomenon.png"
+      normal: "./assets/planet-enemy-sun-normal.png",
+      reference: "./assets/planet-enemy-sun-phenomenon.png"
     },
     status: {
       rows: [
-        { icon: "✦", label: "種類", value: "岩石惑星" },
-        { icon: "◎", label: "運動", value: "自転と公転" },
-        { icon: "⌁", label: "基準", value: "年周視差" }
+        { icon: "✦", label: "種類", value: "恒星" },
+        { icon: "☉", label: "光度", value: "1 L☉" },
+        { icon: "▲", label: "質量", value: "1 M☉" }
       ],
       meter: {
         normal: 70,
-        baseline: 90
+        reference: 94
       }
     },
-    rule: "能力：足もとの動きを隠し、星だけが動いているように見せる。",
-    clearRule: "攻略法：地球の公転で観測位置が変わり、近い星の年周視差が生まれると読む。",
+    rule: "能力：強い光で惑星の軌道と恒星の基準単位を隠す。",
+    clearRule: "攻略法：太陽を1 L☉、1 M☉の基準として、恒星の光度や質量を比べる。",
     reward: {
-      id: "earth-baseline-scroll",
-      title: "公転基線の巻物",
-      message: "地球を観測してゲットしました。",
-      image: "./assets/reward-scroll-minor-earth-baseline.png",
+      id: "sun-luminosity-scroll",
+      title: "太陽光度の巻物",
+      message: "太陽を観測してゲットしました。",
+      image: "./assets/reward-scroll-minor-sun-luminosity.png",
       tier: "minor",
       knowledgeTitle: "",
-      knowledge: [
-        "公転が距離の基線"
-      ]
+      knowledge: ["太陽は恒星の基準"]
     },
     lines: [
       {
-        speaker: "地球亀テラ",
-        text: "観測者よ、空ばかり見るな。君が立つ地球もまた、宇宙を動く惑星だ。",
+        speaker: "太陽獅子ソル",
+        text: "私は惑星台座の中心に輝く太陽。惑星を照らすだけでなく、恒星を比べる物差しにもなる。",
         pattern: "normal"
       },
       {
-        speaker: "地球亀テラ",
-        text: "半年たつと地球は公転軌道の反対側へ移る。観測点が変わるのだ。",
-        pattern: "baseline"
+        speaker: "太陽獅子ソル",
+        text: "光度は 1 L☉、質量は 1 M☉。遠い恒星の強さを語るとき、私の単位が基準になる。",
+        pattern: "reference"
       },
       {
-        speaker: "地球亀テラ",
-        text: "その基線があるから、近い恒星は背景に対してわずかにずれる。年周視差の根元は地球の公転だ。",
-        pattern: "baseline"
+        speaker: "太陽獅子ソル",
+        text: "惑星たちは私のまわりを巡る。円の配置を見れば、太陽中心の見方が星図に浮かぶ。",
+        pattern: "reference"
       },
       {
-        speaker: "地球亀テラ",
-        text: "天空の奥行きは、足もとの惑星の動きから測り始める。",
+        speaker: "太陽獅子ソル",
+        text: "太陽はただの背景ではない。恒星を学ぶための最初の基準星だ。",
         pattern: "normal"
       }
     ]
@@ -346,7 +344,7 @@ const PLANET_STORIES = {
   uranusTilt: {
     kingdomId: "tower",
     battleBg: "planetarium",
-    type: "STORY 21",
+    type: "STORY 22",
     name: "天王梟ウラノス",
     subtitle: "",
     lead: "望遠鏡で惑星として見出された氷の惑星。大きく傾いた自転軸を持つ。",
@@ -407,7 +405,7 @@ const PLANET_STORIES = {
   venusPhases: {
     kingdomId: "tower",
     battleBg: "planetarium",
-    type: "STORY 5",
+    type: "STORY 23",
     name: "金星狐ヴィーナ",
     subtitle: "",
     lead: "太陽に近い内惑星。望遠鏡で見ると、月のように満ち欠けする。",
@@ -468,7 +466,7 @@ const PLANET_STORIES = {
   jupiterMoons: {
     kingdomId: "tower",
     battleBg: "planetarium",
-    type: "STORY 6",
+    type: "STORY 24",
     name: "木星獅子ジュピター",
     subtitle: "",
     lead: "巨大な惑星のそばに、小さな衛星が並ぶ観測の試練。",
@@ -529,7 +527,7 @@ const PLANET_STORIES = {
   marsRetrograde: {
     kingdomId: "tower",
     battleBg: "planetarium",
-    type: "STORY 7",
+    type: "STORY 25",
     name: "火星狼マルス",
     subtitle: "",
     lead: "赤い惑星が星座の中で逆向きに進む、見かけの運動を読む。",
@@ -590,7 +588,7 @@ const PLANET_STORIES = {
   saturnKepler3: {
     kingdomId: "tower",
     battleBg: "planetarium",
-    type: "STORY 8",
+    type: "STORY 26",
     name: "土星鹿サターン",
     subtitle: "",
     lead: "遠い惑星ほど公転に時間がかかる。軌道の大きさと周期の法則を読む。",
@@ -651,7 +649,7 @@ const PLANET_STORIES = {
   neptuneCalculation: {
     kingdomId: "tower",
     battleBg: "planetarium",
-    type: "STORY 9",
+    type: "STORY 27",
     name: "海王海竜ネプトゥーン",
     subtitle: "",
     lead: "見えない惑星を、軌道のずれと計算から探し出す。",
@@ -1054,10 +1052,50 @@ const STORIES = {
       { speaker: "青麦の双星スピカ", text: "望遠鏡で分けられない連星も、分光で見破れる。光を細かく分けて読め。", pattern: "spectrum" }
     ]
   },
-  deneb: {
+  vega: {
     kingdomId: "summer",
     battleBg: "summer",
     type: "STORY 12",
+    name: "基準星ベガ",
+    subtitle: "",
+    lead: "こと座で青白く輝く基準星。見かけの明るさを基準に、距離を入れて絶対等級へ進む。",
+    mechanic: "magnitudeStandard",
+    clearAt: 4,
+    portrait: "./assets/vega-enemy-normal.png",
+    enemy: {
+      normal: "./assets/vega-enemy-normal.png",
+      standard: "./assets/vega-enemy-standard.png"
+    },
+    status: {
+      rows: [
+        { icon: "✦", label: "種類", value: "A0V標準星" },
+        { icon: "⌁", label: "星座", value: "こと座" },
+        { icon: "◎", label: "等級", value: "約0等" }
+      ],
+      meter: { normal: 74, standard: 96 }
+    },
+    rule: "能力：見かけの明るさの基準を掲げ、距離を考えない観測者を惑わせる。",
+    clearRule: "攻略法：見かけの等級に距離補正を入れると、星本来の明るさである絶対等級が分かる。",
+    reward: {
+      id: "vega-absolute-magnitude-scroll",
+      title: "絶対等級の巻物",
+      message: "ベガを観測してゲットしました。",
+      image: "./assets/reward-scroll-vega-absolute-magnitude.png",
+      tier: "major",
+      knowledgeTitle: "",
+      knowledge: ["距離で明るさ補正"]
+    },
+    lines: [
+      { speaker: "基準星ベガ", text: "私は夏の夜、こと座で青白く輝くベガ。明るさを測る物差しとして呼ばれてきた。", pattern: "normal" },
+      { speaker: "基準星ベガ", text: "見かけの等級だけでは、星本来の強さは分からない。近い星は強く、遠い星は弱く見える。", pattern: "standard" },
+      { speaker: "基準星ベガ", text: "距離を入れて補正せよ。10パーセクに置いた明るさ、それが絶対等級だ。", pattern: "standard" },
+      { speaker: "基準星ベガ", text: "基準を持てば、星座の明るさはただの印象ではなく、比べられる数になる。", pattern: "normal" }
+    ]
+  },
+  deneb: {
+    kingdomId: "summer",
+    battleBg: "summer",
+    type: "STORY 13",
     name: "遠光の尾デネブ",
     subtitle: "遠くても輝く大光度星",
     lead: "白鳥の尾で輝く青白い超巨星。見かけの明るさと本当の明るさを分ける。",
@@ -1080,7 +1118,7 @@ const STORIES = {
     clearRule: "攻略法：見かけの明るさだけでなく距離を考え、デネブが本当に明るい星だと読む。",
     reward: {
       id: "deneb-luminosity-scroll",
-      title: "絶対等級の巻物",
+      title: "大光度星の巻物",
       message: "デネブを観測してゲットしました。",
       image: "./assets/reward-scroll-deneb-luminosity.png",
       tier: "major",
@@ -1097,7 +1135,7 @@ const STORIES = {
   albireo: {
     kingdomId: "summer",
     battleBg: "summer",
-    type: "STORY 13",
+    type: "STORY 14",
     name: "双彩のくちばしアルビレオ",
     subtitle: "色の対比で温度を読む",
     lead: "白鳥のくちばしで青と橙が並ぶ美しい二重星。星の色と温度を読む。",
@@ -1137,7 +1175,7 @@ const STORIES = {
   cygni61: {
     kingdomId: "summer",
     battleBg: "summer",
-    type: "STORY 14",
+    type: "STORY 15",
     name: "近星の測り手61 Cygni",
     subtitle: "最初期の年周視差測定",
     lead: "白鳥座の近い恒星。背景星に対する小さなずれから距離を測る。",
@@ -1159,13 +1197,13 @@ const STORIES = {
     rule: "能力：小さなずれを星空のざわめきに隠す。",
     clearRule: "攻略法：半年ごとの位置差を測り、近い星ほど視差が大きいと読む。",
     reward: {
-      id: "cygni61-parallax-scroll",
-      title: "近傍恒星の巻物",
+      id: "cygnus-parallax-scroll",
+      title: "年周視差の巻物",
       message: "61 Cygniを観測してゲットしました。",
-      image: "./assets/reward-scroll-cygni61-parallax.png",
+      image: "./assets/reward-scroll-cygnus-parallax.png",
       tier: "major",
       knowledgeTitle: "",
-      knowledge: ["近い星ほど視差大"]
+      knowledge: ["距離は視差の逆数"]
     },
     lines: [
       { speaker: "近星の測り手61 Cygni", text: "私は白鳥座に潜む近い恒星。派手ではないが、距離測定の歴史に名を残した。", pattern: "normal" },
@@ -1177,7 +1215,7 @@ const STORIES = {
   mira: {
     kingdomId: "autumn",
     battleBg: "autumn",
-    type: "STORY 15",
+    type: "STORY 16",
     name: "脈打つ心臓ミラ",
     subtitle: "星そのものが膨らみ縮む",
     lead: "くじら座の長周期変光星。星の脈動で明るさが大きく変わる。",
@@ -1217,7 +1255,7 @@ const STORIES = {
   m31: {
     kingdomId: "autumn",
     battleBg: "autumn",
-    type: "STORY 16",
+    type: "STORY 17",
     name: "渦巻く隣国M31",
     subtitle: "星座の奥にある銀河",
     lead: "アンドロメダ座方向に見える大銀河。星座の入口の奥に宇宙の階層を見る。",
@@ -1257,7 +1295,7 @@ const STORIES = {
   betelgeuse: {
     kingdomId: "winter",
     battleBg: "winter",
-    type: "STORY 17",
+    type: "STORY 18",
     name: "赤肩の超巨星ベテルギウス",
     subtitle: "赤色超巨星と恒星進化",
     lead: "オリオンの肩で赤く輝く超巨星。低温で巨大な進化した星を読む。",
@@ -1297,7 +1335,7 @@ const STORIES = {
   sirius: {
     kingdomId: "winter",
     battleBg: "winter",
-    type: "STORY 18",
+    type: "STORY 19",
     name: "白犬王シリウス",
     subtitle: "近いから明るい一等星",
     lead: "おおいぬ座で最も明るく見える恒星。距離と見かけの明るさを読む。",
@@ -1456,7 +1494,22 @@ const HOME_KINGDOM_DETAILS = {
   }
 };
 
-const ORB_CLASSES = ["betelgeuse", "rigel", "sirius"];
+const ORB_CLASSES = ["sirius", "rigel", "betelgeuse"];
+const OBJECT_ORB_CLASSES = {
+  mizar: "sirius",
+  arcturus: "arcturus",
+  spica: "spica",
+  vega: "vega",
+  deneb: "deneb",
+  albireo: "albireo",
+  cygni61: "arcturus",
+  algol: "sirius",
+  mira: "mira",
+  m31: "galaxy",
+  rigel: "rigel",
+  betelgeuse: "betelgeuse",
+  sirius: "sirius"
+};
 
 const HOME_TABS = [
   { id: "home", label: "ホーム" },
@@ -1488,6 +1541,10 @@ const OBSERVE_COPY = {
   deneb: {
     lesson: "遠い星でも大光度なら明るい",
     description: "白鳥の尾に輝く遠方の一等星。"
+  },
+  vega: {
+    lesson: "基準星から絶対等級へ進む",
+    description: "見かけの明るさに距離補正を入れる。"
   },
   albireo: {
     lesson: "星の色は温度の手がかり",
@@ -1529,9 +1586,9 @@ const OBSERVE_COPY = {
     lesson: "内惑星は満ち欠けする",
     description: "太陽との位置で照らされた面が変わる。"
   },
-  earth: {
-    lesson: "地球の公転が距離測定の基線",
-    description: "半年後の観測位置差が年周視差を生む。"
+  sun: {
+    lesson: "太陽は恒星比較の基準",
+    description: "光度と質量を太陽単位で比べる。"
   },
   mars: {
     lesson: "逆行は追い越しで起こる見かけ",
@@ -1594,12 +1651,21 @@ const LIBRARY_SCROLLS = [
   },
   {
     id: "deneb-luminosity-scroll",
-    title: "絶対等級の巻物",
+    title: "大光度星の巻物",
     period: "夏の王国",
     image: "./assets/reward-scroll-deneb-luminosity.png",
     tier: "major",
     lesson: "距離込みで明るさ",
     description: "デネブは非常に遠いが、本当の光度が大きいため明るく見える。見かけの明るさと絶対等級を分けて読む。"
+  },
+  {
+    id: "vega-absolute-magnitude-scroll",
+    title: "絶対等級の巻物",
+    period: "夏の王国",
+    image: "./assets/reward-scroll-vega-absolute-magnitude.png",
+    tier: "major",
+    lesson: "距離で明るさ補正",
+    description: "ベガは等級の基準星として扱われてきた。見かけの等級に距離を入れて補正すると、星本来の明るさである絶対等級が分かる。"
   },
   {
     id: "albireo-color-scroll",
@@ -1609,15 +1675,6 @@ const LIBRARY_SCROLLS = [
     tier: "major",
     lesson: "色は温度の手がかり",
     description: "アルビレオの青と橙の対比は、星の色が表面温度を反映することを直感的に示す。"
-  },
-  {
-    id: "cygni61-parallax-scroll",
-    title: "近傍恒星の巻物",
-    period: "夏の王国",
-    image: "./assets/reward-scroll-cygni61-parallax.png",
-    tier: "major",
-    lesson: "近い星ほど視差大",
-    description: "61 Cygniは年周視差測定で重要な近傍恒星。近い恒星ほど背景星に対するずれが大きくなる。"
   },
   {
     id: "mira-pulsation-scroll",
@@ -1692,13 +1749,13 @@ const LIBRARY_SCROLLS = [
     description: "水星は太陽に近い内惑星なので、太陽からの見かけの角度が最大になる最大離角のころ観測しやすい。"
   },
   {
-    id: "earth-baseline-scroll",
-    title: "公転基線の巻物",
+    id: "sun-luminosity-scroll",
+    title: "太陽光度の巻物",
     period: "天球観測塔",
-    image: "./assets/reward-scroll-minor-earth-baseline.png",
+    image: "./assets/reward-scroll-minor-sun-luminosity.png",
     tier: "minor",
-    lesson: "公転が距離の基線",
-    description: "地球が公転することで観測位置が半年後に変わり、近い恒星の年周視差を測る基線になる。"
+    lesson: "太陽は恒星の基準",
+    description: "太陽の光度を 1 L☉、質量を 1 M☉ として、他の恒星の明るさや質量を比べる基準にする。"
   },
   {
     id: "uranus-tilt-scroll",
@@ -2370,7 +2427,7 @@ function renderObserveTab() {
         <div class="observe-orb-grid app-observe-grid" aria-label="天体一覧">
           ${items
             .map((item, index) => {
-              const orbClass = ORB_CLASSES[index % ORB_CLASSES.length];
+              const orbClass = OBJECT_ORB_CLASSES[item.id] ?? ORB_CLASSES[index % ORB_CLASSES.length];
               const lockedClass = item.locked ? " locked" : "";
               const selectedClass = selected.id === item.id ? " selected" : "";
               const planetClass = item.kind === "planet" ? " planet-item" : "";
@@ -2615,7 +2672,7 @@ function renderPanel() {
         <div class="winter-star-orb-grid" aria-label="${kingdom.name}の星">
           ${kingdom.points
             .map((point, index) => {
-              const orbClass = ORB_CLASSES[index % ORB_CLASSES.length];
+              const orbClass = OBJECT_ORB_CLASSES[point.id] ?? ORB_CLASSES[index % ORB_CLASSES.length];
               const lockedClass = point.locked ? " locked" : "";
               const planetClass = point.kind === "planet" ? " planet-item" : "";
               const storyAttr = point.storyId
