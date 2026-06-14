@@ -1141,7 +1141,8 @@ button {
 .map-stage.mode-home[data-home-kingdom="summer"] .kingdom-cutout.summer,
 .map-stage.mode-home[data-home-kingdom="autumn"] .kingdom-cutout.autumn,
 .map-stage.mode-home[data-home-kingdom="winter"] .kingdom-cutout.winter,
-.map-stage.mode-home[data-home-kingdom="tower"] .kingdom-cutout.tower {
+.map-stage.mode-home[data-home-kingdom="tower"] .kingdom-cutout.tower,
+.map-stage.mode-home[data-home-kingdom="deep"] .kingdom-cutout.deep {
   opacity: 1;
   filter:
     saturate(1.08)
@@ -3284,7 +3285,7 @@ button {
   .map-title-logo {
     top: 3.8%;
     left: 4%;
-    width: clamp(92px, 25vw, 120px);
+    width: clamp(112px, 30vw, 148px);
   }
 
   .map-title-logo strong {
@@ -3412,7 +3413,7 @@ button {
 }
 
 .map-title-logo {
-  width: clamp(132px, 24%, 198px);
+  width: clamp(162px, 29%, 240px);
   aspect-ratio: 1000 / 420;
   padding: 0;
   filter:
@@ -3523,7 +3524,7 @@ button {
 
 @media (max-width: 700px) {
   .map-title-logo {
-    width: clamp(112px, 29vw, 136px);
+    width: clamp(136px, 34vw, 166px);
   }
 
   .region-label.kingdom-marker {
@@ -3935,7 +3936,7 @@ button {
   border: 0;
   border-radius: 8px;
   color: #efe2c2;
-  background: #07142d var(--tab-art) center / cover no-repeat;
+  background: #07142d var(--tab-art) center / 100% 100% no-repeat;
   box-shadow:
     inset 0 -22px 24px rgba(0, 0, 0, 0.42),
     0 2px 0 rgba(10, 5, 2, 0.68);
@@ -4206,7 +4207,7 @@ button {
   padding: clamp(18px, 3vw, 25px) clamp(22px, 4vw, 40px) clamp(16px, 2.8vw, 24px);
   border: 0;
   color: #24170f;
-  background: transparent url("./assets/ui-quest-flyer-card.png") center / 100% 100% no-repeat;
+  background: transparent url("./assets/ui-quest-flyer-card.png?v=quest-ui-v6") center / 100% 100% no-repeat;
   cursor: pointer;
   font-family: "Hiragino Mincho ProN", "YuMincho", "Yu Mincho", serif;
   text-align: left;
@@ -4276,6 +4277,7 @@ button {
   min-width: 0;
   display: grid;
   gap: clamp(5px, 1.2vw, 8px);
+  padding-left: clamp(8px, 1.8vw, 14px);
   padding-right: clamp(12px, 2vw, 24px);
 }
 
@@ -4287,6 +4289,7 @@ button {
 }
 
 .quest-title-row strong {
+  grid-column: 1 / -1;
   min-width: 0;
   color: #1d2740;
   font-size: clamp(1.08rem, 3.4vw, 1.78rem);
@@ -4357,46 +4360,39 @@ button {
 }
 
 .quest-requirements {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: clamp(4px, 1vw, 7px);
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
 }
 
 .quest-requirement {
-  min-width: 0;
-  min-height: clamp(42px, 8vw, 58px);
-  display: grid;
-  grid-template-columns: clamp(28px, 5vw, 38px) minmax(0, 1fr) 18px;
-  gap: 3px;
-  align-items: center;
-  padding: 6px 9px 6px 7px;
-  color: #2d1d10;
-  background: transparent url("./assets/ui-quest-requirement-slot.png") center / 100% 100% no-repeat;
-  font-size: clamp(0.54rem, 1.5vw, 0.72rem);
-  font-weight: 900;
-  line-height: 1.12;
+  position: relative;
+  display: block;
+  width: clamp(72px, 11vw, 96px);
+  aspect-ratio: 1;
+  background: transparent;
+  flex-shrink: 0;
 }
 
 .quest-requirement img {
   width: 100%;
-  aspect-ratio: 1;
+  height: 100%;
   object-fit: contain;
-  filter: drop-shadow(0 2px 0 rgba(45, 24, 9, 0.38));
-}
-
-.quest-requirement span {
-  min-width: 0;
+  filter: drop-shadow(0 0 6px rgba(255, 220, 110, 0.28));
 }
 
 .quest-requirement b {
-  width: 18px;
-  height: 18px;
+  position: absolute;
+  bottom: 2px;
+  right: 2px;
+  width: 12px;
+  height: 12px;
   display: grid;
   place-items: center;
   border-radius: 50%;
   color: #ffe8a8;
   background: #0b4f9c;
-  font-size: 0.72rem;
+  font-size: 0.5rem;
   line-height: 1;
   box-shadow:
     inset 0 0 0 1px rgba(255, 232, 154, 0.62),
@@ -4404,7 +4400,7 @@ button {
 }
 
 .quest-requirement.missing {
-  filter: grayscale(0.88) brightness(0.76);
+  filter: grayscale(0.5) opacity(0.55);
 }
 
 .quest-requirement.missing b {
@@ -4832,7 +4828,7 @@ button {
   align-items: center;
   padding: clamp(30px, 5vw, 50px) clamp(32px, 6vw, 62px);
   color: #291a10;
-  background: transparent url("./assets/ui-quest-flyer-card.png") center / 100% 100% no-repeat;
+  background: transparent url("./assets/ui-quest-flyer-card.png?v=quest-ui-v6") center / 100% 100% no-repeat;
   filter:
     drop-shadow(0 6px 0 rgba(14, 7, 3, 0.6))
     drop-shadow(0 0 15px rgba(255, 219, 111, 0.2));
@@ -5343,21 +5339,17 @@ button {
   }
 
   .quest-requirements {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 4px;
+    gap: 5px;
   }
 
   .quest-requirement {
-    min-height: 38px;
-    grid-template-columns: 25px minmax(0, 1fr) 15px;
-    padding: 5px 7px 5px 6px;
-    font-size: 0.5rem;
+    width: clamp(60px, 9.6vw, 80px);
   }
 
   .quest-requirement b {
-    width: 15px;
-    height: 15px;
-    font-size: 0.58rem;
+    width: 11px;
+    height: 14px;
+    font-size: 0.55rem;
   }
 
   .quest-detail-card {
@@ -6003,7 +5995,7 @@ button {
   border: 0;
   border-radius: 0;
   color: #ffeab2;
-  background: transparent url("./assets/ui-equation-panel-frame.png") center / 100% 100% no-repeat;
+  background: transparent url("./assets/ui-equation-panel-frame.png?v=frame-v3") center / 100% 100% no-repeat;
   box-shadow: none;
   filter:
     drop-shadow(0 8px 0 rgba(8, 4, 6, 0.64))
@@ -6193,7 +6185,7 @@ button {
   color: #2d1b10;
   background:
     radial-gradient(circle at 50% 12%, rgba(255, 238, 177, 0.45), transparent 25%),
-    url("./assets/ui-equation-panel-frame.png") center / 100% 100% no-repeat;
+    url("./assets/ui-equation-panel-frame.png?v=frame-v3") center / 100% 100% no-repeat;
   filter:
     drop-shadow(0 12px 0 rgba(11, 6, 4, 0.72))
     drop-shadow(0 0 24px rgba(255, 222, 122, 0.34));
@@ -6247,7 +6239,7 @@ button {
 
 .reward-scroll-image {
   position: relative;
-  width: min(40%, 145px);
+  width: min(72%, 260px);
   margin: 0 auto;
   display: block;
   filter:
@@ -6256,6 +6248,10 @@ button {
 }
 
 .reward-knowledge {
+  display: none;
+}
+
+.reward-knowledge-hidden {
   position: relative;
   width: min(84%, 330px);
   justify-self: center;
@@ -6389,12 +6385,7 @@ button {
   }
 
   .reward-scroll-image {
-    width: min(36%, 115px);
-  }
-
-  .reward-knowledge {
-    width: min(76%, 268px);
-    padding: 9px 11px 8px;
+    width: min(65%, 210px);
   }
 
   .reward-knowledge h3 {
@@ -7190,13 +7181,15 @@ button {
   }
 
   .quest-requirements {
-    gap: 3px;
+    gap: 4px;
   }
 
-  .quest-requirement {
-    min-height: 34px;
-    grid-template-columns: 22px minmax(0, 1fr) 14px;
-    padding: 4px 6px;
+  .quest-requirement b {
+    width: 13px;
+    height: 13px;
+    bottom: 2px;
+    right: 2px;
+    font-size: 0.52rem;
   }
 }
 
@@ -7207,12 +7200,11 @@ button {
 
 .quest-card {
   overflow: visible;
-  background-image: url("./assets/ui-quest-flyer-card.png?v=quest-ui-v3") !important;
+  background-image: url("./assets/ui-quest-flyer-card.png?v=quest-ui-v6") !important;
   background-size: 100% 100% !important;
   padding-inline: clamp(18px, 3.4vw, 34px);
 }
 
-.quest-requirement,
 .quest-evidence-row,
 .quest-selected-slot {
   background-image: url("./assets/ui-quest-requirement-slot.png?v=quest-ui-v3") !important;
@@ -7450,10 +7442,6 @@ button {
   grid-template-columns: minmax(78px, 22%) minmax(0, 1fr);
 }
 
-.quest-title-row {
-  grid-template-columns: auto minmax(0, 1fr);
-}
-
 .quest-card.selected {
   transform: translateY(-2px);
   filter:
@@ -7547,15 +7535,11 @@ button {
 }
 
 .quest-card-copy {
-  padding-left: clamp(8px, 2.2vw, 18px);
+  padding-left: clamp(22px, 4vw, 36px);
 }
 
 .home-selection-panel.app-detail-panel .home-selection-copy {
-  padding-left: clamp(8px, 2.2vw, 18px);
-}
-
-.quest-title-row {
-  display: block;
+  padding-left: clamp(22px, 4vw, 36px);
 }
 
 .quest-number {
@@ -7585,11 +7569,11 @@ button {
   }
 
   .quest-card-copy {
-    padding-left: 10px;
+    padding-left: 28px;
   }
 
   .home-selection-panel.app-detail-panel .home-selection-copy {
-    padding-left: 10px;
+    padding-left: 28px;
   }
 }
 

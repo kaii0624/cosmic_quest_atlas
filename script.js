@@ -274,7 +274,7 @@ const PLANET_STORIES = {
       id: "mercury-elongation-scroll",
       title: "水星の最大離角",
       message: "水星を観測してゲットしました。",
-      image: "./assets/reward-scroll-minor-mercury-elongation.png",
+      image: "./assets/obs-mercury-elongation.png",
       tier: "minor",
       knowledgeTitle: "",
       knowledge: [
@@ -333,9 +333,9 @@ const PLANET_STORIES = {
     clearRule: "攻略法：太陽を1 L☉、1 M☉の基準として、恒星の光度や質量を比べる。",
     reward: {
       id: "sun-luminosity-scroll",
-      title: "太陽光度の巻物",
+      title: "太陽光度",
       message: "太陽を観測してゲットしました。",
-      image: "./assets/reward-scroll-minor-sun-luminosity.png",
+      image: "./assets/obs-sun-reference.png",
       tier: "minor",
       knowledgeTitle: "",
       knowledge: ["太陽は恒星の基準"]
@@ -394,7 +394,7 @@ const PLANET_STORIES = {
       id: "uranus-tilt-scroll",
       title: "天王星の傾き",
       message: "天王星を観測してゲットしました。",
-      image: "./assets/reward-scroll-minor-uranus-tilt.png",
+      image: "./assets/obs-uranus-tilt.png",
       tier: "minor",
       knowledgeTitle: "",
       knowledge: [
@@ -699,7 +699,7 @@ const PLANET_STORIES = {
       id: "neptune-calculation-scroll",
       title: "計算で見つかった惑星",
       message: "海王星を観測してゲットしました。",
-      image: "./assets/reward-scroll-minor-neptune-calculation.png",
+      image: "./assets/obs-neptune-prediction.png",
       tier: "minor",
       knowledgeTitle: "",
       knowledge: [
@@ -761,9 +761,9 @@ const STORIES = {
     clearRule: "攻略法：北斗七星の柄をたどり、ミザールとアルコルを二重星として見分ける。",
     reward: {
       id: "mizar-double-star-scroll",
-      title: "二重星の巻物",
+      title: "二重星",
       message: "ミザールを観測してゲットしました。",
-      image: "./assets/reward-scroll-mizar-double-star.png",
+      image: "./assets/scroll-optical-double.png",
       tier: "major",
       knowledgeTitle: "",
       knowledge: [
@@ -822,9 +822,9 @@ const STORIES = {
     clearRule: "攻略法：光度曲線を読んで「食」のタイミングを見破る。",
     reward: {
       id: "algol-eclipse-scroll",
-      title: "食変光星の巻物",
+      title: "食変光星",
       message: "アルゴルを観測してゲットしました。",
-      image: "./assets/reward-scroll-algol-eclipse.png",
+      image: "./assets/scroll-eclipsing-binary.png",
       tier: "major",
       knowledgeTitle: "",
       knowledge: [
@@ -893,7 +893,7 @@ const STORIES = {
     clearRule: "攻略法：年周視差 p を測り、d = 1 / p で距離を読む。",
     reward: {
       id: "cygnus-parallax-scroll",
-      title: "年周視差の巻物",
+      title: "年周視差",
       message: "白鳥座を観測してゲットしました。",
       image: "./assets/reward-scroll-cygnus-parallax.png",
       knowledgeTitle: "",
@@ -963,9 +963,9 @@ const STORIES = {
     clearRule: "攻略法：星の色から表面温度を読み、リゲルが高温で大光度の星だと見破る。",
     reward: {
       id: "rigel-color-luminosity-scroll",
-      title: "星色と大光度の巻物",
+      title: "星色と大光度",
       message: "リゲルを観測してゲットしました。",
-      image: "./assets/reward-scroll-rigel-luminosity.png",
+      image: "./assets/scroll-blue-star-temp.png",
       knowledgeTitle: "",
       knowledge: [
         "青白い星ほど高温"
@@ -1020,9 +1020,9 @@ const STORIES = {
     clearRule: "攻略法：橙色は青白い星より低温で、巨星へ進化した姿だと読む。",
     reward: {
       id: "arcturus-giant-scroll",
-      title: "橙色巨星の巻物",
+      title: "橙色巨星",
       message: "アルクトゥルスを観測してゲットしました。",
-      image: "./assets/reward-scroll-arcturus-giant.png",
+      image: "./assets/scroll-giant-star-expansion.png",
       tier: "major",
       knowledgeTitle: "",
       knowledge: ["橙色巨星は低温"]
@@ -1060,9 +1060,9 @@ const STORIES = {
     clearRule: "攻略法：青白い色は高温、スペクトル線の変化は近接連星の手がかりだと読む。",
     reward: {
       id: "spica-spectrum-scroll",
-      title: "分光連星の巻物",
+      title: "分光連星",
       message: "スピカを観測してゲットしました。",
-      image: "./assets/reward-scroll-spica-spectrum.png",
+      image: "./assets/scroll-spectral-binary.png",
       tier: "major",
       knowledgeTitle: "",
       knowledge: ["スペクトルで連星"]
@@ -1100,9 +1100,9 @@ const STORIES = {
     clearRule: "攻略法：見かけの等級に距離補正を入れると、星本来の明るさである絶対等級が分かる。",
     reward: {
       id: "vega-absolute-magnitude-scroll",
-      title: "絶対等級の巻物",
+      title: "絶対等級",
       message: "ベガを観測してゲットしました。",
-      image: "./assets/reward-scroll-vega-absolute-magnitude.png",
+      image: "./assets/scroll-absolute-magnitude.png",
       tier: "major",
       knowledgeTitle: "",
       knowledge: ["距離で明るさ補正"]
@@ -1140,9 +1140,9 @@ const STORIES = {
     clearRule: "攻略法：見かけの明るさだけでなく距離を考え、デネブが本当に明るい星だと読む。",
     reward: {
       id: "deneb-luminosity-scroll",
-      title: "大光度星の巻物",
+      title: "大光度星",
       message: "デネブを観測してゲットしました。",
-      image: "./assets/reward-scroll-deneb-luminosity.png",
+      image: "./assets/scroll-absolute-magnitude-distance.png",
       tier: "major",
       knowledgeTitle: "",
       knowledge: ["距離込みで明るさ"]
@@ -1180,9 +1180,9 @@ const STORIES = {
     clearRule: "攻略法：青い星は高温、橙の星は低温という色の対比を読む。",
     reward: {
       id: "albireo-color-scroll",
-      title: "色指数の巻物",
+      title: "色指数",
       message: "アルビレオを観測してゲットしました。",
-      image: "./assets/reward-scroll-albireo-color.png",
+      image: "./assets/scroll-color-index.png",
       tier: "major",
       knowledgeTitle: "",
       knowledge: ["色は温度の手がかり"]
@@ -1220,7 +1220,7 @@ const STORIES = {
     clearRule: "攻略法：半年ごとの位置差を測り、近い星ほど視差が大きいと読む。",
     reward: {
       id: "cygnus-parallax-scroll",
-      title: "年周視差の巻物",
+      title: "年周視差",
       message: "61 Cygniを観測してゲットしました。",
       image: "./assets/reward-scroll-cygnus-parallax.png",
       tier: "major",
@@ -1260,9 +1260,9 @@ const STORIES = {
     clearRule: "攻略法：星そのものの脈動で光度が周期的に変わると読む。",
     reward: {
       id: "mira-pulsation-scroll",
-      title: "脈動変光星の巻物",
+      title: "脈動変光星",
       message: "ミラを観測してゲットしました。",
-      image: "./assets/reward-scroll-mira-pulsation.png",
+      image: "./assets/scroll-pulsating-star.png",
       tier: "major",
       knowledgeTitle: "",
       knowledge: ["星が脈動して変光"]
@@ -1300,9 +1300,9 @@ const STORIES = {
     clearRule: "攻略法：アンドロメダ座は入口で、その方向の奥にM31銀河があると読む。",
     reward: {
       id: "galaxy-distance-scroll",
-      title: "M31銀河距離の巻物",
+      title: "M31銀河距離",
       message: "M31を観測してゲットしました。",
-      image: "./assets/reward-scroll-m31-galaxy.png",
+      image: "./assets/scroll-m31-galaxy.png",
       tier: "major",
       knowledgeTitle: "",
       knowledge: ["星座の奥に銀河"]
@@ -1340,9 +1340,9 @@ const STORIES = {
     clearRule: "攻略法：赤い色は低温、しかし半径が大きい赤色超巨星だと読む。",
     reward: {
       id: "betelgeuse-redgiant-scroll",
-      title: "赤色超巨星の巻物",
+      title: "赤色超巨星",
       message: "ベテルギウスを観測してゲットしました。",
-      image: "./assets/reward-scroll-betelgeuse-redgiant.png",
+      image: "./assets/scroll-red-supergiant.png",
       tier: "major",
       knowledgeTitle: "",
       knowledge: ["赤い超巨星は低温巨大"]
@@ -1380,9 +1380,9 @@ const STORIES = {
     clearRule: "攻略法：シリウスは近いため非常に明るく見えると読み、見かけと絶対光度を分ける。",
     reward: {
       id: "sirius-brightness-scroll",
-      title: "見かけの明るさの巻物",
+      title: "見かけの明るさ",
       message: "シリウスを観測してゲットしました。",
-      image: "./assets/reward-scroll-sirius-brightness.png",
+      image: "./assets/scroll-apparent-brightness.png",
       tier: "major",
       knowledgeTitle: "",
       knowledge: ["明るさは距離も効く"]
@@ -1464,8 +1464,8 @@ const ADDITIONAL_STORIES = {
     ],
     reward: {
       id: "m31-cepheid-scroll",
-      title: "M31セファイドの巻物",
-      image: "./assets/reward-scroll-m31-cepheid.png",
+      title: "M31セファイド",
+      image: "./assets/scroll-m31-cepheid.png",
       lesson: "周期で銀河距離"
     },
     lines: [
@@ -1488,8 +1488,8 @@ const ADDITIONAL_STORIES = {
     ],
     reward: {
       id: "dark-matter-scroll",
-      title: "暗黒物質の巻物",
-      image: "./assets/reward-scroll-dark-matter.png",
+      title: "暗黒物質",
+      image: "./assets/scroll-dark-matter.png",
       lesson: "見えない質量がある"
     },
     lines: [
@@ -1512,8 +1512,8 @@ const ADDITIONAL_STORIES = {
     ],
     reward: {
       id: "quasar-scroll",
-      title: "クエーサーの巻物",
-      image: "./assets/reward-scroll-quasar.png",
+      title: "クエーサー",
+      image: "./assets/scroll-quasar.png",
       lesson: "遠方AGNは明るい"
     },
     lines: [
@@ -1536,8 +1536,8 @@ const ADDITIONAL_STORIES = {
     ],
     reward: {
       id: "cmb-scroll",
-      title: "宇宙背景放射の巻物",
-      image: "./assets/reward-scroll-cmb.png",
+      title: "宇宙背景放射",
+      image: "./assets/scroll-cmb.png",
       lesson: "宇宙に熱の残響"
     },
     lines: [
@@ -1560,8 +1560,8 @@ const ADDITIONAL_STORIES = {
     ],
     reward: {
       id: "pulsar-scroll",
-      title: "パルサーの巻物",
-      image: "./assets/reward-scroll-pulsar.png",
+      title: "パルサー",
+      image: "./assets/scroll-pulsar.png",
       lesson: "中性子星が脈打つ"
     },
     lines: [
@@ -1584,8 +1584,8 @@ const ADDITIONAL_STORIES = {
     ],
     reward: {
       id: "xray-blackhole-scroll",
-      title: "X線連星BHの巻物",
-      image: "./assets/reward-scroll-xray-blackhole.png",
+      title: "X線連星BH",
+      image: "./assets/scroll-xray-binary.png",
       lesson: "見えないBHを推定"
     },
     lines: [
@@ -1608,8 +1608,8 @@ const ADDITIONAL_STORIES = {
     ],
     reward: {
       id: "sn1987a-scroll",
-      title: "SN1987Aの巻物",
-      image: "./assets/reward-scroll-sn1987a.png",
+      title: "SN1987A",
+      image: "./assets/scroll-sn1987a.png",
       lesson: "超新星で元素が散る"
     },
     lines: [
@@ -1632,8 +1632,8 @@ const ADDITIONAL_STORIES = {
     ],
     reward: {
       id: "m87-blackhole-scroll",
-      title: "M87ブラックホールの巻物",
-      image: "./assets/reward-scroll-m87-blackhole.png",
+      title: "M87ブラックホール",
+      image: "./assets/scroll-m87-blackhole.png",
       lesson: "BH影を直接画像化"
     },
     lines: [
@@ -1656,8 +1656,8 @@ const ADDITIONAL_STORIES = {
     ],
     reward: {
       id: "gravitational-waves-scroll",
-      title: "重力波の巻物",
-      image: "./assets/reward-scroll-gravitational-waves.png",
+      title: "重力波",
+      image: "./assets/scroll-gravitational-waves.png",
       lesson: "時空の波を観測"
     },
     lines: [
@@ -1680,8 +1680,8 @@ const ADDITIONAL_STORIES = {
     ],
     reward: {
       id: "accelerating-expansion-scroll",
-      title: "宇宙加速膨張の巻物",
-      image: "./assets/reward-scroll-accelerating-expansion.png",
+      title: "宇宙加速膨張",
+      image: "./assets/scroll-dark-energy.png",
       lesson: "遠方SNで加速膨張"
     },
     lines: [
@@ -2017,16 +2017,16 @@ Object.assign(OBSERVE_COPY, {
 const LIBRARY_SCROLLS = [
   {
     id: "rigel-color-luminosity-scroll",
-    title: "星色と大光度の巻物",
+    title: "星色と大光度",
     period: "冬の王国",
-    image: "./assets/reward-scroll-rigel-luminosity.png",
+    image: "./assets/scroll-blue-star-temp.png",
     tier: "major",
     lesson: "青白い星ほど高温",
     description: "リゲルは青白く高温で、遠くにあっても強く輝く大光度星。星の色は表面温度を読む手がかりになる。"
   },
   {
     id: "cygnus-parallax-scroll",
-    title: "年周視差の巻物",
+    title: "年周視差",
     period: "夏の王国",
     image: "./assets/reward-scroll-cygnus-parallax.png",
     tier: "major",
@@ -2035,72 +2035,72 @@ const LIBRARY_SCROLLS = [
   },
   {
     id: "arcturus-giant-scroll",
-    title: "橙色巨星の巻物",
+    title: "橙色巨星",
     period: "春の王国",
-    image: "./assets/reward-scroll-arcturus-giant.png",
+    image: "./assets/scroll-giant-star-expansion.png",
     tier: "major",
     lesson: "橙色巨星は低温",
     description: "アルクトゥルスは橙色に見える巨星。青白い星より表面温度は低いが、大きくふくらんだため明るく見える。"
   },
   {
     id: "spica-spectrum-scroll",
-    title: "分光連星の巻物",
+    title: "分光連星",
     period: "春の王国",
-    image: "./assets/reward-scroll-spica-spectrum.png",
+    image: "./assets/scroll-spectral-binary.png",
     tier: "major",
     lesson: "スペクトルで連星",
     description: "近すぎて分けて見えない連星も、スペクトル線の周期的なずれから連星だと分かる。"
   },
   {
     id: "deneb-luminosity-scroll",
-    title: "大光度星の巻物",
+    title: "大光度星",
     period: "夏の王国",
-    image: "./assets/reward-scroll-deneb-luminosity.png",
+    image: "./assets/scroll-absolute-magnitude-distance.png",
     tier: "major",
     lesson: "距離込みで明るさ",
     description: "デネブは非常に遠いが、本当の光度が大きいため明るく見える。見かけの明るさと絶対等級を分けて読む。"
   },
   {
     id: "vega-absolute-magnitude-scroll",
-    title: "絶対等級の巻物",
+    title: "絶対等級",
     period: "夏の王国",
-    image: "./assets/reward-scroll-vega-absolute-magnitude.png",
+    image: "./assets/scroll-absolute-magnitude.png",
     tier: "major",
     lesson: "距離で明るさ補正",
     description: "ベガは等級の基準星として扱われてきた。見かけの等級に距離を入れて補正すると、星本来の明るさである絶対等級が分かる。"
   },
   {
     id: "albireo-color-scroll",
-    title: "色指数の巻物",
+    title: "色指数",
     period: "夏の王国",
-    image: "./assets/reward-scroll-albireo-color.png",
+    image: "./assets/scroll-color-index.png",
     tier: "major",
     lesson: "色は温度の手がかり",
     description: "アルビレオの青と橙の対比は、星の色が表面温度を反映することを直感的に示す。"
   },
   {
     id: "mira-pulsation-scroll",
-    title: "脈動変光星の巻物",
+    title: "脈動変光星",
     period: "秋の王国",
-    image: "./assets/reward-scroll-mira-pulsation.png",
+    image: "./assets/scroll-pulsating-star.png",
     tier: "major",
     lesson: "星が脈動して変光",
     description: "ミラは星そのものが膨張収縮することで明るさを大きく変える長周期の脈動変光星。"
   },
   {
     id: "betelgeuse-redgiant-scroll",
-    title: "赤色超巨星の巻物",
+    title: "赤色超巨星",
     period: "冬の王国",
-    image: "./assets/reward-scroll-betelgeuse-redgiant.png",
+    image: "./assets/scroll-red-supergiant.png",
     tier: "major",
     lesson: "赤い超巨星は低温巨大",
     description: "ベテルギウスは赤色超巨星。赤い色は低温を示すが、半径が非常に大きいため明るく輝く。"
   },
   {
     id: "sirius-brightness-scroll",
-    title: "見かけの明るさの巻物",
+    title: "見かけの明るさ",
     period: "冬の王国",
-    image: "./assets/reward-scroll-sirius-brightness.png",
+    image: "./assets/scroll-apparent-brightness.png",
     tier: "major",
     lesson: "明るさは距離も効く",
     description: "シリウスは非常に近いため強く明るく見える。見かけの明るさは本当の光度と距離の両方で決まる。"
@@ -2145,16 +2145,16 @@ const LIBRARY_SCROLLS = [
     id: "mercury-elongation-scroll",
     title: "水星の最大離角",
     period: "天球観測塔",
-    image: "./assets/reward-scroll-minor-mercury-elongation.png",
+    image: "./assets/obs-mercury-elongation.png",
     tier: "minor",
     lesson: "内惑星は離角で探す",
     description: "水星は太陽に近い内惑星なので、太陽からの見かけの角度が最大になる最大離角のころ観測しやすい。"
   },
   {
     id: "sun-luminosity-scroll",
-    title: "太陽光度の巻物",
+    title: "太陽光度",
     period: "天球観測塔",
-    image: "./assets/reward-scroll-minor-sun-luminosity.png",
+    image: "./assets/obs-sun-reference.png",
     tier: "minor",
     lesson: "太陽は恒星の基準",
     description: "太陽の光度を 1 L☉、質量を 1 M☉ として、他の恒星の明るさや質量を比べる基準にする。"
@@ -2163,7 +2163,7 @@ const LIBRARY_SCROLLS = [
     id: "uranus-tilt-scroll",
     title: "天王星の傾き",
     period: "天球観測塔",
-    image: "./assets/reward-scroll-minor-uranus-tilt.png",
+    image: "./assets/obs-uranus-tilt.png",
     tier: "minor",
     lesson: "天王星は横倒し",
     description: "天王星は自転軸が約98度傾くため、横倒しに近い姿で太陽を巡る氷巨大惑星。"
@@ -2172,16 +2172,16 @@ const LIBRARY_SCROLLS = [
     id: "neptune-calculation-scroll",
     title: "計算で見つかった惑星",
     period: "天球観測塔",
-    image: "./assets/reward-scroll-minor-neptune-calculation.png",
+    image: "./assets/obs-neptune-prediction.png",
     tier: "minor",
     lesson: "計算で惑星発見",
     description: "海王星は天王星の軌道のずれを手がかりに、未知の惑星の位置を計算して発見された。観測と理論が結びついた例。"
   },
   {
     id: "spectrum-redshift-scroll",
-    title: "スペクトルデータ",
+    title: "スペクトル赤方偏移",
     period: "銀河の奥",
-    image: "./assets/reward-scroll-spectrum-redshift.png",
+    image: "./assets/obs-redshift-spectrum.png",
     tier: "minor",
     lesson: "赤方偏移を読む",
     description: "遠ざかる天体の光は赤い側へずれる。スペクトルは、天体の運動を読む重要な観測記録になる。",
@@ -2189,27 +2189,27 @@ const LIBRARY_SCROLLS = [
   },
   {
     id: "galaxy-distance-scroll",
-    title: "M31銀河距離の巻物",
+    title: "M31銀河距離",
     period: "秋の王国",
-    image: "./assets/reward-scroll-m31-galaxy.png",
+    image: "./assets/scroll-m31-galaxy.png",
     tier: "major",
     lesson: "星座の奥に銀河",
     description: "M31はアンドロメダ座の方向にある渦巻銀河。星座は入口で、その奥には銀河という大きな構造がある。"
   },
   {
     id: "algol-eclipse-scroll",
-    title: "食変光星の巻物",
+    title: "食変光星",
     period: "秋の王国",
-    image: "./assets/reward-scroll-algol-eclipse.png",
+    image: "./assets/scroll-eclipsing-binary.png",
     tier: "major",
     lesson: "食で光度が下がる",
     description: "アルゴルの暗くなる周期は、伴星が前を通って主星の光を隠す食で説明できる。"
   },
   {
     id: "mizar-double-star-scroll",
-    title: "二重星の巻物",
+    title: "二重星",
     period: "春の王国",
-    image: "./assets/reward-scroll-mizar-double-star.png",
+    image: "./assets/scroll-optical-double.png",
     tier: "major",
     lesson: "近くに見えても別距離",
     description: "星座の星は見かけの並び。二重星や連星を観測すると、点に見える星の奥行きがほどける。"
@@ -2219,270 +2219,270 @@ const LIBRARY_SCROLLS = [
 LIBRARY_SCROLLS.push(
   {
     id: "geocentric-model-scroll",
-    title: "天動説の巻物",
+    title: "天動説",
     period: "クエスト",
-    image: "./assets/reward-scroll-geocentric-model.png",
+    image: "./assets/obs-geocentrism.png",
     tier: "minor",
     lesson: "古代宇宙観の出発点",
     description: "地球を中心に天体が回ると考えた古い宇宙像。惑星の逆行が大きな問題になった。"
   },
   {
     id: "heliocentric-theory-scroll",
-    title: "地動説の巻物",
+    title: "地動説",
     period: "クエスト",
-    image: "./assets/reward-scroll-heliocentric-theory.png",
+    image: "./assets/scroll-heliocentrism.png",
     tier: "major",
     lesson: "太陽中心へ転換",
     description: "惑星と太陽を中心に宇宙観を組み替えた発見。以後の天文学の基盤になる。"
   },
   {
     id: "telescope-observation-scroll",
-    title: "望遠鏡観測の巻物",
+    title: "望遠鏡観測",
     period: "クエスト",
-    image: "./assets/reward-scroll-telescope-observation.png",
+    image: "./assets/scroll-telescope-revolution.png",
     tier: "major",
     lesson: "肉眼から望遠鏡へ",
     description: "月、木星、金星、恒星を望遠鏡で観測し、肉眼天文学から観測天文学へ進んだ。"
   },
   {
     id: "universal-gravity-scroll",
-    title: "万有引力の巻物",
+    title: "万有引力",
     period: "クエスト",
-    image: "./assets/reward-scroll-universal-gravity.png",
+    image: "./assets/scroll-universal-gravitation.png",
     tier: "major",
     lesson: "天体運動を力で説明",
     description: "惑星、月、彗星の運動を一つの重力法則で説明する。連星質量の理解にもつながる。"
   },
   {
     id: "proper-motion-scroll",
-    title: "固有運動の巻物",
+    title: "固有運動",
     period: "恒星バトル",
-    image: "./assets/reward-scroll-proper-motion.png",
+    image: "./assets/scroll-proper-motion.png",
     tier: "major",
     lesson: "恒星も動いている",
     description: "恒星は固定背景ではなく、長い時間で固有運動を示す。天の川内の恒星運動を読む入口。"
   },
   {
     id: "aberration-scroll",
-    title: "光行差の巻物",
+    title: "光行差",
     period: "恒星バトル",
-    image: "./assets/reward-scroll-aberration.png",
+    image: "./assets/scroll-stellar-aberration.png",
     tier: "major",
     lesson: "公転で位置がずれる",
     description: "地球公転により恒星の見かけ位置がわずかに変わる。精密位置天文学の重要発見。"
   },
   {
     id: "helium-solar-spectrum-scroll",
-    title: "太陽ヘリウムの巻物",
+    title: "太陽ヘリウム",
     period: "太陽ステージ",
-    image: "./assets/reward-scroll-helium-solar-spectrum.png",
+    image: "./assets/obs-helium-spectrum.png",
     tier: "minor",
     lesson: "太陽スペクトルで元素発見",
     description: "地上で見つかる前に、太陽スペクトルからヘリウムが発見された。"
   },
   {
     id: "cepheid-pl-scroll",
-    title: "セファイド周期光度の巻物",
+    title: "セファイド周期光度",
     period: "変光星バトル",
-    image: "./assets/reward-scroll-cepheid-pl.png",
+    image: "./assets/scroll-cepheid-distance.png",
     tier: "major",
     lesson: "周期で距離を測る",
     description: "セファイド変光星は周期から本当の明るさを推定でき、銀河距離測定の鍵になる。"
   },
   {
     id: "hr-diagram-scroll",
-    title: "HR図の巻物",
+    title: "HR図",
     period: "恒星図鑑バトル",
-    image: "./assets/reward-scroll-hr-diagram.png",
+    image: "./assets/scroll-hr-diagram.png",
     tier: "major",
     lesson: "色と光度で星を整理",
     description: "恒星の色、明るさ、進化段階を整理する基本図。主系列、巨星、白色矮星を見分ける。"
   },
   {
     id: "general-relativity-scroll",
-    title: "一般相対論の巻物",
+    title: "一般相対論",
     period: "クエスト",
-    image: "./assets/reward-scroll-general-relativity.png",
+    image: "./assets/scroll-spacetime-curvature.png",
     tier: "major",
     lesson: "重力は時空の曲がり",
     description: "重力理解を更新し、ブラックホールや宇宙論へつながる理論の土台。"
   },
   {
     id: "light-bending-scroll",
-    title: "光の曲がりの巻物",
+    title: "光の曲がり",
     period: "日食クエスト",
-    image: "./assets/reward-scroll-light-bending.png",
+    image: "./assets/scroll-light-bending.png",
     tier: "major",
     lesson: "太陽重力で光が曲がる",
     description: "太陽近くを通る恒星光が曲がる観測は、一般相対論の重要な検証になった。"
   },
   {
     id: "galaxy-nature-scroll",
-    title: "銀河の正体の巻物",
+    title: "銀河の正体",
     period: "外宇宙ゲート",
-    image: "./assets/reward-scroll-galaxy-nature.png",
+    image: "./assets/scroll-extragalactic.png",
     tier: "major",
     lesson: "宇宙は天の川だけでない",
     description: "天の川以外にも巨大な銀河があると分かり、宇宙の階層が広がった。"
   },
   {
     id: "m31-cepheid-scroll",
-    title: "M31セファイドの巻物",
+    title: "M31セファイド",
     period: "銀河深淵域",
-    image: "./assets/reward-scroll-m31-cepheid.png",
+    image: "./assets/scroll-m31-cepheid.png",
     tier: "major",
     lesson: "M31は天の川の外",
     description: "M31内のセファイド変光星により、アンドロメダ銀河が天の川の外にあると示された。"
   },
   {
     id: "hubble-law-scroll",
-    title: "ハッブルの法則の巻物",
+    title: "ハッブルの法則",
     period: "クエスト",
-    image: "./assets/reward-scroll-hubble-law.png",
+    image: "./assets/scroll-hubble-expansion.png",
     tier: "major",
     lesson: "遠い銀河ほど速く遠ざかる",
     description: "銀河の距離と後退速度の関係から、宇宙膨張が観測的に示された。"
   },
   {
     id: "dark-matter-scroll",
-    title: "暗黒物質の巻物",
+    title: "暗黒物質",
     period: "銀河深淵域",
-    image: "./assets/reward-scroll-dark-matter.png",
+    image: "./assets/scroll-dark-matter.png",
     tier: "major",
     lesson: "見えない質量がある",
     description: "銀河団の運動は、見える物質だけでは説明できない重力源を示す。"
   },
   {
     id: "white-dwarf-scroll",
-    title: "白色矮星の巻物",
+    title: "白色矮星",
     period: "シリウスBバトル",
-    image: "./assets/reward-scroll-white-dwarf.png",
+    image: "./assets/scroll-white-dwarf.png",
     tier: "major",
     lesson: "恒星進化の終末",
     description: "白色矮星は恒星進化の終末段階。シリウスBは代表的な白色矮星として重要。"
   },
   {
     id: "stellar-fusion-scroll",
-    title: "恒星核融合の巻物",
+    title: "恒星核融合",
     period: "主系列星バトル",
-    image: "./assets/reward-scroll-stellar-fusion.png",
+    image: "./assets/scroll-nuclear-fusion.png",
     tier: "major",
     lesson: "星は核融合で輝く",
     description: "恒星内部の核融合が、星が長く輝くエネルギー源を説明する。"
   },
   {
     id: "nucleosynthesis-scroll",
-    title: "元素合成の巻物",
+    title: "元素合成",
     period: "巨星・超新星バトル",
-    image: "./assets/reward-scroll-nucleosynthesis.png",
+    image: "./assets/scroll-nucleosynthesis.png",
     tier: "major",
     lesson: "元素は星で作られる",
     description: "恒星と超新星で重い元素が作られ、宇宙の物質進化を説明する。"
   },
   {
     id: "quasar-scroll",
-    title: "クエーサーの巻物",
+    title: "クエーサー",
     period: "銀河深淵域",
-    image: "./assets/reward-scroll-quasar.png",
+    image: "./assets/scroll-quasar.png",
     tier: "major",
     lesson: "遠方AGNは非常に明るい",
     description: "クエーサーは遠方の活動銀河核。巨大ブラックホール研究につながる。"
   },
   {
     id: "cmb-scroll",
-    title: "宇宙背景放射の巻物",
+    title: "宇宙背景放射",
     period: "銀河深淵域",
-    image: "./assets/reward-scroll-cmb.png",
+    image: "./assets/scroll-cmb.png",
     tier: "major",
     lesson: "ビッグバンの残光",
     description: "宇宙マイクロ波背景放射は、熱い初期宇宙の残光としてビッグバン宇宙論を支える。"
   },
   {
     id: "pulsar-scroll",
-    title: "パルサーの巻物",
+    title: "パルサー",
     period: "銀河深淵域",
-    image: "./assets/reward-scroll-pulsar.png",
+    image: "./assets/scroll-pulsar.png",
     tier: "major",
     lesson: "中性子星が脈打つ",
     description: "規則正しいパルスは、回転する中性子星から届く信号。恒星進化の極限を示す。"
   },
   {
     id: "xray-blackhole-scroll",
-    title: "X線連星BHの巻物",
+    title: "X線連星BH",
     period: "銀河深淵域",
-    image: "./assets/reward-scroll-xray-blackhole.png",
+    image: "./assets/scroll-xray-binary.png",
     tier: "major",
     lesson: "見えないBHを推定",
     description: "X線連星では、見えない重い伴星を間接的に観測しブラックホール候補を調べる。"
   },
   {
     id: "sn1987a-scroll",
-    title: "SN1987Aの巻物",
+    title: "SN1987A",
     period: "銀河深淵域",
-    image: "./assets/reward-scroll-sn1987a.png",
+    image: "./assets/scroll-sn1987a.png",
     tier: "major",
     lesson: "近傍銀河の超新星",
     description: "大マゼラン雲の超新星1987Aは、恒星進化とニュートリノ観測で重要。"
   },
   {
     id: "exoplanet-pulsar-scroll",
-    title: "系外惑星発見の巻物",
+    title: "系外惑星発見",
     period: "惑星探索",
-    image: "./assets/reward-scroll-exoplanet-pulsar.png",
+    image: "./assets/obs-pulsar-exoplanet.png",
     tier: "minor",
     lesson: "太陽系外にも惑星",
     description: "パルサー周辺の惑星発見により、太陽系外にも惑星があることが確認された。"
   },
   {
     id: "exoplanet-main-sequence-scroll",
-    title: "主系列星系外惑星の巻物",
+    title: "主系列星系外惑星",
     period: "恒星＋惑星バトル",
-    image: "./assets/reward-scroll-exoplanet-main-sequence.png",
+    image: "./assets/scroll-exoplanet-transit.png",
     tier: "major",
     lesson: "太陽型恒星にも惑星",
     description: "主系列星まわりの系外惑星発見は、惑星系が宇宙に広くあることを示した。"
   },
   {
     id: "accelerating-expansion-scroll",
-    title: "宇宙加速膨張の巻物",
+    title: "宇宙加速膨張",
     period: "銀河深淵域",
-    image: "./assets/reward-scroll-accelerating-expansion.png",
+    image: "./assets/scroll-dark-energy.png",
     tier: "major",
     lesson: "遠方SNで加速膨張",
     description: "遠方Ia型超新星の観測から、宇宙膨張が加速していることが示された。"
   },
   {
     id: "asteroid-exploration-scroll",
-    title: "小惑星探査の巻物",
+    title: "小惑星探査",
     period: "小惑星探索",
-    image: "./assets/reward-scroll-asteroid-sample.png",
+    image: "./assets/obs-asteroid-age.png",
     tier: "minor",
     lesson: "小惑星は初期物質",
     description: "小惑星探査は、太陽系形成や生命材料の手がかりを直接調べる道を開く。"
   },
   {
     id: "ryugu-sample-scroll",
-    title: "リュウグウ試料の巻物",
+    title: "リュウグウ試料",
     period: "小惑星研究所",
-    image: "./assets/reward-scroll-ryugu-sample.png",
+    image: "./assets/obs-asteroid-age.png",
     tier: "minor",
     lesson: "試料で有機物を調べる",
     description: "リュウグウ試料分析は、有機物、水、太陽系初期物質を直接調べる重要な成果。"
   },
   {
     id: "gravitational-waves-scroll",
-    title: "重力波の巻物",
+    title: "重力波",
     period: "銀河深淵域",
-    image: "./assets/reward-scroll-gravitational-waves.png",
+    image: "./assets/scroll-gravitational-waves.png",
     tier: "major",
     lesson: "光以外で宇宙を見る",
     description: "ブラックホール連星からの重力波検出は、重力波天文学の始まりを示した。"
   },
   {
     id: "m87-blackhole-scroll",
-    title: "M87ブラックホールの巻物",
+    title: "M87ブラックホール",
     period: "銀河深淵域",
-    image: "./assets/reward-scroll-m87-blackhole.png",
+    image: "./assets/scroll-m87-blackhole.png",
     tier: "major",
     lesson: "BH影を直接画像化",
     description: "M87中心ブラックホールのシャドウ画像は、ブラックホールを直接的に検証する重要成果。"
@@ -3359,8 +3359,7 @@ function renderQuestRequirement(requirement) {
 
   return `
     <span class="quest-requirement${acquired ? " acquired" : " missing"}">
-      <img src="${withAssetVersion(getRequirementImage(requirement))}" alt="" aria-hidden="true" />
-      <span>${requirement.label}</span>
+      <img src="${withAssetVersion(getRequirementImage(requirement))}" alt="${requirement.label}" />
       <b>${acquired ? "✓" : "−"}</b>
     </span>
   `;
@@ -3497,7 +3496,9 @@ function renderLibraryTab() {
       </div>
       <div class="app-scroll-area">
         <div class="library-scroll-grid" aria-label="巻物一覧">
-          ${LIBRARY_SCROLLS.map((scroll) => {
+          ${[...LIBRARY_SCROLLS]
+            .sort((a, b) => (a.tier === "minor" ? 1 : 0) - (b.tier === "minor" ? 1 : 0))
+            .map((scroll) => {
             const unlocked = claimedRewards.has(scroll.id);
             return `
               <button class="library-scroll-card ${scroll.tier ?? "major"}-tier${unlocked ? " unlocked" : " locked"}${selected.id === scroll.id ? " selected" : ""}" type="button" ${unlocked ? `data-scroll-id="${scroll.id}"` : 'aria-disabled="true"'}>
