@@ -3621,6 +3621,7 @@ function renderGuideNote(title, note) {
 
 function renderStory() {
   const story = STORIES[state.storyId];
+  const pointLabel = Object.values(KINGDOMS).flatMap(k => k.points ?? []).find(p => p.storyId === state.storyId)?.label ?? story.name;
   const line = story.lines[state.lineIndex];
   const pattern = line.pattern ?? "normal";
   const sprite = story.enemy[pattern] ?? story.enemy.normal;
@@ -3635,7 +3636,7 @@ function renderStory() {
   enemySprite.className = `enemy-sprite story-${state.storyId} pattern-${pattern}`;
   targetStatusThumb.src = sprite;
   targetStatusThumb.alt = story.name;
-  targetStatusName.textContent = story.name;
+  targetStatusName.textContent = pointLabel;
   targetStatusStats.innerHTML = "";
   story.status.rows.forEach((row) => {
     const item = document.createElement("div");
@@ -3652,9 +3653,9 @@ function renderStory() {
   });
   targetStatusMeter.style.setProperty("--meter", `${story.status.meter[pattern] ?? 70}%`);
   storySceneTypeEl.textContent = story.type;
-  storySceneNameEl.textContent = story.name;
+  storySceneNameEl.textContent = pointLabel;
   storyTypeEl.textContent = story.type;
-  storyNameEl.textContent = story.name;
+  storyNameEl.textContent = pointLabel;
   storySubtitleEl.textContent = "";
   storySubtitleEl.hidden = true;
   storyTextSpeaker.textContent = line.speaker;
