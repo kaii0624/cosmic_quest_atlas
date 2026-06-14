@@ -3596,7 +3596,7 @@ button {
 
 .tower-marker {
   --tower-frame: url("./assets/ui-tower-frame.png?v=tower-v3");
-  width: clamp(220px, 30vw, 330px);
+  width: clamp(154px, 21vw, 231px);
   min-width: 0;
   aspect-ratio: 3 / 2;
   display: flex;
@@ -3643,10 +3643,10 @@ button {
 
 @media (max-width: 700px) {
   .tower-marker {
-    width: 190px;
-    min-width: 190px;
-    min-height: 62px;
-    padding: 0.05em 19px 0.1em 54px;
+    width: 133px;
+    min-width: 133px;
+    min-height: 44px;
+    padding: 0.05em 13px 0.1em 38px;
     font-size: 0.76rem;
   }
 }
