@@ -5726,6 +5726,32 @@ button {
   opacity: 0.96;
 }
 
+.detail-canvas[data-kingdom="deep"] .story-point {
+  width: clamp(52px, 8vw, 76px);
+  height: clamp(52px, 8vw, 76px);
+  background: none;
+  filter:
+    drop-shadow(0 0 11px rgba(129, 188, 255, 0.58))
+    drop-shadow(0 0 16px rgba(255, 219, 124, 0.44))
+    drop-shadow(0 6px 0 rgba(5, 4, 12, 0.48));
+}
+
+.detail-canvas[data-kingdom="deep"] .story-point img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  pointer-events: none;
+}
+
+.detail-canvas[data-kingdom="deep"] .story-point:hover,
+.detail-canvas[data-kingdom="deep"] .story-point:focus-visible {
+  filter:
+    brightness(1.12)
+    drop-shadow(0 0 16px rgba(161, 209, 255, 0.76))
+    drop-shadow(0 0 22px rgba(255, 225, 129, 0.62))
+    drop-shadow(0 7px 0 rgba(5, 4, 12, 0.52));
+}
+
 .detail-canvas[data-kingdom="tower"] .story-point {
   width: clamp(82px, 12vw, 126px);
   height: clamp(82px, 12vw, 126px);
@@ -7595,6 +7621,10 @@ button {
   transform: scale(1.06);
 }
 
+.map-stage.mode-home .tower-marker {
+  display: none;
+}
+
 .home-selection-panel.deep {
   --home-accent: #b879ff;
 }
@@ -7610,15 +7640,20 @@ button {
 }
 
 .detail-canvas[data-kingdom="deep"] .story-point {
-  --point-orb: url("./assets/ui-star-orb-galaxy.png");
+  width: clamp(52px, 8vw, 76px);
+  height: clamp(52px, 8vw, 76px);
+  background: none;
   filter:
-    drop-shadow(0 0 13px rgba(194, 139, 255, 0.82))
+    drop-shadow(0 0 11px rgba(129, 188, 255, 0.58))
+    drop-shadow(0 0 17px rgba(255, 219, 124, 0.48))
     drop-shadow(0 4px 0 rgba(7, 5, 8, 0.52));
 }
 
-.detail-canvas[data-kingdom="deep"] .story-point:nth-child(3n + 1),
-.detail-canvas[data-kingdom="deep"] .story-point:nth-child(3n) {
-  --point-orb: url("./assets/ui-star-orb-galaxy.png");
+.detail-canvas[data-kingdom="deep"] .story-point img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  pointer-events: none;
 }
 
 .detail-canvas[data-kingdom="deep"] .story-point::after {
@@ -7627,11 +7662,34 @@ button {
     linear-gradient(180deg, rgba(36, 24, 76, 0.98), rgba(6, 9, 35, 0.98));
 }
 
+.game-shell[data-kingdom="deep"] .winter-star-orb-button.asset-item .winter-star-orb {
+  width: min(100%, 150px);
+  aspect-ratio: 1;
+  display: grid;
+  place-items: center;
+  background: none;
+  filter:
+    drop-shadow(0 7px 0 rgba(8, 5, 8, 0.42))
+    drop-shadow(0 0 14px rgba(185, 126, 255, 0.48))
+    drop-shadow(0 0 10px rgba(255, 218, 119, 0.28));
+}
+
+.game-shell[data-kingdom="deep"] .winter-star-orb-button.asset-item .winter-star-orb img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
 @media (max-width: 700px) {
   .region-label.kingdom-marker.deep {
     left: 39%;
     bottom: 8.8%;
     min-width: 126px;
     font-size: 0.7rem;
+  }
+
+  .detail-canvas[data-kingdom="deep"] .story-point {
+    width: clamp(46px, 12vw, 58px);
+    height: clamp(46px, 12vw, 58px);
   }
 }

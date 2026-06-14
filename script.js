@@ -239,16 +239,16 @@ KINGDOMS.deep = {
   detailText: "天の川の向こうで、銀河、銀河団、クエーサー、宇宙背景放射が宇宙の階層を語る。",
   steps: ["M31セファイド", "銀河団", "クエーサー", "宇宙背景放射", "M87ブラックホール"],
   points: [
-    { id: "m31Cepheid", x: 31, y: 31, label: "M31変光星", storyId: "m31Cepheid" },
-    { id: "virgoCluster", x: 70, y: 29, label: "銀河団", storyId: "virgoDarkMatter" },
-    { id: "quasar", x: 82, y: 48, label: "クエーサー", storyId: "quasarBeacon" },
-    { id: "cmb", x: 50, y: 16, label: "CMB", storyId: "cmbEcho" },
-    { id: "pulsar", x: 24, y: 55, label: "パルサー", storyId: "pulsarBeacon" },
-    { id: "cygnusX1", x: 42, y: 68, label: "X線連星", storyId: "cygnusX1" },
-    { id: "sn1987a", x: 18, y: 78, label: "SN1987A", storyId: "sn1987a" },
-    { id: "m87Shadow", x: 69, y: 73, label: "M87", storyId: "m87Shadow" },
-    { id: "gravityWaves", x: 52, y: 86, label: "重力波", storyId: "gravityWaveGate" },
-    { id: "darkEnergy", x: 84, y: 84, label: "加速膨張", storyId: "darkEnergySupernova" }
+    { id: "m31Cepheid", x: 31, y: 31, label: "M31変光星", storyId: "m31Cepheid", asset: "./assets/deep-point-m31-cepheid.png" },
+    { id: "virgoCluster", x: 70, y: 29, label: "銀河団", storyId: "virgoDarkMatter", asset: "./assets/deep-point-virgo-darkmatter.png" },
+    { id: "quasar", x: 82, y: 48, label: "クエーサー", storyId: "quasarBeacon", asset: "./assets/deep-point-quasar.png" },
+    { id: "cmb", x: 50, y: 16, label: "CMB", storyId: "cmbEcho", asset: "./assets/deep-point-cmb.png" },
+    { id: "pulsar", x: 24, y: 55, label: "パルサー", storyId: "pulsarBeacon", asset: "./assets/deep-point-pulsar.png" },
+    { id: "cygnusX1", x: 42, y: 68, label: "X線連星", storyId: "cygnusX1", asset: "./assets/deep-point-xray-blackhole.png" },
+    { id: "sn1987a", x: 18, y: 78, label: "SN1987A", storyId: "sn1987a", asset: "./assets/deep-point-sn1987a.png" },
+    { id: "m87Shadow", x: 69, y: 73, label: "M87", storyId: "m87Shadow", asset: "./assets/deep-point-m87-blackhole.png" },
+    { id: "gravityWaves", x: 52, y: 86, label: "重力波", storyId: "gravityWaveGate", asset: "./assets/deep-point-gravity-waves.png" },
+    { id: "darkEnergy", x: 84, y: 84, label: "加速膨張", storyId: "darkEnergySupernova", asset: "./assets/deep-point-dark-energy.png" }
   ]
 };
 
@@ -3380,12 +3380,13 @@ function renderObserveTab() {
               const lockedClass = item.locked ? " locked" : "";
               const selectedClass = selected.id === item.id ? " selected" : "";
               const planetClass = item.kind === "planet" ? " planet-item" : "";
-              const orbContent = item.kind === "planet" && item.asset
+              const assetClass = item.asset ? " asset-item" : "";
+              const orbContent = item.asset
                 ? `<img src="${withAssetVersion(item.asset)}" alt="" aria-hidden="true" />`
                 : "";
 
               return `
-                <button class="winter-star-orb-button ${orbClass}${lockedClass}${selectedClass}${planetClass}" type="button" data-observe-id="${item.id}">
+                <button class="winter-star-orb-button ${orbClass}${lockedClass}${selectedClass}${planetClass}${assetClass}" type="button" data-observe-id="${item.id}">
                   <span class="winter-star-orb" aria-hidden="true">${orbContent}</span>
                   <span class="winter-star-label">${item.label}</span>
                   <span class="observe-kingdom-name">${item.kingdomName}</span>
@@ -3624,18 +3625,19 @@ function renderPanel() {
               const orbClass = OBJECT_ORB_CLASSES[point.id] ?? ORB_CLASSES[index % ORB_CLASSES.length];
               const lockedClass = point.locked ? " locked" : "";
               const planetClass = point.kind === "planet" ? " planet-item" : "";
+              const assetClass = point.asset ? " asset-item" : "";
               const storyAttr = point.storyId
                 ? `data-story-id="${point.storyId}"`
                 : `data-guide-title="${point.label}" data-guide-note="${point.note}"`;
               const label = point.kind === "planet"
                 ? point.label
                 : STORIES[point.storyId]?.name ?? (point.id === "rigel" ? "青白き巨星リゲル" : point.label);
-              const orbContent = point.kind === "planet" && point.asset
+              const orbContent = point.asset
                 ? `<img src="${withAssetVersion(point.asset)}" alt="" aria-hidden="true" />`
                 : "";
 
               return `
-                <button class="winter-star-orb-button ${orbClass}${lockedClass}${planetClass}" type="button" ${storyAttr}>
+                <button class="winter-star-orb-button ${orbClass}${lockedClass}${planetClass}${assetClass}" type="button" ${storyAttr}>
                   <span class="winter-star-orb" aria-hidden="true">${orbContent}</span>
                   <span class="winter-star-label">${label}</span>
                 </button>
