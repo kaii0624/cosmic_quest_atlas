@@ -4207,7 +4207,7 @@ button {
   padding: clamp(18px, 3vw, 25px) clamp(22px, 4vw, 40px) clamp(16px, 2.8vw, 24px);
   border: 0;
   color: #24170f;
-  background: transparent url("./assets/ui-quest-flyer-card.png?v=quest-ui-v6") center / 100% 100% no-repeat;
+  background: transparent url("./assets/ui-quest-flyer-card.png?v=quest-ui-v7") center / 100% 100% no-repeat;
   cursor: pointer;
   font-family: "Hiragino Mincho ProN", "YuMincho", "Yu Mincho", serif;
   text-align: left;
@@ -4362,16 +4362,17 @@ button {
 .quest-requirements {
   display: flex;
   gap: 6px;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
+  min-width: 0;
 }
 
 .quest-requirement {
   position: relative;
   display: block;
-  width: clamp(72px, 11vw, 96px);
+  flex: 0 1 clamp(48px, 11vw, 96px);
+  min-width: 32px;
   aspect-ratio: 1;
   background: transparent;
-  flex-shrink: 0;
 }
 
 .quest-requirement img {
@@ -4828,7 +4829,7 @@ button {
   align-items: center;
   padding: clamp(30px, 5vw, 50px) clamp(32px, 6vw, 62px);
   color: #291a10;
-  background: transparent url("./assets/ui-quest-flyer-card.png?v=quest-ui-v6") center / 100% 100% no-repeat;
+  background: transparent url("./assets/ui-quest-flyer-card.png?v=quest-ui-v7") center / 100% 100% no-repeat;
   filter:
     drop-shadow(0 6px 0 rgba(14, 7, 3, 0.6))
     drop-shadow(0 0 15px rgba(255, 219, 111, 0.2));
@@ -5343,7 +5344,7 @@ button {
   }
 
   .quest-requirement {
-    width: clamp(60px, 9.6vw, 80px);
+    flex-basis: clamp(40px, 9.6vw, 80px);
   }
 
   .quest-requirement b {
@@ -7200,7 +7201,7 @@ button {
 
 .quest-card {
   overflow: visible;
-  background-image: url("./assets/ui-quest-flyer-card.png?v=quest-ui-v6") !important;
+  background-image: url("./assets/ui-quest-flyer-card.png?v=quest-ui-v7") !important;
   background-size: 100% 100% !important;
   padding-inline: clamp(18px, 3.4vw, 34px);
 }
