@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>COSMIC QUEST</title>
-    <link rel="stylesheet" href="./styles.css?v=vega-sun-map-v1" />
+    <link rel="stylesheet" href="./styles.css?v=deep-cosmos-v1" />
   </head>
   <body>
     <div class="star-dust" aria-hidden="true"></div>
@@ -13,7 +13,7 @@
         <div id="mapCanvas" class="map-canvas">
           <img
             class="world-art"
-            src="./assets/sky-continent-map.png?v=vega-sun-map-v1"
+            src="./assets/sky-continent-map.png?v=deep-cosmos-v1"
             alt="天空の大陸の星空RPGワールドマップ"
           />
           <div class="kingdom-layer-stack" aria-hidden="true">
@@ -47,6 +47,7 @@
           <button class="region-label kingdom-marker summer" type="button" data-kingdom="summer">夏の王国</button>
           <button class="region-label kingdom-marker autumn" type="button" data-kingdom="autumn">秋の王国</button>
           <button class="region-label kingdom-marker winter" type="button" data-kingdom="winter">冬の王国</button>
+          <button class="region-label kingdom-marker deep" type="button" data-kingdom="deep">外宇宙ゲート</button>
           <button id="towerButton" class="tower-label tower-marker" type="button" data-home-kingdom="tower">天球観測塔</button>
         </div>
         <div id="detailCanvas" class="detail-canvas" aria-label="星域MAP">
@@ -162,19 +163,16 @@
         </section>
 
         <section class="scroll-panel">
-          <h2>方程式の巻物</h2>
+          <h2 class="visually-hidden">Scrolls</h2>
           <div class="equation-scrolls">
             <figure>
-              <img src="./assets/equation-scroll-luminosity.png" alt="質量光度関係の巻物" />
-              <figcaption>質量光度関係</figcaption>
+              <img src="./assets/reward-scroll-rigel-luminosity.png" alt="" aria-hidden="true" />
             </figure>
             <figure>
-              <img src="./assets/equation-scroll-parallax.png" alt="年周視差の巻物" />
-              <figcaption>年周視差</figcaption>
+              <img src="./assets/reward-scroll-cygnus-parallax.png" alt="" aria-hidden="true" />
             </figure>
             <figure>
-              <img src="./assets/equation-scroll-binary.png" alt="連星質量の巻物" />
-              <figcaption>連星質量</figcaption>
+              <img src="./assets/reward-scroll-mizar-double-star.png" alt="" aria-hidden="true" />
             </figure>
           </div>
         </section>
@@ -200,6 +198,6 @@
       </section>
     </div>
 
-    <script src="./script.js?v=vega-sun-map-v1"></script>
+    <script src="./script.js?v=deep-cosmos-v1"></script>
   </body>
 </html>

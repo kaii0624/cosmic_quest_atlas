@@ -220,6 +220,38 @@ const KINGDOMS = {
 
 };
 
+KINGDOMS.tower.points.push({
+  id: "ancientSky",
+  x: 50,
+  y: 50,
+  label: "天球儀",
+  storyId: "ancientSkyMap",
+  kind: "planet",
+  asset: "./assets/cosmic-enemy-ancient-sky-normal.png"
+});
+
+KINGDOMS.deep = {
+  name: "銀河深淵域",
+  lead: "天の川の外へ続く、紫の外宇宙ゲート。",
+  detailImage: "./assets/deep-cosmos-gate-map.png",
+  detailAlt: "銀河深淵域と遠方宇宙の詳細星図",
+  detailTitle: "外宇宙星図",
+  detailText: "天の川の向こうで、銀河、銀河団、クエーサー、宇宙背景放射が宇宙の階層を語る。",
+  steps: ["M31セファイド", "銀河団", "クエーサー", "宇宙背景放射", "M87ブラックホール"],
+  points: [
+    { id: "m31Cepheid", x: 31, y: 31, label: "M31変光星", storyId: "m31Cepheid" },
+    { id: "virgoCluster", x: 70, y: 29, label: "銀河団", storyId: "virgoDarkMatter" },
+    { id: "quasar", x: 82, y: 48, label: "クエーサー", storyId: "quasarBeacon" },
+    { id: "cmb", x: 50, y: 16, label: "CMB", storyId: "cmbEcho" },
+    { id: "pulsar", x: 24, y: 55, label: "パルサー", storyId: "pulsarBeacon" },
+    { id: "cygnusX1", x: 42, y: 68, label: "X線連星", storyId: "cygnusX1" },
+    { id: "sn1987a", x: 18, y: 78, label: "SN1987A", storyId: "sn1987a" },
+    { id: "m87Shadow", x: 69, y: 73, label: "M87", storyId: "m87Shadow" },
+    { id: "gravityWaves", x: 52, y: 86, label: "重力波", storyId: "gravityWaveGate" },
+    { id: "darkEnergy", x: 84, y: 84, label: "加速膨張", storyId: "darkEnergySupernova" }
+  ]
+};
+
 const PLANET_STORIES = {
   mercuryElongation: {
     kingdomId: "tower",
@@ -741,7 +773,7 @@ const STORIES = {
       id: "mizar-double-star-scroll",
       title: "二重星の巻物",
       message: "ミザールを観測してゲットしました。",
-      image: "./assets/equation-scroll-parallax.png",
+      image: "./assets/reward-scroll-mizar-double-star.png",
       tier: "major",
       knowledgeTitle: "",
       knowledge: [
@@ -802,7 +834,7 @@ const STORIES = {
       id: "algol-eclipse-scroll",
       title: "食変光星の巻物",
       message: "アルゴルを観測してゲットしました。",
-      image: "./assets/equation-scroll-binary.png",
+      image: "./assets/reward-scroll-algol-eclipse.png",
       tier: "major",
       knowledgeTitle: "",
       knowledge: [
@@ -1374,7 +1406,348 @@ const STORIES = {
   }
 };
 
-Object.assign(STORIES, PLANET_STORIES);
+function makeCosmicStory({
+  kingdomId = "deep",
+  battleBg = "planetarium",
+  type,
+  name,
+  lead,
+  normal,
+  phenomenon,
+  pattern,
+  statusRows,
+  reward,
+  lines
+}) {
+  return {
+    kingdomId,
+    battleBg,
+    type,
+    name,
+    subtitle: "",
+    lead,
+    mechanic: pattern,
+    clearAt: lines.length,
+    portrait: normal,
+    enemy: {
+      normal,
+      [pattern]: phenomenon
+    },
+    status: {
+      rows: statusRows,
+      meter: {
+        normal: 72,
+        [pattern]: 94
+      }
+    },
+    rule: `能力：${lead}`,
+    clearRule: reward.lesson,
+    reward: {
+      id: reward.id,
+      title: reward.title,
+      message: `${name}を観測してゲットしました。`,
+      image: reward.image,
+      tier: reward.tier ?? "major",
+      knowledgeTitle: "",
+      knowledge: [reward.lesson]
+    },
+    lines: lines.map((text, index) => ({
+      speaker: name,
+      text,
+      pattern: index % 2 === 0 ? "normal" : pattern
+    }))
+  };
+}
+
+const ADDITIONAL_STORIES = {
+  ancientSkyMap: makeCosmicStory({
+    kingdomId: "tower",
+    type: "STORY 28",
+    name: "天球儀の番人",
+    lead: "星の見かけの配置を古い天球へ写し、星座体系の入口を開く。",
+    normal: "./assets/cosmic-enemy-ancient-sky-normal.png",
+    phenomenon: "./assets/cosmic-enemy-ancient-sky-phenomenon.png",
+    pattern: "map",
+    statusRows: [
+      { icon: "✦", label: "対象", value: "恒星の配置" },
+      { icon: "◎", label: "時代", value: "古代" },
+      { icon: "◇", label: "意味", value: "星座体系" }
+    ],
+    reward: {
+      id: "ancient-constellations-scroll",
+      title: "星座体系の巻物",
+      image: "./assets/reward-scroll-ancient-constellations.png",
+      tier: "minor",
+      lesson: "星座は見かけの地図"
+    },
+    lines: [
+      "古代の観測者は、星の並びを結び、季節と方角を記録した。",
+      "星座は宇宙の距離図ではない。空に投影された見かけの地図だ。",
+      "この地図が、天球座標や後の観測の土台になった。"
+    ]
+  }),
+  m31Cepheid: makeCosmicStory({
+    type: "STORY 29",
+    name: "M31セファイドの灯",
+    lead: "変光周期から距離を読み、アンドロメダが天の川の外にあることを示す。",
+    normal: "./assets/cosmic-enemy-m31-cepheid-normal.png",
+    phenomenon: "./assets/cosmic-enemy-m31-cepheid-phenomenon.png",
+    pattern: "cepheid",
+    statusRows: [
+      { icon: "✦", label: "対象", value: "M31内の変光星" },
+      { icon: "⌁", label: "距離", value: "銀河の外" },
+      { icon: "◎", label: "鍵", value: "周期光度関係" }
+    ],
+    reward: {
+      id: "m31-cepheid-scroll",
+      title: "M31セファイドの巻物",
+      image: "./assets/reward-scroll-m31-cepheid.png",
+      lesson: "周期で銀河距離"
+    },
+    lines: [
+      "私はアンドロメダ銀河の中で脈打つ小さな灯。",
+      "変光の周期を読めば、本当の明るさが分かる。",
+      "見かけの暗さと比べることで、M31が天の川の外にあると分かった。"
+    ]
+  }),
+  virgoDarkMatter: makeCosmicStory({
+    type: "STORY 30",
+    name: "銀河団の見えない重り",
+    lead: "銀河団の運動から、見える物質だけでは足りない重力を読む。",
+    normal: "./assets/cosmic-enemy-virgo-darkmatter-normal.png",
+    phenomenon: "./assets/cosmic-enemy-virgo-darkmatter-phenomenon.png",
+    pattern: "cluster",
+    statusRows: [
+      { icon: "✦", label: "対象", value: "銀河団" },
+      { icon: "▲", label: "質量", value: "見えない成分" },
+      { icon: "◎", label: "意味", value: "暗黒物質" }
+    ],
+    reward: {
+      id: "dark-matter-scroll",
+      title: "暗黒物質の巻物",
+      image: "./assets/reward-scroll-dark-matter.png",
+      lesson: "見えない質量がある"
+    },
+    lines: [
+      "銀河団では、銀河たちが重力に束ねられている。",
+      "見える星や銀河だけでは、その速さを説明できない。",
+      "不足する重力の手がかりが、暗黒物質の存在を示した。"
+    ]
+  }),
+  quasarBeacon: makeCosmicStory({
+    type: "STORY 31",
+    name: "遠方灯台クエーサー",
+    lead: "遠方活動銀河核の強烈な光から、巨大ブラックホール活動を読む。",
+    normal: "./assets/cosmic-enemy-quasar-normal.png",
+    phenomenon: "./assets/cosmic-enemy-quasar-phenomenon.png",
+    pattern: "jet",
+    statusRows: [
+      { icon: "✦", label: "対象", value: "活動銀河核" },
+      { icon: "⌁", label: "距離", value: "非常に遠方" },
+      { icon: "◎", label: "源", value: "巨大BH" }
+    ],
+    reward: {
+      id: "quasar-scroll",
+      title: "クエーサーの巻物",
+      image: "./assets/reward-scroll-quasar.png",
+      lesson: "遠方AGNは明るい"
+    },
+    lines: [
+      "私は星のように見えて、正体は遠方銀河の中心。",
+      "巨大ブラックホールへ落ち込む物質が、強烈な光を放つ。",
+      "クエーサーは遠い宇宙を照らす灯台だ。"
+    ]
+  }),
+  cmbEcho: makeCosmicStory({
+    type: "STORY 32",
+    name: "宇宙背景の残響",
+    lead: "宇宙全体に残る冷たい放射から、ビッグバン宇宙論を読む。",
+    normal: "./assets/cosmic-enemy-cmb-normal.png",
+    phenomenon: "./assets/cosmic-enemy-cmb-phenomenon.png",
+    pattern: "echo",
+    statusRows: [
+      { icon: "✦", label: "対象", value: "宇宙全体" },
+      { icon: "⌁", label: "温度", value: "約2.7K" },
+      { icon: "◎", label: "意味", value: "ビッグバン証拠" }
+    ],
+    reward: {
+      id: "cmb-scroll",
+      title: "宇宙背景放射の巻物",
+      image: "./assets/reward-scroll-cmb.png",
+      lesson: "宇宙に熱の残響"
+    },
+    lines: [
+      "どの方向を見ても、宇宙には微かな冷たい光が残る。",
+      "それは初期宇宙が熱かった時代の残響だ。",
+      "宇宙マイクロ波背景放射は、ビッグバン宇宙論の強い証拠になった。"
+    ]
+  }),
+  pulsarBeacon: makeCosmicStory({
+    type: "STORY 33",
+    name: "脈打つ中性子星",
+    lead: "規則正しい電波パルスから、超新星後に残る中性子星を読む。",
+    normal: "./assets/cosmic-enemy-pulsar-normal.png",
+    phenomenon: "./assets/cosmic-enemy-pulsar-phenomenon.png",
+    pattern: "pulse",
+    statusRows: [
+      { icon: "✦", label: "対象", value: "中性子星" },
+      { icon: "◎", label: "発見", value: "1967年" },
+      { icon: "⌁", label: "信号", value: "パルス" }
+    ],
+    reward: {
+      id: "pulsar-scroll",
+      title: "パルサーの巻物",
+      image: "./assets/reward-scroll-pulsar.png",
+      lesson: "中性子星が脈打つ"
+    },
+    lines: [
+      "私は超新星のあとに残る、極端に密な星。",
+      "回転するビームが地球をかすめるたび、規則正しいパルスが届く。",
+      "パルサーの発見は、恒星進化の極限を開いた。"
+    ]
+  }),
+  cygnusX1: makeCosmicStory({
+    type: "STORY 34",
+    name: "白鳥座X-1の影",
+    lead: "X線連星の見えない伴星から、ブラックホール候補を読む。",
+    normal: "./assets/cosmic-enemy-xray-blackhole-normal.png",
+    phenomenon: "./assets/cosmic-enemy-xray-blackhole-phenomenon.png",
+    pattern: "xray",
+    statusRows: [
+      { icon: "✦", label: "対象", value: "X線連星" },
+      { icon: "▲", label: "伴星", value: "見えない重力源" },
+      { icon: "◎", label: "意味", value: "BH候補" }
+    ],
+    reward: {
+      id: "xray-blackhole-scroll",
+      title: "X線連星BHの巻物",
+      image: "./assets/reward-scroll-xray-blackhole.png",
+      lesson: "見えないBHを推定"
+    },
+    lines: [
+      "白鳥座の方向から強いX線が届く。",
+      "見える星のそばには、重く見えない伴星がいる。",
+      "X線連星は、ブラックホールを間接的に見つける道を開いた。"
+    ]
+  }),
+  sn1987a: makeCosmicStory({
+    type: "STORY 35",
+    name: "大マゼラン雲の超新星",
+    lead: "近傍銀河の超新星から、恒星進化とニュートリノを読む。",
+    normal: "./assets/cosmic-enemy-sn1987a-normal.png",
+    phenomenon: "./assets/cosmic-enemy-sn1987a-phenomenon.png",
+    pattern: "burst",
+    statusRows: [
+      { icon: "✦", label: "対象", value: "超新星1987A" },
+      { icon: "⌁", label: "場所", value: "大マゼラン雲" },
+      { icon: "◎", label: "意味", value: "ニュートリノ" }
+    ],
+    reward: {
+      id: "sn1987a-scroll",
+      title: "SN1987Aの巻物",
+      image: "./assets/reward-scroll-sn1987a.png",
+      lesson: "超新星で元素が散る"
+    },
+    lines: [
+      "近くの銀河で、大質量星が最期の爆発を起こした。",
+      "光だけでなくニュートリノも届き、星の内部崩壊を直接示した。",
+      "超新星は恒星進化と元素合成を結ぶ巨大な合図だ。"
+    ]
+  }),
+  m87Shadow: makeCosmicStory({
+    type: "STORY 36",
+    name: "M87黒影の門",
+    lead: "遠方銀河中心のブラックホールシャドウを画像として読む。",
+    normal: "./assets/cosmic-enemy-m87-blackhole-normal.png",
+    phenomenon: "./assets/cosmic-enemy-m87-blackhole-phenomenon.png",
+    pattern: "shadow",
+    statusRows: [
+      { icon: "✦", label: "対象", value: "M87中心" },
+      { icon: "◎", label: "観測", value: "EHT画像" },
+      { icon: "▲", label: "意味", value: "BH影" }
+    ],
+    reward: {
+      id: "m87-blackhole-scroll",
+      title: "M87ブラックホールの巻物",
+      image: "./assets/reward-scroll-m87-blackhole.png",
+      lesson: "BH影を直接画像化"
+    },
+    lines: [
+      "M87銀河の中心には、巨大な重力の影がある。",
+      "世界中の望遠鏡をつなぎ、地球サイズの目でその輪郭を描いた。",
+      "ブラックホールシャドウは、見えない天体を画像で確かめる時代を開いた。"
+    ]
+  }),
+  gravityWaveGate: makeCosmicStory({
+    type: "STORY 37",
+    name: "重力波の双黒門",
+    lead: "ブラックホール連星の合体から、光以外で宇宙を見る方法を読む。",
+    normal: "./assets/cosmic-enemy-gravity-waves-normal.png",
+    phenomenon: "./assets/cosmic-enemy-gravity-waves-phenomenon.png",
+    pattern: "wave",
+    statusRows: [
+      { icon: "✦", label: "対象", value: "BH連星" },
+      { icon: "◎", label: "発見", value: "2015年" },
+      { icon: "⌁", label: "意味", value: "重力波天文学" }
+    ],
+    reward: {
+      id: "gravitational-waves-scroll",
+      title: "重力波の巻物",
+      image: "./assets/reward-scroll-gravitational-waves.png",
+      lesson: "時空の波を観測"
+    },
+    lines: [
+      "二つのブラックホールが合体すると、時空そのものが波打つ。",
+      "その波は光ではない。重力波として地球の検出器に届いた。",
+      "重力波は、宇宙を見る新しい感覚を開いた。"
+    ]
+  }),
+  darkEnergySupernova: makeCosmicStory({
+    type: "STORY 38",
+    name: "遠方超新星の暗き力",
+    lead: "Ia型超新星の距離と暗さから、宇宙の加速膨張を読む。",
+    normal: "./assets/cosmic-enemy-dark-energy-normal.png",
+    phenomenon: "./assets/cosmic-enemy-dark-energy-phenomenon.png",
+    pattern: "accelerate",
+    statusRows: [
+      { icon: "✦", label: "対象", value: "遠方Ia型超新星" },
+      { icon: "⌁", label: "現象", value: "加速膨張" },
+      { icon: "◎", label: "意味", value: "暗黒エネルギー" }
+    ],
+    reward: {
+      id: "accelerating-expansion-scroll",
+      title: "宇宙加速膨張の巻物",
+      image: "./assets/reward-scroll-accelerating-expansion.png",
+      lesson: "遠方SNで加速膨張"
+    },
+    lines: [
+      "Ia型超新星は、遠方宇宙の距離を測る標準光源になる。",
+      "遠方の超新星は、予想より暗く見えた。",
+      "そこから宇宙の膨張が加速していることが示された。"
+    ]
+  })
+};
+
+Object.assign(STORIES, PLANET_STORIES, ADDITIONAL_STORIES);
+
+Object.assign(STORIES.cygni61, {
+  extraRewardIds: ["proper-motion-scroll", "aberration-scroll"]
+});
+Object.assign(STORIES.spica, {
+  extraRewardIds: ["telescope-observation-scroll"]
+});
+Object.assign(STORIES.rigel, {
+  extraRewardIds: ["hr-diagram-scroll"]
+});
+Object.assign(STORIES.sirius, {
+  extraRewardIds: ["white-dwarf-scroll"]
+});
+Object.assign(STORIES.betelgeuse, {
+  extraRewardIds: ["nucleosynthesis-scroll"]
+});
+Object.assign(STORIES.sunReference, {
+  extraRewardIds: ["helium-solar-spectrum-scroll", "stellar-fusion-scroll"]
+});
 
 const state = {
   mode: "home",
@@ -1494,6 +1867,15 @@ const HOME_KINGDOM_DETAILS = {
   }
 };
 
+HOME_KINGDOM_DETAILS.deep = {
+  icon: "✧",
+  card: "./assets/deep-cosmos-gate-map.png",
+  title: "銀河深淵域",
+  description: "天の川の外へ進み、銀河団、クエーサー、宇宙背景放射を読む。",
+  action: "外宇宙ゲートへ進む",
+  enterId: "deep"
+};
+
 const ORB_CLASSES = ["sirius", "rigel", "betelgeuse"];
 const OBJECT_ORB_CLASSES = {
   mizar: "sirius",
@@ -1510,6 +1892,20 @@ const OBJECT_ORB_CLASSES = {
   betelgeuse: "betelgeuse",
   sirius: "sirius"
 };
+
+Object.assign(OBJECT_ORB_CLASSES, {
+  ancientSky: "galaxy",
+  m31Cepheid: "galaxy",
+  virgoCluster: "galaxy",
+  quasar: "galaxy",
+  cmb: "galaxy",
+  pulsar: "galaxy",
+  cygnusX1: "galaxy",
+  sn1987a: "betelgeuse",
+  m87Shadow: "galaxy",
+  gravityWaves: "galaxy",
+  darkEnergy: "galaxy"
+});
 
 const HOME_TABS = [
   { id: "home", label: "ホーム" },
@@ -1611,6 +2007,53 @@ const OBSERVE_COPY = {
     description: "望遠鏡で惑星と分かり横倒し自転を読む。"
   }
 };
+
+Object.assign(OBSERVE_COPY, {
+  ancientSky: {
+    lesson: "星座は見かけの地図",
+    description: "古代の星座体系は天球座標の土台。"
+  },
+  m31Cepheid: {
+    lesson: "周期で銀河距離を測る",
+    description: "M31内の変光星が外銀河距離を示す。"
+  },
+  virgoCluster: {
+    lesson: "見えない質量を運動から読む",
+    description: "銀河団の速さが暗黒物質を示す。"
+  },
+  quasar: {
+    lesson: "遠方活動銀河核は非常に明るい",
+    description: "巨大ブラックホール活動を光で読む。"
+  },
+  cmb: {
+    lesson: "宇宙に熱い始まりの残響",
+    description: "CMBはビッグバン宇宙論の証拠。"
+  },
+  pulsar: {
+    lesson: "中性子星はパルスを出す",
+    description: "回転するビームが周期信号になる。"
+  },
+  cygnusX1: {
+    lesson: "X線連星で見えないBHを推定",
+    description: "重い不可視伴星を間接観測する。"
+  },
+  sn1987a: {
+    lesson: "超新星で恒星最期を読む",
+    description: "近傍銀河の爆発が進化を示す。"
+  },
+  m87Shadow: {
+    lesson: "ブラックホール影を画像化",
+    description: "M87中心の影をEHTで直接観測。"
+  },
+  gravityWaves: {
+    lesson: "時空の波で宇宙を見る",
+    description: "BH連星合体の重力波を検出。"
+  },
+  darkEnergy: {
+    lesson: "遠方超新星で加速膨張を読む",
+    description: "Ia型超新星が暗黒エネルギーを示す。"
+  }
+});
 
 const LIBRARY_SCROLLS = [
   {
@@ -1779,7 +2222,7 @@ const LIBRARY_SCROLLS = [
     id: "spectrum-redshift-scroll",
     title: "スペクトルデータ",
     period: "銀河の奥",
-    image: "./assets/reward-scroll-minor-base.png",
+    image: "./assets/reward-scroll-spectrum-redshift.png",
     tier: "minor",
     lesson: "赤方偏移を読む",
     description: "遠ざかる天体の光は赤い側へずれる。スペクトルは、天体の運動を読む重要な観測記録になる。",
@@ -1798,7 +2241,7 @@ const LIBRARY_SCROLLS = [
     id: "algol-eclipse-scroll",
     title: "食変光星の巻物",
     period: "秋の王国",
-    image: "./assets/equation-scroll-binary.png",
+    image: "./assets/reward-scroll-algol-eclipse.png",
     tier: "major",
     lesson: "食で光度が下がる",
     description: "アルゴルの暗くなる周期は、伴星が前を通って主星の光を隠す食で説明できる。"
@@ -1807,12 +2250,294 @@ const LIBRARY_SCROLLS = [
     id: "mizar-double-star-scroll",
     title: "二重星の巻物",
     period: "春の王国",
-    image: "./assets/equation-scroll-parallax.png",
+    image: "./assets/reward-scroll-mizar-double-star.png",
     tier: "major",
     lesson: "近くに見えても別距離",
     description: "星座の星は見かけの並び。二重星や連星を観測すると、点に見える星の奥行きがほどける。"
   }
 ];
+
+LIBRARY_SCROLLS.push(
+  {
+    id: "ancient-constellations-scroll",
+    title: "星座体系の巻物",
+    period: "天球観測塔",
+    image: "./assets/reward-scroll-ancient-constellations.png",
+    tier: "minor",
+    lesson: "星座は見かけの地図",
+    description: "古代の星座体系は、星空を記録する最初の地図。天球座標や星座理解の土台になる。"
+  },
+  {
+    id: "geocentric-model-scroll",
+    title: "天動説の巻物",
+    period: "クエスト",
+    image: "./assets/reward-scroll-geocentric-model.png",
+    tier: "minor",
+    lesson: "古代宇宙観の出発点",
+    description: "地球を中心に天体が回ると考えた古い宇宙像。惑星の逆行が大きな問題になった。"
+  },
+  {
+    id: "heliocentric-theory-scroll",
+    title: "地動説の巻物",
+    period: "クエスト",
+    image: "./assets/reward-scroll-heliocentric-theory.png",
+    tier: "major",
+    lesson: "太陽中心へ転換",
+    description: "惑星と太陽を中心に宇宙観を組み替えた発見。以後の天文学の基盤になる。"
+  },
+  {
+    id: "telescope-observation-scroll",
+    title: "望遠鏡観測の巻物",
+    period: "クエスト",
+    image: "./assets/reward-scroll-telescope-observation.png",
+    tier: "major",
+    lesson: "肉眼から望遠鏡へ",
+    description: "月、木星、金星、恒星を望遠鏡で観測し、肉眼天文学から観測天文学へ進んだ。"
+  },
+  {
+    id: "universal-gravity-scroll",
+    title: "万有引力の巻物",
+    period: "クエスト",
+    image: "./assets/reward-scroll-universal-gravity.png",
+    tier: "major",
+    lesson: "天体運動を力で説明",
+    description: "惑星、月、彗星の運動を一つの重力法則で説明する。連星質量の理解にもつながる。"
+  },
+  {
+    id: "proper-motion-scroll",
+    title: "固有運動の巻物",
+    period: "恒星バトル",
+    image: "./assets/reward-scroll-proper-motion.png",
+    tier: "major",
+    lesson: "恒星も動いている",
+    description: "恒星は固定背景ではなく、長い時間で固有運動を示す。天の川内の恒星運動を読む入口。"
+  },
+  {
+    id: "aberration-scroll",
+    title: "光行差の巻物",
+    period: "恒星バトル",
+    image: "./assets/reward-scroll-aberration.png",
+    tier: "major",
+    lesson: "公転で位置がずれる",
+    description: "地球公転により恒星の見かけ位置がわずかに変わる。精密位置天文学の重要発見。"
+  },
+  {
+    id: "helium-solar-spectrum-scroll",
+    title: "太陽ヘリウムの巻物",
+    period: "太陽ステージ",
+    image: "./assets/reward-scroll-helium-solar-spectrum.png",
+    tier: "minor",
+    lesson: "太陽スペクトルで元素発見",
+    description: "地上で見つかる前に、太陽スペクトルからヘリウムが発見された。"
+  },
+  {
+    id: "cepheid-pl-scroll",
+    title: "セファイド周期光度の巻物",
+    period: "変光星バトル",
+    image: "./assets/reward-scroll-cepheid-pl.png",
+    tier: "major",
+    lesson: "周期で距離を測る",
+    description: "セファイド変光星は周期から本当の明るさを推定でき、銀河距離測定の鍵になる。"
+  },
+  {
+    id: "hr-diagram-scroll",
+    title: "HR図の巻物",
+    period: "恒星図鑑バトル",
+    image: "./assets/reward-scroll-hr-diagram.png",
+    tier: "major",
+    lesson: "色と光度で星を整理",
+    description: "恒星の色、明るさ、進化段階を整理する基本図。主系列、巨星、白色矮星を見分ける。"
+  },
+  {
+    id: "general-relativity-scroll",
+    title: "一般相対論の巻物",
+    period: "クエスト",
+    image: "./assets/reward-scroll-general-relativity.png",
+    tier: "major",
+    lesson: "重力は時空の曲がり",
+    description: "重力理解を更新し、ブラックホールや宇宙論へつながる理論の土台。"
+  },
+  {
+    id: "light-bending-scroll",
+    title: "光の曲がりの巻物",
+    period: "日食クエスト",
+    image: "./assets/reward-scroll-light-bending.png",
+    tier: "major",
+    lesson: "太陽重力で光が曲がる",
+    description: "太陽近くを通る恒星光が曲がる観測は、一般相対論の重要な検証になった。"
+  },
+  {
+    id: "galaxy-nature-scroll",
+    title: "銀河の正体の巻物",
+    period: "外宇宙ゲート",
+    image: "./assets/reward-scroll-galaxy-nature.png",
+    tier: "major",
+    lesson: "宇宙は天の川だけでない",
+    description: "天の川以外にも巨大な銀河があると分かり、宇宙の階層が広がった。"
+  },
+  {
+    id: "m31-cepheid-scroll",
+    title: "M31セファイドの巻物",
+    period: "銀河深淵域",
+    image: "./assets/reward-scroll-m31-cepheid.png",
+    tier: "major",
+    lesson: "M31は天の川の外",
+    description: "M31内のセファイド変光星により、アンドロメダ銀河が天の川の外にあると示された。"
+  },
+  {
+    id: "hubble-law-scroll",
+    title: "ハッブルの法則の巻物",
+    period: "クエスト",
+    image: "./assets/reward-scroll-hubble-law.png",
+    tier: "major",
+    lesson: "遠い銀河ほど速く遠ざかる",
+    description: "銀河の距離と後退速度の関係から、宇宙膨張が観測的に示された。"
+  },
+  {
+    id: "dark-matter-scroll",
+    title: "暗黒物質の巻物",
+    period: "銀河深淵域",
+    image: "./assets/reward-scroll-dark-matter.png",
+    tier: "major",
+    lesson: "見えない質量がある",
+    description: "銀河団の運動は、見える物質だけでは説明できない重力源を示す。"
+  },
+  {
+    id: "white-dwarf-scroll",
+    title: "白色矮星の巻物",
+    period: "シリウスBバトル",
+    image: "./assets/reward-scroll-white-dwarf.png",
+    tier: "major",
+    lesson: "恒星進化の終末",
+    description: "白色矮星は恒星進化の終末段階。シリウスBは代表的な白色矮星として重要。"
+  },
+  {
+    id: "stellar-fusion-scroll",
+    title: "恒星核融合の巻物",
+    period: "主系列星バトル",
+    image: "./assets/reward-scroll-stellar-fusion.png",
+    tier: "major",
+    lesson: "星は核融合で輝く",
+    description: "恒星内部の核融合が、星が長く輝くエネルギー源を説明する。"
+  },
+  {
+    id: "nucleosynthesis-scroll",
+    title: "元素合成の巻物",
+    period: "巨星・超新星バトル",
+    image: "./assets/reward-scroll-nucleosynthesis.png",
+    tier: "major",
+    lesson: "元素は星で作られる",
+    description: "恒星と超新星で重い元素が作られ、宇宙の物質進化を説明する。"
+  },
+  {
+    id: "quasar-scroll",
+    title: "クエーサーの巻物",
+    period: "銀河深淵域",
+    image: "./assets/reward-scroll-quasar.png",
+    tier: "major",
+    lesson: "遠方AGNは非常に明るい",
+    description: "クエーサーは遠方の活動銀河核。巨大ブラックホール研究につながる。"
+  },
+  {
+    id: "cmb-scroll",
+    title: "宇宙背景放射の巻物",
+    period: "銀河深淵域",
+    image: "./assets/reward-scroll-cmb.png",
+    tier: "major",
+    lesson: "ビッグバンの残光",
+    description: "宇宙マイクロ波背景放射は、熱い初期宇宙の残光としてビッグバン宇宙論を支える。"
+  },
+  {
+    id: "pulsar-scroll",
+    title: "パルサーの巻物",
+    period: "銀河深淵域",
+    image: "./assets/reward-scroll-pulsar.png",
+    tier: "major",
+    lesson: "中性子星が脈打つ",
+    description: "規則正しいパルスは、回転する中性子星から届く信号。恒星進化の極限を示す。"
+  },
+  {
+    id: "xray-blackhole-scroll",
+    title: "X線連星BHの巻物",
+    period: "銀河深淵域",
+    image: "./assets/reward-scroll-xray-blackhole.png",
+    tier: "major",
+    lesson: "見えないBHを推定",
+    description: "X線連星では、見えない重い伴星を間接的に観測しブラックホール候補を調べる。"
+  },
+  {
+    id: "sn1987a-scroll",
+    title: "SN1987Aの巻物",
+    period: "銀河深淵域",
+    image: "./assets/reward-scroll-sn1987a.png",
+    tier: "major",
+    lesson: "近傍銀河の超新星",
+    description: "大マゼラン雲の超新星1987Aは、恒星進化とニュートリノ観測で重要。"
+  },
+  {
+    id: "exoplanet-pulsar-scroll",
+    title: "系外惑星発見の巻物",
+    period: "惑星探索",
+    image: "./assets/reward-scroll-exoplanet-pulsar.png",
+    tier: "minor",
+    lesson: "太陽系外にも惑星",
+    description: "パルサー周辺の惑星発見により、太陽系外にも惑星があることが確認された。"
+  },
+  {
+    id: "exoplanet-main-sequence-scroll",
+    title: "主系列星系外惑星の巻物",
+    period: "恒星＋惑星バトル",
+    image: "./assets/reward-scroll-exoplanet-main-sequence.png",
+    tier: "major",
+    lesson: "太陽型恒星にも惑星",
+    description: "主系列星まわりの系外惑星発見は、惑星系が宇宙に広くあることを示した。"
+  },
+  {
+    id: "accelerating-expansion-scroll",
+    title: "宇宙加速膨張の巻物",
+    period: "銀河深淵域",
+    image: "./assets/reward-scroll-accelerating-expansion.png",
+    tier: "major",
+    lesson: "遠方SNで加速膨張",
+    description: "遠方Ia型超新星の観測から、宇宙膨張が加速していることが示された。"
+  },
+  {
+    id: "asteroid-exploration-scroll",
+    title: "小惑星探査の巻物",
+    period: "小惑星探索",
+    image: "./assets/reward-scroll-asteroid-sample.png",
+    tier: "minor",
+    lesson: "小惑星は初期物質",
+    description: "小惑星探査は、太陽系形成や生命材料の手がかりを直接調べる道を開く。"
+  },
+  {
+    id: "ryugu-sample-scroll",
+    title: "リュウグウ試料の巻物",
+    period: "小惑星研究所",
+    image: "./assets/reward-scroll-ryugu-sample.png",
+    tier: "minor",
+    lesson: "試料で有機物を調べる",
+    description: "リュウグウ試料分析は、有機物、水、太陽系初期物質を直接調べる重要な成果。"
+  },
+  {
+    id: "gravitational-waves-scroll",
+    title: "重力波の巻物",
+    period: "銀河深淵域",
+    image: "./assets/reward-scroll-gravitational-waves.png",
+    tier: "major",
+    lesson: "光以外で宇宙を見る",
+    description: "ブラックホール連星からの重力波検出は、重力波天文学の始まりを示した。"
+  },
+  {
+    id: "m87-blackhole-scroll",
+    title: "M87ブラックホールの巻物",
+    period: "銀河深淵域",
+    image: "./assets/reward-scroll-m87-blackhole.png",
+    tier: "major",
+    lesson: "BH影を直接画像化",
+    description: "M87中心ブラックホールのシャドウ画像は、ブラックホールを直接的に検証する重要成果。"
+  }
+);
 
 const QUESTS = [
   {
@@ -1832,6 +2557,7 @@ const QUESTS = [
     summary: "太陽中心の宇宙を示す証拠を集めてほしい。",
     detail: "金星の満ち欠けと木星の衛星は、地球中心だけでは説明しにくい観測事実。太陽中心の見方へ進むための依頼。",
     reward: "地動説の星章",
+    rewardScrollId: "heliocentric-theory-scroll",
     requiredScrolls: [
       { id: "venus-phases-scroll", label: "金星の満ち欠け" },
       { id: "jupiter-moons-scroll", label: "木星の衛星発見" }
@@ -1854,6 +2580,7 @@ const QUESTS = [
     summary: "惑星の運動について、さらに確かな法則を見出したい。",
     detail: "火星の逆行を見かけの運動としてほどき、土星の公転周期から軌道と周期の規則を読む依頼。",
     reward: "軌道調和の星章",
+    rewardScrollId: "saturn-kepler3-scroll",
     requiredScrolls: [
       { id: "mars-retrograde-scroll", label: "火星の逆行" },
       { id: "saturn-kepler3-scroll", label: "第3法則の観測" }
@@ -1876,6 +2603,7 @@ const QUESTS = [
     summary: "物体を引き合う力の正体を解き明かしてほしい。",
     detail: "惑星の軌道法則、衛星の周回、計算で予測される惑星をつなぎ、重力で天体運動を説明する依頼。",
     reward: "重力法則の星章",
+    rewardScrollId: "universal-gravity-scroll",
     requiredScrolls: [
       { id: "jupiter-moons-scroll", label: "木星の衛星発見" },
       { id: "saturn-kepler3-scroll", label: "ケプラー第3法則" },
@@ -1899,6 +2627,7 @@ const QUESTS = [
     summary: "遠方銀河の速度と距離の関係を調べてほしい。",
     detail: "距離測定、スペクトル、遠方銀河の観測記録をそろえると、宇宙膨張へ進む依頼が開く。",
     reward: "宇宙膨張の星章",
+    rewardScrollId: "hubble-law-scroll",
     requiredScrolls: [
       { id: "cygnus-parallax-scroll", label: "距離測定の記録" },
       { id: "spectrum-redshift-scroll", label: "スペクトルデータ" },
@@ -1906,6 +2635,198 @@ const QUESTS = [
     ]
   }
 ];
+
+QUESTS.push(
+  {
+    id: "geocentric-model",
+    number: 5,
+    title: "天動説の星図",
+    requester: "古代天球師",
+    requesterImage: "./assets/quest-requester-copernicus.png",
+    mainImage: "./assets/quest-main-heliocentric.png",
+    objective: "古代の星図と惑星の迷いを整理する",
+    conversation: "星座体系と惑星の逆行を組み合わせ、古代の宇宙観がどこで迷ったかを見つけよう。",
+    requesterStats: {
+      birthYear: "古代",
+      fullName: "Ancient Celestial Scribes",
+      achievement: "星座体系と惑星運動の記録を積み重ね、後の天文学の土台を作った。"
+    },
+    summary: "古代の星図と惑星の迷いを整理してほしい。",
+    detail: "星座体系と惑星の逆行を組み合わせ、地球中心説がなぜ必要とされたかを読む依頼。",
+    reward: "天動説の星章",
+    rewardScrollId: "geocentric-model-scroll",
+    requiredScrolls: [
+      { id: "ancient-constellations-scroll", label: "星座体系" },
+      { id: "mars-retrograde-scroll", label: "惑星の逆行" }
+    ]
+  },
+  {
+    id: "telescope-observation",
+    number: 6,
+    title: "望遠鏡観測",
+    requester: "ガリレオ",
+    requesterImage: "./assets/quest-requester-copernicus.png",
+    mainImage: "./assets/battle-bg-planetarium.png",
+    objective: "肉眼では見えない証拠を集める",
+    conversation: "金星の形と木星の小さな点を選び、望遠鏡が宇宙観を変えた理由を示そう。",
+    requesterStats: {
+      birthYear: "1564年",
+      fullName: "Galileo Galilei",
+      achievement: "望遠鏡を用いた観測で、地動説の根拠となる多くの証拠を発見した。"
+    },
+    summary: "望遠鏡で宇宙観を変える証拠を集めたい。",
+    detail: "金星の満ち欠けと木星の衛星は、望遠鏡観測が肉眼の宇宙像を超えた代表例。",
+    reward: "望遠鏡観測の星章",
+    rewardScrollId: "telescope-observation-scroll",
+    requiredScrolls: [
+      { id: "venus-phases-scroll", label: "金星の満ち欠け" },
+      { id: "jupiter-moons-scroll", label: "木星の衛星" }
+    ]
+  },
+  {
+    id: "general-relativity",
+    number: 7,
+    title: "一般相対論",
+    requester: "アインシュタイン",
+    requesterImage: "./assets/quest-requester-newton.png",
+    mainImage: "./assets/battle-bg-planetarium.png",
+    objective: "重力を時空の曲がりとして読み直す",
+    conversation: "万有引力、太陽、惑星軌道の証拠を重ね、重力理解の更新へ進もう。",
+    requesterStats: {
+      birthYear: "1879年",
+      fullName: "Albert Einstein",
+      achievement: "一般相対論により、重力を時空の曲がりとして説明した。"
+    },
+    summary: "重力をさらに深く説明する証拠を集めたい。",
+    detail: "ニュートン重力の先に、太陽近傍や水星の運動をより正確に説明する理論へ進む依頼。",
+    reward: "相対論の星章",
+    rewardScrollId: "general-relativity-scroll",
+    requiredScrolls: [
+      { id: "universal-gravity-scroll", label: "万有引力" },
+      { id: "sun-luminosity-scroll", label: "太陽基準" },
+      { id: "mercury-elongation-scroll", label: "水星観測" }
+    ]
+  },
+  {
+    id: "light-bending",
+    number: 8,
+    title: "光の曲がり",
+    requester: "日食観測隊",
+    requesterImage: "./assets/quest-requester-newton.png",
+    mainImage: "./assets/battle-bg-planetarium.png",
+    objective: "太陽近傍の恒星光のずれを読む",
+    conversation: "相対論と太陽の証拠を選び、重力が光の道を曲げることを示そう。",
+    requesterStats: {
+      birthYear: "1919年",
+      fullName: "Eclipse Expedition",
+      achievement: "日食時の恒星位置測定により、太陽重力で光が曲がることを検証した。"
+    },
+    summary: "日食で光の曲がりを確かめたい。",
+    detail: "太陽近くの恒星光が曲がる観測は、一般相対論の代表的な検証。",
+    reward: "光曲がりの星章",
+    rewardScrollId: "light-bending-scroll",
+    requiredScrolls: [
+      { id: "general-relativity-scroll", label: "一般相対論" },
+      { id: "sun-luminosity-scroll", label: "太陽観測" }
+    ]
+  },
+  {
+    id: "galaxy-nature",
+    number: 9,
+    title: "銀河の正体",
+    requester: "ハッブル",
+    requesterImage: "./assets/quest-requester-hubble.png",
+    mainImage: "./assets/deep-cosmos-gate-map.png",
+    objective: "星雲が銀河である証拠を組み合わせる",
+    conversation: "M31の奥行きとセファイド変光星を選び、天の川の外に銀河があると示そう。",
+    requesterStats: {
+      birthYear: "1889年",
+      fullName: "Edwin Hubble",
+      achievement: "M31内のセファイド変光星から、銀河が天の川の外にあることを示した。"
+    },
+    summary: "宇宙が天の川だけではない証拠を集めたい。",
+    detail: "M31の距離とセファイド変光星を組み合わせ、銀河の正体へ進む依頼。",
+    reward: "外銀河の星章",
+    rewardScrollId: "galaxy-nature-scroll",
+    requiredScrolls: [
+      { id: "galaxy-distance-scroll", label: "M31銀河距離" },
+      { id: "m31-cepheid-scroll", label: "M31セファイド" }
+    ]
+  },
+  {
+    id: "cosmology-temple",
+    number: 10,
+    title: "宇宙論の神殿",
+    requester: "宇宙論者",
+    requesterImage: "./assets/quest-requester-hubble.png",
+    mainImage: "./assets/deep-cosmos-gate-map.png",
+    objective: "膨張宇宙の証拠をそろえる",
+    conversation: "ハッブルの法則、CMB、遠方超新星を組み合わせ、現代宇宙論の柱を作ろう。",
+    requesterStats: {
+      birthYear: "20世紀",
+      fullName: "Modern Cosmologists",
+      achievement: "銀河後退、背景放射、遠方超新星から、膨張する宇宙像を確立した。"
+    },
+    summary: "宇宙全体の進化を示す証拠を集めたい。",
+    detail: "膨張、背景放射、加速膨張をつなぎ、現代宇宙論へ進む依頼。",
+    reward: "宇宙論の星章",
+    rewardScrollId: "cmb-scroll",
+    requiredScrolls: [
+      { id: "hubble-law-scroll", label: "ハッブルの法則" },
+      { id: "cmb-scroll", label: "宇宙背景放射" },
+      { id: "accelerating-expansion-scroll", label: "加速膨張" }
+    ]
+  },
+  {
+    id: "stellar-evolution",
+    number: 11,
+    title: "恒星進化の系譜",
+    requester: "恒星図鑑師",
+    requesterImage: "./assets/quest-requester-kepler.png",
+    mainImage: "./assets/battle-bg-winter.png",
+    objective: "星の色、進化、最期を一本につなぐ",
+    conversation: "色温度、赤色超巨星、白色矮星、元素合成を組み合わせ、恒星進化を整理しよう。",
+    requesterStats: {
+      birthYear: "20世紀",
+      fullName: "Stellar Cartographers",
+      achievement: "HR図と恒星内部物理を用いて、恒星の一生を整理した。"
+    },
+    summary: "恒星の一生を示す証拠を集めたい。",
+    detail: "色温度、HR図、核融合、白色矮星、超新星を組み合わせる依頼。",
+    reward: "恒星進化の星章",
+    rewardScrollId: "hr-diagram-scroll",
+    requiredScrolls: [
+      { id: "rigel-color-luminosity-scroll", label: "星色と温度" },
+      { id: "betelgeuse-redgiant-scroll", label: "赤色超巨星" },
+      { id: "white-dwarf-scroll", label: "白色矮星" },
+      { id: "stellar-fusion-scroll", label: "核融合" }
+    ]
+  },
+  {
+    id: "new-messenger-astronomy",
+    number: 12,
+    title: "新しい宇宙の見方",
+    requester: "重力波観測隊",
+    requesterImage: "./assets/quest-requester-newton.png",
+    mainImage: "./assets/deep-cosmos-gate-map.png",
+    objective: "光以外の観測手段を読む",
+    conversation: "パルサー、X線連星、重力波を組み合わせ、光だけではない天文学へ進もう。",
+    requesterStats: {
+      birthYear: "21世紀",
+      fullName: "Multi-messenger Observers",
+      achievement: "電波、X線、重力波などを組み合わせ、極限天体を観測する時代を開いた。"
+    },
+    summary: "光以外の観測で宇宙を読みたい。",
+    detail: "パルサー、X線、重力波をつなぎ、マルチメッセンジャー天文学へ進む依頼。",
+    reward: "重力波の星章",
+    rewardScrollId: "gravitational-waves-scroll",
+    requiredScrolls: [
+      { id: "pulsar-scroll", label: "パルサー" },
+      { id: "xray-blackhole-scroll", label: "X線連星BH" },
+      { id: "gravitational-waves-scroll", label: "重力波" }
+    ]
+  }
+);
 
 function getQuestProgress(quest) {
   const collected = quest.requiredScrolls.filter((item) => claimedRewards.has(item.id)).length;
@@ -1999,6 +2920,34 @@ function removeQuestEvidence(questId, evidenceId) {
   state.selectedQuestEvidence[quest.id] = getQuestSelectedEvidenceIds(quest)
     .filter((id) => id !== evidenceId);
   renderMap();
+}
+
+function claimQuestReward(questId) {
+  const quest = QUESTS.find((item) => item.id === questId);
+  if (!quest?.rewardScrollId) return;
+
+  const selectedEvidenceIds = getQuestSelectedEvidenceIds(quest);
+  const canCombine = quest.requiredScrolls.every((requirement) => selectedEvidenceIds.includes(requirement.id));
+  if (!canCombine) return;
+
+  const rewardScroll = getScrollById(quest.rewardScrollId);
+  if (!rewardScroll) return;
+
+  if (!claimedRewards.has(rewardScroll.id)) {
+    claimedRewards.add(rewardScroll.id);
+    saveClaimedRewards();
+  }
+
+  state.selectedScrollId = rewardScroll.id;
+  showReward({
+    id: rewardScroll.id,
+    title: rewardScroll.title,
+    message: `${quest.title}を解決してゲットしました。`,
+    image: rewardScroll.image,
+    knowledgeTitle: "",
+    knowledge: [rewardScroll.lesson]
+  });
+  render();
 }
 
 function renderQuestEvidenceRow(quest, evidence) {
@@ -2543,7 +3492,7 @@ function renderQuestDetail(quest) {
               ${selectedSlots.map((evidenceId, index) => renderSelectedEvidenceSlot(quest, evidenceId, index)).join("")}
             </div>
             <p>${progress.open ? "必要な証拠はそろっています。" : `必要な証拠 ${progress.collected} / ${progress.total}`}</p>
-            <button class="quest-combine-button" type="button" ${canCombine ? "" : "disabled"}>
+            <button class="quest-combine-button" type="button" data-quest-combine="${quest.id}" ${canCombine ? "" : "disabled"}>
               組み合わせる
               <small>${canCombine ? "必要な証拠がそろっています" : "必要な証拠が不足しています"}</small>
             </button>
@@ -2794,19 +3743,41 @@ function hideReward() {
   rewardPopup.classList.add("is-hidden");
 }
 
+function getRewardFromScrollId(scrollId, message = "ゲットしました。") {
+  const scroll = getScrollById(scrollId);
+  if (!scroll) return null;
+
+  return {
+    id: scroll.id,
+    title: scroll.title,
+    message,
+    image: scroll.image,
+    tier: scroll.tier,
+    knowledgeTitle: "",
+    knowledge: [scroll.lesson]
+  };
+}
+
 function finishStory(story) {
-  const reward = story.reward;
+  const rewards = [
+    story.reward,
+    ...(story.extraRewardIds ?? []).map((id) => getRewardFromScrollId(id, `${story.name}から追加でゲットしました。`))
+  ].filter(Boolean);
 
   state.mode = "detail";
   state.storyId = null;
   state.lineIndex = 0;
   render();
 
-  if (reward && !claimedRewards.has(reward.id)) {
+  const newRewards = rewards.filter((reward) => !claimedRewards.has(reward.id));
+  newRewards.forEach((reward) => {
     claimedRewards.add(reward.id);
+  });
+
+  if (newRewards.length > 0) {
     saveClaimedRewards();
-    state.selectedScrollId = reward.id;
-    showReward(reward);
+    state.selectedScrollId = newRewards[0].id;
+    showReward(newRewards[0]);
   }
 }
 
@@ -2931,6 +3902,12 @@ appScreen.addEventListener("click", (event) => {
   const evidenceButton = target?.closest("[data-evidence-id]");
   if (evidenceButton && state.selectedQuestId) {
     toggleQuestEvidence(state.selectedQuestId, evidenceButton.dataset.evidenceId);
+    return;
+  }
+
+  const questCombineButton = target?.closest("[data-quest-combine]");
+  if (questCombineButton) {
+    claimQuestReward(questCombineButton.dataset.questCombine);
     return;
   }
 
