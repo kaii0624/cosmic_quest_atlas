@@ -3598,11 +3598,11 @@ button {
   --tower-frame: url("./assets/ui-tower-frame.png?v=tower-v3");
   width: clamp(220px, 30vw, 330px);
   min-width: 0;
-  min-height: clamp(64px, 9.8vw, 92px);
+  aspect-ratio: 3 / 2;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 0.08em clamp(28px, 3.5vw, 42px) 0.12em clamp(64px, 7vw, 94px);
+  padding: 0.08em clamp(20px, 2.5vw, 32px) 0.12em clamp(60px, 7vw, 90px);
   clip-path: none;
   border: 0;
   border-radius: 0;
@@ -3610,7 +3610,7 @@ button {
   background-image: var(--tower-frame);
   background-repeat: no-repeat;
   background-position: center;
-  background-size: 100% 100%;
+  background-size: 100% auto;
   box-shadow: none;
   color: #fff0b7;
   font-size: clamp(0.94rem, 2.2vw, 1.35rem);
