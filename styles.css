@@ -998,9 +998,7 @@ button {
   outline: none;
   filter: brightness(1.12);
   transform: scale(1.08);
-  box-shadow:
-    0 6px 0 rgba(92, 52, 20, 0.72),
-    0 0 20px rgba(255, 231, 132, 0.7);
+  box-shadow: none;
 }
 
 .region-label.spring:hover,
@@ -3283,9 +3281,9 @@ button {
   }
 
   .map-title-logo {
-    top: 3.8%;
-    left: 4%;
-    width: clamp(112px, 30vw, 148px);
+    top: 2.5%;
+    left: 3%;
+    width: clamp(146px, 39vw, 193px);
   }
 
   .map-title-logo strong {
@@ -3413,7 +3411,9 @@ button {
 }
 
 .map-title-logo {
-  width: clamp(162px, 29%, 240px);
+  top: 2.8%;
+  left: 3%;
+  width: clamp(210px, 38%, 312px);
   aspect-ratio: 1000 / 420;
   padding: 0;
   filter:
@@ -3524,7 +3524,7 @@ button {
 
 @media (max-width: 700px) {
   .map-title-logo {
-    width: clamp(136px, 34vw, 166px);
+    width: clamp(177px, 44vw, 216px);
   }
 
   .region-label.kingdom-marker {
