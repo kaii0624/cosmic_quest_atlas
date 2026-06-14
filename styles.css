@@ -3602,7 +3602,7 @@ button {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 0.08em clamp(20px, 2.5vw, 32px) 0.12em clamp(60px, 7vw, 90px);
+  padding: 0 clamp(24px, 3vw, 36px) clamp(14px, 2vw, 22px) clamp(56px, 6.5vw, 84px);
   clip-path: none;
   border: 0;
   border-radius: 0;
@@ -3646,7 +3646,7 @@ button {
     width: 133px;
     min-width: 133px;
     min-height: 44px;
-    padding: 0.05em 13px 0.1em 38px;
+    padding: 0 14px 10px 34px;
     font-size: 0.76rem;
   }
 }
