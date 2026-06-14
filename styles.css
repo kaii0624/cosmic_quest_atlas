@@ -4238,6 +4238,7 @@ button {
   display: grid;
   justify-items: center;
   gap: 1px;
+  transform: translateY(clamp(-14px, -2.5vw, -8px));
 }
 
 .quest-requester img,
