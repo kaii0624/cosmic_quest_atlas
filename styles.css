@@ -5045,6 +5045,23 @@ button {
     0 0 13px rgba(95, 185, 255, 0.38);
 }
 
+.app-screen .app-observe-grid .winter-star-orb-button.asset-item .winter-star-orb {
+  background: none;
+  aspect-ratio: 1;
+  display: grid;
+  place-items: center;
+  filter:
+    drop-shadow(0 6px 0 rgba(8, 5, 8, 0.42))
+    drop-shadow(0 0 14px rgba(185, 126, 255, 0.48))
+    drop-shadow(0 0 8px rgba(255, 218, 119, 0.28));
+}
+
+.app-screen .app-observe-grid .winter-star-orb-button.asset-item .winter-star-orb img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
 .app-screen .library-scroll-card {
   min-width: 0;
   min-height: 116px;
@@ -7619,10 +7636,6 @@ button {
 .region-label.deep:focus-visible,
 .region-label.deep.active {
   transform: scale(1.06);
-}
-
-.map-stage.mode-home .tower-marker {
-  display: none;
 }
 
 .home-selection-panel.deep {

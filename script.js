@@ -220,16 +220,6 @@ const KINGDOMS = {
 
 };
 
-KINGDOMS.tower.points.push({
-  id: "ancientSky",
-  x: 50,
-  y: 50,
-  label: "天球儀",
-  storyId: "ancientSkyMap",
-  kind: "planet",
-  asset: "./assets/cosmic-enemy-ancient-sky-normal.png"
-});
-
 KINGDOMS.deep = {
   name: "銀河深淵域",
   lead: "天の川の外へ続く、紫の外宇宙ゲート。",
@@ -1460,32 +1450,6 @@ function makeCosmicStory({
 }
 
 const ADDITIONAL_STORIES = {
-  ancientSkyMap: makeCosmicStory({
-    kingdomId: "tower",
-    type: "STORY 28",
-    name: "天球儀の番人",
-    lead: "星の見かけの配置を古い天球へ写し、星座体系の入口を開く。",
-    normal: "./assets/cosmic-enemy-ancient-sky-normal.png",
-    phenomenon: "./assets/cosmic-enemy-ancient-sky-phenomenon.png",
-    pattern: "map",
-    statusRows: [
-      { icon: "✦", label: "対象", value: "恒星の配置" },
-      { icon: "◎", label: "時代", value: "古代" },
-      { icon: "◇", label: "意味", value: "星座体系" }
-    ],
-    reward: {
-      id: "ancient-constellations-scroll",
-      title: "星座体系の巻物",
-      image: "./assets/reward-scroll-ancient-constellations.png",
-      tier: "minor",
-      lesson: "星座は見かけの地図"
-    },
-    lines: [
-      "古代の観測者は、星の並びを結び、季節と方角を記録した。",
-      "星座は宇宙の距離図ではない。空に投影された見かけの地図だ。",
-      "この地図が、天球座標や後の観測の土台になった。"
-    ]
-  }),
   m31Cepheid: makeCosmicStory({
     type: "STORY 29",
     name: "M31セファイドの灯",
@@ -1894,7 +1858,6 @@ const OBJECT_ORB_CLASSES = {
 };
 
 Object.assign(OBJECT_ORB_CLASSES, {
-  ancientSky: "galaxy",
   m31Cepheid: "galaxy",
   virgoCluster: "galaxy",
   quasar: "galaxy",
@@ -2009,10 +1972,6 @@ const OBSERVE_COPY = {
 };
 
 Object.assign(OBSERVE_COPY, {
-  ancientSky: {
-    lesson: "星座は見かけの地図",
-    description: "古代の星座体系は天球座標の土台。"
-  },
   m31Cepheid: {
     lesson: "周期で銀河距離を測る",
     description: "M31内の変光星が外銀河距離を示す。"
@@ -2258,15 +2217,6 @@ const LIBRARY_SCROLLS = [
 ];
 
 LIBRARY_SCROLLS.push(
-  {
-    id: "ancient-constellations-scroll",
-    title: "星座体系の巻物",
-    period: "天球観測塔",
-    image: "./assets/reward-scroll-ancient-constellations.png",
-    tier: "minor",
-    lesson: "星座は見かけの地図",
-    description: "古代の星座体系は、星空を記録する最初の地図。天球座標や星座理解の土台になる。"
-  },
   {
     id: "geocentric-model-scroll",
     title: "天動説の巻物",
@@ -2656,7 +2606,6 @@ QUESTS.push(
     reward: "天動説の星章",
     rewardScrollId: "geocentric-model-scroll",
     requiredScrolls: [
-      { id: "ancient-constellations-scroll", label: "星座体系" },
       { id: "mars-retrograde-scroll", label: "惑星の逆行" }
     ]
   },
