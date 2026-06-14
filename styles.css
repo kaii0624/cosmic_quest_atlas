@@ -6530,9 +6530,9 @@ button {
 .game-shell[data-mode="story"] .target-status-panel {
   top: 7%;
   left: 5.5%;
-  width: min(430px, 46%);
-  padding: clamp(14px, 1.8vw, 22px) clamp(16px, 2vw, 26px) clamp(14px, 1.8vw, 22px);
-  background-image: url("./assets/ui-battle-target-status-frame.png");
+  width: min(280px, 34%);
+  padding: clamp(10px, 1.4vw, 16px) clamp(12px, 1.6vw, 20px) clamp(10px, 1.4vw, 16px);
+  background-image: url("./assets/ui-battle-target-status-frame.png?v=frame-v2");
 }
 
 .game-shell[data-mode="story"] .status-object {
@@ -6703,8 +6703,8 @@ button {
   .game-shell[data-mode="story"] .target-status-panel {
     top: 5.6%;
     left: 4.8%;
-    width: 47%;
-    padding: 9px 10px 9px;
+    width: 36%;
+    padding: 7px 8px 7px;
   }
 
   .game-shell[data-mode="story"] .status-object {
