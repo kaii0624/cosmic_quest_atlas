@@ -7792,6 +7792,29 @@ button {
   gap: clamp(16px, 3vw, 22px);
 }
 
+.lesson-hook {
+  margin: 0;
+  position: relative;
+  padding: clamp(4px, 1.2vw, 8px) 0 clamp(14px, 2.6vw, 18px);
+  color: #ffe7a2;
+  font-size: clamp(1.12rem, 3.6vw, 1.44rem);
+  font-weight: 900;
+  line-height: 1.5;
+  letter-spacing: 0.01em;
+  text-shadow: 0 2px 0 rgba(8, 5, 2, 0.5), 0 0 14px rgba(255, 222, 119, 0.26);
+}
+
+.lesson-hook::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: clamp(48px, 16vw, 76px);
+  height: 3px;
+  border-radius: 3px;
+  background: linear-gradient(90deg, #f6cd5e, rgba(246, 205, 94, 0));
+}
+
 .lesson-lead {
   margin: 0;
   font-size: clamp(0.92rem, 2.7vw, 1.05rem);

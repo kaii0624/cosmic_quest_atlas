@@ -2496,9 +2496,11 @@ const LESSON_PAGES = {
     badge: "天文宇宙検定2級",
     title: "絶対等級",
     subtitle: "星本来の明るさを同じ距離でそろえて比べる",
+    hook: "夜空でいちばん明るく見える星は、本当に“いちばんすごい”星なのだろうか――？",
     lead:
-      "夜空でどの星が明るく見えるかは、星そのものの明るさ（光度）だけでなく、地球からの距離にも左右される。" +
-      "絶対等級は、すべての星を同じ距離に並べ直して、本来の明るさだけを公平に比べるためのものさし。",
+      "じつは、見かけの明るさは“近さ”のごまかしかもしれない。すぐ隣のろうそくが、遠くの灯台より明るく見えるように。" +
+      "そこで天文学者は、すべての星を同じ距離（10 パーセク）に並べ直すという大胆な発想をした。" +
+      "こうして見えてくる星の“本当の実力”が、絶対等級だ。",
     blocks: [
       {
         type: "compare",
@@ -3934,6 +3936,7 @@ function openLesson(scrollId) {
         <button class="lesson-close" type="button" aria-label="閉じる" data-lesson-close>×</button>
       </header>
       <div class="lesson-body">
+        ${lesson.hook ? `<p class="lesson-hook">${lesson.hook}</p>` : ""}
         <p class="lesson-lead">${lesson.lead}</p>
         ${lesson.blocks.map(renderLessonBlock).join("")}
       </div>
