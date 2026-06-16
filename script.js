@@ -6560,25 +6560,28 @@ function renderQuestFactDetail(quest) {
         <span>QUEST ${quest.number}</span>
         <h2>${quest.title}</h2>
       </div>
-      <figure class="quest-main-image-card quest-fact-image">
-        <img src="${withAssetVersion(quest.mainImage)}" alt="${quest.title}の観測場面" />
-      </figure>
-      <div class="quest-fact-row" aria-label="必要な観測事実">
-        ${quest.facts
-          .map((fact) => {
-            const owned = claimedRewards.has(fact.id);
-            const scroll = getScrollById(fact.id);
-            const image = scroll?.image ?? "./assets/reward-scroll-minor-base.png";
-            return `
-              <div class="quest-fact-card ${owned ? "owned" : "missing"}">
-                <span class="quest-fact-thumb">
-                  <img src="${withAssetVersion(image)}" alt="${fact.label}" />
-                  <b class="quest-fact-mark" aria-hidden="true">${owned ? "✓" : "?"}</b>
-                </span>
-                <span class="quest-fact-label">${fact.label}</span>
-              </div>`;
-          })
-          .join("")}
+      <div class="quest-detail-scroll app-scroll-area">
+        <figure class="quest-main-image-card quest-fact-image">
+          <img src="${withAssetVersion(quest.mainImage)}" alt="${quest.title}の観測場面" />
+        </figure>
+        <div class="quest-fact-row" aria-label="必要な観測事実">
+          ${quest.facts
+            .map((fact) => {
+              const owned = claimedRewards.has(fact.id);
+              const scroll = getScrollById(fact.id);
+              const image = scroll?.image ?? "./assets/reward-scroll-minor-base.png";
+              return `
+                <div class="quest-fact-card ${owned ? "owned" : "missing"}">
+                  <span class="quest-fact-thumb">
+                    <img src="${withAssetVersion(image)}" alt="${fact.label}" />
+                    <b class="quest-fact-mark" aria-hidden="true">${owned ? "✓" : "?"}</b>
+                  </span>
+                  <span class="quest-fact-label">${fact.label}</span>
+                  <span class="quest-fact-status">${owned ? "観測済み" : "未観測"}</span>
+                </div>`;
+            })
+            .join("")}
+        </div>
       </div>
     </section>
   `;

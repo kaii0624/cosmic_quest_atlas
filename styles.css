@@ -8289,19 +8289,14 @@ button {
   display: none;
 }
 
-/* ===== クエスト：観測事実方式（1画面・横並び・読み進め式） ===== */
-.quest-fact-view {
-  display: flex;
-  flex-direction: column;
-  gap: clamp(8px, 1.8vw, 14px);
-  height: 100%;
-  padding-bottom: clamp(6px, 1.6vw, 12px);
+/* ===== クエスト：観測事実を横並び表示（選択式に代わる方式） ===== */
+.quest-fact-view .quest-detail-scroll {
+  display: grid;
+  gap: clamp(12px, 2.6vw, 18px);
 }
 
 .quest-fact-image {
   margin: 0;
-  flex: 1 1 auto;
-  min-height: 0;
   border-radius: 12px;
   overflow: hidden;
   border: 1px solid rgba(246, 205, 94, 0.42);
@@ -8310,12 +8305,9 @@ button {
 .quest-fact-image img {
   display: block;
   width: 100%;
-  height: 100%;
-  object-fit: cover;
 }
 
 .quest-fact-row {
-  flex: none;
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(0, 1fr));
   gap: clamp(8px, 2vw, 14px);
@@ -8324,8 +8316,8 @@ button {
 .quest-fact-card {
   display: grid;
   justify-items: center;
-  gap: 5px;
-  padding: clamp(8px, 1.8vw, 12px) clamp(6px, 1.6vw, 10px);
+  gap: 6px;
+  padding: clamp(10px, 2.4vw, 14px) clamp(6px, 1.6vw, 10px);
   border: 1px solid rgba(149, 130, 200, 0.4);
   border-radius: 12px;
   background: rgba(13, 16, 36, 0.5);
@@ -8339,7 +8331,7 @@ button {
 
 .quest-fact-thumb {
   position: relative;
-  width: clamp(46px, 13vw, 70px);
+  width: clamp(54px, 16vw, 84px);
   aspect-ratio: 1;
   display: block;
 }
@@ -8358,12 +8350,12 @@ button {
   position: absolute;
   right: -4px;
   bottom: -4px;
-  width: 21px;
-  height: 21px;
+  width: 22px;
+  height: 22px;
   display: grid;
   place-items: center;
   border-radius: 50%;
-  font-size: 0.82rem;
+  font-size: 0.86rem;
   font-weight: 900;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
 }
@@ -8379,17 +8371,23 @@ button {
 }
 
 .quest-fact-label {
-  color: #ffe7a2;
-  font-family: "Hiragino Mincho ProN", "YuMincho", "Yu Mincho", serif;
+  color: #ece6f5;
   font-weight: 900;
-  font-size: clamp(0.86rem, 2.5vw, 1rem);
+  font-size: clamp(0.82rem, 2.4vw, 0.95rem);
   line-height: 1.2;
-  letter-spacing: 0.02em;
-  text-shadow: 0 1px 0 rgba(13, 7, 3, 0.6);
 }
 
-.quest-fact-card.missing .quest-fact-label {
-  color: #cabfe6;
+.quest-fact-status {
+  font-size: clamp(0.72rem, 2.1vw, 0.82rem);
+  font-weight: 800;
+}
+
+.quest-fact-card.owned .quest-fact-status {
+  color: #9be8ad;
+}
+
+.quest-fact-card.missing .quest-fact-status {
+  color: #b6a9d8;
 }
 
 /* 下の説明欄：依頼主のセリフ送り（バトルのテキスト送りと同じ操作感） */
