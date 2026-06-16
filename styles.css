@@ -8288,3 +8288,152 @@ button {
 .target-status-panel .status-meter {
   display: none;
 }
+
+/* ===== クエスト：観測事実を横並び表示（選択式に代わる方式） ===== */
+.quest-fact-view .quest-detail-scroll {
+  display: grid;
+  gap: clamp(12px, 2.6vw, 18px);
+}
+
+.quest-fact-image {
+  margin: 0;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid rgba(246, 205, 94, 0.42);
+}
+
+.quest-fact-image img {
+  display: block;
+  width: 100%;
+}
+
+.quest-fact-objective {
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #f4d9a2;
+  font-weight: 800;
+  font-size: clamp(0.9rem, 2.6vw, 1.05rem);
+  line-height: 1.4;
+}
+
+.quest-fact-objective span {
+  flex: none;
+  padding: 2px 11px;
+  border-radius: 6px;
+  background: linear-gradient(135deg, #5a3f8c, #8a5bb4);
+  color: #fff0c4;
+  font-size: 0.82em;
+  font-weight: 900;
+}
+
+.quest-fact-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(0, 1fr));
+  gap: clamp(8px, 2vw, 14px);
+}
+
+.quest-fact-card {
+  display: grid;
+  justify-items: center;
+  gap: 6px;
+  padding: clamp(10px, 2.4vw, 14px) clamp(6px, 1.6vw, 10px);
+  border: 1px solid rgba(149, 130, 200, 0.4);
+  border-radius: 12px;
+  background: rgba(13, 16, 36, 0.5);
+  text-align: center;
+}
+
+.quest-fact-card.owned {
+  border-color: rgba(120, 214, 140, 0.85);
+  background: rgba(46, 110, 64, 0.3);
+}
+
+.quest-fact-thumb {
+  position: relative;
+  width: clamp(54px, 16vw, 84px);
+  aspect-ratio: 1;
+  display: block;
+}
+
+.quest-fact-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.quest-fact-card.missing .quest-fact-thumb img {
+  filter: grayscale(0.85) brightness(0.66);
+}
+
+.quest-fact-mark {
+  position: absolute;
+  right: -4px;
+  bottom: -4px;
+  width: 22px;
+  height: 22px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  font-size: 0.86rem;
+  font-weight: 900;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+}
+
+.quest-fact-card.owned .quest-fact-mark {
+  background: #3da35a;
+  color: #eafff0;
+}
+
+.quest-fact-card.missing .quest-fact-mark {
+  background: #5b4a78;
+  color: #e7dcff;
+}
+
+.quest-fact-label {
+  color: #ece6f5;
+  font-weight: 900;
+  font-size: clamp(0.82rem, 2.4vw, 0.95rem);
+  line-height: 1.2;
+}
+
+.quest-fact-status {
+  font-size: clamp(0.72rem, 2.1vw, 0.82rem);
+  font-weight: 800;
+}
+
+.quest-fact-card.owned .quest-fact-status {
+  color: #9be8ad;
+}
+
+.quest-fact-card.missing .quest-fact-status {
+  color: #b6a9d8;
+}
+
+/* 下の説明欄：依頼主の見立て（証拠不足／条件成立） */
+.quest-fact-verdict {
+  display: inline-block;
+  margin-left: 8px;
+  padding: 2px 10px;
+  border-radius: 999px;
+  font-size: 0.62em;
+  font-weight: 900;
+  vertical-align: 0.12em;
+}
+
+.quest-fact-panel.is-clear .quest-fact-verdict {
+  background: #2e6e40;
+  color: #eafff0;
+}
+
+.quest-fact-panel.is-missing .quest-fact-verdict {
+  background: #9a5a1e;
+  color: #fff0d8;
+}
+
+/* クリアボタンの引き上げ量を打ち消し、セリフとの重なりを防ぐ */
+.quest-fact-panel .home-selection-actions {
+  transform: none;
+  margin-top: clamp(3px, 0.8vw, 7px);
+}

@@ -5530,7 +5530,30 @@ const QUESTS = [
     requiredScrolls: [
       { id: "venus-phases-scroll", label: "金星の満ち欠け" },
       { id: "jupiter-moons-scroll", label: "木星の衛星発見" }
-    ]
+    ],
+    // 必要な観測事実（最大4つ）。揃えばクリア、欠ければ missing のセリフを表示する。
+    facts: [
+      {
+        id: "venus-phases-scroll",
+        label: "金星の満ち欠け",
+        missing:
+          "まだ金星の満ち欠けを確かめられていない。もし金星が月のように満ち欠けするなら、" +
+          "それは金星が太陽の周りを回っている何よりの証拠になる。その観測がないかぎり、" +
+          "「金星は地球と太陽のあいだを行き来するだけ」という古い見方を、まだ退けられない。"
+      },
+      {
+        id: "jupiter-moons-scroll",
+        label: "木星の衛星",
+        missing:
+          "まだ木星をめぐる衛星を見つけられていない。地球以外を中心に回る天体がたった一つでも" +
+          "見つかれば、「すべては地球を中心に回る」という前提は揺らぐ。その実例を欠いたままでは、" +
+          "天動説に決定的な一撃を与えられない。"
+      }
+    ],
+    clearLine:
+      "金星の満ち欠け、そして木星をめぐる衛星。ふたつの観測事実が、いま私の手の中にそろった。" +
+      "どちらも地球を宇宙の中心に置いたままでは説明しきれない。これで太陽中心の体系は、" +
+      "もはや空想ではない――観測に裏打ちされた事実だ。よくやった、星章を受け取るがいい。"
   },
   {
     id: "kepler-third-law",
@@ -5894,8 +5917,9 @@ function claimQuestReward(questId) {
   const quest = QUESTS.find((item) => item.id === questId);
   if (!quest?.rewardScrollId) return;
 
-  const selectedEvidenceIds = getQuestSelectedEvidenceIds(quest);
-  const canCombine = quest.requiredScrolls.every((requirement) => selectedEvidenceIds.includes(requirement.id));
+  const canCombine = quest.facts
+    ? quest.facts.every((fact) => claimedRewards.has(fact.id))
+    : quest.requiredScrolls.every((requirement) => getQuestSelectedEvidenceIds(quest).includes(requirement.id));
   if (!canCombine) return;
 
   const rewardScroll = getScrollById(quest.rewardScrollId);
@@ -6341,7 +6365,9 @@ function renderGuideDetailPanel() {
   if (state.mode === "observe") return renderObserveSelectionPanel();
   if (state.mode === "library") return renderLibrarySelectionPanel();
   if (state.mode === "quests") {
-    return state.selectedQuestId ? renderQuestDetailPanel() : renderQuestSelectionPanel();
+    if (!state.selectedQuestId) return renderQuestSelectionPanel();
+    const quest = getSelectedQuest();
+    return quest.facts ? renderQuestFactPanel(quest) : renderQuestDetailPanel();
   }
 
   return "";
@@ -6492,11 +6518,72 @@ function renderQuestDetail(quest) {
   `;
 }
 
+// 観測事実方式のクエスト：必要な事実（最大4つ）を横並びで表示する。
+function renderQuestFactDetail(quest) {
+  return `
+    <section class="app-screen-panel quest-tab quest-detail-view quest-fact-view">
+      <div class="quest-detail-title">
+        <button class="quest-back-button" type="button" data-quest-back aria-label="クエスト一覧へ戻る">←</button>
+        <span>QUEST ${quest.number}</span>
+        <h2>${quest.title}</h2>
+      </div>
+      <div class="quest-detail-scroll app-scroll-area">
+        <figure class="quest-main-image-card quest-fact-image">
+          <img src="${withAssetVersion(quest.mainImage)}" alt="${quest.title}の観測場面" />
+        </figure>
+        <p class="quest-fact-objective"><span>目標</span>${quest.objective}</p>
+        <div class="quest-fact-row" aria-label="必要な観測事実">
+          ${quest.facts
+            .map((fact) => {
+              const owned = claimedRewards.has(fact.id);
+              const scroll = getScrollById(fact.id);
+              const image = scroll?.image ?? "./assets/reward-scroll-minor-base.png";
+              return `
+                <div class="quest-fact-card ${owned ? "owned" : "missing"}">
+                  <span class="quest-fact-thumb">
+                    <img src="${withAssetVersion(image)}" alt="${fact.label}" />
+                    <b class="quest-fact-mark" aria-hidden="true">${owned ? "✓" : "?"}</b>
+                  </span>
+                  <span class="quest-fact-label">${fact.label}</span>
+                  <span class="quest-fact-status">${owned ? "観測済み" : "未観測"}</span>
+                </div>`;
+            })
+            .join("")}
+        </div>
+      </div>
+    </section>
+  `;
+}
+
+function renderQuestFactPanel(quest) {
+  const missing = quest.facts.filter((fact) => !claimedRewards.has(fact.id));
+  const cleared = missing.length === 0;
+  const line = cleared ? quest.clearLine : missing[0].missing;
+
+  return `
+    <section class="home-selection-panel app-detail-panel quest-dialogue-detail-panel quest-fact-panel ${cleared ? "is-clear" : "is-missing"}" aria-label="${quest.requester}の見立て">
+      <figure class="home-selection-card app-detail-card">
+        <img src="${withAssetVersion(quest.requesterImage)}" alt="${quest.requester}" />
+      </figure>
+      <div class="home-selection-copy app-detail-copy">
+        <h2>${quest.requester}<span class="quest-fact-verdict">${cleared ? "条件成立" : "証拠不足"}</span></h2>
+        <p>${line}</p>
+        ${cleared ? `
+        <div class="home-selection-actions">
+          <button class="home-enter-button" type="button" data-quest-combine="${quest.id}">
+            クエストクリア
+          </button>
+        </div>` : ""}
+      </div>
+    </section>
+  `;
+}
+
 function renderQuestTab() {
   const selectedQuest = state.selectedQuestId ? getSelectedQuest() : null;
 
   if (selectedQuest) {
-    return renderQuestDetail(selectedQuest);
+    return selectedQuest.facts ? renderQuestFactDetail(selectedQuest) : renderQuestDetail(selectedQuest);
   }
 
   getFocusedQuest();
@@ -6994,6 +7081,14 @@ document.addEventListener(
       event.preventDefault();
       event.stopPropagation();
       openStory(observeStartButton.dataset.observeStart);
+      return;
+    }
+
+    const questCombineButton = target?.closest("[data-quest-combine]");
+    if (questCombineButton) {
+      event.preventDefault();
+      event.stopPropagation();
+      claimQuestReward(questCombineButton.dataset.questCombine);
     }
   },
   true
@@ -7029,6 +7124,12 @@ guidePanel.addEventListener("click", (event) => {
   const observeStartButton = target?.closest("[data-observe-start]");
   if (observeStartButton) {
     openStory(observeStartButton.dataset.observeStart);
+    return;
+  }
+
+  const questCombineButton = target?.closest("[data-quest-combine]");
+  if (questCombineButton) {
+    claimQuestReward(questCombineButton.dataset.questCombine);
     return;
   }
 
