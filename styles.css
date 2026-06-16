@@ -7412,6 +7412,20 @@ button {
   line-height: 1.46;
 }
 
+.home-selection-panel.library-detail-panel .home-selection-copy p {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  overflow: hidden;
+}
+
+/* 説明文を2行に固定したぶん、ボタンの引き上げ量を打ち消して重なりを防ぐ */
+.home-selection-panel.library-detail-panel .home-selection-actions {
+  transform: none;
+  margin-top: clamp(3px, 0.8vw, 7px);
+}
+
 .home-selection-panel.app-detail-panel .home-selection-copy p strong {
   display: block;
   margin-bottom: 3px;

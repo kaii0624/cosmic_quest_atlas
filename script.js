@@ -6263,7 +6263,7 @@ function renderObserveSelectionPanel() {
 function renderLibrarySelectionPanel() {
   const selected = getSelectedLibraryScroll();
   const selectedUnlocked = claimedRewards.has(selected.id);
-  const hasLesson = selectedUnlocked && Boolean(getLessonForScroll(selected.id));
+  const hasLesson = Boolean(getLessonForScroll(selected.id));
 
   return `
     <section class="home-selection-panel app-detail-panel library-detail-panel ${selected.tier ?? "major"}-tier" aria-label="${selected.title}の説明">
