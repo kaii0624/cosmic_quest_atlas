@@ -6530,9 +6530,33 @@ button {
 .game-shell[data-mode="story"] .target-status-panel {
   top: 7%;
   left: 8%;
-  width: min(230px, 27%);
-  padding: clamp(10px, 1.4vw, 16px) clamp(12px, 1.6vw, 20px) clamp(10px, 1.4vw, 16px);
-  background-image: url("./assets/ui-battle-target-status-frame.png?v=frame-v3");
+  width: min(276px, 32.4%);
+  min-height: clamp(150px, 21vw, 196px);
+  display: grid;
+  align-content: center;
+  padding: clamp(14px, 1.9vw, 22px) clamp(14px, 1.9vw, 24px);
+  background-image: none;
+}
+
+/* ステータス枠を画像要素で確実に表示（背景画像が描画されない環境対策） */
+.target-status-frame {
+  display: none;
+}
+
+.game-shell[data-mode="story"] .target-status-frame {
+  display: block;
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: fill;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.game-shell[data-mode="story"] .target-status-panel .status-object {
+  position: relative;
+  z-index: 1;
 }
 
 .game-shell[data-mode="story"] .status-object {
@@ -6703,8 +6727,9 @@ button {
   .game-shell[data-mode="story"] .target-status-panel {
     top: 5.6%;
     left: 7%;
-    width: 29%;
-    padding: 7px 8px 7px;
+    width: 35%;
+    min-height: 98px;
+    padding: 10px 12px;
   }
 
   .game-shell[data-mode="story"] .status-object {
