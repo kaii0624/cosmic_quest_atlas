@@ -8274,18 +8274,14 @@ button {
   margin-top: clamp(3px, 0.8vw, 7px);
 }
 
-/* ===== 説明欄サムネイルの王国アクセント枠を冬以外で非表示 ===== */
-.home-selection-panel.spring .home-selection-card::before,
-.home-selection-panel.spring .home-selection-card::after,
-.home-selection-panel.summer .home-selection-card::before,
-.home-selection-panel.summer .home-selection-card::after,
-.home-selection-panel.autumn .home-selection-card::before,
-.home-selection-panel.autumn .home-selection-card::after,
-.home-selection-panel.tower .home-selection-card::before,
-.home-selection-panel.tower .home-selection-card::after,
-.home-selection-panel.deep .home-selection-card::before,
-.home-selection-panel.deep .home-selection-card::after {
-  display: none;
+/* ===== 詳細マップの説明欄を囲む外側の金枠（codex-panelのベース枠）を削除 ===== */
+.game-shell[data-mode="detail"] .codex-panel {
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+  padding: 0;
+  min-height: 0;
+  overflow: visible;
 }
 
 /* ===== バトル画面: 相手のHPゲージは非表示 ===== */
