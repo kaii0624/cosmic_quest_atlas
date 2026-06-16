@@ -6586,18 +6586,16 @@ function renderQuestFactDetail(quest) {
   `;
 }
 
-// 下の説明欄：依頼主のセリフを1行ずつ読み進める（バトルのテキスト送りと同じ操作感）
+// 下の説明欄：依頼主のセリフを1行ずつ読み進める（バトルのテキスト送りと全く同じFMT）
 function renderQuestFactPanel(quest) {
-  const { lines, cleared } = getQuestDialogue(quest);
+  const { lines } = getQuestDialogue(quest);
   const index = Math.min(state.questLineIndex, lines.length - 1);
-  const isLast = index >= lines.length - 1;
-  const cue = cleared ? (isLast ? "★" : "▼") : (isLast ? "↻" : "▼");
 
   return `
-    <button class="quest-fact-dialogue ${cleared ? "is-clear" : "is-missing"}" type="button" data-quest-advance="${quest.id}" aria-label="${quest.requester}のセリフを進める">
+    <button class="quest-fact-dialogue" type="button" data-quest-advance="${quest.id}" aria-label="${quest.requester}のセリフを進める">
       <span class="quest-fact-speaker">${quest.requester}</span>
       <span class="quest-fact-line">${lines[index]}</span>
-      <span class="quest-fact-cue" aria-hidden="true">${cue}</span>
+      <span class="quest-fact-cue" aria-hidden="true">▼</span>
     </button>
   `;
 }
