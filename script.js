@@ -6577,7 +6577,6 @@ function renderQuestFactDetail(quest) {
                     <b class="quest-fact-mark" aria-hidden="true">${owned ? "✓" : "?"}</b>
                   </span>
                   <span class="quest-fact-label">${fact.label}</span>
-                  <span class="quest-fact-status">${owned ? "観測済み" : "未観測"}</span>
                 </div>`;
             })
             .join("")}
