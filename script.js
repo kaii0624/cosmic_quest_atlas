@@ -1753,6 +1753,7 @@ const rewardImage = document.querySelector("#rewardImage");
 const rewardKnowledgeTitle = document.querySelector("#rewardKnowledgeTitle");
 const rewardKnowledgeList = document.querySelector("#rewardKnowledgeList");
 const rewardCloseButton = document.querySelector("#rewardCloseButton");
+const lessonOverlay = document.querySelector("#lessonOverlay");
 const enemySprite = document.querySelector("#enemySprite");
 const targetStatusThumb = document.querySelector("#targetStatusThumb");
 const targetStatusName = document.querySelector("#targetStatusName");
@@ -2488,6 +2489,117 @@ LIBRARY_SCROLLS.push(
     description: "M87中心ブラックホールのシャドウ画像は、ブラックホールを直接的に検証する重要成果。"
   }
 );
+
+// 巻物ごとの「詳細を学ぶ」ページ。天文宇宙検定2級レベルの1枚解説。
+const LESSON_PAGES = {
+  "vega-absolute-magnitude-scroll": {
+    badge: "天文宇宙検定2級",
+    title: "絶対等級",
+    subtitle: "星本来の明るさを同じ距離でそろえて比べる",
+    lead:
+      "夜空でどの星が明るく見えるかは、星そのものの明るさ（光度）だけでなく、地球からの距離にも左右される。" +
+      "絶対等級は、すべての星を同じ距離に並べ直して、本来の明るさだけを公平に比べるためのものさし。",
+    blocks: [
+      {
+        type: "compare",
+        items: [
+          {
+            symbol: "m",
+            label: "見かけの等級",
+            text: "地球から実際に見える明るさの等級。近い星ほど明るく見えるので、星本来の明るさとは限らない。"
+          },
+          {
+            symbol: "M",
+            label: "絶対等級",
+            text: "その星を 10 パーセクの距離に置いたと仮定したときの等級。距離の影響を除いた、星本来の明るさを表す。"
+          }
+        ]
+      },
+      {
+        type: "note",
+        heading: "基準は「10 パーセク」",
+        text:
+          "10 パーセク ＝ 約 32.6 光年。すべての星をこの同じ距離に置きそろえることで、" +
+          "見かけの差を取りのぞき、光度そのものだけを比較できる。"
+      },
+      {
+        type: "formula",
+        expression: "m − M = 5 log₁₀ d − 5",
+        sub: "（別の形）　m − M = 5 log₁₀ ( d / 10 )",
+        where: "d ＝ 星までの距離〔パーセク〕",
+        caption:
+          "この m − M を「距離指数」と呼ぶ。距離 d が分かれば絶対等級 M が求まり、" +
+          "逆に M が分かれば距離 d を逆算できる。d ＝ 10 のとき m − M ＝ 0 となり、定義どおり m ＝ M になる。"
+      },
+      {
+        type: "scale",
+        heading: "等級と明るさの関係（ポグソンの式）",
+        rows: [
+          { diff: "1 等級の差", ratio: "明るさ 約 2.5 倍", note: "正確には 100 の 5 乗根＝2.512 倍" },
+          { diff: "5 等級の差", ratio: "明るさ ちょうど 100 倍", note: "これが等級の定義の出発点" }
+        ],
+        foot: "等級は数値が小さい（マイナスが大きい）ほど明るい。"
+      },
+      {
+        type: "examples",
+        heading: "具体例で確かめる",
+        columns: ["天体", "見かけ m", "距離", "絶対 M"],
+        rows: [
+          ["太陽", "−26.8", "約 0.0000049 pc", "+4.8"],
+          ["ベガ", "0.0", "約 7.7 pc", "+0.6"],
+          ["デネブ", "+1.3", "約 440 pc", "約 −7"]
+        ],
+        foot:
+          "太陽は近いので見かけは桁違いに明るいが、絶対等級ではごく平均的な星。" +
+          "デネブは遠いのに明るく見える＝本当に桁違いの光度を持つ。"
+      },
+      {
+        type: "points",
+        heading: "ポイント",
+        items: [
+          "絶対等級の基準距離は「10 パーセク」。光年ではない点に注意。",
+          "5 等級の差＝明るさ 100 倍。1 等級あたり約 2.512 倍。",
+          "距離指数 m − M ＝ 5 log d − 5 から、距離も光度も逆算できる。",
+          "絶対等級が小さいほど高光度。太陽は M ＝ +4.8 でごく平均的。"
+        ]
+      },
+      {
+        type: "quiz",
+        heading: "練習問題",
+        items: [
+          {
+            q: "ある星の見かけの等級が +6.0、距離が 100 パーセクのとき、絶対等級 M はいくらか。",
+            choices: ["ア　+1.0", "イ　+6.0", "ウ　+11.0", "エ　−4.0"],
+            answer: "正解：ア　+1.0",
+            explain:
+              "距離指数の式 m − M ＝ 5 log d − 5 に d ＝ 100 を代入する。" +
+              "log₁₀ 100 ＝ 2 なので、m − M ＝ 5 × 2 − 5 ＝ 5。よって M ＝ m − 5 ＝ 6.0 − 5 ＝ +1.0。"
+          },
+          {
+            q: "絶対等級が等しい星 A（距離 10 パーセク）と星 B（距離 100 パーセク）がある。見かけの明るさはどちらが何倍明るく見えるか。",
+            choices: ["ア　A が 100 倍", "イ　B が 100 倍", "ウ　A が 10 倍", "エ　どちらも同じ"],
+            answer: "正解：ア　A が 100 倍",
+            explain:
+              "絶対等級が等しい＝光度（本来の明るさ）が同じ。見かけの明るさは距離の 2 乗に反比例するので、" +
+              "距離が 10 倍遠い B は A の 1/100 の明るさ。したがって A が B の 100 倍明るく見える（等級差はちょうど 5 等級）。"
+          },
+          {
+            q: "星の等級が 1 等級小さくなると、明るさは約何倍になるか。",
+            choices: ["ア　約 2.5 倍", "イ　約 5 倍", "ウ　約 10 倍", "エ　約 100 倍"],
+            answer: "正解：ア　約 2.5 倍",
+            explain:
+              "5 等級の差で明るさはちょうど 100 倍。よって 1 等級あたりは 100 の 5 乗根＝約 2.512 倍。" +
+              "等級は数値が小さいほど明るいので、1 等級小さくなると約 2.5 倍明るくなる。"
+          }
+        ]
+      }
+    ]
+  }
+};
+
+function getLessonForScroll(scrollId) {
+  return LESSON_PAGES[scrollId] ?? null;
+}
 
 const QUESTS = [
   {
@@ -3245,6 +3357,7 @@ function renderObserveSelectionPanel() {
 function renderLibrarySelectionPanel() {
   const selected = getSelectedLibraryScroll();
   const selectedUnlocked = claimedRewards.has(selected.id);
+  const hasLesson = selectedUnlocked && Boolean(getLessonForScroll(selected.id));
 
   return `
     <section class="home-selection-panel app-detail-panel library-detail-panel ${selected.tier ?? "major"}-tier" aria-label="${selected.title}の説明">
@@ -3254,6 +3367,12 @@ function renderLibrarySelectionPanel() {
       <div class="home-selection-copy app-detail-copy">
         <h2>${selected.title}</h2>
         <p>${selectedUnlocked ? selected.description : `${selected.period}の物語を観測すると、この巻物の解説が読める。`}</p>
+        ${hasLesson ? `
+        <div class="home-selection-actions">
+          <button class="home-enter-button" type="button" data-lesson-open="${selected.id}">
+            詳細を学ぶ
+          </button>
+        </div>` : ""}
       </div>
     </section>
   `;
@@ -3696,6 +3815,140 @@ function hideReward() {
   rewardPopup.classList.add("is-hidden");
 }
 
+function renderLessonBlock(block) {
+  switch (block.type) {
+    case "compare":
+      return `
+        <div class="lesson-compare">
+          ${block.items
+            .map(
+              (item) => `
+            <div class="lesson-compare-card">
+              <span class="lesson-compare-symbol">${item.symbol}</span>
+              <strong class="lesson-compare-label">${item.label}</strong>
+              <p>${item.text}</p>
+            </div>`
+            )
+            .join("")}
+        </div>`;
+    case "note":
+      return `
+        <div class="lesson-note">
+          <h3>${block.heading}</h3>
+          <p>${block.text}</p>
+        </div>`;
+    case "formula":
+      return `
+        <div class="lesson-formula">
+          <p class="lesson-formula-main">${block.expression}</p>
+          ${block.sub ? `<p class="lesson-formula-sub">${block.sub}</p>` : ""}
+          <p class="lesson-formula-where">${block.where}</p>
+          <p class="lesson-formula-caption">${block.caption}</p>
+        </div>`;
+    case "scale":
+      return `
+        <div class="lesson-section">
+          <h3>${block.heading}</h3>
+          <div class="lesson-scale">
+            ${block.rows
+              .map(
+                (row) => `
+              <div class="lesson-scale-row">
+                <span class="lesson-scale-diff">${row.diff}</span>
+                <span class="lesson-scale-arrow" aria-hidden="true">→</span>
+                <span class="lesson-scale-ratio">${row.ratio}</span>
+                <span class="lesson-scale-note">${row.note}</span>
+              </div>`
+              )
+              .join("")}
+          </div>
+          ${block.foot ? `<p class="lesson-foot">${block.foot}</p>` : ""}
+        </div>`;
+    case "examples":
+      return `
+        <div class="lesson-section">
+          <h3>${block.heading}</h3>
+          <table class="lesson-table">
+            <thead>
+              <tr>${block.columns.map((c) => `<th>${c}</th>`).join("")}</tr>
+            </thead>
+            <tbody>
+              ${block.rows
+                .map(
+                  (row) => `<tr>${row.map((cell, i) => `<td${i === 0 ? ' class="lesson-table-name"' : ""}>${cell}</td>`).join("")}</tr>`
+                )
+                .join("")}
+            </tbody>
+          </table>
+          ${block.foot ? `<p class="lesson-foot">${block.foot}</p>` : ""}
+        </div>`;
+    case "points":
+      return `
+        <div class="lesson-section">
+          <h3>${block.heading}</h3>
+          <ul class="lesson-points">
+            ${block.items.map((item) => `<li>${item}</li>`).join("")}
+          </ul>
+        </div>`;
+    case "quiz":
+      return `
+        <div class="lesson-section lesson-quiz">
+          <h3>${block.heading}</h3>
+          <ol class="lesson-quiz-list">
+            ${block.items
+              .map(
+                (item, i) => `
+              <li class="lesson-quiz-item">
+                <p class="lesson-quiz-q"><span class="lesson-quiz-num">Q${i + 1}</span>${item.q}</p>
+                ${item.choices ? `
+                <ul class="lesson-quiz-choices">
+                  ${item.choices.map((c) => `<li>${c}</li>`).join("")}
+                </ul>` : ""}
+                <details class="lesson-quiz-detail">
+                  <summary><span class="lesson-quiz-summary-label">解説</span><span class="lesson-quiz-summary-icon" aria-hidden="true">＋</span></summary>
+                  <div class="lesson-quiz-answer">
+                    <p class="lesson-quiz-correct">${item.answer}</p>
+                    <p class="lesson-quiz-explain">${item.explain}</p>
+                  </div>
+                </details>
+              </li>`
+              )
+              .join("")}
+          </ol>
+        </div>`;
+    default:
+      return "";
+  }
+}
+
+function openLesson(scrollId) {
+  const lesson = getLessonForScroll(scrollId);
+  if (!lesson) return;
+
+  lessonOverlay.innerHTML = `
+    <button class="lesson-backdrop" type="button" aria-label="解説を閉じる" data-lesson-close></button>
+    <section class="lesson-card" role="dialog" aria-modal="true" aria-label="${lesson.title}の解説">
+      <header class="lesson-head">
+        <h2>${lesson.title}</h2>
+        <p class="lesson-subtitle">${lesson.subtitle}</p>
+        <button class="lesson-close" type="button" aria-label="閉じる" data-lesson-close>×</button>
+      </header>
+      <div class="lesson-body">
+        <p class="lesson-lead">${lesson.lead}</p>
+        ${lesson.blocks.map(renderLessonBlock).join("")}
+      </div>
+    </section>
+  `;
+  lessonOverlay.classList.remove("is-hidden");
+  const closeButton = lessonOverlay.querySelector(".lesson-close");
+  if (closeButton) closeButton.focus();
+}
+
+function closeLesson() {
+  lessonOverlay.classList.add("is-hidden");
+  lessonOverlay.innerHTML = "";
+}
+
 function getRewardFromScrollId(scrollId, message = "ゲットしました。") {
   const scroll = getScrollById(scrollId);
   if (!scroll) return null;
@@ -3819,6 +4072,12 @@ guidePanel.addEventListener("click", (event) => {
     return;
   }
 
+  const lessonOpenButton = target?.closest("[data-lesson-open]");
+  if (lessonOpenButton) {
+    openLesson(lessonOpenButton.dataset.lessonOpen);
+    return;
+  }
+
   const menuButton = target?.closest("[data-menu-kingdom]");
   if (menuButton) {
     chooseHomeKingdom(menuButton.dataset.menuKingdom);
@@ -3904,7 +4163,18 @@ rewardPopup.addEventListener("click", (event) => {
   }
 });
 
+lessonOverlay.addEventListener("click", (event) => {
+  const target = getEventElement(event);
+  if (target?.closest("[data-lesson-close]")) {
+    closeLesson();
+  }
+});
+
 document.addEventListener("keydown", (event) => {
+  if (event.key === "Escape" && !lessonOverlay.classList.contains("is-hidden")) {
+    closeLesson();
+    return;
+  }
   if (event.key === "Escape" && !rewardPopup.classList.contains("is-hidden")) {
     hideReward();
   }
