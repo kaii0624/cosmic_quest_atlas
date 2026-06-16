@@ -2616,10 +2616,10 @@ const LESSON_PAGES = {
       },
       {
         type: "formula",
-        expression: "λ_max × T = 2.9 × 10⁻³",
-        where: "λ_max ＝ 最も強い光の波長〔m〕　T ＝ 表面温度〔K〕",
+        expression: "λmax × T = 2.9 × 10⁻³",
+        where: "λmax ＝ 最も強い光の波長〔m〕　T ＝ 表面温度〔K〕",
         caption:
-          "温度 T が高いほどピーク波長 λ_max は短く（青く）なる。逆に色（波長）が分かれば温度が求められる。"
+          "温度 T が高いほどピーク波長 λmax は短く（青く）なる。逆に色（波長）が分かれば温度が求められる。"
       },
       {
         type: "examples",
@@ -2657,7 +2657,7 @@ const LESSON_PAGES = {
             choices: ["ア　約 1/2 になる", "イ　約 2 倍になる", "ウ　変わらない", "エ　約 4 倍になる"],
             answer: "正解：ア　約 1/2 になる",
             explain:
-              "λ_max × T が一定なので、T が 2 倍になれば λ_max は 1/2 になる（波長が短く＝青くなる）。"
+              "λmax × T が一定なので、T が 2 倍になれば λmax は 1/2 になる（波長が短く＝青くなる）。"
           },
           {
             q: "スペクトル型 O・B・A・F・G・K・M のうち、最も低温なのはどれか。",
@@ -6721,6 +6721,36 @@ function hideReward() {
   rewardPopup.classList.add("is-hidden");
 }
 
+const QUIZ_LABELS = ["ア", "イ", "ウ", "エ"];
+
+// 選択肢の先頭ラベル（ア／イ…＋全角空白）を外して中身だけ取り出す
+function stripQuizLabel(text) {
+  return text.replace(/^(?:正解：)?[アイウエ]　/, "");
+}
+
+// 正解が常に「ア」固定にならないよう、表示時に選択肢をシャッフルしてラベルを振り直す。
+// 中身の対応が崩れる場合は元のまま返す（安全側）。
+function shuffleQuizItem(item) {
+  if (!Array.isArray(item.choices) || !item.answer) {
+    return { choices: item.choices, answer: item.answer };
+  }
+  const correctContent = stripQuizLabel(item.answer);
+  const contents = item.choices.map(stripQuizLabel);
+  if (!contents.includes(correctContent)) {
+    return { choices: item.choices, answer: item.answer };
+  }
+  const order = contents.map((_, i) => i);
+  for (let i = order.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [order[i], order[j]] = [order[j], order[i]];
+  }
+  const shuffled = order.map((idx) => contents[idx]);
+  const correctIdx = shuffled.indexOf(correctContent);
+  const choices = shuffled.map((c, i) => `${QUIZ_LABELS[i]}　${c}`);
+  const answer = `正解：${QUIZ_LABELS[correctIdx]}　${correctContent}`;
+  return { choices, answer };
+}
+
 function renderLessonBlock(block) {
   switch (block.type) {
     case "compare":
@@ -6803,21 +6833,24 @@ function renderLessonBlock(block) {
           <ol class="lesson-quiz-list">
             ${block.items
               .map(
-                (item, i) => `
+                (item, i) => {
+                  const { choices, answer } = shuffleQuizItem(item);
+                  return `
               <li class="lesson-quiz-item">
                 <p class="lesson-quiz-q"><span class="lesson-quiz-num">Q${i + 1}</span>${item.q}</p>
-                ${item.choices ? `
+                ${choices ? `
                 <ul class="lesson-quiz-choices">
-                  ${item.choices.map((c) => `<li>${c}</li>`).join("")}
+                  ${choices.map((c) => `<li>${c}</li>`).join("")}
                 </ul>` : ""}
                 <details class="lesson-quiz-detail">
                   <summary><span class="lesson-quiz-summary-label">解説</span><span class="lesson-quiz-summary-icon" aria-hidden="true">＋</span></summary>
                   <div class="lesson-quiz-answer">
-                    <p class="lesson-quiz-correct">${item.answer}</p>
+                    <p class="lesson-quiz-correct">${answer}</p>
                     <p class="lesson-quiz-explain">${item.explain}</p>
                   </div>
                 </details>
-              </li>`
+              </li>`;
+                }
               )
               .join("")}
           </ol>
