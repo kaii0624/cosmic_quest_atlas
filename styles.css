@@ -8188,3 +8188,31 @@ button {
     border-radius: 14px;
   }
 }
+
+/* ===== ホーム説明欄を「天体を見る」のFMT（左寄せ・小さめ）に合わせる ===== */
+.home-selection-panel:not(.app-detail-panel) .home-selection-copy h2 {
+  font-size: clamp(1rem, 3.3vw, 1.55rem);
+  justify-content: flex-start;
+  text-align: left;
+}
+
+.home-selection-panel:not(.app-detail-panel) .home-selection-copy h2 span {
+  display: none;
+}
+
+.home-selection-panel:not(.app-detail-panel) .home-selection-copy p {
+  font-size: clamp(0.72rem, 2vw, 0.9rem);
+  line-height: 1.46;
+  text-align: left;
+}
+
+/* ===== バトル画面: 左上ステータスの天体名は非表示 ===== */
+#targetStatusName {
+  display: none;
+}
+
+/* 観測パネルに「観測する」ボタンを付けたぶん、引き上げ量を打ち消して重なりを防ぐ */
+.home-selection-panel.observe-detail-panel .home-selection-actions {
+  transform: none;
+  margin-top: clamp(3px, 0.8vw, 7px);
+}

@@ -1722,6 +1722,7 @@ const state = {
   homeTab: "home",
   homeKingdomId: "autumn",
   selectedObserveId: null,
+  selectedDetailPointId: null,
   selectedScrollId: null,
   selectedQuestId: null,
   focusedQuestId: null,
@@ -5989,6 +5990,14 @@ function getSelectedObservableItem() {
   return selected;
 }
 
+function getSelectedDetailItem() {
+  const items = getObservableItems().filter((item) => item.kingdomId === state.kingdomId);
+  if (!items.length) return null;
+  const selected = items.find((item) => item.id === state.selectedDetailPointId) ?? items[0];
+  state.selectedDetailPointId = selected.id;
+  return selected;
+}
+
 function chooseHomeKingdom(kingdomId) {
   if (!HOME_KINGDOM_DETAILS[kingdomId]) return;
   hideReward();
@@ -6024,6 +6033,7 @@ function selectKingdom(kingdomId) {
   state.lineIndex = 0;
   state.battleBg = kingdomId;
   state.selectedQuestId = null;
+  state.selectedDetailPointId = null;
   render();
 }
 
@@ -6173,15 +6183,10 @@ function renderStoryPoints(points) {
       button.appendChild(image);
     }
     button.addEventListener("click", () => {
-      if (point.locked) {
-        renderGuideNote(point.label, point.note);
-        return;
-      }
-      if (point.storyId) {
-        openStory(point.storyId);
-        return;
-      }
-      renderGuideNote(point.label, point.note);
+      // 星アイコンを押すと、下の説明欄にその天体の解説（観測スタイル）を表示する。
+      // 実際のバトルは説明欄の「観測する」ボタンから始める。
+      state.selectedDetailPointId = point.id;
+      render();
     });
     storyPointsEl.appendChild(button);
   });
@@ -6242,22 +6247,32 @@ function renderHomeSelectionPanel() {
   `;
 }
 
-function renderObserveSelectionPanel() {
-  const selected = getSelectedObservableItem();
+function renderObserveDetailPanel(item) {
+  const canObserve = Boolean(item.storyId) && !item.locked;
 
   return `
-    <section class="home-selection-panel app-detail-panel observe-detail-panel ${selected.kingdomId}" aria-label="${selected.title}の説明">
+    <section class="home-selection-panel app-detail-panel observe-detail-panel ${item.kingdomId}" aria-label="${item.title}の説明">
       <figure class="home-selection-card app-detail-card">
-        ${selected.enemyImage
-          ? `<img src="${withAssetVersion(selected.enemyImage)}" alt="${selected.enemyAlt}" />`
-          : `<img src="${withAssetVersion(HOME_KINGDOM_DETAILS[selected.kingdomId]?.card ?? HOME_KINGDOM_DETAILS.autumn.card)}" alt="${selected.title}" />`}
+        ${item.enemyImage
+          ? `<img src="${withAssetVersion(item.enemyImage)}" alt="${item.enemyAlt}" />`
+          : `<img src="${withAssetVersion(HOME_KINGDOM_DETAILS[item.kingdomId]?.card ?? HOME_KINGDOM_DETAILS.autumn.card)}" alt="${item.title}" />`}
       </figure>
       <div class="home-selection-copy app-detail-copy">
-        <h2>${selected.title}</h2>
-        <p><strong>${selected.lesson}</strong>${selected.description}</p>
+        <h2>${item.title}</h2>
+        <p><strong>${item.lesson}</strong>${item.description}</p>
+        ${canObserve ? `
+        <div class="home-selection-actions">
+          <button class="home-enter-button" type="button" data-observe-start="${item.storyId}">
+            観測する
+          </button>
+        </div>` : ""}
       </div>
     </section>
   `;
+}
+
+function renderObserveSelectionPanel() {
+  return renderObserveDetailPanel(getSelectedObservableItem());
 }
 
 function renderLibrarySelectionPanel() {
@@ -6582,44 +6597,15 @@ function renderPanel() {
   }
 
   if (state.mode === "detail") {
-    const kingdom = KINGDOMS[state.kingdomId];
     guidePanel.classList.remove("is-hidden");
     storyPanel.classList.add("is-hidden");
     storyTextPanel.classList.add("is-hidden");
     scrollPanel.classList.add("is-hidden");
 
+    const item = getSelectedDetailItem();
     guidePanel.innerHTML = `
-      <div class="winter-detail-guide">
-        <section class="winter-scroll-banner" aria-label="${kingdom.detailTitle}">
-          <h2>${kingdom.detailTitle}</h2>
-          <p>${kingdom.detailText}</p>
-        </section>
-        <div class="winter-star-orb-grid" aria-label="${kingdom.name}の星">
-          ${kingdom.points
-            .map((point, index) => {
-              const orbClass = OBJECT_ORB_CLASSES[point.id] ?? ORB_CLASSES[index % ORB_CLASSES.length];
-              const lockedClass = point.locked ? " locked" : "";
-              const planetClass = point.kind === "planet" ? " planet-item" : "";
-              const assetClass = point.asset ? " asset-item" : "";
-              const storyAttr = point.storyId
-                ? `data-story-id="${point.storyId}"`
-                : `data-guide-title="${point.label}" data-guide-note="${point.note}"`;
-              const label = point.kind === "planet"
-                ? point.label
-                : STORIES[point.storyId]?.name ?? (point.id === "rigel" ? "青白き巨星リゲル" : point.label);
-              const orbContent = point.asset
-                ? `<img src="${withAssetVersion(point.asset)}" alt="" aria-hidden="true" />`
-                : "";
-
-              return `
-                <button class="winter-star-orb-button ${orbClass}${lockedClass}${planetClass}${assetClass}" type="button" ${storyAttr}>
-                  <span class="winter-star-orb" aria-hidden="true">${orbContent}</span>
-                  <span class="winter-star-label">${label}</span>
-                </button>
-              `;
-            })
-            .join("")}
-        </div>
+      <div class="home-panel-shell">
+        ${item ? renderObserveDetailPanel(item) : ""}
       </div>
     `;
     return;
@@ -6995,6 +6981,14 @@ document.addEventListener(
       event.preventDefault();
       event.stopPropagation();
       openLesson(lessonOpenButton.dataset.lessonOpen);
+      return;
+    }
+
+    const observeStartButton = target?.closest("[data-observe-start]");
+    if (observeStartButton) {
+      event.preventDefault();
+      event.stopPropagation();
+      openStory(observeStartButton.dataset.observeStart);
     }
   },
   true
@@ -7024,6 +7018,12 @@ guidePanel.addEventListener("click", (event) => {
   const lessonOpenButton = target?.closest("[data-lesson-open]");
   if (lessonOpenButton) {
     openLesson(lessonOpenButton.dataset.lessonOpen);
+    return;
+  }
+
+  const observeStartButton = target?.closest("[data-observe-start]");
+  if (observeStartButton) {
+    openStory(observeStartButton.dataset.observeStart);
     return;
   }
 
