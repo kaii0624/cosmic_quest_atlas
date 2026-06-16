@@ -6715,15 +6715,19 @@ function stripQuizLabel(text) {
 }
 
 // 正解が常に「ア」固定にならないよう、表示時に選択肢をシャッフルしてラベルを振り直す。
-// 中身の対応が崩れる場合は元のまま返す（安全側）。
+// 中身の対応が崩れる場合は元のまま返す（安全側）。正解の位置 correctIndex も返す。
 function shuffleQuizItem(item) {
+  const fallbackIndex = () => {
+    const m = (item.answer ?? "").match(/正解：([アイウエ])/);
+    return m ? QUIZ_LABELS.indexOf(m[1]) : -1;
+  };
   if (!Array.isArray(item.choices) || !item.answer) {
-    return { choices: item.choices, answer: item.answer };
+    return { choices: item.choices, answer: item.answer, correctIndex: fallbackIndex() };
   }
   const correctContent = stripQuizLabel(item.answer);
   const contents = item.choices.map(stripQuizLabel);
   if (!contents.includes(correctContent)) {
-    return { choices: item.choices, answer: item.answer };
+    return { choices: item.choices, answer: item.answer, correctIndex: fallbackIndex() };
   }
   const order = contents.map((_, i) => i);
   for (let i = order.length - 1; i > 0; i--) {
@@ -6731,10 +6735,10 @@ function shuffleQuizItem(item) {
     [order[i], order[j]] = [order[j], order[i]];
   }
   const shuffled = order.map((idx) => contents[idx]);
-  const correctIdx = shuffled.indexOf(correctContent);
+  const correctIndex = shuffled.indexOf(correctContent);
   const choices = shuffled.map((c, i) => `${QUIZ_LABELS[i]}　${c}`);
-  const answer = `正解：${QUIZ_LABELS[correctIdx]}　${correctContent}`;
-  return { choices, answer };
+  const answer = `正解：${QUIZ_LABELS[correctIndex]}　${correctContent}`;
+  return { choices, answer, correctIndex };
 }
 
 function renderLessonBlock(block) {
@@ -6820,14 +6824,15 @@ function renderLessonBlock(block) {
             ${block.items
               .map(
                 (item, i) => {
-                  const { choices, answer } = shuffleQuizItem(item);
+                  const { choices, answer, correctIndex } = shuffleQuizItem(item);
                   return `
               <li class="lesson-quiz-item">
                 <p class="lesson-quiz-q"><span class="lesson-quiz-num">Q${i + 1}</span>${item.q}</p>
                 ${choices ? `
                 <ul class="lesson-quiz-choices">
-                  ${choices.map((c) => `<li>${c}</li>`).join("")}
-                </ul>` : ""}
+                  ${choices.map((c, idx) => `<li><button type="button" class="lesson-quiz-choice" data-choice="${idx}"${idx === correctIndex ? ' data-correct="1"' : ""}>${c}</button></li>`).join("")}
+                </ul>
+                <p class="lesson-quiz-verdict" aria-live="polite"></p>` : ""}
                 <details class="lesson-quiz-detail">
                   <summary><span class="lesson-quiz-summary-label">解説</span><span class="lesson-quiz-summary-icon" aria-hidden="true">＋</span></summary>
                   <div class="lesson-quiz-answer">
@@ -7116,6 +7121,30 @@ lessonOverlay.addEventListener("click", (event) => {
   const target = getEventElement(event);
   if (target?.closest("[data-lesson-close]")) {
     closeLesson();
+    return;
+  }
+
+  const choiceButton = target?.closest(".lesson-quiz-choice");
+  if (choiceButton) {
+    const itemEl = choiceButton.closest(".lesson-quiz-item");
+    if (!itemEl) return;
+    const isCorrect = choiceButton.dataset.correct === "1";
+    itemEl.querySelectorAll(".lesson-quiz-choice").forEach((btn) => {
+      btn.classList.remove("is-correct", "is-incorrect");
+      if (btn.dataset.correct === "1") {
+        btn.classList.add("is-correct");
+      } else if (btn === choiceButton) {
+        btn.classList.add("is-incorrect");
+      }
+    });
+    const verdict = itemEl.querySelector(".lesson-quiz-verdict");
+    if (verdict) {
+      verdict.textContent = isCorrect ? "正解！" : "不正解…";
+      verdict.classList.toggle("is-correct", isCorrect);
+      verdict.classList.toggle("is-incorrect", !isCorrect);
+    }
+    const details = itemEl.querySelector(".lesson-quiz-detail");
+    if (details) details.open = true;
   }
 });
 

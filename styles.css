@@ -8092,13 +8092,70 @@ button {
   gap: 6px;
 }
 
-.lesson-quiz-choices li {
+.lesson-quiz-choice {
+  display: block;
+  width: 100%;
+  text-align: left;
   padding: clamp(7px, 1.8vw, 10px) clamp(10px, 2.4vw, 14px);
   border: 1px solid rgba(149, 130, 200, 0.28);
   border-radius: 8px;
   background: rgba(13, 16, 36, 0.5);
+  font-family: inherit;
   font-size: clamp(0.84rem, 2.5vw, 0.95rem);
   color: #ded7ee;
+  cursor: pointer;
+  transition: border-color 0.15s ease, background 0.15s ease;
+}
+
+.lesson-quiz-choice:hover,
+.lesson-quiz-choice:focus-visible {
+  outline: none;
+  border-color: rgba(246, 205, 94, 0.6);
+  background: rgba(30, 34, 64, 0.6);
+}
+
+.lesson-quiz-choice.is-correct {
+  border-color: rgba(120, 214, 140, 0.9);
+  background: rgba(46, 110, 64, 0.45);
+  color: #e6ffe9;
+  font-weight: 900;
+}
+
+.lesson-quiz-choice.is-incorrect {
+  border-color: rgba(226, 110, 110, 0.9);
+  background: rgba(120, 44, 44, 0.42);
+  color: #ffe3e3;
+  font-weight: 900;
+}
+
+.lesson-quiz-choice.is-correct::after {
+  content: "　✓";
+  color: #9be8ad;
+}
+
+.lesson-quiz-choice.is-incorrect::after {
+  content: "　✗";
+  color: #ffb3b3;
+}
+
+.lesson-quiz-verdict {
+  margin: 10px 0 0;
+  min-height: 1.2em;
+  font-size: clamp(0.9rem, 2.7vw, 1rem);
+  font-weight: 900;
+}
+
+.lesson-quiz-verdict:empty {
+  margin: 0;
+  min-height: 0;
+}
+
+.lesson-quiz-verdict.is-correct {
+  color: #9be8ad;
+}
+
+.lesson-quiz-verdict.is-incorrect {
+  color: #ff9e9e;
 }
 
 .lesson-quiz-detail {
@@ -8215,4 +8272,23 @@ button {
 .home-selection-panel.observe-detail-panel .home-selection-actions {
   transform: none;
   margin-top: clamp(3px, 0.8vw, 7px);
+}
+
+/* ===== 説明欄サムネイルの王国アクセント枠を冬以外で非表示 ===== */
+.home-selection-panel.spring .home-selection-card::before,
+.home-selection-panel.spring .home-selection-card::after,
+.home-selection-panel.summer .home-selection-card::before,
+.home-selection-panel.summer .home-selection-card::after,
+.home-selection-panel.autumn .home-selection-card::before,
+.home-selection-panel.autumn .home-selection-card::after,
+.home-selection-panel.tower .home-selection-card::before,
+.home-selection-panel.tower .home-selection-card::after,
+.home-selection-panel.deep .home-selection-card::before,
+.home-selection-panel.deep .home-selection-card::after {
+  display: none;
+}
+
+/* ===== バトル画面: 相手のHPゲージは非表示 ===== */
+.target-status-panel .status-meter {
+  display: none;
 }
