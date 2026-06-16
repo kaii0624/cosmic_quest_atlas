@@ -3587,7 +3587,7 @@ button {
 }
 
 .tower-marker {
-  --tower-frame: url("./assets/ui-tower-frame.png?v=tower-v3");
+  --tower-frame: url("./assets/ui-tower-frame.png?v=tower-v4");
   width: clamp(154px, 21vw, 231px);
   min-width: 0;
   aspect-ratio: 3 / 2;
@@ -6532,7 +6532,7 @@ button {
   left: 8%;
   width: min(230px, 27%);
   padding: clamp(10px, 1.4vw, 16px) clamp(12px, 1.6vw, 20px) clamp(10px, 1.4vw, 16px);
-  background-image: url("./assets/ui-battle-target-status-frame.png?v=frame-v2");
+  background-image: url("./assets/ui-battle-target-status-frame.png?v=frame-v3");
 }
 
 .game-shell[data-mode="story"] .status-object {
