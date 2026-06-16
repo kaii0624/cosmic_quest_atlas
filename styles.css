@@ -8371,10 +8371,17 @@ button {
 }
 
 .quest-fact-label {
-  color: #ece6f5;
+  color: #ffe7a2;
+  font-family: "Hiragino Mincho ProN", "YuMincho", "Yu Mincho", serif;
   font-weight: 900;
-  font-size: clamp(0.82rem, 2.4vw, 0.95rem);
-  line-height: 1.2;
+  font-size: clamp(0.86rem, 2.5vw, 1rem);
+  line-height: 1.3;
+  letter-spacing: 0.04em;
+  text-shadow: 0 1px 0 rgba(13, 7, 3, 0.6);
+}
+
+.quest-fact-card.missing .quest-fact-label {
+  color: #cabfe6;
 }
 
 .quest-fact-status {
@@ -8390,15 +8397,16 @@ button {
   color: #b6a9d8;
 }
 
-/* 下の説明欄：依頼主のセリフ送り（バトル画面のテキスト送りと全く同じFMT） */
+/* 下の説明欄：依頼主のセリフ送り（バトル画面のテキスト送りと全く同じFMT・行数によらず固定高さ） */
 .quest-fact-dialogue {
   position: relative;
   display: block;
   width: 100%;
-  min-height: clamp(118px, 19vw, 150px);
+  height: clamp(168px, 24vw, 208px);
   padding: clamp(28px, 4vw, 44px) clamp(40px, 6.4vw, 70px) clamp(30px, 4.5vw, 50px) clamp(44px, 7vw, 78px);
   border: 0;
   border-radius: 0;
+  overflow: hidden;
   color: #2b1a0f;
   background: transparent url("./assets/ui-battle-dialogue-frame.png") center / 100% 100% no-repeat;
   filter:
@@ -8438,4 +8446,21 @@ button {
   color: #3b2917;
   font-size: 1.2rem;
   animation: cueBlink 1.1s ease-in-out infinite;
+}
+
+@media (max-width: 700px) {
+  .quest-fact-dialogue {
+    height: 164px;
+    padding: 28px 30px 28px 34px;
+  }
+
+  .quest-fact-speaker {
+    margin-bottom: 7px;
+    font-size: 0.92rem;
+  }
+
+  .quest-fact-line {
+    font-size: 0.88rem;
+    line-height: 1.52;
+  }
 }
