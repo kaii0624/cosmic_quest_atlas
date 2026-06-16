@@ -1726,7 +1726,8 @@ const state = {
   selectedScrollId: null,
   selectedQuestId: null,
   focusedQuestId: null,
-  selectedQuestEvidence: {}
+  selectedQuestEvidence: {},
+  questLineIndex: 0
 };
 
 const gameShell = document.querySelector(".game-shell");
@@ -5531,29 +5532,33 @@ const QUESTS = [
       { id: "venus-phases-scroll", label: "金星の満ち欠け" },
       { id: "jupiter-moons-scroll", label: "木星の衛星発見" }
     ],
-    // 必要な観測事実（最大4つ）。揃えばクリア、欠ければ missing のセリフを表示する。
+    // 必要な観測事実（最大4つ）。揃えばクリア、欠ければ lines のセリフを1行ずつ読み進める。
     facts: [
       {
         id: "venus-phases-scroll",
         label: "金星の満ち欠け",
-        missing:
-          "まだ金星の満ち欠けを確かめられていない。もし金星が月のように満ち欠けするなら、" +
-          "それは金星が太陽の周りを回っている何よりの証拠になる。その観測がないかぎり、" +
-          "「金星は地球と太陽のあいだを行き来するだけ」という古い見方を、まだ退けられない。"
+        lines: [
+          "まだ金星の満ち欠けを確かめられていない。",
+          "もし金星が月のように満ち欠けするなら、金星が太陽の周りを回っている何よりの証拠になる。",
+          "その観測がないかぎり――金星は地球と太陽のあいだを行き来するだけ、という古い見方を退けられない。"
+        ]
       },
       {
         id: "jupiter-moons-scroll",
         label: "木星の衛星",
-        missing:
-          "まだ木星をめぐる衛星を見つけられていない。地球以外を中心に回る天体がたった一つでも" +
-          "見つかれば、「すべては地球を中心に回る」という前提は揺らぐ。その実例を欠いたままでは、" +
-          "天動説に決定的な一撃を与えられない。"
+        lines: [
+          "まだ木星をめぐる衛星を見つけられていない。",
+          "地球以外を中心に回る天体が一つでも見つかれば、「すべては地球を中心に回る」という前提は揺らぐ。",
+          "その実例を欠いたままでは――天動説に決定的な一撃を与えられない。"
+        ]
       }
     ],
-    clearLine:
-      "金星の満ち欠け、そして木星をめぐる衛星。ふたつの観測事実が、いま私の手の中にそろった。" +
-      "どちらも地球を宇宙の中心に置いたままでは説明しきれない。これで太陽中心の体系は、" +
-      "もはや空想ではない――観測に裏打ちされた事実だ。よくやった、星章を受け取るがいい。"
+    clearLines: [
+      "金星の満ち欠け、そして木星をめぐる衛星。ふたつの観測事実が、いま私の手の中にそろった。",
+      "どちらも、地球を宇宙の中心に置いたままでは説明しきれない。",
+      "太陽中心の体系は、もはや空想ではない――観測に裏打ちされた事実だ。",
+      "よくやった。星章を受け取るがいい。"
+    ]
   },
   {
     id: "kepler-third-law",
@@ -6087,7 +6092,35 @@ function goHome() {
 function openQuest(questId) {
   state.focusedQuestId = questId;
   state.selectedQuestId = questId;
+  state.questLineIndex = 0;
   render();
+}
+
+// 観測事実クエストの現在のセリフ群（不足なら最初に欠けた事実の説明、揃えばクリア演出）
+function getQuestDialogue(quest) {
+  const missing = quest.facts.filter((fact) => !claimedRewards.has(fact.id));
+  if (missing.length === 0) return { lines: quest.clearLines, cleared: true };
+  return { lines: missing[0].lines, cleared: false };
+}
+
+function advanceQuestLine(questId) {
+  const quest = QUESTS.find((item) => item.id === questId);
+  if (!quest?.facts) return;
+  const { lines, cleared } = getQuestDialogue(quest);
+
+  if (state.questLineIndex < lines.length - 1) {
+    state.questLineIndex += 1;
+    render();
+    return;
+  }
+
+  // 最後の行：揃っていれば報酬を授与、不足なら頭から読み直せるようにループ
+  if (cleared) {
+    claimQuestReward(questId);
+  } else {
+    state.questLineIndex = 0;
+    render();
+  }
 }
 
 function openAppScreen(screenId) {
@@ -6527,55 +6560,43 @@ function renderQuestFactDetail(quest) {
         <span>QUEST ${quest.number}</span>
         <h2>${quest.title}</h2>
       </div>
-      <div class="quest-detail-scroll app-scroll-area">
-        <figure class="quest-main-image-card quest-fact-image">
-          <img src="${withAssetVersion(quest.mainImage)}" alt="${quest.title}の観測場面" />
-        </figure>
-        <p class="quest-fact-objective"><span>目標</span>${quest.objective}</p>
-        <div class="quest-fact-row" aria-label="必要な観測事実">
-          ${quest.facts
-            .map((fact) => {
-              const owned = claimedRewards.has(fact.id);
-              const scroll = getScrollById(fact.id);
-              const image = scroll?.image ?? "./assets/reward-scroll-minor-base.png";
-              return `
-                <div class="quest-fact-card ${owned ? "owned" : "missing"}">
-                  <span class="quest-fact-thumb">
-                    <img src="${withAssetVersion(image)}" alt="${fact.label}" />
-                    <b class="quest-fact-mark" aria-hidden="true">${owned ? "✓" : "?"}</b>
-                  </span>
-                  <span class="quest-fact-label">${fact.label}</span>
-                  <span class="quest-fact-status">${owned ? "観測済み" : "未観測"}</span>
-                </div>`;
-            })
-            .join("")}
-        </div>
+      <figure class="quest-main-image-card quest-fact-image">
+        <img src="${withAssetVersion(quest.mainImage)}" alt="${quest.title}の観測場面" />
+      </figure>
+      <div class="quest-fact-row" aria-label="必要な観測事実">
+        ${quest.facts
+          .map((fact) => {
+            const owned = claimedRewards.has(fact.id);
+            const scroll = getScrollById(fact.id);
+            const image = scroll?.image ?? "./assets/reward-scroll-minor-base.png";
+            return `
+              <div class="quest-fact-card ${owned ? "owned" : "missing"}">
+                <span class="quest-fact-thumb">
+                  <img src="${withAssetVersion(image)}" alt="${fact.label}" />
+                  <b class="quest-fact-mark" aria-hidden="true">${owned ? "✓" : "?"}</b>
+                </span>
+                <span class="quest-fact-label">${fact.label}</span>
+              </div>`;
+          })
+          .join("")}
       </div>
     </section>
   `;
 }
 
+// 下の説明欄：依頼主のセリフを1行ずつ読み進める（バトルのテキスト送りと同じ操作感）
 function renderQuestFactPanel(quest) {
-  const missing = quest.facts.filter((fact) => !claimedRewards.has(fact.id));
-  const cleared = missing.length === 0;
-  const line = cleared ? quest.clearLine : missing[0].missing;
+  const { lines, cleared } = getQuestDialogue(quest);
+  const index = Math.min(state.questLineIndex, lines.length - 1);
+  const isLast = index >= lines.length - 1;
+  const cue = cleared ? (isLast ? "★" : "▼") : (isLast ? "↻" : "▼");
 
   return `
-    <section class="home-selection-panel app-detail-panel quest-dialogue-detail-panel quest-fact-panel ${cleared ? "is-clear" : "is-missing"}" aria-label="${quest.requester}の見立て">
-      <figure class="home-selection-card app-detail-card">
-        <img src="${withAssetVersion(quest.requesterImage)}" alt="${quest.requester}" />
-      </figure>
-      <div class="home-selection-copy app-detail-copy">
-        <h2>${quest.requester}<span class="quest-fact-verdict">${cleared ? "条件成立" : "証拠不足"}</span></h2>
-        <p>${line}</p>
-        ${cleared ? `
-        <div class="home-selection-actions">
-          <button class="home-enter-button" type="button" data-quest-combine="${quest.id}">
-            クエストクリア
-          </button>
-        </div>` : ""}
-      </div>
-    </section>
+    <button class="quest-fact-dialogue ${cleared ? "is-clear" : "is-missing"}" type="button" data-quest-advance="${quest.id}" aria-label="${quest.requester}のセリフを進める">
+      <span class="quest-fact-speaker">${quest.requester}</span>
+      <span class="quest-fact-line">${lines[index]}</span>
+      <span class="quest-fact-cue" aria-hidden="true">${cue}</span>
+    </button>
   `;
 }
 
@@ -7084,11 +7105,11 @@ document.addEventListener(
       return;
     }
 
-    const questCombineButton = target?.closest("[data-quest-combine]");
-    if (questCombineButton) {
+    const questAdvanceFactButton = target?.closest("[data-quest-advance]");
+    if (questAdvanceFactButton) {
       event.preventDefault();
       event.stopPropagation();
-      claimQuestReward(questCombineButton.dataset.questCombine);
+      advanceQuestLine(questAdvanceFactButton.dataset.questAdvance);
     }
   },
   true
@@ -7127,9 +7148,9 @@ guidePanel.addEventListener("click", (event) => {
     return;
   }
 
-  const questCombineButton = target?.closest("[data-quest-combine]");
-  if (questCombineButton) {
-    claimQuestReward(questCombineButton.dataset.questCombine);
+  const questAdvanceFactButton = target?.closest("[data-quest-advance]");
+  if (questAdvanceFactButton) {
+    advanceQuestLine(questAdvanceFactButton.dataset.questAdvance);
     return;
   }
 
