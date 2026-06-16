@@ -6987,6 +6987,14 @@ document.addEventListener(
       event.preventDefault();
       event.stopPropagation();
       openQuest(questOpenButton.dataset.questOpen);
+      return;
+    }
+
+    const lessonOpenButton = target?.closest("[data-lesson-open]");
+    if (lessonOpenButton) {
+      event.preventDefault();
+      event.stopPropagation();
+      openLesson(lessonOpenButton.dataset.lessonOpen);
     }
   },
   true
@@ -6994,7 +7002,8 @@ document.addEventListener(
 
 guidePanel.addEventListener("click", (event) => {
   const target = getEventElement(event);
-  const homeTabButton = target?.closest("[data-home-tab]");
+  // #guidePanel 自身にも data-home-tab（状態保持用）が付くため、ナビのボタンだけに限定する
+  const homeTabButton = target?.closest("button[data-home-tab]");
   if (homeTabButton) {
     openAppScreen(homeTabButton.dataset.homeTab);
     return;
