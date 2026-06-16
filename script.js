@@ -146,7 +146,7 @@ const KINGDOMS = {
       {
         id: "sun",
         x: 50,
-        y: 18,
+        y: 26,
         label: "太陽",
         storyId: "sunReference",
         kind: "planet",
@@ -232,7 +232,7 @@ KINGDOMS.deep = {
     { id: "m31Cepheid", x: 31, y: 31, label: "M31変光星", storyId: "m31Cepheid", asset: "./assets/deep-point-m31-cepheid.png" },
     { id: "virgoCluster", x: 70, y: 29, label: "銀河団", storyId: "virgoDarkMatter", asset: "./assets/deep-point-virgo-darkmatter.png" },
     { id: "quasar", x: 82, y: 48, label: "クエーサー", storyId: "quasarBeacon", asset: "./assets/deep-point-quasar.png" },
-    { id: "cmb", x: 50, y: 16, label: "CMB", storyId: "cmbEcho", asset: "./assets/deep-point-cmb.png" },
+    { id: "cmb", x: 50, y: 26, label: "CMB", storyId: "cmbEcho", asset: "./assets/deep-point-cmb.png" },
     { id: "pulsar", x: 24, y: 55, label: "パルサー", storyId: "pulsarBeacon", asset: "./assets/deep-point-pulsar.png" },
     { id: "cygnusX1", x: 42, y: 68, label: "X線連星", storyId: "cygnusX1", asset: "./assets/deep-point-xray-blackhole.png" },
     { id: "sn1987a", x: 18, y: 78, label: "SN1987A", storyId: "sn1987a", asset: "./assets/deep-point-sn1987a.png" },
