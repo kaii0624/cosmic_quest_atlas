@@ -8349,9 +8349,40 @@ button {
   text-align: center;
 }
 
-.quest-fact-card.owned {
+button.quest-fact-card {
+  font-family: inherit;
+  appearance: none;
+  -webkit-appearance: none;
+}
+
+/* 提出済み */
+.quest-fact-card.given {
   border-color: rgba(120, 214, 140, 0.85);
   background: rgba(46, 110, 64, 0.3);
+}
+
+/* これから渡せる（所持済み・依頼順の対象）：強調＆タップ可 */
+.quest-fact-card.ready {
+  border-color: rgba(246, 205, 94, 0.95);
+  background: rgba(120, 86, 24, 0.34);
+  box-shadow: 0 0 0 1px rgba(246, 205, 94, 0.5), 0 0 16px rgba(246, 205, 94, 0.34);
+  cursor: pointer;
+  animation: questReadyPulse 1.5s ease-in-out infinite;
+}
+
+@keyframes questReadyPulse {
+  0%, 100% { box-shadow: 0 0 0 1px rgba(246, 205, 94, 0.5), 0 0 14px rgba(246, 205, 94, 0.28); }
+  50% { box-shadow: 0 0 0 1px rgba(246, 205, 94, 0.8), 0 0 22px rgba(246, 205, 94, 0.5); }
+}
+
+/* 依頼されたが未観測（宿題） */
+.quest-fact-card.homework {
+  border-color: rgba(229, 174, 75, 0.55);
+}
+
+/* まだ依頼されていない */
+.quest-fact-card.future {
+  opacity: 0.6;
 }
 
 .quest-fact-thumb {
@@ -8367,7 +8398,8 @@ button {
   object-fit: contain;
 }
 
-.quest-fact-card.missing .quest-fact-thumb img {
+.quest-fact-card.homework .quest-fact-thumb img,
+.quest-fact-card.future .quest-fact-thumb img {
   filter: grayscale(0.85) brightness(0.66);
 }
 
@@ -8385,14 +8417,24 @@ button {
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
 }
 
-.quest-fact-card.owned .quest-fact-mark {
+.quest-fact-card.given .quest-fact-mark {
   background: #3da35a;
   color: #eafff0;
 }
 
-.quest-fact-card.missing .quest-fact-mark {
-  background: #5b4a78;
-  color: #e7dcff;
+.quest-fact-card.ready .quest-fact-mark {
+  background: #f6cd5e;
+  color: #3a2408;
+}
+
+.quest-fact-card.homework .quest-fact-mark {
+  background: #9a5a1e;
+  color: #ffeccf;
+}
+
+.quest-fact-card.future .quest-fact-mark {
+  background: #3a3550;
+  color: #b6a9d8;
 }
 
 .quest-fact-label {
@@ -8405,21 +8447,58 @@ button {
   text-shadow: 0 1px 0 rgba(13, 7, 3, 0.6);
 }
 
-.quest-fact-card.missing .quest-fact-label {
+.quest-fact-card.ready .quest-fact-label {
+  color: #fff0b7;
+}
+
+.quest-fact-card.homework .quest-fact-label,
+.quest-fact-card.future .quest-fact-label {
   color: #cabfe6;
 }
 
-.quest-fact-status {
-  font-size: clamp(0.72rem, 2.1vw, 0.82rem);
+.quest-fact-hint {
+  font-family: "Hiragino Mincho ProN", "YuMincho", "Yu Mincho", serif;
+  font-size: clamp(0.7rem, 2.1vw, 0.8rem);
   font-weight: 800;
 }
 
-.quest-fact-card.owned .quest-fact-status {
+.quest-fact-card.given .quest-fact-hint {
   color: #9be8ad;
 }
 
-.quest-fact-card.missing .quest-fact-status {
-  color: #b6a9d8;
+.quest-fact-card.ready .quest-fact-hint {
+  color: #ffe29a;
+}
+
+.quest-fact-card.homework .quest-fact-hint {
+  color: #f0bd86;
+}
+
+.quest-fact-card.future .quest-fact-hint {
+  color: #8a83a8;
+}
+
+/* 進捗（X / 4） */
+.quest-fact-progress {
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  gap: 10px;
+  margin: 0;
+  font-family: "Hiragino Mincho ProN", "YuMincho", "Yu Mincho", serif;
+}
+
+.quest-fact-progress span {
+  color: #d8cdf0;
+  font-size: clamp(0.82rem, 2.4vw, 0.94rem);
+  font-weight: 800;
+}
+
+.quest-fact-progress strong {
+  color: #ffe7a2;
+  font-size: clamp(1.05rem, 3vw, 1.32rem);
+  font-weight: 900;
+  letter-spacing: 0.04em;
 }
 
 /* 下の説明欄：依頼主のセリフ送り（バトル画面のテキスト送りと全く同じFMT・行数によらず固定高さ） */

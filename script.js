@@ -1727,7 +1727,8 @@ const state = {
   selectedQuestId: null,
   focusedQuestId: null,
   selectedQuestEvidence: {},
-  questLineIndex: 0
+  questLineIndex: 0,
+  questJustHandedOver: false
 };
 
 const gameShell = document.querySelector(".game-shell");
@@ -1782,6 +1783,26 @@ const claimedRewards = new Set(loadClaimedRewards());
 
 function saveClaimedRewards() {
   localStorage.setItem(REWARD_STORAGE_KEY, JSON.stringify([...claimedRewards]));
+}
+
+const QUEST_PROGRESS_KEY = "cosmicQuest.questHandedOver";
+
+function loadQuestHandedOver() {
+  try {
+    return JSON.parse(localStorage.getItem(QUEST_PROGRESS_KEY) ?? "{}");
+  } catch {
+    return {};
+  }
+}
+
+const questHandedOver = loadQuestHandedOver();
+
+function saveQuestHandedOver() {
+  localStorage.setItem(QUEST_PROGRESS_KEY, JSON.stringify(questHandedOver));
+}
+
+function getHandedOver(questId) {
+  return questHandedOver[questId] ?? 0;
 }
 
 const HOME_CHOICES = [
@@ -5529,35 +5550,80 @@ const QUESTS = [
     reward: "地動説の星章",
     rewardScrollId: "heliocentric-theory-scroll",
     requiredScrolls: [
+      { id: "mars-retrograde-scroll", label: "火星の逆行" },
       { id: "venus-phases-scroll", label: "金星の満ち欠け" },
-      { id: "jupiter-moons-scroll", label: "木星の衛星発見" }
+      { id: "jupiter-moons-scroll", label: "木星の衛星" },
+      { id: "cygnus-parallax-scroll", label: "年周視差" }
     ],
-    // 必要な観測事実（最大4つ）。揃えばクリア、欠ければ lines のセリフを1行ずつ読み進める。
+    // 依頼者を一つずつ手伝う会話形式。観測事実を順に手渡すと理論が進む。
+    intro: [
+      "私はコペルニクス。長年こよみと空を見るうちに、ひとつの考えに行き着いた。",
+      "動かぬ大地――そう信じられてきたが、じつは地球のほうが、太陽の周りを回っているのではないか、と。",
+      "だが世間は『地球こそ宇宙の中心』と言って譲らぬ。これを覆すには、たしかな観測事実がいる。どうか、力を貸してくれないか？"
+    ],
     facts: [
+      {
+        id: "mars-retrograde-scroll",
+        label: "火星の逆行",
+        ask: [
+          "まずは惑星の逆行だ。火星はときおり、空で歩みを止め、逆向きに進むように見える。",
+          "地球を中心に据えると、これを説明するのに周転円という複雑な仕掛けがいる。だが地球が太陽を回っているなら――内側の地球が外の火星を追い越すだけのこと。",
+          "火星の逆行を記した観測は、持っていないかね？"
+        ],
+        thanks: [
+          "おお、火星の逆行の記録だ……！ありがとう。",
+          "見たまえ、太陽中心ならば複雑な仕掛けはいらぬ。天動説の綻びが、一つ見えてきたぞ。"
+        ]
+      },
       {
         id: "venus-phases-scroll",
         label: "金星の満ち欠け",
-        lines: [
-          "まだ金星の満ち欠けを確かめられていない。",
-          "もし金星が月のように満ち欠けするなら、金星が太陽の周りを回っている何よりの証拠になる。",
-          "その観測がないかぎり――金星は地球と太陽のあいだを行き来するだけ、という古い見方を退けられない。"
+        ask: [
+          "次は金星だ。もし金星が太陽の周りを回っているなら、月のように満ち、また欠ける――そのすべての姿が見えるはず。",
+          "地球を中心に置く古い宇宙像では、まるく満ちた金星は決して見えぬ。",
+          "金星の満ち欠けを確かめた観測は、ないだろうか？"
+        ],
+        thanks: [
+          "金星が……まるく満ちている。やはり金星は、太陽を巡っているのだ！",
+          "これは地球中心の宇宙では、どうあっても説明がつかぬ。ありがとう、また一歩すすんだ。"
         ]
       },
       {
         id: "jupiter-moons-scroll",
         label: "木星の衛星",
-        lines: [
-          "まだ木星をめぐる衛星を見つけられていない。",
-          "地球以外を中心に回る天体が一つでも見つかれば、「すべては地球を中心に回る」という前提は揺らぐ。",
-          "その実例を欠いたままでは――天動説に決定的な一撃を与えられない。"
+        ask: [
+          "さらに――地球以外を中心に回る天体が、たった一つでも見つかれば、『すべては地球を回る』という大前提そのものが崩れる。",
+          "木星のかたわらを、木星をめぐって動く小さな星はないだろうか？",
+          "木星の衛星を見つけた記録は、ないかね？"
+        ],
+        thanks: [
+          "木星に、それを巡る衛星があるとは……！地球だけが、すべての中心ではないのだ。",
+          "また一つ、古い常識が崩れ落ちた。心から礼を言う。"
+        ]
+      },
+      {
+        id: "cygnus-parallax-scroll",
+        label: "年周視差",
+        ask: [
+          "最後に、決定的な証拠がいる。地球が本当に動いているなら、近い星は一年のうちに、その位置をわずかにずらすはず――年周視差だ。",
+          "あまりに小さな角度ゆえ、捉えるのは至難。だがこれさえあれば、地球が動いていることは、もはや誰にも否めぬ。",
+          "年周視差の観測は、手元にないかね？"
+        ],
+        thanks: [
+          "年周視差……地球が動いている、まごうことなき証だ！",
+          "これで地動説は、机上の空想ではなくなった。観測に裏打ちされた、ひとつの事実だ。"
         ]
       }
     ],
-    clearLines: [
-      "金星の満ち欠け、そして木星をめぐる衛星。ふたつの観測事実が、いま私の手の中にそろった。",
-      "どちらも、地球を宇宙の中心に置いたままでは説明しきれない。",
-      "太陽中心の体系は、もはや空想ではない――観測に裏打ちされた事実だ。",
-      "よくやった。星章を受け取るがいい。"
+    // 再訪時のあいさつ（まだ宿題が残っているとき）
+    revisit: [
+      "おお、また来てくれたか。研究は片時も止められん。",
+      "前に頼んだあの件――もう、観測できたかね？"
+    ],
+    complete: [
+      "火星の逆行、金星の満ち欠け、木星の衛星、そして年周視差。四つの事実が、すべて揃った。",
+      "どれ一つとして、地球を宇宙の中心に置いたままでは説明しきれぬ。太陽を中心とする宇宙が、ここに証明されたのだ。",
+      "君のおかげで、新しい宇宙の姿が見えたよ。これは礼だ――どうか、受け取ってくれ。"
     ]
   },
   {
@@ -6093,20 +6159,52 @@ function openQuest(questId) {
   state.focusedQuestId = questId;
   state.selectedQuestId = questId;
   state.questLineIndex = 0;
+  state.questJustHandedOver = false;
   render();
 }
 
-// 観測事実クエストの現在のセリフ群（不足なら最初に欠けた事実の説明、揃えばクリア演出）
-function getQuestDialogue(quest) {
-  const missing = quest.facts.filter((fact) => !claimedRewards.has(fact.id));
-  if (missing.length === 0) return { lines: quest.clearLines, cleared: true };
-  return { lines: missing[0].lines, cleared: false };
+// 依頼者との会話台本。手渡した数(handed)と「直前に手渡したか」で表示を切り替える。
+function getQuestScript(quest) {
+  const handed = getHandedOver(quest.id);
+  const total = quest.facts.length;
+  const lines = [];
+
+  if (state.questJustHandedOver && handed > 0) {
+    // 手渡した直後：その事実への礼 ＋ 次の依頼（または完成）
+    lines.push(...quest.facts[handed - 1].thanks);
+    if (handed < total) lines.push(...quest.facts[handed].ask);
+    else lines.push(...quest.complete);
+  } else if (handed === 0) {
+    lines.push(...quest.intro, ...quest.facts[0].ask);
+  } else if (handed < total) {
+    lines.push(...quest.revisit, ...quest.facts[handed].ask);
+  } else {
+    lines.push(...quest.complete);
+  }
+
+  return { lines, handed, complete: handed >= total };
+}
+
+// 観測事実を手渡す（依頼順どおり・所持済みのときだけ）
+function tryHandOverFact(questId, factId) {
+  const quest = QUESTS.find((item) => item.id === questId);
+  if (!quest?.facts) return;
+  const handed = getHandedOver(questId);
+  if (handed >= quest.facts.length) return;
+  if (quest.facts[handed].id !== factId) return;
+  if (!claimedRewards.has(factId)) return;
+
+  questHandedOver[questId] = handed + 1;
+  saveQuestHandedOver();
+  state.questJustHandedOver = true;
+  state.questLineIndex = 0;
+  render();
 }
 
 function advanceQuestLine(questId) {
   const quest = QUESTS.find((item) => item.id === questId);
   if (!quest?.facts) return;
-  const { lines, cleared } = getQuestDialogue(quest);
+  const { lines, complete } = getQuestScript(quest);
 
   if (state.questLineIndex < lines.length - 1) {
     state.questLineIndex += 1;
@@ -6114,10 +6212,14 @@ function advanceQuestLine(questId) {
     return;
   }
 
-  // 最後の行：揃っていれば報酬を授与、不足なら頭から読み直せるようにループ
-  if (cleared) {
+  // 最後の行に到達：全て揃っていれば報酬授与、そうでなければ依頼を読み終えて待機
+  if (complete) {
     claimQuestReward(questId);
-  } else {
+    return;
+  }
+  if (state.questJustHandedOver) {
+    // 礼＋次の依頼を読み終えた → 「待機（依頼）」表示に落ち着かせる
+    state.questJustHandedOver = false;
     state.questLineIndex = 0;
     render();
   }
@@ -6551,8 +6653,11 @@ function renderQuestDetail(quest) {
   `;
 }
 
-// 観測事実方式のクエスト：必要な事実（最大4つ）を横並びで表示する。
+// 観測事実方式のクエスト：必要な事実（最大4つ）を横並びで表示。順に手渡していく。
 function renderQuestFactDetail(quest) {
+  const handed = getHandedOver(quest.id);
+  const total = quest.facts.length;
+
   return `
     <section class="app-screen-panel quest-tab quest-detail-view quest-fact-view">
       <div class="quest-detail-title">
@@ -6564,20 +6669,32 @@ function renderQuestFactDetail(quest) {
         <figure class="quest-main-image-card quest-fact-image">
           <img src="${withAssetVersion(quest.mainImage)}" alt="${quest.title}の観測場面" />
         </figure>
+        <div class="quest-fact-progress" aria-label="証明の進み">
+          <span>証明できた観測事実</span><strong>${handed} / ${total}</strong>
+        </div>
         <div class="quest-fact-row" aria-label="必要な観測事実">
           ${quest.facts
-            .map((fact) => {
+            .map((fact, i) => {
               const owned = claimedRewards.has(fact.id);
+              const given = i < handed;
+              const isTarget = i === handed;
+              const ready = isTarget && owned;
               const scroll = getScrollById(fact.id);
               const image = scroll?.image ?? "./assets/reward-scroll-minor-base.png";
+              const cls = given ? "given" : ready ? "ready" : isTarget ? "homework" : "future";
+              const mark = given ? "✓" : ready ? "！" : isTarget ? "?" : "・";
+              const tag = ready ? "button" : "div";
+              const attrs = ready ? `type="button" data-fact-give="${fact.id}"` : "";
+              const hint = ready ? "タップで渡す" : given ? "提出済み" : isTarget ? "観測が必要" : "順番待ち";
               return `
-                <div class="quest-fact-card ${owned ? "owned" : "missing"}">
+                <${tag} class="quest-fact-card ${cls}" ${attrs}>
                   <span class="quest-fact-thumb">
                     <img src="${withAssetVersion(image)}" alt="${fact.label}" />
-                    <b class="quest-fact-mark" aria-hidden="true">${owned ? "✓" : "?"}</b>
+                    <b class="quest-fact-mark" aria-hidden="true">${mark}</b>
                   </span>
                   <span class="quest-fact-label">${fact.label}</span>
-                </div>`;
+                  <span class="quest-fact-hint">${hint}</span>
+                </${tag}>`;
             })
             .join("")}
         </div>
@@ -6586,9 +6703,9 @@ function renderQuestFactDetail(quest) {
   `;
 }
 
-// 下の説明欄：依頼主のセリフを1行ずつ読み進める（バトルのテキスト送りと全く同じFMT）
+// 下の説明欄：依頼者のセリフを1行ずつ読み進める（バトルのテキスト送りと同じFMT）
 function renderQuestFactPanel(quest) {
-  const { lines } = getQuestDialogue(quest);
+  const { lines } = getQuestScript(quest);
   const index = Math.min(state.questLineIndex, lines.length - 1);
 
   return `
@@ -7178,6 +7295,12 @@ appScreen.addEventListener("click", (event) => {
   if (questBackButton) {
     state.selectedQuestId = null;
     render();
+    return;
+  }
+
+  const factGiveButton = target?.closest("[data-fact-give]");
+  if (factGiveButton && state.selectedQuestId) {
+    tryHandOverFact(state.selectedQuestId, factGiveButton.dataset.factGive);
     return;
   }
 
