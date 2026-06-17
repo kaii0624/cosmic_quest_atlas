@@ -7303,7 +7303,7 @@ function renderSettingsTab() {
       <div class="app-screen-header">
         <span>CONFIG</span>
         <h2>設定</h2>
-        <p>表示と演出の状態を確認する。</p>
+
       </div>
       <div class="settings-menu">
         <button type="button"><span>音量</span><strong>ON</strong></button>
