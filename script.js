@@ -1757,6 +1757,7 @@ const rewardKnowledgeTitle = document.querySelector("#rewardKnowledgeTitle");
 const rewardKnowledgeList = document.querySelector("#rewardKnowledgeList");
 const rewardCloseButton = document.querySelector("#rewardCloseButton");
 const lessonOverlay = document.querySelector("#lessonOverlay");
+const referenceOverlay = document.querySelector("#referenceOverlay");
 const enemySprite = document.querySelector("#enemySprite");
 const targetStatusThumb = document.querySelector("#targetStatusThumb");
 const targetStatusName = document.querySelector("#targetStatusName");
@@ -6354,6 +6355,83 @@ function getScrollById(scrollId) {
   return LIBRARY_SCROLLS.find((scroll) => scroll.id === scrollId);
 }
 
+// 各巻物の入手先（天体とのバトル名／クエスト名）を集計する
+function getScrollSources() {
+  const map = {};
+  const add = (scrollId, type, name) => {
+    if (!scrollId || !name) return;
+    map[scrollId] = map[scrollId] ?? [];
+    if (!map[scrollId].some((s) => s.type === type && s.name === name)) {
+      map[scrollId].push({ type, name });
+    }
+  };
+
+  Object.values(STORIES).forEach((story) => {
+    if (!story || !story.name) return;
+    add(story.reward?.id, "battle", story.name);
+    (story.extraRewardIds ?? []).forEach((id) => add(id, "battle", story.name));
+  });
+
+  QUESTS.forEach((quest) => add(quest.rewardScrollId, "quest", quest.title));
+
+  return map;
+}
+
+function renderReferenceTable() {
+  const sources = getScrollSources();
+  const rows = LIBRARY_SCROLLS.map((scroll) => {
+    const owned = claimedRewards.has(scroll.id);
+    const list = sources[scroll.id] ?? [];
+    const sourceHtml = list.length
+      ? list
+          .map(
+            (s) =>
+              `<span class="ref-source ${s.type}">${s.type === "battle" ? "バトル" : "クエスト"}：${s.name}</span>`
+          )
+          .join("")
+      : `<span class="ref-source none">入手先なし</span>`;
+    return `
+      <tr class="${owned ? "owned" : ""}">
+        <td class="ref-scroll">
+          <img src="${withAssetVersion(scroll.image)}" alt="" aria-hidden="true" />
+          <span>${scroll.title}${owned ? ' <b class="ref-have" aria-hidden="true">✓</b>' : ""}</span>
+        </td>
+        <td class="ref-from">${sourceHtml}</td>
+      </tr>`;
+  }).join("");
+
+  return `
+    <button class="lesson-backdrop" type="button" aria-label="対応表を閉じる" data-reference-close></button>
+    <section class="lesson-card reference-card" role="dialog" aria-modal="true" aria-label="巻物の入手先 対応表">
+      <header class="lesson-head">
+        <h2>巻物の入手先</h2>
+        <p class="lesson-subtitle">図書館の巻物は、天体とのバトルかクエストで手に入る</p>
+        <button class="lesson-close" type="button" aria-label="閉じる" data-reference-close>×</button>
+      </header>
+      <div class="lesson-body">
+        <table class="reference-table">
+          <thead>
+            <tr><th>巻物</th><th>入手先</th></tr>
+          </thead>
+          <tbody>${rows}</tbody>
+        </table>
+      </div>
+    </section>
+  `;
+}
+
+function openReferenceTable() {
+  referenceOverlay.innerHTML = renderReferenceTable();
+  referenceOverlay.classList.remove("is-hidden");
+  const closeButton = referenceOverlay.querySelector(".lesson-close");
+  if (closeButton) closeButton.focus();
+}
+
+function closeReferenceTable() {
+  referenceOverlay.classList.add("is-hidden");
+  referenceOverlay.innerHTML = "";
+}
+
 function getQuestEvidenceOptions(quest) {
   const seen = new Set();
   const required = quest.requiredScrolls.map((requirement) => {
@@ -7231,6 +7309,7 @@ function renderSettingsTab() {
         <button type="button"><span>音量</span><strong>ON</strong></button>
         <button type="button"><span>演出</span><strong>標準</strong></button>
         <button type="button"><span>データ</span><strong>保存中</strong></button>
+        <button type="button" data-open-reference><span>巻物の入手先</span><strong>対応表 ›</strong></button>
       </div>
     </section>
   `;
@@ -7732,6 +7811,12 @@ guidePanel.addEventListener("click", (event) => {
 
 appScreen.addEventListener("click", (event) => {
   const target = getEventElement(event);
+  const openReferenceButton = target?.closest("[data-open-reference]");
+  if (openReferenceButton) {
+    openReferenceTable();
+    return;
+  }
+
   const questBackButton = target?.closest("[data-quest-back]");
   if (questBackButton) {
     state.selectedQuestId = null;
@@ -7834,7 +7919,18 @@ lessonOverlay.addEventListener("click", (event) => {
   }
 });
 
+referenceOverlay.addEventListener("click", (event) => {
+  const target = getEventElement(event);
+  if (target?.closest("[data-reference-close]")) {
+    closeReferenceTable();
+  }
+});
+
 document.addEventListener("keydown", (event) => {
+  if (event.key === "Escape" && !referenceOverlay.classList.contains("is-hidden")) {
+    closeReferenceTable();
+    return;
+  }
   if (event.key === "Escape" && !lessonOverlay.classList.contains("is-hidden")) {
     closeLesson();
     return;
