@@ -6546,10 +6546,10 @@ button {
 .game-shell[data-mode="story"] .target-status-frame {
   display: block;
   position: absolute;
-  width: 100%;
-  height: 120%;
-  left: 0;
-  top: -5%;
+  width: 120%;
+  height: 144%;
+  left: -10%;
+  top: -17%;
   object-fit: fill;
   z-index: 0;
   pointer-events: none;
@@ -6603,7 +6603,7 @@ button {
   right: 5%;
   bottom: 6%;
   width: min(400px, 43%);
-  padding: clamp(30px, 4.2vw, 48px) clamp(24px, 3.2vw, 42px) clamp(15px, 2.1vw, 26px);
+  padding: clamp(46px, 5.5vw, 66px) clamp(24px, 3.2vw, 42px) clamp(15px, 2.1vw, 26px);
   background-image: url("./assets/ui-battle-observer-status-frame.png");
 }
 
@@ -6764,7 +6764,7 @@ button {
     bottom: 4.4%;
     width: 53%;
     min-height: 96px;
-    padding: 23px 18px 11px;
+    padding: 31px 18px 11px;
   }
 
   .game-shell[data-mode="story"] .observer-stats div {
