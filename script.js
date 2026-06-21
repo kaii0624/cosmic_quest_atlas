@@ -1694,6 +1694,119 @@ const ADDITIONAL_STORIES = {
 
 Object.assign(STORIES, PLANET_STORIES, ADDITIONAL_STORIES);
 
+function makeCatalogObservationStory(target) {
+  const pattern = `${target.id}Observed`;
+  const lines = target.lines ?? [
+    `${target.title}をただの名前で終わらせるな。観測された事実から正体を読め。`,
+    target.fact,
+    target.meaning,
+    "ここまで読めれば、図鑑の文字は戦える知識に変わる。"
+  ];
+
+  return {
+    kingdomId: target.kingdomId ?? "deep",
+    battleBg: target.battleBg ?? "planetarium",
+    type: `${target.rank ?? "OBS"}級`,
+    name: target.title,
+    subtitle: target.fact,
+    lead: target.fact,
+    mechanic: pattern,
+    clearAt: lines.length,
+    portrait: target.enemyImage,
+    enemy: {
+      normal: target.enemyImage,
+      [pattern]: target.enemyImage
+    },
+    status: {
+      rows: [
+        { icon: "✦", label: "階級", value: target.rank ?? "観測" },
+        { icon: "◎", label: "観測", value: target.shortFact ?? target.lesson },
+        { icon: "◇", label: "意味", value: target.shortMeaning ?? target.rankTheme ?? "宇宙理解" }
+      ],
+      meter: {
+        normal: target.meter ?? 76,
+        [pattern]: Math.min((target.meter ?? 76) + 17, 98)
+      }
+    },
+    rule: `能力：${target.fact}`,
+    clearRule: target.lesson,
+    returnMode: "observe",
+    reward: {
+      id: target.scrollId,
+      title: target.scrollTitle,
+      message: `${target.title}を観測してゲットしました。`,
+      image: target.obsImage,
+      tier: "minor",
+      knowledgeTitle: "",
+      knowledge: [target.lesson]
+    },
+    lines: lines.map((text, index) => ({
+      speaker: target.title,
+      text,
+      pattern: index % 2 === 0 ? "normal" : pattern
+    }))
+  };
+}
+
+const COSMIC_OBSERVATION_TARGETS = [
+  { id: "s2-star", storyId: "catalogS2Star", title: "S2星", rank: "A", scrollTitle: "S2星の高速公転", lesson: "銀河中心の重力を星の軌道で読む", fact: "天の川中心ブラックホールの周りを高速で公転する恒星として観測されている。", meaning: "S2星の軌道は、いて座A*の強い重力と中心質量を調べる直接的な手がかりになる。", shortFact: "高速公転", shortMeaning: "中心質量", asset: "./assets/map-marker-s2-star.png", enemyImage: "./assets/character-s2-star-fast-orbit.png", obsImage: "./assets/obs-s2-star-fast-orbit.png", lines: ["私は銀河中心をかすめる高速の星。", "私の軌道は、見えない重力源の質量を白日の下に出す。", "近点では速度が跳ね上がる。強い重力を運動で読め。", "天の川中心のブラックホールは、星の軌道で観測できる。"] },
+  { id: "sgr-a-star", storyId: "catalogSgrAStar", title: "いて座A*", rank: "SS", scrollTitle: "いて座A*の中心質量", lesson: "天の川中心に超巨大ブラックホールがある", fact: "天の川銀河中心にある超巨大ブラックホールとして観測されている。", meaning: "周囲の恒星軌道や電波観測から、銀河中心に極めて大きな質量が集中していることが分かった。", shortFact: "銀河中心BH", shortMeaning: "恒星軌道", asset: "./assets/map-marker-sgr-a-star.png", enemyImage: "./assets/character-sgr-a-star-galactic-center-black-hole-v3.png", obsImage: "./assets/obs-sgr-a-star-galactic-center-black-hole.png", lines: ["私は天の川の中心に沈む重力の核。", "まわりの星は、私の見えない質量をなぞって走る。", "光らないから無い、ではない。軌道が重力を語る。", "銀河中心の黒い王座を観測で見抜け。"] },
+  { id: "m87-star", storyId: "catalogM87Star", title: "M87*", rank: "SS", scrollTitle: "M87*のブラックホール影", lesson: "ブラックホールの影を直接画像化した", fact: "人類が初めて直接撮像したブラックホールの影として観測された。", meaning: "EHTの観測は、ブラックホール周辺の光るリングと暗い影を画像で示した。", shortFact: "BHシャドウ", shortMeaning: "EHT画像", asset: "./assets/map-marker-m87-star.png", enemyImage: "./assets/character-m87-star-first-black-hole-shadow-v3.png", obsImage: "./assets/obs-m87-star-first-black-hole-shadow.png", lines: ["私は銀河M87の中心に開いた黒い輪郭。", "世界中の望遠鏡をつなぎ、地球サイズの目で影を描いた。", "見えないはずの天体も、周囲の光で輪郭を残す。", "この暗い中心こそ、ブラックホールの観測された影だ。"] },
+  { id: "sn-1987a", storyId: "catalogSn1987a", title: "SN 1987A", rank: "SS", scrollTitle: "SN 1987Aの近傍超新星", lesson: "近い超新星で恒星最期を読む", fact: "大マゼラン雲で観測された近傍超新星である。", meaning: "光だけでなくニュートリノも検出され、重い星の中心崩壊を観測で裏づけた。", shortFact: "近傍超新星", shortMeaning: "ニュートリノ", asset: "./assets/map-marker-sn-1987a.png", enemyImage: "./assets/character-sn-1987a-nearby-supernova-v3.png", obsImage: "./assets/obs-sn-1987a-nearby-supernova.png", lines: ["私は大マゼラン雲で燃え上がった近傍超新星。", "光が届く前後に、星の奥からニュートリノも地球へ届いた。", "爆発はただ明るいだけではない。核崩壊の証拠を運ぶ。", "恒星の最期を、近い宇宙で観測せよ。"] },
+  { id: "type-ia-supernova", storyId: "catalogTypeIaSupernova", title: "Ia型超新星", rank: "A", scrollTitle: "Ia型超新星の標準光源", lesson: "標準光源で宇宙距離を測る", fact: "白色矮星の爆発による宇宙距離測定の標準光源として使われる。", meaning: "明るさの性質がそろいやすく、遠方銀河までの距離と宇宙膨張の研究に使われた。", shortFact: "標準光源", shortMeaning: "距離測定", asset: "./assets/map-marker-type-ia-supernova.png", enemyImage: "./assets/character-type-ia-supernova-standard-candle-v3.png", obsImage: "./assets/obs-type-ia-supernova-standard-candle.png", lines: ["私は白色矮星が放つ、距離を測る爆発の灯。", "本当の明るさをそろえれば、見かけの暗さから距離が分かる。", "遠方で暗く見える私たちは、宇宙膨張の歴史も語る。", "標準光源を使い、宇宙のものさしを伸ばせ。"] },
+  { id: "proxima-b", storyId: "catalogProximaB", title: "プロキシマb", rank: "B", scrollTitle: "プロキシマbの近傍惑星", lesson: "最も近い恒星系の惑星候補を読む", fact: "最も近い恒星系にあるハビタブルゾーン候補惑星として観測されている。", meaning: "近い赤色矮星まわりの岩石惑星候補として、大気や居住可能性の研究対象になる。", shortFact: "近傍惑星", shortMeaning: "HZ候補", asset: "./assets/map-marker-proxima-b.png", enemyImage: "./assets/character-proxima-b-habitable-zone-v3.png", obsImage: "./assets/obs-proxima-b-habitable-zone.png", lines: ["私はいちばん近い恒星のそばを回る小さな候補惑星。", "赤色矮星の近くでも、温度条件が合えば水の可能性を考えられる。", "近いからこそ、次の観測で大気の手がかりを追える。", "近傍系外惑星の入口として私を覚えよ。"] },
+  { id: "trappist-1", storyId: "catalogTrappist1", title: "TRAPPIST-1", rank: "B", scrollTitle: "TRAPPIST-1の多惑星系", lesson: "地球サイズ惑星が並ぶ赤色矮星系", fact: "地球サイズの惑星を多数もつ赤色矮星系として観測されている。", meaning: "同じ恒星の周りに複数の小型惑星があり、比較惑星学と大気観測の重要対象になった。", shortFact: "多惑星系", shortMeaning: "地球サイズ", asset: "./assets/map-marker-trappist-1.png", enemyImage: "./assets/character-trappist-1-earth-size-planets-v3.png", obsImage: "./assets/obs-trappist-1-earth-size-planets.png", lines: ["私は小さな赤い恒星に並ぶ七つの影。", "惑星が前を横切るたび、光の落ち込みが軌道を教える。", "同じ星の惑星を比べれば、大気と環境の違いが見えてくる。", "多惑星系のリズムを観測でほどけ。"] },
+  { id: "kepler-186", storyId: "catalogKepler186", title: "ケプラー186", rank: "B", scrollTitle: "ケプラー186の地球サイズ惑星", lesson: "ハビタブルゾーンの地球サイズ惑星を探す", fact: "ハビタブルゾーンに地球サイズ惑星をもつ恒星系として知られる。", meaning: "ケプラー186fは、地球サイズ惑星が生命居住可能領域にもあり得ることを示した代表例。", shortFact: "HZ地球サイズ", shortMeaning: "トランジット", asset: "./assets/map-marker-kepler-186.png", enemyImage: "./assets/character-kepler-186-habitable-earth-size-planet-v3.png", obsImage: "./assets/obs-kepler-186-habitable-earth-size-planet.png", lines: ["私は暗い星のそばで、地球サイズの影を落とす系。", "恒星の光がわずかに弱まる。その小さな差が惑星を告げる。", "ハビタブルゾーンに地球サイズがあるという事実を見逃すな。", "小さな減光から、大きな可能性を読め。"] },
+  { id: "kepler-452", storyId: "catalogKepler452", title: "ケプラー452", rank: "B", scrollTitle: "ケプラー452の地球類似候補", lesson: "太陽型恒星の地球類似候補を読む", fact: "地球に似た惑星候補をもつ太陽型恒星として注目された。", meaning: "太陽に似た恒星まわりの候補として、地球との比較で系外惑星研究を広げた。", shortFact: "太陽型恒星", shortMeaning: "地球類似", asset: "./assets/map-marker-kepler-452.png", enemyImage: "./assets/character-kepler-452-earth-like-candidate-v3.png", obsImage: "./assets/obs-kepler-452-earth-like-candidate.png", lines: ["私は太陽に似た恒星のまわりにある、地球類似候補の舞台。", "似ている、という言葉に飛びつくな。半径、軌道、恒星を順に確かめろ。", "候補は観測で絞り込むもの。可能性と確定を分けて読め。", "地球との比較で、系外惑星の地図を広げよ。"] },
+  { id: "tau-ceti", storyId: "catalogTauCeti", title: "くじら座τ星", rank: "B", scrollTitle: "くじら座τ星の近傍太陽型星", lesson: "生命探査候補の近傍太陽型星", fact: "生命探査の候補として注目される近傍の太陽型星である。", meaning: "太陽に似た近い恒星として、惑星系と生命居住可能性を考える比較対象になる。", shortFact: "近傍太陽型", shortMeaning: "生命探査", asset: "./assets/map-marker-tau-ceti.png", enemyImage: "./assets/character-tau-ceti-life-search-candidate-v3.png", obsImage: "./assets/obs-tau-ceti-life-search-candidate.png", lines: ["私はくじらの海に浮かぶ近い太陽型星。", "太陽に似て近いことは、生命探査の候補として大きな意味を持つ。", "ただし期待だけでは足りない。惑星、大気、環境を観測で積み上げる。", "近い恒星系を、生命探査の目で読め。"] },
+  { id: "hd-209458b", storyId: "catalogHd209458b", title: "HD 209458b", rank: "B", scrollTitle: "HD 209458bのトランジット", lesson: "惑星通過で恒星光が少し暗くなる", fact: "恒星の前を惑星が通過して明るさがわずかに暗くなる現象が観測された。", meaning: "トランジット観測により、系外惑星の半径や大気を調べる道が開かれた。", shortFact: "トランジット", shortMeaning: "大気観測", asset: "./assets/map-marker-hd-209458b.png", enemyImage: "./assets/character-hd-209458b-transit-dimming-v3.png", obsImage: "./assets/scroll-hd-209458b-transit-dimming-v3.png", lines: ["私は恒星の前を横切る熱い巨大惑星。", "光がほんの少しだけ暗くなる。その浅い谷が私の影だ。", "通過の光を分光すれば、大気の成分にも近づける。", "小さな減光を見逃さず、系外惑星を観測せよ。"] },
+  { id: "large-scale-structure", storyId: "catalogLargeScaleStructure", title: "大規模構造", rank: "EX", scrollTitle: "大規模構造の宇宙網", lesson: "銀河分布は宇宙の網目を作る", fact: "銀河が一様に分布せず、フィラメント・壁・空洞からなる宇宙の網目状構造を形成している。", meaning: "初期宇宙の密度ゆらぎが重力で成長し、現在の銀河分布になったことを示す。", shortFact: "宇宙網", shortMeaning: "密度ゆらぎ", asset: "./assets/map-marker-large-scale-structure.png", enemyImage: "./assets/character-large-scale-structure-cosmic-web.png", obsImage: "./assets/obs-large-scale-structure-cosmic-web.png", meter: 95 },
+  { id: "bullet-cluster", storyId: "catalogBulletCluster", title: "弾丸銀河団", rank: "EX", scrollTitle: "弾丸銀河団の質量分離", lesson: "重力レンズでダークマターを読む", fact: "銀河団衝突後の高温ガスの位置と、重力レンズから求めた質量分布の位置が分離している。", meaning: "通常物質とは別に振る舞うダークマターの強い観測的証拠になった。", shortFact: "質量分離", shortMeaning: "暗黒物質", asset: "./assets/map-marker-bullet-cluster.png", enemyImage: "./assets/character-bullet-cluster-dark-matter-separation.png", obsImage: "./assets/obs-bullet-cluster-dark-matter-separation.png", meter: 96 },
+  { id: "coma-cluster", storyId: "catalogComaCluster", title: "かみのけ座銀河団", rank: "EX", scrollTitle: "かみのけ座銀河団の見えない質量", lesson: "銀河団の高速運動が見えない質量を示す", fact: "銀河団内の銀河が、観測可能な物質だけでは束縛できないほど高速で運動している。", meaning: "ツビッキーが見えない質量を提唱し、ダークマター研究の出発点になった。", shortFact: "高速銀河", shortMeaning: "暗黒物質", asset: "./assets/map-marker-coma-cluster.png", enemyImage: "./assets/character-coma-cluster-dark-matter.png", obsImage: "./assets/obs-coma-cluster-dark-matter.png", meter: 95 },
+  { id: "milky-way-galaxy", storyId: "catalogMilkyWayGalaxy", title: "天の川銀河", rank: "SSS", scrollTitle: "天の川銀河の構造", lesson: "円盤・バルジ・ハロー構造を読む", fact: "恒星・星間ガス・星団の分布と運動から、円盤・バルジ・ハロー構造が確認されている。", meaning: "銀河構造、銀河回転、ダークマターハローを研究する基準になった。", shortFact: "銀河構造", shortMeaning: "ハロー", asset: "./assets/map-marker-milky-way-galaxy.png", enemyImage: "./assets/character-milky-way-galaxy-disk-bulge-halo.png", obsImage: "./assets/obs-milky-way-galaxy-disk-bulge-halo.png", meter: 92 },
+  { id: "spiral-galaxy", storyId: "catalogSpiralGalaxy", title: "渦巻銀河", rank: "SSS", scrollTitle: "渦巻銀河の回転曲線", lesson: "銀河回転曲線からダークマターを読む", fact: "銀河外縁の恒星やガスが、可視物質から予測されるより速く公転している。", meaning: "銀河を包むダークマターハローの存在が示された。", shortFact: "回転曲線", shortMeaning: "ハロー", asset: "./assets/map-marker-spiral-galaxy.png", enemyImage: "./assets/character-spiral-galaxy-rotation-curve.png", obsImage: "./assets/obs-spiral-galaxy-rotation-curve.png", meter: 91 },
+  { id: "distant-galaxy", storyId: "catalogDistantGalaxy", title: "遠方銀河", rank: "SSS", scrollTitle: "遠方銀河の赤方偏移", lesson: "遠い銀河ほど赤方偏移が大きい", fact: "銀河までの距離が大きくなるほど、スペクトルの赤方偏移も大きくなる。", meaning: "宇宙全体が膨張しているという現代宇宙論の基礎を築いた。", shortFact: "赤方偏移", shortMeaning: "宇宙膨張", asset: "./assets/map-marker-distant-galaxy.png", enemyImage: "./assets/character-distant-galaxy-redshift.png", obsImage: "./assets/obs-distant-galaxy-redshift.png", meter: 90 },
+  { id: "sirius-b", storyId: "catalogSiriusB", title: "シリウスB", rank: "SS", scrollTitle: "シリウスBの白色矮星", lesson: "小さく重い白色矮星を読む", fact: "小さな半径にもかかわらず、太陽に近い質量をもつ高温・高密度天体として観測された。", meaning: "白色矮星という恒星の終末形態を確立し、縮退物質の研究につながった。", shortFact: "白色矮星", shortMeaning: "縮退物質", asset: "./assets/map-marker-sirius-b.png", enemyImage: "./assets/character-sirius-b-white-dwarf-density.png", obsImage: "./assets/obs-sirius-b-white-dwarf-density.png", meter: 88 },
+  { id: "antares", storyId: "catalogAntares", title: "アンタレス", rank: "S", scrollTitle: "アンタレスの赤色超巨星", lesson: "低温巨大な赤色超巨星を読む", fact: "低温で巨大な半径をもつ赤色超巨星として観測されている。", meaning: "大質量星が晩年に赤色超巨星へ進化する過程を研究する代表例になった。", shortFact: "赤色超巨星", shortMeaning: "恒星進化", asset: "./assets/map-marker-antares.png", enemyImage: "./assets/character-antares-red-supergiant.png", obsImage: "./assets/obs-antares-red-supergiant.png", meter: 84 },
+  { id: "aldebaran", storyId: "catalogAldebaran", title: "アルデバラン", rank: "S", scrollTitle: "アルデバランの赤色巨星", lesson: "主系列を終えた赤色巨星を読む", fact: "主系列段階を終え、膨張した低温の赤色巨星である。", meaning: "太陽程度の恒星が主系列を離れ、巨星へ進化する過程を示す代表例になった。", shortFact: "赤色巨星", shortMeaning: "主系列後", asset: "./assets/map-marker-aldebaran.png", enemyImage: "./assets/character-aldebaran-red-giant.png", obsImage: "./assets/obs-aldebaran-red-giant.png", meter: 82 },
+  { id: "capella", storyId: "catalogCapella", title: "カペラ", rank: "S", scrollTitle: "カペラの巨星連星", lesson: "連星軌道で巨星の質量を測る", fact: "複数の恒星からなる系で、主要な2星が進化した巨星として互いを公転している。", meaning: "連星軌道から恒星質量を測定し、巨星の進化モデルを検証する対象になった。", shortFact: "巨星連星", shortMeaning: "質量測定", asset: "./assets/map-marker-capella.png", enemyImage: "./assets/character-capella-binary-giants.png", obsImage: "./assets/obs-capella-binary-giants.png", meter: 82 },
+  { id: "procyon", storyId: "catalogProcyon", title: "プロキオン", rank: "S", scrollTitle: "プロキオンの白色矮星伴星", lesson: "位置の揺れから暗い伴星を読む", fact: "主星の位置の揺れから暗い伴星が予測され、その後白色矮星として確認された。", meaning: "天体の重力運動から見えない伴星を発見できることを示した。", shortFact: "伴星予測", shortMeaning: "重力運動", asset: "./assets/map-marker-procyon.png", enemyImage: "./assets/character-procyon-white-dwarf-companion.png", obsImage: "./assets/obs-procyon-white-dwarf-companion.png", meter: 81 },
+  { id: "pollux", storyId: "catalogPollux", title: "ポルックス", rank: "S", scrollTitle: "ポルックスの橙色巨星", lesson: "太陽に近い質量の主系列後進化を読む", fact: "主系列を終え、半径が膨張した橙色巨星として観測されている。", meaning: "太陽に比較的近い質量の恒星が、主系列後にたどる進化を研究する対象になった。", shortFact: "橙色巨星", shortMeaning: "主系列後", asset: "./assets/map-marker-pollux.png", enemyImage: "./assets/character-pollux-orange-giant.png", obsImage: "./assets/obs-pollux-orange-giant.png", meter: 81 },
+  { id: "altair", storyId: "catalogAltair", title: "アルタイル", rank: "S", scrollTitle: "アルタイルの高速自転", lesson: "高速自転で扁平になった恒星を読む", fact: "高速自転によって赤道方向に膨らんだ扁平な形が直接観測された。", meaning: "恒星の自転が形状や表面温度分布に与える影響を実証した。", shortFact: "高速自転", shortMeaning: "扁平化", asset: "./assets/map-marker-altair.png", enemyImage: "./assets/character-altair-fast-rotation.png", obsImage: "./assets/obs-altair-fast-rotation.png", meter: 82 },
+  { id: "delta-cephei", storyId: "catalogDeltaCephei", title: "δケフェイ", rank: "A", scrollTitle: "δケフェイの周期光度", lesson: "周期で距離を測るケフェイド", fact: "恒星の明るさが一定周期で変化するケフェイド変光星である。", meaning: "ケフェイドの周期光度関係を用いる宇宙距離測定の基準になった。", shortFact: "ケフェイド", shortMeaning: "距離測定", asset: "./assets/map-marker-delta-cephei.png", enemyImage: "./assets/character-delta-cephei-cepheid-variable.png", obsImage: "./assets/obs-delta-cephei-cepheid-variable.png", meter: 78 },
+  { id: "polaris-cepheid", storyId: "catalogPolarisCepheid", title: "ポラリス", rank: "A", scrollTitle: "ポラリスの北極と変光", lesson: "北極星であり近傍ケフェイドでもある", fact: "天の北極付近に位置し、同時に周期的な変光を示すケフェイド変光星である。", meaning: "天球座標の基準であるとともに、近傍ケフェイドの較正対象になった。", shortFact: "北極付近", shortMeaning: "較正", asset: "./assets/map-marker-polaris-cepheid.png", enemyImage: "./assets/character-polaris-cepheid-pole-star.png", obsImage: "./assets/obs-polaris-cepheid-pole-star.png", meter: 78 },
+  { id: "rr-lyrae", storyId: "catalogRRLyrae", title: "こと座RR星", rank: "A", scrollTitle: "こと座RR星の標準光度", lesson: "古い星集団の距離を測る変光星", fact: "短周期で規則的に明るさが変化し、同型の恒星がほぼ一定の光度をもつ。", meaning: "球状星団や銀河ハローなど、古い恒星集団の距離測定を可能にした。", shortFact: "RR型変光星", shortMeaning: "距離測定", asset: "./assets/map-marker-rr-lyrae.png", enemyImage: "./assets/character-rr-lyrae-standard-candle.png", obsImage: "./assets/obs-rr-lyrae-standard-candle.png", meter: 77 },
+  { id: "barnards-star", storyId: "catalogBarnardsStar", title: "バーナード星", rank: "A", scrollTitle: "バーナード星の固有運動", lesson: "恒星が天球上を動くことを読む", fact: "背景星に対して非常に大きな固有運動を示す。", meaning: "恒星が天球上に固定されておらず、銀河内を運動していることを明確に示した。", shortFact: "固有運動", shortMeaning: "恒星運動", asset: "./assets/map-marker-barnards-star.png", enemyImage: "./assets/character-barnards-star-proper-motion.png", obsImage: "./assets/obs-barnards-star-proper-motion.png", meter: 76 },
+  { id: "beta-pictoris", storyId: "catalogBetaPictoris", title: "がか座β星", rank: "B", scrollTitle: "がか座β星の円盤と惑星", lesson: "若い恒星の塵円盤と直接撮像惑星", fact: "若い恒星の周囲に塵円盤があり、その中の巨大惑星が直接撮像された。", meaning: "惑星形成円盤と形成直後の惑星を同じ恒星系で研究できる代表例になった。", shortFact: "塵円盤", shortMeaning: "直接撮像", asset: "./assets/map-marker-beta-pictoris.png", enemyImage: "./assets/character-beta-pictoris-dust-disk-planet.png", obsImage: "./assets/obs-beta-pictoris-dust-disk-planet.png", meter: 72 },
+  { id: "tw-hydrae", storyId: "catalogTWHydrae", title: "うみへび座TW星", rank: "B", scrollTitle: "うみへび座TW星の円盤リング", lesson: "原始惑星系円盤のリングと隙間を読む", fact: "原始惑星系円盤に複数のリングや隙間が高解像度で観測された。", meaning: "円盤内で惑星が形成され、物質分布を変化させる過程の研究を進展させた。", shortFact: "円盤リング", shortMeaning: "惑星形成", asset: "./assets/map-marker-tw-hydrae.png", enemyImage: "./assets/character-tw-hydrae-disk-rings.png", obsImage: "./assets/obs-tw-hydrae-disk-rings.png", meter: 72 },
+  { id: "fomalhaut", storyId: "catalogFomalhaut", title: "フォーマルハウト", rank: "B", scrollTitle: "フォーマルハウトの塵リング", lesson: "偏心した塵リングから重力作用を読む", fact: "恒星の周囲に、境界が明瞭で偏心した塵のリングが撮像された。", meaning: "塵円盤の構造から、惑星などの見えない天体の重力作用を推定する研究を発展させた。", shortFact: "塵リング", shortMeaning: "重力作用", asset: "./assets/map-marker-fomalhaut.png", enemyImage: "./assets/character-fomalhaut-dust-ring.png", obsImage: "./assets/obs-fomalhaut-dust-ring.png", meter: 72 },
+  { id: "51-pegasi", storyId: "catalog51Pegasi", title: "51 Pegasi", rank: "B", scrollTitle: "51 Pegasiのホットジュピター", lesson: "視線速度で太陽型星の惑星を読む", fact: "恒星のスペクトル線が周期的に変動し、近距離を回る巨大惑星の存在が検出された。", meaning: "太陽型恒星を回る系外惑星の最初期の確実な発見として、系外惑星探査を本格化させた。", shortFact: "視線速度", shortMeaning: "系外惑星", asset: "./assets/map-marker-51-pegasi.png", enemyImage: "./assets/character-51-pegasi-hot-jupiter.png", obsImage: "./assets/obs-51-pegasi-hot-jupiter.png", meter: 73 },
+  { id: "wasp-39", storyId: "catalogWasp39", title: "WASP-39", rank: "B", scrollTitle: "WASP-39の大気分光", lesson: "通過分光で系外惑星大気を化学分析する", fact: "惑星通過時の分光観測から、大気中の二酸化炭素など複数の化学成分が検出された。", meaning: "系外惑星大気を詳細に化学分析する観測手法を発展させた。", shortFact: "大気分光", shortMeaning: "化学成分", asset: "./assets/map-marker-wasp-39.png", enemyImage: "./assets/character-wasp-39-atmosphere.png", obsImage: "./assets/obs-wasp-39-atmosphere.png", meter: 73 },
+  { id: "lhs-1140", storyId: "catalogLhs1140", title: "LHS 1140", rank: "B", scrollTitle: "LHS 1140の岩石惑星", lesson: "近傍岩石惑星の大気と居住可能性を読む", fact: "近傍の赤色矮星を、岩石質と考えられる惑星が公転している。", meaning: "比較的観測しやすい近傍岩石惑星として、大気と生命居住可能性の研究対象になった。", shortFact: "岩石惑星", shortMeaning: "大気研究", asset: "./assets/map-marker-lhs-1140.png", enemyImage: "./assets/character-lhs-1140-rocky-planet.png", obsImage: "./assets/obs-lhs-1140-rocky-planet.png", meter: 72 },
+  { id: "epsilon-eridani", storyId: "catalogEpsilonEridani", title: "エリダヌス座ε星", rank: "B", scrollTitle: "エリダヌス座ε星の惑星と塵", lesson: "近い惑星系の複数リングを読む", fact: "近傍恒星の周囲に惑星と複数の塵構造が観測されている。", meaning: "太陽系に比較的近い惑星系として、惑星と塵円盤の構造を詳しく比較できるようにした。", shortFact: "近傍惑星系", shortMeaning: "塵構造", asset: "./assets/map-marker-epsilon-eridani.png", enemyImage: "./assets/character-epsilon-eridani-planet-dust.png", obsImage: "./assets/obs-epsilon-eridani-planet-dust.png", meter: 72 },
+  { id: "enceladus", storyId: "catalogEnceladus", title: "エンケラドゥス", rank: "C", scrollTitle: "エンケラドゥスの氷噴流", lesson: "地下海の物質を噴出物で調べる", fact: "南極域から、水蒸気・氷粒・塩・有機物を含む噴出物が放出されている。", meaning: "地下海の物質を宇宙空間で直接分析できる生命探査対象になった。", shortFact: "氷噴流", shortMeaning: "地下海", asset: "./assets/map-marker-enceladus.png", enemyImage: "./assets/character-enceladus-ice-plumes.png", obsImage: "./assets/obs-enceladus-ice-plumes.png", meter: 65 },
+  { id: "europa", storyId: "catalogEuropa", title: "エウロパ", rank: "C", scrollTitle: "エウロパの地下海", lesson: "氷殻の下の塩水海を読む", fact: "若い氷表面、亀裂、誘導磁場から、氷殻の下に塩水の海がある可能性が示された。", meaning: "地球外生命が存在しうる環境を、惑星表面から氷衛星内部へ拡張した。", shortFact: "地下海", shortMeaning: "生命探査", asset: "./assets/map-marker-europa.png", enemyImage: "./assets/character-europa-subsurface-ocean.png", obsImage: "./assets/obs-europa-subsurface-ocean.png", meter: 66 },
+  { id: "titan", storyId: "catalogTitan", title: "タイタン", rank: "C", scrollTitle: "タイタンのメタン湖", lesson: "濃い大気と液体メタン地形を読む", fact: "窒素を主成分とする濃い大気と、液体メタンの湖・河川地形が確認された。", meaning: "地球とは異なる低温環境における有機化学と生命前化学の研究を可能にした。", shortFact: "メタン湖", shortMeaning: "有機化学", asset: "./assets/map-marker-titan.png", enemyImage: "./assets/character-titan-methane-lakes.png", obsImage: "./assets/obs-titan-methane-lakes.png", meter: 66 },
+  { id: "ganymede", storyId: "catalogGanymede", title: "ガニメデ", rank: "C", scrollTitle: "ガニメデの固有磁場", lesson: "衛星の固有磁場と内部海を読む", fact: "太陽系の衛星で唯一の固有磁場をもち、内部海の存在も示唆されている。", meaning: "大型氷衛星の内部構造と磁場生成を研究する重要対象になった。", shortFact: "固有磁場", shortMeaning: "内部構造", asset: "./assets/map-marker-ganymede.png", enemyImage: "./assets/character-ganymede-magnetic-field.png", obsImage: "./assets/obs-ganymede-magnetic-field.png", meter: 66 },
+  { id: "ryugu", storyId: "catalogRyugu", title: "リュウグウ", rank: "C", scrollTitle: "リュウグウ試料の有機物", lesson: "小惑星試料から生命材料を読む", fact: "地球へ持ち帰られた試料から、含水鉱物や多様な有機物が検出された。", meaning: "太陽系形成初期の小天体に、生命材料となる物質が存在したことを実証した。", shortFact: "試料帰還", shortMeaning: "有機物", asset: "./assets/map-marker-ryugu.png", enemyImage: "./assets/character-ryugu-sample-organics.png", obsImage: "./assets/obs-ryugu-sample-organics.png", meter: 64 },
+  { id: "bennu", storyId: "catalogBennu", title: "ベンヌ", rank: "C", scrollTitle: "ベンヌ試料の炭素と水", lesson: "炭素質小惑星試料を読む", fact: "回収試料から炭素質物質、水に関係する鉱物、太陽系初期の物質が確認された。", meaning: "小惑星が初期地球へ水や有機物を供給した可能性の研究を進めた。", shortFact: "炭素質試料", shortMeaning: "水と有機物", asset: "./assets/map-marker-bennu.png", enemyImage: "./assets/character-bennu-sample-carbon-water.png", obsImage: "./assets/obs-bennu-sample-carbon-water.png", meter: 64 },
+  { id: "comet", storyId: "catalogComet", title: "彗星", rank: "C", scrollTitle: "彗星の尾と初期物質", lesson: "昇華で尾を作る氷小天体", fact: "太陽へ近づくと氷が昇華し、水・ガス・塵・有機分子を放出して尾を形成する。", meaning: "太陽系外縁に保存された初期物質と、地球の水・有機物の起源を研究する対象になった。", shortFact: "昇華と尾", shortMeaning: "初期物質", asset: "./assets/map-marker-comet.png", enemyImage: "./assets/character-comet-sublimation-tail.png", obsImage: "./assets/obs-comet-sublimation-tail.png", meter: 63 },
+  { id: "halleys-comet", storyId: "catalogHalleysComet", title: "ハレー彗星", rank: "C", scrollTitle: "ハレー彗星の周期回帰", lesson: "彗星の周期回帰を軌道で予測する", fact: "過去の彗星記録が同一天体の周期的な回帰であることが予測・確認された。", meaning: "彗星にもニュートン力学が適用できることを示し、天体軌道の予測科学を確立した。", shortFact: "周期回帰", shortMeaning: "軌道予測", asset: "./assets/map-marker-halleys-comet.png", enemyImage: "./assets/character-halleys-comet-periodic-return.png", obsImage: "./assets/obs-halleys-comet-periodic-return.png", meter: 64 },
+  { id: "io", storyId: "catalogIo", title: "イオ", rank: "C", scrollTitle: "イオの火山活動", lesson: "潮汐加熱で活火山を読む", fact: "多数の活火山から、硫黄や溶岩が大規模に噴出している。", meaning: "木星の潮汐力が衛星内部を加熱する潮汐加熱を実証した。", shortFact: "活火山", shortMeaning: "潮汐加熱", asset: "./assets/map-marker-io.png", enemyImage: "./assets/character-io-volcanism.png", obsImage: "./assets/obs-io-volcanism.png", meter: 65 },
+  { id: "north-star", storyId: "catalogNorthStar", title: "北極星", rank: "C", scrollTitle: "北極星の方位基準", lesson: "天の北極近くの星を方位基準にする", fact: "天の北極付近に位置するため、一晩を通してほぼ同じ場所に見える。", meaning: "方位測定、航海、天球の日周運動の基準として長く利用された。", shortFact: "北極付近", shortMeaning: "方位基準", asset: "./assets/map-marker-north-star.png", enemyImage: "./assets/character-north-star-fixed-direction.png", obsImage: "./assets/obs-north-star-fixed-direction.png", meter: 63 },
+  { id: "regulus", storyId: "catalogRegulus", title: "レグルス", rank: "C", scrollTitle: "レグルスと黄道", lesson: "黄道近くの恒星を惑星運動の目印にする", fact: "黄道の近くに位置し、月や惑星が接近・通過する様子が観測される。", meaning: "恒星を背景として惑星の位置と黄道上の運動を測る目印になった。", shortFact: "黄道近く", shortMeaning: "位置測定", asset: "./assets/map-marker-regulus.png", enemyImage: "./assets/character-regulus-ecliptic-marker.png", obsImage: "./assets/obs-regulus-ecliptic-marker.png", meter: 63 }
+].map((target) => ({
+  ...target,
+  scrollId: `catalog-${target.id}-scroll`,
+  period: target.period ?? `${target.rank ?? "観測"}級カタログ`,
+  kingdomId: target.kingdomId ?? "deep"
+}));
+
+Object.assign(
+  STORIES,
+  Object.fromEntries(COSMIC_OBSERVATION_TARGETS.map((target) => [target.storyId, makeCatalogObservationStory(target)]))
+);
+
 Object.assign(STORIES.cygni61, {
   extraRewardIds: ["proper-motion-scroll", "aberration-scroll"]
 });
@@ -2513,6 +2626,105 @@ LIBRARY_SCROLLS.push(
     description: "M87中心ブラックホールのシャドウ画像は、ブラックホールを直接的に検証する重要成果。"
   }
 );
+
+LIBRARY_SCROLLS.push(
+  ...COSMIC_OBSERVATION_TARGETS.map((target) => ({
+    id: target.scrollId,
+    title: target.scrollTitle,
+    period: target.period,
+    image: target.obsImage,
+    tier: "minor",
+    lesson: target.lesson,
+    description: `${target.fact}${target.meaning}`
+  }))
+);
+
+function makeObservationLessonPage(target) {
+  return {
+    badge: `${target.rank ?? "観測"}級 観測事実`,
+    title: target.scrollTitle,
+    subtitle: target.lesson,
+    hook: `${target.title}は、名前より先に「何を観測で確かめたか」を覚えると強い。`,
+    lead:
+      `${target.fact}` +
+      `${target.meaning}` +
+      "この1枚では、観測された事実、そこから読める宇宙の仕組み、試験で問われやすい見分け方をまとめる。",
+    blocks: [
+      {
+        type: "compare",
+        items: [
+          {
+            symbol: "観",
+            label: "観測事実",
+            text: target.fact
+          },
+          {
+            symbol: "意",
+            label: "天文学的意義",
+            text: target.meaning
+          }
+        ]
+      },
+      {
+        type: "note",
+        heading: "ここを見れば思い出せる",
+        text:
+          `${target.title}のキーワードは「${target.shortFact ?? target.lesson}」。` +
+          `関連する意味は「${target.shortMeaning ?? "宇宙理解"}」。` +
+          "天体名だけでなく、観測手段や何が分かったかをセットで覚える。"
+      },
+      {
+        type: "examples",
+        heading: "読み取りの型",
+        columns: ["項目", "見るポイント"],
+        rows: [
+          ["対象", target.title],
+          ["観測されたこと", target.shortFact ?? target.lesson],
+          ["そこから分かること", target.shortMeaning ?? target.meaning]
+        ],
+        foot: "観測事実の問題では、天体名・現象・意義の3点を取り違えないことが重要。"
+      },
+      {
+        type: "points",
+        heading: "ポイント",
+        items: [
+          `${target.title}は「${target.lesson}」で覚える。`,
+          `観測事実：${target.fact}`,
+          `意義：${target.meaning}`,
+          "似た天体が出たら、観測方法と分かった物理量を比べる。"
+        ]
+      },
+      {
+        type: "quiz",
+        heading: "練習問題",
+        items: [
+          {
+            q: `${target.title}について正しい説明はどれか。`,
+            choices: [
+              `ア　${target.fact}`,
+              "イ　地球大気の雲の形だけを調べる対象である。",
+              "ウ　観測ではなく神話だけで定義される天体である。",
+              "エ　太陽系の暦作りだけに関係する。"
+            ],
+            answer: `正解：ア　${target.fact}`,
+            explain: `${target.title}は、${target.fact}${target.meaning}`
+          },
+          {
+            q: `${target.title}の天文学的な意義として最も近いものはどれか。`,
+            choices: [
+              `ア　${target.meaning}`,
+              "イ　星座の絵柄を決めるためだけに使われる。",
+              "ウ　天体の名前の由来だけを示す。",
+              "エ　肉眼で明るいかどうかだけを分類する。"
+            ],
+            answer: `正解：ア　${target.meaning}`,
+            explain: "観測事実は、単なる発見名ではなく、そこから何が分かったかまで結びつける。"
+          }
+        ]
+      }
+    ]
+  };
+}
 
 // 巻物ごとの「詳細を学ぶ」ページ。天文宇宙検定2級レベルの1枚解説。
 const LESSON_PAGES = {
@@ -5527,6 +5739,10 @@ const LESSON_PAGES = {
   }
 };
 
+COSMIC_OBSERVATION_TARGETS.forEach((target) => {
+  LESSON_PAGES[target.scrollId] = makeObservationLessonPage(target);
+});
+
 function getLessonForScroll(scrollId) {
   return LESSON_PAGES[scrollId] ?? null;
 }
@@ -6573,7 +6789,7 @@ function renderSelectedEvidenceSlot(quest, evidenceId, index) {
 }
 
 function getObservableItems() {
-  return Object.entries(KINGDOMS).flatMap(([kingdomId, kingdom]) =>
+  const mappedItems = Object.entries(KINGDOMS).flatMap(([kingdomId, kingdom]) =>
     kingdom.points.map((point) => {
       const story = point.storyId ? STORIES[point.storyId] : null;
       const status = story?.status?.rows?.map((row) => `${row.label}: ${row.value}`).join(" / ");
@@ -6595,6 +6811,25 @@ function getObservableItems() {
       };
     })
   );
+
+  const catalogItems = COSMIC_OBSERVATION_TARGETS.map((target) => ({
+    id: `catalog-${target.id}`,
+    storyId: target.storyId,
+    x: 0,
+    y: 0,
+    label: target.title,
+    kingdomId: target.kingdomId,
+    kingdomName: target.period,
+    kind: "catalog",
+    asset: target.asset,
+    title: target.title,
+    enemyImage: target.enemyImage,
+    enemyAlt: target.title,
+    lesson: target.lesson,
+    description: `${target.fact}${target.meaning}`
+  }));
+
+  return [...mappedItems, ...catalogItems];
 }
 
 function getSelectedObservableItem() {
@@ -6942,6 +7177,9 @@ function renderObserveDetailPanel(item) {
         <div class="home-selection-actions">
           <button class="home-enter-button" type="button" data-observe-start="${item.storyId}">
             観測する
+          </button>
+          <button class="home-enter-button secondary" type="button" data-battle-start="${item.storyId}">
+            バトル
           </button>
         </div>` : ""}
       </div>
@@ -7646,9 +7884,14 @@ function finishStory(story) {
     ...(story.extraRewardIds ?? []).map((id) => getRewardFromScrollId(id, `${story.name}から追加でゲットしました。`))
   ].filter(Boolean);
 
-  state.mode = "detail";
+  const returnMode = story.returnMode ?? "detail";
+  state.mode = returnMode;
   state.storyId = null;
   state.lineIndex = 0;
+  if (returnMode === "observe") {
+    state.homeTab = "observe";
+    state.kingdomId = null;
+  }
   render();
 
   const newRewards = rewards.filter((reward) => !claimedRewards.has(reward.id));
@@ -7742,6 +7985,14 @@ document.addEventListener(
       return;
     }
 
+    const battleStartButton = target?.closest("[data-battle-start]");
+    if (battleStartButton) {
+      event.preventDefault();
+      event.stopPropagation();
+      openStory(battleStartButton.dataset.battleStart);
+      return;
+    }
+
     const questAdvanceFactButton = target?.closest("[data-quest-advance]");
     if (questAdvanceFactButton) {
       event.preventDefault();
@@ -7782,6 +8033,12 @@ guidePanel.addEventListener("click", (event) => {
   const observeStartButton = target?.closest("[data-observe-start]");
   if (observeStartButton) {
     openStory(observeStartButton.dataset.observeStart);
+    return;
+  }
+
+  const battleStartButton = target?.closest("[data-battle-start]");
+  if (battleStartButton) {
+    openStory(battleStartButton.dataset.battleStart);
     return;
   }
 

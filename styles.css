@@ -3896,6 +3896,12 @@ button {
   filter: brightness(1.1) saturate(1.08);
 }
 
+.home-enter-button.secondary {
+  color: #fff3c9;
+  background:
+    linear-gradient(90deg, rgba(24, 57, 87, 0.98), rgba(28, 103, 126, 0.98), rgba(20, 49, 84, 0.98));
+}
+
 .home-nav-bar {
   display: grid;
   grid-template-columns: repeat(5, minmax(0, 1fr));
@@ -8296,6 +8302,7 @@ button {
 
 /* 観測パネルに「観測する」ボタンを付けたぶん、引き上げ量を打ち消して重なりを防ぐ */
 .home-selection-panel.observe-detail-panel .home-selection-actions {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   transform: none;
   margin-top: clamp(3px, 0.8vw, 7px);
 }
