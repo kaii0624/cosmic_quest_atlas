@@ -2130,6 +2130,7 @@ const state = {
   selectedQuestEvidence: {},
   libraryScrollTop: 0,
   libraryGridScrollTop: 0,
+  profileCompanionSelectorOpen: false,
   questLineIndex: 0,
   questJustHandedOver: false
 };
@@ -2174,6 +2175,22 @@ const storySubtitleEl = document.querySelector("#storySubtitle");
 const kingdomButtons = [...document.querySelectorAll("[data-kingdom]")];
 const battleBgButtons = [...document.querySelectorAll("[data-battle-bg]")];
 const REWARD_STORAGE_KEY = "cosmicQuest.claimedRewards";
+const PROFILE_COMPANION_STORAGE_KEY = "cosmicQuest.profileCompanion";
+const DEFAULT_PROFILE_COMPANION_ID = "spica";
+const PROFILE_COMPANION_STORY_IDS = [
+  "spica",
+  "mizar",
+  "arcturus",
+  "vega",
+  "deneb",
+  "albireo",
+  "cygni61",
+  "algol",
+  "mira",
+  "rigel",
+  "betelgeuse",
+  "sirius"
+];
 
 function loadClaimedRewards() {
   try {
@@ -2187,6 +2204,21 @@ const claimedRewards = new Set(loadClaimedRewards());
 
 function saveClaimedRewards() {
   localStorage.setItem(REWARD_STORAGE_KEY, JSON.stringify([...claimedRewards]));
+}
+
+function loadProfileCompanionId() {
+  try {
+    return localStorage.getItem(PROFILE_COMPANION_STORAGE_KEY) ?? DEFAULT_PROFILE_COMPANION_ID;
+  } catch {
+    return DEFAULT_PROFILE_COMPANION_ID;
+  }
+}
+
+let selectedProfileCompanionId = loadProfileCompanionId();
+
+function saveProfileCompanionId(storyId) {
+  selectedProfileCompanionId = storyId;
+  localStorage.setItem(PROFILE_COMPANION_STORAGE_KEY, storyId);
 }
 
 const QUIZ_PROGRESS_STORAGE_KEY = "cosmicQuest.quizProgress";
@@ -7897,6 +7929,7 @@ function openAppScreen(screenId) {
   state.storyId = null;
   state.lineIndex = 0;
   state.selectedQuestId = screenId === "quests" ? null : state.selectedQuestId;
+  state.profileCompanionSelectorOpen = false;
   if (screenId === "quests") {
     getFocusedQuest();
   }
@@ -8537,6 +8570,47 @@ function getToolStats() {
   };
 }
 
+function isProfileCompanionUnlocked(storyId) {
+  return storyId === DEFAULT_PROFILE_COMPANION_ID || isStoryObserved(storyId);
+}
+
+function getProfileCompanionOptions() {
+  return PROFILE_COMPANION_STORY_IDS
+    .map((storyId) => {
+      const story = STORIES[storyId];
+      const image = story?.enemy?.normal ?? story?.portrait;
+      if (!story || !image || !isProfileCompanionUnlocked(storyId)) return null;
+
+      return {
+        id: storyId,
+        title: getStoryPointByStoryId(storyId)?.label ?? story.name,
+        image
+      };
+    })
+    .filter(Boolean);
+}
+
+function getSelectedProfileCompanion(options) {
+  const selected = options.find((option) => option.id === selectedProfileCompanionId)
+    ?? options.find((option) => option.id === DEFAULT_PROFILE_COMPANION_ID)
+    ?? options[0];
+
+  if (selected && selected.id !== selectedProfileCompanionId) {
+    selectedProfileCompanionId = selected.id;
+  }
+
+  return selected;
+}
+
+function renderProfileCompanionOption(option, selectedId) {
+  return `
+    <button class="profile-companion-option${option.id === selectedId ? " selected" : ""}" type="button" data-profile-companion-id="${option.id}" aria-pressed="${option.id === selectedId ? "true" : "false"}">
+      <img src="${withAssetVersion(option.image)}" alt="${option.title}" />
+      <span>${option.title}</span>
+    </button>
+  `;
+}
+
 function renderObservationToolSlot(tool) {
   return `
     <div class="user-tool-slot${tool.owned ? " owned" : " locked"}">
@@ -8552,6 +8626,8 @@ function renderSettingsTab() {
   const scrollStats = getScrollStats();
   const quizStats = getQuizStats();
   const toolStats = getToolStats();
+  const companionOptions = getProfileCompanionOptions();
+  const companion = getSelectedProfileCompanion(companionOptions);
   const progressItems = [
     {
       label: "観測天体",
@@ -8592,8 +8668,16 @@ function renderSettingsTab() {
         <h2>観測者プロフィール</h2>
       </div>
       <div class="user-profile-layout">
-        <figure class="user-hero-card" aria-label="観測者">
-          <img src="${withAssetVersion(OBSERVER_PROFILE_IMAGE)}" alt="観測者の全身ビジュアル" />
+        <figure class="user-hero-card${state.profileCompanionSelectorOpen ? " companion-open" : ""}" aria-label="観測者">
+          ${companion ? `
+          <button class="profile-companion-button" type="button" data-profile-companion-toggle aria-label="お気に入りキャラを変更" aria-expanded="${state.profileCompanionSelectorOpen ? "true" : "false"}">
+            <img src="${withAssetVersion(companion.image)}" alt="${companion.title}" />
+          </button>` : ""}
+          <img class="user-hero-image" src="${withAssetVersion(OBSERVER_PROFILE_IMAGE)}" alt="観測者の全身ビジュアル" />
+          ${state.profileCompanionSelectorOpen ? `
+          <div class="profile-companion-picker" role="listbox" aria-label="お気に入りキャラ">
+            ${companionOptions.map((option) => renderProfileCompanionOption(option, companion?.id)).join("")}
+          </div>` : ""}
         </figure>
 
         <section class="user-progress-board" aria-label="進捗度">
@@ -9117,6 +9201,21 @@ guidePanel.addEventListener("click", (event) => {
 
 appScreen.addEventListener("click", (event) => {
   const target = getEventElement(event);
+  const companionToggleButton = target?.closest("[data-profile-companion-toggle]");
+  if (companionToggleButton) {
+    state.profileCompanionSelectorOpen = !state.profileCompanionSelectorOpen;
+    render();
+    return;
+  }
+
+  const companionOptionButton = target?.closest("[data-profile-companion-id]");
+  if (companionOptionButton) {
+    saveProfileCompanionId(companionOptionButton.dataset.profileCompanionId);
+    state.profileCompanionSelectorOpen = false;
+    render();
+    return;
+  }
+
   const openReferenceButton = target?.closest("[data-open-reference]");
   if (openReferenceButton) {
     openReferenceTable();
@@ -9178,6 +9277,11 @@ appScreen.addEventListener("click", (event) => {
     state.selectedScrollId = scrollButton.dataset.scrollId;
     render();
     return;
+  }
+
+  if (state.profileCompanionSelectorOpen) {
+    state.profileCompanionSelectorOpen = false;
+    render();
   }
 });
 
