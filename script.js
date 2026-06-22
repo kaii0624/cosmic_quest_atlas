@@ -2128,6 +2128,8 @@ const state = {
   selectedQuestId: null,
   focusedQuestId: null,
   selectedQuestEvidence: {},
+  libraryScrollTop: 0,
+  libraryGridScrollTop: 0,
   questLineIndex: 0,
   questJustHandedOver: false
 };
@@ -7431,6 +7433,49 @@ function getScrollById(scrollId) {
   return LIBRARY_SCROLLS.find((scroll) => scroll.id === scrollId);
 }
 
+function getStoryPointByStoryId(storyId) {
+  return Object.values(KINGDOMS)
+    .flatMap((kingdom) => kingdom.points ?? [])
+    .find((point) => point.storyId === storyId);
+}
+
+function getLibraryObservationSource(scrollId) {
+  const entry = Object.entries(STORIES).find(([, story]) =>
+    story?.reward?.id === scrollId || (story?.extraRewardIds ?? []).includes(scrollId)
+  );
+  if (!entry) return null;
+
+  const [storyId, story] = entry;
+  const point = getStoryPointByStoryId(storyId);
+  return {
+    storyId,
+    title: point?.label ?? story.name
+  };
+}
+
+function getLockedLibraryPrompt(scroll) {
+  const source = getLibraryObservationSource(scroll.id);
+  if (source) {
+    return {
+      description: `${source.title}を観測してみよう。`,
+      action: `<button class="home-enter-button" type="button" data-observe-start="${source.storyId}">観測する</button>`
+    };
+  }
+
+  const quest = QUESTS.find((item) => item.rewardScrollId === scroll.id);
+  if (quest) {
+    return {
+      description: `クエスト「${quest.title}」で必要な観測事実を集めよう。`,
+      action: `<button class="home-enter-button" type="button" data-home-tab="quests">観測する</button>`
+    };
+  }
+
+  return {
+    description: "天体を見るから観測を進めてみよう。",
+    action: `<button class="home-enter-button" type="button" data-home-tab="observe">観測する</button>`
+  };
+}
+
 // 各巻物の入手先（天体とのバトル名／クエスト名）を集計する
 function getScrollSources() {
   const map = {};
@@ -7874,6 +7919,21 @@ function renderAppScreen() {
   };
 
   appScreen.innerHTML = renderers[state.mode]?.() ?? "";
+  if (state.mode === "library") {
+    restoreLibraryScrollPosition();
+  }
+}
+
+function restoreLibraryScrollPosition() {
+  const restore = () => {
+    const area = appScreen.querySelector(".library-tab .app-scroll-area");
+    const grid = appScreen.querySelector(".library-tab .library-scroll-grid");
+    if (area) area.scrollTop = state.libraryScrollTop;
+    if (grid) grid.scrollTop = state.libraryGridScrollTop;
+  };
+
+  restore();
+  requestAnimationFrame(restore);
 }
 
 function renderMap() {
@@ -8052,6 +8112,7 @@ function renderLibrarySelectionPanel() {
   const selected = getSelectedLibraryScroll();
   const selectedUnlocked = claimedRewards.has(selected.id);
   const hasLesson = Boolean(getLessonForScroll(selected.id));
+  const lockedPrompt = selectedUnlocked ? null : getLockedLibraryPrompt(selected);
 
   return `
     <section class="home-selection-panel app-detail-panel library-detail-panel ${selected.tier ?? "major"}-tier" aria-label="${selected.title}の説明">
@@ -8060,12 +8121,16 @@ function renderLibrarySelectionPanel() {
       </figure>
       <div class="home-selection-copy app-detail-copy">
         <h2>${selected.title}</h2>
-        <p>${selectedUnlocked ? selected.description : `${selected.period}の物語を観測すると、この巻物の解説が読める。`}</p>
-        ${hasLesson ? `
+        <p>${selectedUnlocked ? selected.description : lockedPrompt.description}</p>
+        ${selectedUnlocked && hasLesson ? `
         <div class="home-selection-actions">
           <button class="home-enter-button" type="button" data-lesson-open="${selected.id}">
             詳細を学ぶ
           </button>
+        </div>` : ""}
+        ${!selectedUnlocked ? `
+        <div class="home-selection-actions">
+          ${lockedPrompt.action}
         </div>` : ""}
       </div>
     </section>
@@ -8380,7 +8445,7 @@ function renderLibraryTab() {
             .map((scroll) => {
             const unlocked = claimedRewards.has(scroll.id);
             return `
-              <button class="library-scroll-card ${scroll.tier ?? "major"}-tier${unlocked ? " unlocked" : " locked"}${selected.id === scroll.id ? " selected" : ""}" type="button" ${unlocked ? `data-scroll-id="${scroll.id}"` : 'aria-disabled="true"'}>
+              <button class="library-scroll-card ${scroll.tier ?? "major"}-tier${unlocked ? " unlocked" : " locked"}${selected.id === scroll.id ? " selected" : ""}" type="button" data-scroll-id="${scroll.id}" aria-pressed="${selected.id === scroll.id ? "true" : "false"}">
                 <img src="${withAssetVersion(scroll.image)}" alt="${scroll.title}" />
                 <span>${scroll.title}</span>
               </button>
@@ -9106,6 +9171,10 @@ appScreen.addEventListener("click", (event) => {
 
   const scrollButton = target?.closest("[data-scroll-id]");
   if (scrollButton) {
+    const scrollArea = scrollButton.closest(".app-scroll-area");
+    const scrollGrid = scrollButton.closest(".library-scroll-grid");
+    state.libraryScrollTop = scrollArea?.scrollTop ?? state.libraryScrollTop;
+    state.libraryGridScrollTop = scrollGrid?.scrollTop ?? state.libraryGridScrollTop;
     state.selectedScrollId = scrollButton.dataset.scrollId;
     render();
     return;

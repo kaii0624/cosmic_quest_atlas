@@ -4121,13 +4121,15 @@ button {
 }
 
 .library-scroll-card.locked {
-  cursor: default;
+  cursor: pointer;
   filter: grayscale(0.82) brightness(0.62);
 }
 
 .library-scroll-card.selected,
 .library-scroll-card.unlocked:hover,
-.library-scroll-card.unlocked:focus-visible {
+.library-scroll-card.unlocked:focus-visible,
+.library-scroll-card.locked:hover,
+.library-scroll-card.locked:focus-visible {
   outline: none;
   filter: brightness(1.1) saturate(1.08);
   box-shadow:
@@ -7332,13 +7334,17 @@ button {
 
 .library-scroll-card.selected,
 .library-scroll-card.unlocked:hover,
-.library-scroll-card.unlocked:focus-visible {
+.library-scroll-card.unlocked:focus-visible,
+.library-scroll-card.locked:hover,
+.library-scroll-card.locked:focus-visible {
   box-shadow: none;
 }
 
 .library-scroll-card.selected img,
 .library-scroll-card.unlocked:hover img,
-.library-scroll-card.unlocked:focus-visible img {
+.library-scroll-card.unlocked:focus-visible img,
+.library-scroll-card.locked:hover img,
+.library-scroll-card.locked:focus-visible img {
   filter:
     brightness(1.12)
     drop-shadow(0 0 18px rgba(95, 185, 255, 0.46));
