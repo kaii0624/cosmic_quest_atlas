@@ -1696,6 +1696,7 @@ Object.assign(STORIES, PLANET_STORIES, ADDITIONAL_STORIES);
 
 function makeCatalogObservationStory(target) {
   const pattern = `${target.id}Observed`;
+  const enemySprites = getCatalogEnemySprites(target, pattern);
   const lines = target.lines ?? [
     `${target.title}をただの名前で終わらせるな。観測された事実から正体を読め。`,
     target.fact,
@@ -1712,11 +1713,8 @@ function makeCatalogObservationStory(target) {
     lead: target.fact,
     mechanic: pattern,
     clearAt: lines.length,
-    portrait: target.enemyImage,
-    enemy: {
-      normal: target.enemyImage,
-      [pattern]: target.enemyImage
-    },
+    portrait: enemySprites.normal,
+    enemy: enemySprites,
     status: {
       rows: [
         { icon: "✦", label: "階級", value: target.rank ?? "観測" },
@@ -1746,6 +1744,25 @@ function makeCatalogObservationStory(target) {
       pattern: index % 2 === 0 ? "normal" : pattern
     }))
   };
+}
+
+function getCatalogEnemySprites(target, pattern) {
+  const normal = target.enemyNormalImage
+    ?? deriveCatalogCharacterVariant(target.enemyImage, "normal");
+  const phenomenon = target.enemyPhenomenonImage
+    ?? deriveCatalogCharacterVariant(target.enemyImage, "phenomenon");
+
+  return {
+    normal,
+    [pattern]: phenomenon
+  };
+}
+
+function deriveCatalogCharacterVariant(src, variant) {
+  if (!src || !src.startsWith("./assets/character-") || /-(normal|phenomenon)\.png$/.test(src)) {
+    return src;
+  }
+  return src.replace(/\.png$/, `-${variant}.png`);
 }
 
 // セリフ未設定の追加天体に、既存の敵セリフと同じ一人称4行の語り口を与える。
@@ -2012,6 +2029,10 @@ const COSMIC_OBSERVATION_TARGETS = [
   { id: "regulus", storyId: "catalogRegulus", title: "レグルス", rank: "C", scrollTitle: "レグルスと黄道", lesson: "黄道近くの恒星を惑星運動の目印にする", fact: "黄道の近くに位置し、月や惑星が接近・通過する様子が観測される。", meaning: "恒星を背景として惑星の位置と黄道上の運動を測る目印になった。", shortFact: "黄道近く", shortMeaning: "位置測定", asset: "./assets/map-marker-regulus.png", enemyImage: "./assets/character-regulus-ecliptic-marker.png", obsImage: "./assets/obs-regulus-ecliptic-marker.png", meter: 63 }
 ].map((target) => ({
   ...target,
+  enemySourceImage: target.enemyImage,
+  enemyNormalImage: target.enemyNormalImage ?? deriveCatalogCharacterVariant(target.enemyImage, "normal"),
+  enemyPhenomenonImage: target.enemyPhenomenonImage ?? deriveCatalogCharacterVariant(target.enemyImage, "phenomenon"),
+  enemyImage: target.enemyNormalImage ?? deriveCatalogCharacterVariant(target.enemyImage, "normal"),
   lines: target.lines ?? CATALOG_OBSERVATION_LINES[target.id],
   scrollId: `catalog-${target.id}-scroll`,
   period: target.period ?? `${target.rank ?? "観測"}級カタログ`,
