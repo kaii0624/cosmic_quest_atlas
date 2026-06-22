@@ -8302,7 +8302,6 @@ button {
 
 /* 観測パネルに「観測する」ボタンを付けたぶん、引き上げ量を打ち消して重なりを防ぐ */
 .home-selection-panel.observe-detail-panel .home-selection-actions {
-  grid-template-columns: repeat(2, minmax(0, 1fr));
   transform: none;
   margin-top: clamp(3px, 0.8vw, 7px);
 }

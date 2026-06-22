@@ -1748,6 +1748,221 @@ function makeCatalogObservationStory(target) {
   };
 }
 
+// セリフ未設定の追加天体に、既存の敵セリフと同じ一人称4行の語り口を与える。
+// id をキーに COSMIC_OBSERVATION_TARGETS の .map で合流させる（target.lines があればそちらを優先）。
+const CATALOG_OBSERVATION_LINES = {
+  "large-scale-structure": [
+    "私は銀河ひとつぶを光の点に変える、宇宙そのものの編み目だ。",
+    "銀河はばらまかれてなどいない。フィラメントと壁が、巨大な空洞を取り囲む。",
+    "この網の目は偶然ではない。初期宇宙のわずかな密度ゆらぎが、重力で育った跡だ。",
+    "銀河ひとつでなく、その並びを読め。宇宙の大規模構造がそこに浮かび上がる。"
+  ],
+  "bullet-cluster": [
+    "私は二つの銀河団が正面衝突し、すれ違っていった跡だ。",
+    "光るガスは中央でせめぎ合う。だが重さの中心は、そこにはない。",
+    "重力レンズが描く質量は、ガスと分かれて先へ抜けていった。見えない物質が走った証だ。",
+    "光と重さのずれを読め。そこにダークマターの足あとが残っている。"
+  ],
+  "coma-cluster": [
+    "私はかみのけ座にひしめく、無数の銀河の大集団だ。",
+    "見えている星とガスだけでは、私の銀河はとうに飛び散っているはずだ。",
+    "それでも逃げないのは、見えない質量が束ねているから。ツビッキーはそれを見抜いた。",
+    "速すぎる運動を読め。観測にかからぬ質量の存在が、そこから立ち上がる。"
+  ],
+  "milky-way-galaxy": [
+    "私はおまえたちが棲みつく、星々の大河そのものだ。",
+    "夜空を横切るあの帯は雲ではない。無数の恒星が円盤に連なった姿だ。",
+    "平たい円盤、中央の膨らみ、それを包むハロー。星とガスの運動が三層を描く。",
+    "内側から銀河を読め。天の川の構造が、星の流れの中に見えてくる。"
+  ],
+  "spiral-galaxy": [
+    "私は腕を大きく広げて回る、渦巻く星の島だ。",
+    "外縁の星々は、見える物質の重さだけでは、これほど速くは回れない。",
+    "それでも振り落とされぬのは、銀河を包む見えないハローが引きとめているからだ。",
+    "回転曲線を読め。落ちない速さこそが、ダークマターを指し示す。"
+  ],
+  "distant-galaxy": [
+    "私ははるか彼方から、古い光をおまえへ届ける銀河だ。",
+    "私の光は赤くずれている。遠ざかるぶんだけ、波長が引き延ばされたのだ。",
+    "遠い銀河ほど、その赤方偏移は大きい。距離と後退が手を取り合っている。",
+    "スペクトルのずれを読め。宇宙が膨らんでいる事実が、そこから現れる。"
+  ],
+  "sirius-b": [
+    "私は青き主星シリウスに寄り添う、小さく白い亡霊だ。",
+    "地球ほどの体に、太陽ほどの重さを詰め込んだ。ひとさじで何トンにもなる。",
+    "ふつうの物質ではこうは潰れない。電子の縮退する力が、私を支えている。",
+    "小ささと重さの矛盾を読め。白色矮星という、恒星の終わりの姿が見える。"
+  ],
+  "antares": [
+    "私はさそりの心臓で赤く燃える、老いて巨大な星だ。",
+    "赤いのは衰えではない。膨れあがって表面が冷え、低温の赤い光を放つのだ。",
+    "太陽の座に私を置けば、火星の軌道さえ飲み込む。これが赤色超巨星の大きさだ。",
+    "赤く巨大なわが姿を読め。大質量星が晩年にたどる道が見えてくる。"
+  ],
+  "aldebaran": [
+    "私はおうしの目で赤く光る、ひとつの巨星だ。",
+    "もう中心で水素を燃やしてはいない。主系列を終え、外層が膨らんだ姿だ。",
+    "ふくらんで冷えた表面が、橙赤色の光を放つ。これが巨星への階段だ。",
+    "膨らんだわが身を読め。太陽もいつか歩む、恒星進化の先がそこにある。"
+  ],
+  "capella": [
+    "私は一つの星に見えて、その実は寄り添う巨星の連星だ。",
+    "ぎょしゃ座に光る一点。だが中身は、互いを回り合う二つの進化した星だ。",
+    "その軌道を測れば、それぞれの星の質量が秤にかかる。",
+    "連星の踊りを読め。巨星の重さと進化が、回る軌道の中で明かされる。"
+  ],
+  "procyon": [
+    "私はこいぬ座に光る主星。だが、ひとりではない。",
+    "私の位置はかすかに揺れる。見えない相棒が、重力で引いているのだ。",
+    "やがてその伴星は、暗く小さな白色矮星として正体を現した。",
+    "主星の揺れを読め。見えない伴星の存在が、その運動から浮かび上がる。"
+  ],
+  "pollux": [
+    "私はふたご座の片割れに座す、橙色の巨星だ。",
+    "太陽に近い重さの星でも、主系列を終えれば、こうして膨れあがる。",
+    "外層を広げ、表面を冷やし、橙の光をまとう。これが老いの色だ。",
+    "橙の巨星を読め。太陽ほどの星がたどる、主系列の後がそこに見える。"
+  ],
+  "altair": [
+    "私はわし座で速く回りすぎる、せっかちな星だ。",
+    "あまりに速く自転するため、私は真ん丸ではいられない。赤道がふくらんでいる。",
+    "そのつぶれた姿は直接とらえられた。極と赤道では、表面の温度さえ違う。",
+    "扁平なわが形を読め。自転が星のかたちを変える事実が、そこに見える。"
+  ],
+  "delta-cephei": [
+    "私はケフェウス座で規則正しく明滅する、時を刻む星だ。",
+    "気まぐれに光るのではない。一定の周期で膨らみ縮み、明るさを変えている。",
+    "そして周期の長い私ほど、本当は明るい。明滅の速さが、真の光度を告げる。",
+    "私の周期を読め。見かけの暗さと合わせれば、宇宙の距離が測れる。"
+  ],
+  "polaris-cepheid": [
+    "私は北の空に静止して見える、特別な星だ。",
+    "ただ動かぬだけではない。私は一定の周期で明るさを変えるケフェイドでもある。",
+    "天の北極の目印でありながら、近いがゆえに距離の物差しを較正できる。",
+    "私の二つの顔を読め。方位の基準が、宇宙の距離尺度をも支えている。"
+  ],
+  "rr-lyrae": [
+    "私はこと座で短く速く明滅する、古き世界の変光星だ。",
+    "同じ型の星は、みなほぼ等しい明るさで光る。そこに私の使いどころがある。",
+    "ならば見かけの暗さは、距離そのもの。球状星団の奥行きさえ測れる。",
+    "短い明滅を読め。古い星の集団までの距離が、そこから割り出せる。"
+  ],
+  "barnards-star": [
+    "私は背景の星々を置き去りにして、夜空を駆ける逃げ足の星だ。",
+    "星は天に貼りついてなどいない。見よ、私は年ごとに位置をずらしていく。",
+    "この大きな固有運動こそ、私が近くにいて、銀河の中を走っている証だ。",
+    "私の動きを読め。恒星もまた銀河を旅するという事実が、そこに見えてくる。"
+  ],
+  "beta-pictoris": [
+    "私はがか座で生まれて間もない、若き星だ。",
+    "私のまわりには塵の円盤が広がり、その中で惑星が産声をあげている。",
+    "その巨大惑星は、まばゆい私の光をかいくぐって直接とらえられた。",
+    "円盤と若い惑星を読め。惑星が生まれる現場が、ひとつの系で見えてくる。"
+  ],
+  "tw-hydrae": [
+    "私はうみへび座で、惑星のゆりかごを広げる若い星だ。",
+    "私を囲む原始惑星系円盤には、幾重ものリングと隙間が刻まれている。",
+    "その溝は、育ちつつある惑星が塵をかき集めてできた跡かもしれない。",
+    "円盤の縞模様を読め。惑星がかたちづくられる過程が、そこに現れる。"
+  ],
+  "fomalhaut": [
+    "私はみなみのうお座で、塵の指輪をはめた星だ。",
+    "そのリングは、ただの円ではない。縁が鋭く、わずかに片寄っている。",
+    "ゆがんだ形は、見えない天体の重力が塵を整えている合図だ。",
+    "偏ったリングを読め。姿を見せぬ惑星の引力が、そこから推し量れる。"
+  ],
+  "51-pegasi": [
+    "私はペガスス座にある、太陽によく似たひとつの星だ。",
+    "私のスペクトル線は、周期的に前へ後ろへ揺れる。何かが私を振り回している。",
+    "その正体は、すぐ間近を駆けめぐる巨大な惑星。視線速度がそれを暴いた。",
+    "光のゆらぎを読め。太陽型の星をめぐる、最初の系外惑星がそこにいる。"
+  ],
+  "wasp-39": [
+    "私の前を、ひとつの惑星が決まった周期で横切っていく。",
+    "横切る一瞬、惑星の大気をかすめた光だけが、わずかに色を変える。",
+    "その光を分ければ、二酸化炭素まで読み取れる。遠い惑星の空気の中身だ。",
+    "通過の光を分けて読め。系外惑星の大気の化学が、そこから見えてくる。"
+  ],
+  "lhs-1140": [
+    "私は近くに灯る赤く小さな星。そのまわりを、硬い惑星が回っている。",
+    "ガスの塊ではない。岩石でできた、足を下ろせそうな世界だ。",
+    "近くて観測しやすいその惑星は、大気と水の手がかりを探す格好の的になる。",
+    "近傍の岩石惑星を読め。生命を宿せる環境かどうか、観測が問いかける。"
+  ],
+  "epsilon-eridani": [
+    "私はエリダヌス座の、太陽系のすぐ隣に灯る若い星だ。",
+    "私のまわりには惑星があり、それを取り巻く塵の帯が幾重にも広がる。",
+    "近いからこそ、惑星と円盤の構造を細かく見比べられる。",
+    "隣り合う惑星系を読め。私たちの太陽系と引き比べる手本が、そこにある。"
+  ],
+  "enceladus": [
+    "私は氷に覆われた、土星の小さな衛星だ。",
+    "凍りついて死んでなどいない。南極の裂け目から、水しぶきを噴き上げている。",
+    "その噴煙には水と塩と有機物。氷の下の海が、宇宙へ中身を吹き出しているのだ。",
+    "氷の噴流を読め。地下海の素材を、外から直に確かめられる場所がここだ。"
+  ],
+  "europa": [
+    "私はなめらかな氷の殻をまとう、木星の衛星だ。",
+    "表面は若く、ひび割れ、磁場を乱す。そのすべてが殻の下の何かを指している。",
+    "それは塩の海。凍った地殻の下に、液体の水を隠している。",
+    "氷の下を読め。生命のすみかが、惑星の外、氷衛星の内側にも広がっている。"
+  ],
+  "titan": [
+    "私は厚いもやに包まれた、土星でいちばん大きな衛星だ。",
+    "私の大気は地球より濃い。だが降りそそぐのは雨ではなく、液体のメタンだ。",
+    "メタンの湖と川が大地を刻む。極寒の地で、地球とは別の化学が進む。",
+    "メタンの地形を読め。異なる環境の有機化学が、そこで静かに動いている。"
+  ],
+  "ganymede": [
+    "私は太陽系で最も大きな衛星、木星をめぐる氷の巨体だ。",
+    "衛星でありながら、私は自前の磁場をまとう。これは私だけの特権だ。",
+    "その磁場と内部の手がかりは、氷の奥に隠れた海の存在さえほのめかす。",
+    "固有の磁場を読め。大きな氷衛星の内側の構造が、そこから見えてくる。"
+  ],
+  "ryugu": [
+    "私は地球のそばを通り過ぎる、炭のように黒い小惑星だ。",
+    "探査機が私のかけらをすくい取り、はるばる地球へ持ち帰った。",
+    "その試料には、水を含む鉱物と、さまざまな有機物が眠っていた。",
+    "持ち帰った粒を読め。生命の材料が太陽系の初めから在った証が、そこにある。"
+  ],
+  "bennu": [
+    "私は宇宙をさまよう、黒い炭素の小惑星だ。",
+    "私からも試料が回収された。容器の中身は、太陽系の生まれたての記憶だ。",
+    "炭素の物質、水に関わる鉱物。原始の素材が、そっくり残されていた。",
+    "私のかけらを読め。小惑星が幼い地球へ水と有機物を運んだ筋書きが見える。"
+  ],
+  "comet": [
+    "私は太陽系の外れから訪れた、汚れた雪の玉だ。",
+    "太陽へ近づけば、凍った身が溶けて気化し、ガスと塵を噴き出す。",
+    "それが長い尾を引く。尾は、太古に閉じ込めた水と有機分子の証だ。",
+    "尾のなびきを読め。太陽系初期の物質と、地球の水の起源がそこにある。"
+  ],
+  "halleys-comet": [
+    "私はおよそ七十六年ごとに、決まって空へ帰ってくる旅人だ。",
+    "ばらばらに現れる客ではない。記録に残る彗星は、すべて同じこの私だった。",
+    "私の帰りは、軌道から計算で言い当てられた。彗星も力学に従う証だ。",
+    "私の周期を読め。天体の道筋を未来まで予言する科学が、そこに立つ。"
+  ],
+  "io": [
+    "私は木星に最も近く、火を噴き続ける衛星だ。",
+    "冷えて固まった死の星ではない。表面では無数の火山が、硫黄と溶岩を吹き上げる。",
+    "燃料は太陽ではない。木星の潮汐力に引かれ揉まれて、内側が熱くなるのだ。",
+    "私の火山を読め。潮汐の熱が衛星を生かしている事実が、そこに見える。"
+  ],
+  "north-star": [
+    "私は天の北極に座する、夜空の不動の柱だ。",
+    "ほかの星がぐるりと巡る中、私だけは一晩じゅうほぼ同じ場所に居続ける。",
+    "だから旅人は私を見て北を知り、船は私を頼って海を渡った。",
+    "動かぬ私を読め。方位と日周運動の基準が、そこに据えられている。"
+  ],
+  "regulus": [
+    "私はしし座の胸に光り、黄道のすぐそばに立つ星だ。",
+    "私の近くは、月や惑星が行き交う通り道。彼らは私をかすめて進んでいく。",
+    "動かぬ私を背景にすれば、さまよう惑星の位置がはっきりと測れる。",
+    "黄道のほとりを読め。私を目印に、惑星の歩みを追いかけられる。"
+  ]
+};
+
 const COSMIC_OBSERVATION_TARGETS = [
   { id: "s2-star", storyId: "catalogS2Star", title: "S2星", rank: "A", scrollTitle: "S2星の高速公転", lesson: "銀河中心の重力を星の軌道で読む", fact: "天の川中心ブラックホールの周りを高速で公転する恒星として観測されている。", meaning: "S2星の軌道は、いて座A*の強い重力と中心質量を調べる直接的な手がかりになる。", shortFact: "高速公転", shortMeaning: "中心質量", asset: "./assets/map-marker-s2-star.png", enemyImage: "./assets/character-s2-star-fast-orbit.png", obsImage: "./assets/obs-s2-star-fast-orbit.png", lines: ["私は銀河中心をかすめる高速の星。", "私の軌道は、見えない重力源の質量を白日の下に出す。", "近点では速度が跳ね上がる。強い重力を運動で読め。", "天の川中心のブラックホールは、星の軌道で観測できる。"] },
   { id: "sgr-a-star", storyId: "catalogSgrAStar", title: "いて座A*", rank: "SS", scrollTitle: "いて座A*の中心質量", lesson: "天の川中心に超巨大ブラックホールがある", fact: "天の川銀河中心にある超巨大ブラックホールとして観測されている。", meaning: "周囲の恒星軌道や電波観測から、銀河中心に極めて大きな質量が集中していることが分かった。", shortFact: "銀河中心BH", shortMeaning: "恒星軌道", asset: "./assets/map-marker-sgr-a-star.png", enemyImage: "./assets/character-sgr-a-star-galactic-center-black-hole-v3.png", obsImage: "./assets/obs-sgr-a-star-galactic-center-black-hole.png", lines: ["私は天の川の中心に沈む重力の核。", "まわりの星は、私の見えない質量をなぞって走る。", "光らないから無い、ではない。軌道が重力を語る。", "銀河中心の黒い王座を観測で見抜け。"] },
@@ -1797,6 +2012,7 @@ const COSMIC_OBSERVATION_TARGETS = [
   { id: "regulus", storyId: "catalogRegulus", title: "レグルス", rank: "C", scrollTitle: "レグルスと黄道", lesson: "黄道近くの恒星を惑星運動の目印にする", fact: "黄道の近くに位置し、月や惑星が接近・通過する様子が観測される。", meaning: "恒星を背景として惑星の位置と黄道上の運動を測る目印になった。", shortFact: "黄道近く", shortMeaning: "位置測定", asset: "./assets/map-marker-regulus.png", enemyImage: "./assets/character-regulus-ecliptic-marker.png", obsImage: "./assets/obs-regulus-ecliptic-marker.png", meter: 63 }
 ].map((target) => ({
   ...target,
+  lines: target.lines ?? CATALOG_OBSERVATION_LINES[target.id],
   scrollId: `catalog-${target.id}-scroll`,
   period: target.period ?? `${target.rank ?? "観測"}級カタログ`,
   kingdomId: target.kingdomId ?? "deep"
@@ -6053,7 +6269,7 @@ QUESTS.push(
     number: 5,
     title: "天動説の星図",
     requester: "古代天球師",
-    requesterImage: "./assets/quest-requester-copernicus.png",
+    requesterImage: "./assets/quest-requester-ptolemy.png",
     mainImage: "./assets/quest-main-heliocentric.png",
     objective: "古代の星図と惑星の迷いを整理する",
     conversation: "星座体系と惑星の逆行を組み合わせ、古代の宇宙観がどこで迷ったかを見つけよう。",
@@ -6101,7 +6317,7 @@ QUESTS.push(
     number: 6,
     title: "望遠鏡観測",
     requester: "ガリレオ",
-    requesterImage: "./assets/quest-requester-copernicus.png",
+    requesterImage: "./assets/quest-requester-galileo.png",
     mainImage: "./assets/battle-bg-planetarium.png",
     objective: "肉眼では見えない証拠を集める",
     conversation: "金星の形と木星の小さな点を選び、望遠鏡が宇宙観を変えた理由を示そう。",
@@ -6161,7 +6377,7 @@ QUESTS.push(
     number: 7,
     title: "一般相対論",
     requester: "アインシュタイン",
-    requesterImage: "./assets/quest-requester-newton.png",
+    requesterImage: "./assets/quest-requester-albert-einstein.png",
     mainImage: "./assets/battle-bg-planetarium.png",
     objective: "重力を時空の曲がりとして読み直す",
     conversation: "万有引力、太陽、惑星軌道の証拠を重ね、重力理解の更新へ進もう。",
@@ -6232,7 +6448,7 @@ QUESTS.push(
     number: 8,
     title: "光の曲がり",
     requester: "日食観測隊",
-    requesterImage: "./assets/quest-requester-newton.png",
+    requesterImage: "./assets/quest-requester-arthur-eddington.png",
     mainImage: "./assets/battle-bg-planetarium.png",
     objective: "太陽近傍の恒星光のずれを読む",
     conversation: "相対論と太陽の証拠を選び、重力が光の道を曲げることを示そう。",
@@ -6350,7 +6566,7 @@ QUESTS.push(
     number: 10,
     title: "宇宙論の神殿",
     requester: "宇宙論者",
-    requesterImage: "./assets/quest-requester-hubble.png",
+    requesterImage: "./assets/quest-requester-georges-lemaitre.png",
     mainImage: "./assets/deep-cosmos-gate-map.png",
     objective: "膨張宇宙の証拠をそろえる",
     conversation: "ハッブルの法則、CMB、遠方超新星を組み合わせ、現代宇宙論の柱を作ろう。",
@@ -6409,7 +6625,7 @@ QUESTS.push(
     number: 11,
     title: "恒星進化の系譜",
     requester: "恒星図鑑師",
-    requesterImage: "./assets/quest-requester-kepler.png",
+    requesterImage: "./assets/quest-requester-annie-jump-cannon.png",
     mainImage: "./assets/battle-bg-winter.png",
     objective: "星の色、進化、最期を一本につなぐ",
     conversation: "色温度、赤色超巨星、白色矮星、元素合成を組み合わせ、恒星進化を整理しよう。",
@@ -6492,7 +6708,7 @@ QUESTS.push(
     number: 12,
     title: "新しい宇宙の見方",
     requester: "重力波観測隊",
-    requesterImage: "./assets/quest-requester-newton.png",
+    requesterImage: "./assets/quest-requester-jocelyn-bell-burnell.png",
     mainImage: "./assets/deep-cosmos-gate-map.png",
     objective: "光以外の観測手段を読む",
     conversation: "パルサー、X線連星、重力波を組み合わせ、光だけではない天文学へ進もう。",
@@ -7177,9 +7393,6 @@ function renderObserveDetailPanel(item) {
         <div class="home-selection-actions">
           <button class="home-enter-button" type="button" data-observe-start="${item.storyId}">
             観測する
-          </button>
-          <button class="home-enter-button secondary" type="button" data-battle-start="${item.storyId}">
-            バトル
           </button>
         </div>` : ""}
       </div>
@@ -7985,14 +8198,6 @@ document.addEventListener(
       return;
     }
 
-    const battleStartButton = target?.closest("[data-battle-start]");
-    if (battleStartButton) {
-      event.preventDefault();
-      event.stopPropagation();
-      openStory(battleStartButton.dataset.battleStart);
-      return;
-    }
-
     const questAdvanceFactButton = target?.closest("[data-quest-advance]");
     if (questAdvanceFactButton) {
       event.preventDefault();
@@ -8033,12 +8238,6 @@ guidePanel.addEventListener("click", (event) => {
   const observeStartButton = target?.closest("[data-observe-start]");
   if (observeStartButton) {
     openStory(observeStartButton.dataset.observeStart);
-    return;
-  }
-
-  const battleStartButton = target?.closest("[data-battle-start]");
-  if (battleStartButton) {
-    openStory(battleStartButton.dataset.battleStart);
     return;
   }
 
