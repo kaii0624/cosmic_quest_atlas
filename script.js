@@ -2187,6 +2187,22 @@ function saveClaimedRewards() {
   localStorage.setItem(REWARD_STORAGE_KEY, JSON.stringify([...claimedRewards]));
 }
 
+const QUIZ_PROGRESS_STORAGE_KEY = "cosmicQuest.quizProgress";
+
+function loadQuizProgress() {
+  try {
+    return JSON.parse(localStorage.getItem(QUIZ_PROGRESS_STORAGE_KEY) ?? "{}");
+  } catch {
+    return {};
+  }
+}
+
+const quizProgress = loadQuizProgress();
+
+function saveQuizProgress() {
+  localStorage.setItem(QUIZ_PROGRESS_STORAGE_KEY, JSON.stringify(quizProgress));
+}
+
 const QUEST_PROGRESS_KEY = "cosmicQuest.questHandedOver";
 
 function loadQuestHandedOver() {
@@ -2301,10 +2317,63 @@ const HOME_TABS = [
   { id: "observe", label: "天体を見る" },
   { id: "quests", label: "クエスト" },
   { id: "library", label: "図書館" },
-  { id: "settings", label: "設定" }
+  { id: "settings", label: "ユーザー" }
 ];
 
 const APP_SCREEN_MODES = new Set(["observe", "quests", "library", "settings"]);
+
+const OBSERVER_PROFILE_IMAGE = "./assets/observer-astronomer-front-v1.png";
+
+const OBSERVATION_TOOLS = [
+  {
+    id: "telescope",
+    title: "望遠鏡",
+    image: "./assets/observation-tool-telescope-v1.png",
+    rewardIds: []
+  },
+  {
+    id: "astrometry",
+    title: "測角器",
+    image: "./assets/observation-tool-astrometry-v1.png",
+    rewardIds: ["cygnus-parallax-scroll", "proper-motion-scroll"]
+  },
+  {
+    id: "spectroscope",
+    title: "分光器",
+    image: "./assets/observation-tool-spectroscope-v1.png",
+    rewardIds: ["spica-spectrum-scroll", "helium-solar-spectrum-scroll", "spectrum-redshift-scroll"]
+  },
+  {
+    id: "photometer",
+    title: "測光器",
+    image: "./assets/observation-tool-ccd-photometer-v1.png",
+    rewardIds: ["algol-eclipse-scroll", "catalog-hd-209458b-scroll", "venus-phases-scroll"]
+  },
+  {
+    id: "radio",
+    title: "電波アンテナ",
+    image: "./assets/observation-tool-radio-antenna-v1.png",
+    rewardIds: ["pulsar-scroll", "cmb-scroll"]
+  },
+  {
+    id: "infrared",
+    title: "赤外線観測器",
+    image: "./assets/observation-tool-infrared-v1.png",
+    rewardIds: ["catalog-beta-pictoris-scroll", "catalog-tw-hydrae-scroll", "catalog-fomalhaut-scroll"]
+  },
+  {
+    id: "xray",
+    title: "X線検出器",
+    image: "./assets/observation-tool-xray-detector-v1.png",
+    rewardIds: ["xray-blackhole-scroll"]
+  },
+  {
+    id: "spacetime",
+    title: "時空検出器",
+    image: "./assets/observation-tool-spacetime-detector-v1.png",
+    rewardIds: ["gravitational-waves-scroll"]
+  }
+];
 
 const OBSERVE_COPY = {
   mizar: {
@@ -2937,9 +3006,9 @@ const CATALOG_LESSON_CONTENT = {
     note: { heading: "軌道は天秤になる", text: "惑星が太陽を回るのと同じで、星が何かを回るなら、その公転のしかたから中心の重さがわかる。S2星の極端な高速公転は、中心にとてつもない質量＝超巨大ブラックホールがある証拠になった。" },
     points: ["S2星は天の川中心のブラックホールを高速で公転する。", "見えない天体でも、まわりの星の軌道から質量を測れる。", "近づくほど速くなるのは、強い重力で振り回されるから。"],
     quiz: [
-      { q: "S2星の高速公転からわかることはどれか。", choices: ["ア　銀河中心にある巨大な質量", "イ　星の表面温度", "ウ　星座の神話", "エ　地球の自転速度"], answer: "正解：ア　銀河中心にある巨大な質量", explain: "中心を回る速さから、見えない中心天体（超巨大ブラックホール）の質量がわかる。" },
-      { q: "S2星が中心に最も近づいたとき、速さはどうなるか。", choices: ["ア　大きく速くなる", "イ　止まる", "ウ　変わらない", "エ　光らなくなる"], answer: "正解：ア　大きく速くなる", explain: "近点では強い重力で振り回され、公転速度が跳ね上がる。" },
-      { q: "見えない天体の質量を測る手がかりはどれか。", choices: ["ア　まわりを回る星の軌道", "イ　星座の名前", "ウ　地球の自転", "エ　星の色だけ"], answer: "正解：ア　まわりを回る星の軌道", explain: "周回する天体の軌道（速さ）から、中心の質量が求められる。" }
+      { q: "S2星の高速公転からわかることはどれか。", choices: ["ア　銀河中心にある巨大な質量", "イ　星の表面温度", "ウ　星座の神話", "エ　地球の自転速度"], answer: "正解：ア　銀河中心にある巨大な質量", explain: "星の回り方は「重さの体重計」。速く回るほど中心は重い＝超巨大ブラックホール。" },
+      { q: "S2星が中心に最も近づいたとき、速さはどうなるか。", choices: ["ア　大きく速くなる", "イ　止まる", "ウ　変わらない", "エ　光らなくなる"], answer: "正解：ア　大きく速くなる", explain: "近づくほどブン回される。ジェットコースターの底でいちばん速いのと同じ。" },
+      { q: "見えない天体の質量を測る手がかりはどれか。", choices: ["ア　まわりを回る星の軌道", "イ　星座の名前", "ウ　地球の自転", "エ　星の色だけ"], answer: "正解：ア　まわりを回る星の軌道", explain: "見えない主役は、まわりの「踊り手（星）」の動きでわかる。軌道は重さの証言者。" }
     ]
   },
   "sgr-a-star": {
@@ -2949,9 +3018,9 @@ const CATALOG_LESSON_CONTENT = {
     note: { heading: "見えない＝無い、ではない", text: "光らないからといって何もないわけではない。周囲の恒星の軌道や電波の観測から、ごく狭い領域に太陽の約400万倍もの質量が詰まっていると分かった。これが超巨大ブラックホールだ。" },
     points: ["いて座A*は天の川銀河の中心の超巨大ブラックホール。", "本体は光らないが、まわりの星の軌道で存在がわかる。", "狭い領域に莫大な質量＝ブラックホールの決め手。"],
     quiz: [
-      { q: "いて座A*とは何か。", choices: ["ア　天の川銀河中心の超巨大ブラックホール", "イ　太陽に近い惑星", "ウ　彗星の一種", "エ　地球の衛星"], answer: "正解：ア　天の川銀河中心の超巨大ブラックホール", explain: "周囲の星の高速運動から、銀河中心に巨大質量が集中していることが分かった。" },
-      { q: "いて座A*の存在はどうやって確かめられたか。", choices: ["ア　周囲の星の高速な軌道運動から", "イ　彗星の尾から", "ウ　北極星の位置から", "エ　月の満ち欠けから"], answer: "正解：ア　周囲の星の高速な軌道運動から", explain: "見えない中心を回る星々の軌道から、巨大質量の集中が分かった。" },
-      { q: "「光らないから何もない」という考えは正しいか。", choices: ["ア　正しくない（軌道が質量を語る）", "イ　正しい", "ウ　星座でだけ決まる", "エ　温度で決まる"], answer: "正解：ア　正しくない（軌道が質量を語る）", explain: "光を出さなくても、周囲の運動から質量＝存在が分かる。" }
+      { q: "いて座A*とは何か。", choices: ["ア　天の川銀河中心の超巨大ブラックホール", "イ　太陽に近い惑星", "ウ　彗星の一種", "エ　地球の衛星"], answer: "正解：ア　天の川銀河中心の超巨大ブラックホール", explain: "天の川のド真ん中に座る、光らない王様。それが超巨大ブラックホール。" },
+      { q: "いて座A*の存在はどうやって確かめられたか。", choices: ["ア　周囲の星の高速な軌道運動から", "イ　彗星の尾から", "ウ　北極星の位置から", "エ　月の満ち欠けから"], answer: "正解：ア　周囲の星の高速な軌道運動から", explain: "本体は見えなくても、まわりの星が黒い中心をなぞって走る。星が証人だ。" },
+      { q: "「光らないから何もない」という考えは正しいか。", choices: ["ア　正しくない（軌道が質量を語る）", "イ　正しい", "ウ　星座でだけ決まる", "エ　温度で決まる"], answer: "正解：ア　正しくない（軌道が質量を語る）", explain: "「見えない＝無い」はウソ。動きが重さを語る。これがブラックホール探しの極意。" }
     ]
   },
   "m87-star": {
@@ -2961,9 +3030,9 @@ const CATALOG_LESSON_CONTENT = {
     note: { heading: "地球を一つの望遠鏡にする", text: "世界中の電波望遠鏡をつなげて、地球サイズの解像度を作り出した（EHT）。光らない中心も、周囲の明るいリングが縁取ることで、暗い影として姿を現す。" },
     points: ["M87*は初めて直接撮像されたブラックホールの影。", "明るいリングの中の暗い影が、ブラックホールの輪郭。", "世界中の望遠鏡を結ぶと地球サイズの目になる。"],
     quiz: [
-      { q: "M87*の観測で初めて画像化されたものはどれか。", choices: ["ア　ブラックホールの影", "イ　太陽の黒点", "ウ　月のクレーター", "エ　彗星の尾"], answer: "正解：ア　ブラックホールの影", explain: "EHTが、明るいリングに縁取られた暗い影（シャドウ）を直接撮像した。" },
-      { q: "M87*の影を撮像した手法はどれか。", choices: ["ア　世界中の電波望遠鏡を結ぶEHT", "イ　肉眼での観察", "ウ　彗星の通過", "エ　地震計"], answer: "正解：ア　世界中の電波望遠鏡を結ぶEHT", explain: "電波望遠鏡をつなぎ、地球サイズの解像度で影をとらえた（EHT）。" },
-      { q: "光らないブラックホールの影が見えるのはなぜか。", choices: ["ア　周囲の明るいリングが暗い中心を縁取るから", "イ　本体が光るから", "ウ　地球に近いから", "エ　太陽が照らすから"], answer: "正解：ア　周囲の明るいリングが暗い中心を縁取るから", explain: "光らない中心も、周囲の光るガスに縁取られて影として見える。" }
+      { q: "M87*の観測で初めて画像化されたものはどれか。", choices: ["ア　ブラックホールの影", "イ　太陽の黒点", "ウ　月のクレーター", "エ　彗星の尾"], answer: "正解：ア　ブラックホールの影", explain: "人類が初めて撮った「黒の肖像」。光の輪の中の暗い丸＝ブラックホールの影。" },
+      { q: "M87*の影を撮像した手法はどれか。", choices: ["ア　世界中の電波望遠鏡を結ぶEHT", "イ　肉眼での観察", "ウ　彗星の通過", "エ　地震計"], answer: "正解：ア　世界中の電波望遠鏡を結ぶEHT", explain: "1台じゃ無理。世界中の望遠鏡を合体させ、地球サイズの巨大な目に（EHT）。" },
+      { q: "光らないブラックホールの影が見えるのはなぜか。", choices: ["ア　周囲の明るいリングが暗い中心を縁取るから", "イ　本体が光るから", "ウ　地球に近いから", "エ　太陽が照らすから"], answer: "正解：ア　周囲の明るいリングが暗い中心を縁取るから", explain: "本体は真っ黒でも、周りの光が額縁になる。だから影として浮かび上がる。" }
     ]
   },
   "sn-1987a": {
@@ -2973,9 +3042,9 @@ const CATALOG_LESSON_CONTENT = {
     note: { heading: "爆発は光だけじゃない", text: "重い星が一生の最後に中心からつぶれる（重力崩壊）と、大量のニュートリノが放たれる。SN 1987Aではそれが実際に捕まり、超新星のしくみが観測で裏づけられた。" },
     points: ["SN 1987Aは大マゼラン雲で観測された近傍の超新星。", "光に加えてニュートリノが検出された。", "重い星の中心崩壊というしくみを観測で確認した。"],
     quiz: [
-      { q: "SN 1987Aで光のほかに検出されたものはどれか。", choices: ["ア　ニュートリノ", "イ　電波だけ", "ウ　なにも検出されない", "エ　太陽風"], answer: "正解：ア　ニュートリノ", explain: "中心崩壊で放たれたニュートリノが地球で検出され、超新星のしくみを裏づけた。" },
-      { q: "SN 1987Aはどこで観測されたか。", choices: ["ア　大マゼラン雲", "イ　太陽系内", "ウ　月", "エ　地球の大気中"], answer: "正解：ア　大マゼラン雲", explain: "近くの大マゼラン雲で爆発し、近傍超新星として観測された。" },
-      { q: "ニュートリノの検出は何を裏づけたか。", choices: ["ア　重い星の中心崩壊", "イ　惑星の誕生", "ウ　彗星の回帰", "エ　銀河の合体"], answer: "正解：ア　重い星の中心崩壊", explain: "中心崩壊で放たれるニュートリノが捕まり、超新星のしくみを裏づけた。" }
+      { q: "SN 1987Aで光のほかに検出されたものはどれか。", choices: ["ア　ニュートリノ", "イ　電波だけ", "ウ　なにも検出されない", "エ　太陽風"], answer: "正解：ア　ニュートリノ", explain: "光より先に、星の「芯の声」ニュートリノが到着。爆発の中身を直接のぞいた。" },
+      { q: "SN 1987Aはどこで観測されたか。", choices: ["ア　大マゼラン雲", "イ　太陽系内", "ウ　月", "エ　地球の大気中"], answer: "正解：ア　大マゼラン雲", explain: "お隣の大マゼラン雲で爆発。近かったからこそ、ここまで詳しく見えた。" },
+      { q: "ニュートリノの検出は何を裏づけたか。", choices: ["ア　重い星の中心崩壊", "イ　惑星の誕生", "ウ　彗星の回帰", "エ　銀河の合体"], answer: "正解：ア　重い星の中心崩壊", explain: "重い星は最後に中心からつぶれる。ニュートリノはその瞬間の生中継だった。" }
     ]
   },
   "type-ia-supernova": {
@@ -2985,9 +3054,9 @@ const CATALOG_LESSON_CONTENT = {
     note: { heading: "標準光源という発想", text: "「本当の明るさ」が分かっている天体（標準光源）なら、見かけの明るさとの差から距離が出せる。Ia型超新星は非常に明るく遠くまで見えるので、宇宙膨張の研究に使われた。" },
     points: ["Ia型超新星は白色矮星の爆発で、明るさがほぼ一定。", "本当の明るさが分かるので、見かけから距離が測れる（標準光源）。", "遠方まで届くため、宇宙の膨張を調べる物差しになった。"],
     quiz: [
-      { q: "Ia型超新星が距離測定に使えるのはなぜか。", choices: ["ア　本当の明るさがほぼ一定だから", "イ　いつも同じ色だから", "ウ　動かないから", "エ　音を出すから"], answer: "正解：ア　本当の明るさがほぼ一定だから", explain: "明るさがそろう標準光源なので、見かけの暗さから距離が求められる。" },
-      { q: "Ia型超新星は何の爆発か。", choices: ["ア　白色矮星", "イ　惑星", "ウ　彗星", "エ　太陽の黒点"], answer: "正解：ア　白色矮星", explain: "白色矮星の爆発で、本当の明るさがほぼそろう。" },
-      { q: "標準光源を使うと何が測れるか。", choices: ["ア　天体までの距離", "イ　星座の神話", "ウ　地球の自転速度", "エ　彗星の名前"], answer: "正解：ア　天体までの距離", explain: "本当の明るさが分かるので、見かけの暗さから距離が求められる。" }
+      { q: "Ia型超新星が距離測定に使えるのはなぜか。", choices: ["ア　本当の明るさがほぼ一定だから", "イ　いつも同じ色だから", "ウ　動かないから", "エ　音を出すから"], answer: "正解：ア　本当の明るさがほぼ一定だから", explain: "みんな同じワットの電球＝「宇宙のものさし」。暗く見えるほど遠い。" },
+      { q: "Ia型超新星は何の爆発か。", choices: ["ア　白色矮星", "イ　惑星", "ウ　彗星", "エ　太陽の黒点"], answer: "正解：ア　白色矮星", explain: "白色矮星のドカン。だから明るさがそろい、距離の基準（標準光源）に使える。" },
+      { q: "標準光源を使うと何が測れるか。", choices: ["ア　天体までの距離", "イ　星座の神話", "ウ　地球の自転速度", "エ　彗星の名前"], answer: "正解：ア　天体までの距離", explain: "本当の明るさが分かれば、暗さ＝距離。だから宇宙の果てまで測れる。" }
     ]
   },
   "proxima-b": {
@@ -2997,9 +3066,9 @@ const CATALOG_LESSON_CONTENT = {
     note: { heading: "ハビタブルゾーンとは", text: "星から近すぎず遠すぎず、表面に液体の水があり得る距離の帯のこと。暗い赤色矮星では、その帯は星のすぐ近くにくる。プロキシマbはそこにある岩石惑星候補だ。" },
     points: ["プロキシマbは最も近い恒星系にある惑星候補。", "ハビタブルゾーン＝水が液体でいられる距離の帯。", "近いので、将来の大気観測に向く有力な対象。"],
     quiz: [
-      { q: "プロキシマbが注目される理由はどれか。", choices: ["ア　最も近い恒星系のハビタブルゾーン候補だから", "イ　太陽系で最大の惑星だから", "ウ　地球の衛星だから", "エ　彗星だから"], answer: "正解：ア　最も近い恒星系のハビタブルゾーン候補だから", explain: "最も近い恒星のまわりにある岩石惑星候補で、大気や居住可能性の研究対象になる。" },
-      { q: "ハビタブルゾーンとは何か。", choices: ["ア　液体の水があり得る距離の帯", "イ　星の表面", "ウ　彗星の通り道", "エ　銀河の中心"], answer: "正解：ア　液体の水があり得る距離の帯", explain: "近すぎず遠すぎず、表面に液体の水があり得る距離の範囲。" },
-      { q: "暗い赤色矮星では、ハビタブルゾーンはどこにくるか。", choices: ["ア　星のすぐ近く", "イ　はるか遠く", "ウ　星の内部", "エ　存在しない"], answer: "正解：ア　星のすぐ近く", explain: "暗い星では、ちょうどよい温度の帯が星のすぐ近くになる。" }
+      { q: "プロキシマbが注目される理由はどれか。", choices: ["ア　最も近い恒星系のハビタブルゾーン候補だから", "イ　太陽系で最大の惑星だから", "ウ　地球の衛星だから", "エ　彗星だから"], answer: "正解：ア　最も近い恒星系のハビタブルゾーン候補だから", explain: "宇宙のお隣さん。いちばん近いから、次の観測で「水」を狙える有力株。" },
+      { q: "ハビタブルゾーンとは何か。", choices: ["ア　液体の水があり得る距離の帯", "イ　星の表面", "ウ　彗星の通り道", "エ　銀河の中心"], answer: "正解：ア　液体の水があり得る距離の帯", explain: "熱すぎず寒すぎず、水が液体でいられる「ちょうどいい帯」。生命探しの最前線。" },
+      { q: "暗い赤色矮星では、ハビタブルゾーンはどこにくるか。", choices: ["ア　星のすぐ近く", "イ　はるか遠く", "ウ　星の内部", "エ　存在しない"], answer: "正解：ア　星のすぐ近く", explain: "暗い焚き火は近づかないと暖まらない。暗い星のハビタブルゾーンは星のすぐそば。" }
     ]
   },
   "trappist-1": {
@@ -3009,9 +3078,9 @@ const CATALOG_LESSON_CONTENT = {
     note: { heading: "トランジットで惑星を数える", text: "惑星が恒星の前を通ると、星の光が少しだけ暗くなる（トランジット）。その周期と深さから、いくつの惑星がどんな軌道で回るかが分かる。" },
     points: ["TRAPPIST-1は地球サイズ惑星を多数もつ赤色矮星系。", "トランジット（恒星の減光）で惑星を見つける。", "同じ星の惑星を比べられ、大気研究の好対象。"],
     quiz: [
-      { q: "TRAPPIST-1の特徴はどれか。", choices: ["ア　地球サイズの惑星を多数もつ", "イ　惑星をひとつももたない", "ウ　太陽より大きく明るい", "エ　銀河の一種である"], answer: "正解：ア　地球サイズの惑星を多数もつ", explain: "赤色矮星のまわりに複数の小型惑星が並ぶ多惑星系として知られる。" },
-      { q: "TRAPPIST-1の惑星はどうやって見つかるか。", choices: ["ア　恒星の前を横切るトランジット", "イ　彗星の尾", "ウ　北極星との比較", "エ　地震"], answer: "正解：ア　恒星の前を横切るトランジット", explain: "惑星が星の前を通ると光が少し暗くなる（トランジット）。" },
-      { q: "TRAPPIST-1系が大気研究で有利な点はどれか。", choices: ["ア　同じ星の複数の惑星を比べられる", "イ　惑星がひとつだけ", "ウ　恒星が巨大すぎる", "エ　彗星が多い"], answer: "正解：ア　同じ星の複数の惑星を比べられる", explain: "同じ恒星まわりの複数惑星を比較でき、比較惑星学に向く。" }
+      { q: "TRAPPIST-1の特徴はどれか。", choices: ["ア　地球サイズの惑星を多数もつ", "イ　惑星をひとつももたない", "ウ　太陽より大きく明るい", "エ　銀河の一種である"], answer: "正解：ア　地球サイズの惑星を多数もつ", explain: "小さな赤い星に、地球サイズが7つ勢ぞろい。多惑星系の宝箱。" },
+      { q: "TRAPPIST-1の惑星はどうやって見つかるか。", choices: ["ア　恒星の前を横切るトランジット", "イ　彗星の尾", "ウ　北極星との比較", "エ　地震"], answer: "正解：ア　恒星の前を横切るトランジット", explain: "惑星が前を横切ると星が一瞬かげる（トランジット）。その点滅が惑星の指紋。" },
+      { q: "TRAPPIST-1系が大気研究で有利な点はどれか。", choices: ["ア　同じ星の複数の惑星を比べられる", "イ　惑星がひとつだけ", "ウ　恒星が巨大すぎる", "エ　彗星が多い"], answer: "正解：ア　同じ星の複数の惑星を比べられる", explain: "同じ親星の兄弟惑星を並べて比較。違いがそのまま研究のヒントになる。" }
     ]
   },
   "kepler-186": {
@@ -3021,9 +3090,9 @@ const CATALOG_LESSON_CONTENT = {
     note: { heading: "小さな減光が大きな発見に", text: "惑星が星の前を横切る瞬間、光がほんの少し落ちる。その小さな差をていねいに追うと、惑星の大きさや軌道がわかる。ケプラー186fは地球サイズで生命圏にあると示された。" },
     points: ["ケプラー186はハビタブルゾーンに地球サイズ惑星をもつ。", "トランジットの小さな減光から惑星を見つける。", "「地球サイズ×生命圏」があり得ることを示した。"],
     quiz: [
-      { q: "ケプラー186fが代表例とされる理由はどれか。", choices: ["ア　ハビタブルゾーンにある地球サイズの惑星だから", "イ　太陽系最大のガス惑星だから", "ウ　恒星そのものだから", "エ　彗星の核だから"], answer: "正解：ア　ハビタブルゾーンにある地球サイズの惑星だから", explain: "地球サイズの惑星が生命居住可能領域にもあり得ることを示した。" },
-      { q: "ケプラー186fはどの方法で見つかったか。", choices: ["ア　トランジット（恒星の減光）", "イ　直接肉眼で観察", "ウ　彗星の回帰", "エ　月食"], answer: "正解：ア　トランジット（恒星の減光）", explain: "恒星の小さな減光から、地球サイズの惑星が見つかった。" },
-      { q: "ケプラー186fが示したことはどれか。", choices: ["ア　地球サイズ惑星が生命圏にもあり得ること", "イ　惑星は巨大ガスだけということ", "ウ　恒星は存在しないこと", "エ　彗星が惑星になること"], answer: "正解：ア　地球サイズ惑星が生命圏にもあり得ること", explain: "地球サイズの惑星がハビタブルゾーンにもあり得ると示した。" }
+      { q: "ケプラー186fが代表例とされる理由はどれか。", choices: ["ア　ハビタブルゾーンにある地球サイズの惑星だから", "イ　太陽系最大のガス惑星だから", "ウ　恒星そのものだから", "エ　彗星の核だから"], answer: "正解：ア　ハビタブルゾーンにある地球サイズの惑星だから", explain: "「地球サイズ × 生命圏」の初代スター。小さくて、水もありえる場所に立つ。" },
+      { q: "ケプラー186fはどの方法で見つかったか。", choices: ["ア　トランジット（恒星の減光）", "イ　直接肉眼で観察", "ウ　彗星の回帰", "エ　月食"], answer: "正解：ア　トランジット（恒星の減光）", explain: "星のチラッとした減光が、地球サイズの惑星の影の正体。" },
+      { q: "ケプラー186fが示したことはどれか。", choices: ["ア　地球サイズ惑星が生命圏にもあり得ること", "イ　惑星は巨大ガスだけということ", "ウ　恒星は存在しないこと", "エ　彗星が惑星になること"], answer: "正解：ア　地球サイズ惑星が生命圏にもあり得ること", explain: "ガス惑星だけじゃない。地球サイズも生命圏にいられる、と背中を押した一例。" }
     ]
   },
   "kepler-452": {
@@ -3033,9 +3102,9 @@ const CATALOG_LESSON_CONTENT = {
     note: { heading: "候補は絞り込むもの", text: "系外惑星は最初「候補」として見つかり、追観測で本物かどうか絞られる。期待だけで決めず、データを積み上げて判断するのが天文学の作法だ。" },
     points: ["ケプラー452は太陽型星まわりの地球類似候補をもつ。", "「似ている」は出発点で、観測で確かめて絞り込む。", "可能性と確定を分けて読むのが大切。"],
     quiz: [
-      { q: "ケプラー452の惑星を考えるときの正しい姿勢はどれか。", choices: ["ア　候補として観測で確かめて絞り込む", "イ　名前だけで地球と同じと断定する", "ウ　神話で性質を決める", "エ　明るさだけで分類する"], answer: "正解：ア　候補として観測で確かめて絞り込む", explain: "太陽型星まわりの候補であり、半径・軌道などを観測で確認して判断する。" },
-      { q: "ケプラー452がもつ恒星はどんな星か。", choices: ["ア　太陽によく似た恒星", "イ　ブラックホール", "ウ　赤色超巨星", "エ　彗星"], answer: "正解：ア　太陽によく似た恒星", explain: "太陽型の恒星まわりに地球類似の候補をもつ。" },
-      { q: "系外惑星の「候補」と「確定」の関係はどれか。", choices: ["ア　候補は追観測で確かめて確定する", "イ　候補はそのまま確定する", "ウ　名前で確定する", "エ　神話で確定する"], answer: "正解：ア　候補は追観測で確かめて確定する", explain: "最初は候補で、追観測でデータを積み上げて確定する。" }
+      { q: "ケプラー452の惑星を考えるときの正しい姿勢はどれか。", choices: ["ア　候補として観測で確かめて絞り込む", "イ　名前だけで地球と同じと断定する", "ウ　神話で性質を決める", "エ　明るさだけで分類する"], answer: "正解：ア　候補として観測で確かめて絞り込む", explain: "「地球のいとこ」も最初はただの候補。半径・軌道・恒星を順に確かめてこそ。" },
+      { q: "ケプラー452がもつ恒星はどんな星か。", choices: ["ア　太陽によく似た恒星", "イ　ブラックホール", "ウ　赤色超巨星", "エ　彗星"], answer: "正解：ア　太陽によく似た恒星", explain: "親星が太陽そっくり。だから「地球に似た惑星」候補として注目された。" },
+      { q: "系外惑星の「候補」と「確定」の関係はどれか。", choices: ["ア　候補は追観測で確かめて確定する", "イ　候補はそのまま確定する", "ウ　名前で確定する", "エ　神話で確定する"], answer: "正解：ア　候補は追観測で確かめて確定する", explain: "候補→追観測→確定。期待で飛びつかず、データで詰めるのが天文の作法。" }
     ]
   },
   "tau-ceti": {
@@ -3045,9 +3114,9 @@ const CATALOG_LESSON_CONTENT = {
     note: { heading: "近い太陽型星が狙い目", text: "性質が太陽に近く距離も近い星は、惑星系を詳しく調べやすい。だから生命探査の優先候補になる。くじら座τ星はその代表だ。" },
     points: ["くじら座τ星は近傍の太陽型星で生命探査の候補。", "太陽に似て近いほど、惑星系を詳しく調べやすい。", "期待だけでなく観測の積み上げで確かめる。"],
     quiz: [
-      { q: "くじら座τ星が生命探査で注目される理由はどれか。", choices: ["ア　太陽に似た近くの恒星だから", "イ　銀河の中心だから", "ウ　彗星だから", "エ　月の一種だから"], answer: "正解：ア　太陽に似た近くの恒星だから", explain: "太陽に似て近い恒星は惑星系や居住可能性を調べる比較対象になる。" },
-      { q: "近い太陽型星が生命探査に向くのはなぜか。", choices: ["ア　惑星系を詳しく調べやすいから", "イ　光らないから", "ウ　彗星が多いから", "エ　動かないから"], answer: "正解：ア　惑星系を詳しく調べやすいから", explain: "性質が太陽に近く距離も近いと、惑星系を詳しく観測できる。" },
-      { q: "生命探査で大切な姿勢はどれか。", choices: ["ア　惑星・大気・環境を観測で積み上げる", "イ　期待だけで決める", "ウ　名前で決める", "エ　明るさだけで決める"], answer: "正解：ア　惑星・大気・環境を観測で積み上げる", explain: "期待だけでなく観測の積み上げで確かめていく。" }
+      { q: "くじら座τ星が生命探査で注目される理由はどれか。", choices: ["ア　太陽に似た近くの恒星だから", "イ　銀河の中心だから", "ウ　彗星だから", "エ　月の一種だから"], answer: "正解：ア　太陽に似た近くの恒星だから", explain: "太陽似で、しかも近い。だから生命探しの「優先指名」になる星。" },
+      { q: "近い太陽型星が生命探査に向くのはなぜか。", choices: ["ア　惑星系を詳しく調べやすいから", "イ　光らないから", "ウ　彗星が多いから", "エ　動かないから"], answer: "正解：ア　惑星系を詳しく調べやすいから", explain: "似てて近いほど、惑星系をじっくり調べられる。近さは観測の武器。" },
+      { q: "生命探査で大切な姿勢はどれか。", choices: ["ア　惑星・大気・環境を観測で積み上げる", "イ　期待だけで決める", "ウ　名前で決める", "エ　明るさだけで決める"], answer: "正解：ア　惑星・大気・環境を観測で積み上げる", explain: "「いそう」で終わらせない。惑星・大気・環境を一つずつ観測で確かめる。" }
     ]
   },
   "hd-209458b": {
@@ -3057,9 +3126,9 @@ const CATALOG_LESSON_CONTENT = {
     note: { heading: "トランジットの威力", text: "減光の深さは惑星の大きさを、周期は軌道を教える。通過中に恒星の光が惑星大気をかすめるので、その光を分けると大気の手がかりも得られる。" },
     points: ["HD 209458bはトランジット（恒星の減光）で知られる。", "減光の深さ＝惑星の大きさ、周期＝軌道。", "通過光の分光で大気の成分まで探れる。"],
     quiz: [
-      { q: "トランジットで恒星の明るさはどうなるか。", choices: ["ア　わずかに暗くなる", "イ　急に消える", "ウ　明るくなる", "エ　色が緑になる"], answer: "正解：ア　わずかに暗くなる", explain: "惑星が前を横切るぶん、恒星の光がわずかに遮られて暗くなる。" },
-      { q: "トランジットの減光の深さから何が分かるか。", choices: ["ア　惑星の大きさ", "イ　星座の神話", "ウ　地球の年齢", "エ　彗星の数"], answer: "正解：ア　惑星の大きさ", explain: "どれだけ光が遮られるかで、惑星の大きさが分かる。" },
-      { q: "通過中の光を分光すると何が探れるか。", choices: ["ア　惑星の大気の成分", "イ　恒星の名前", "ウ　月の位置", "エ　地球の自転"], answer: "正解：ア　惑星の大気の成分", explain: "通過の光が大気をかすめるので、分光で大気成分に近づける。" }
+      { q: "トランジットで恒星の明るさはどうなるか。", choices: ["ア　わずかに暗くなる", "イ　急に消える", "ウ　明るくなる", "エ　色が緑になる"], answer: "正解：ア　わずかに暗くなる", explain: "惑星が星の前を通ると、光がちょっとへこむ。この「へこみ」がトランジット。" },
+      { q: "トランジットの減光の深さから何が分かるか。", choices: ["ア　惑星の大きさ", "イ　星座の神話", "ウ　地球の年齢", "エ　彗星の数"], answer: "正解：ア　惑星の大きさ", explain: "へこみが深いほど大きな惑星。減光の深さは惑星のサイズ表。" },
+      { q: "通過中の光を分光すると何が探れるか。", choices: ["ア　惑星の大気の成分", "イ　恒星の名前", "ウ　月の位置", "エ　地球の自転"], answer: "正解：ア　惑星の大気の成分", explain: "通過の光は惑星の空気を通り抜ける。だから分光で大気成分まで読める。" }
     ]
   },
   "large-scale-structure": {
@@ -3069,9 +3138,9 @@ const CATALOG_LESSON_CONTENT = {
     note: { heading: "ゆらぎが網を育てた", text: "生まれたての宇宙のわずかな密度のムラが、重力で長い時間をかけて成長し、今の網目状の銀河分布になった。模様は偶然ではなく、宇宙の歴史の跡だ。" },
     points: ["銀河はフィラメント・壁・空洞からなる網目状に分布する。", "これを宇宙の大規模構造という。", "初期宇宙の密度ゆらぎが重力で育った結果。"],
     quiz: [
-      { q: "宇宙の大規模構造の説明として正しいものはどれか。", choices: ["ア　銀河が網目状（フィラメントと空洞）に分布する", "イ　銀河は完全に均一に散らばる", "ウ　銀河は一直線に並ぶ", "エ　銀河は存在しない"], answer: "正解：ア　銀河が網目状（フィラメントと空洞）に分布する", explain: "銀河はフィラメントや壁に沿って並び、間に空洞が広がる網目構造をつくる。" },
-      { q: "宇宙の網目構造を育てたものはどれか。", choices: ["ア　初期宇宙の密度ゆらぎと重力", "イ　太陽の光", "ウ　彗星の衝突", "エ　月の引力"], answer: "正解：ア　初期宇宙の密度ゆらぎと重力", explain: "わずかな密度のムラが重力で成長し、網目状になった。" },
-      { q: "フィラメントや壁の間に広がるものはどれか。", choices: ["ア　大きな空洞（ボイド）", "イ　濃い銀河の塊", "ウ　恒星の表面", "エ　惑星の環"], answer: "正解：ア　大きな空洞（ボイド）", explain: "銀河は糸や壁に並び、その間に大きな空洞が広がる。" }
+      { q: "宇宙の大規模構造の説明として正しいものはどれか。", choices: ["ア　銀河が網目状（フィラメントと空洞）に分布する", "イ　銀河は完全に均一に散らばる", "ウ　銀河は一直線に並ぶ", "エ　銀河は存在しない"], answer: "正解：ア　銀河が網目状（フィラメントと空洞）に分布する", explain: "銀河はバラまきじゃなく、糸と壁に並ぶ。間は空洞。宇宙は巨大な「網」。" },
+      { q: "宇宙の網目構造を育てたものはどれか。", choices: ["ア　初期宇宙の密度ゆらぎと重力", "イ　太陽の光", "ウ　彗星の衝突", "エ　月の引力"], answer: "正解：ア　初期宇宙の密度ゆらぎと重力", explain: "生まれたての宇宙の小さなムラが、重力で育って網に。模様は宇宙の成長記録。" },
+      { q: "フィラメントや壁の間に広がるものはどれか。", choices: ["ア　大きな空洞（ボイド）", "イ　濃い銀河の塊", "ウ　恒星の表面", "エ　惑星の環"], answer: "正解：ア　大きな空洞（ボイド）", explain: "銀河の糸（フィラメント）と、その間のスカスカな大穴（ボイド）がセット。" }
     ]
   },
   "bullet-cluster": {
@@ -3081,9 +3150,9 @@ const CATALOG_LESSON_CONTENT = {
     note: { heading: "重力レンズで重さを測る", text: "手前の質量は背景の光を曲げる（重力レンズ）。その曲がり方から「どこに重さがあるか」が分かる。弾丸銀河団では、それがガスとずれていた＝ダークマターの存在を強く示す。" },
     points: ["弾丸銀河団は衝突で光るガスと質量の中心がずれている。", "重力レンズで「重さの位置」を測れる。", "通常物質と別に動く＝ダークマターの強い証拠。"],
     quiz: [
-      { q: "弾丸銀河団がダークマターの証拠とされる理由はどれか。", choices: ["ア　光るガスと質量の中心がずれているから", "イ　星が一個もないから", "ウ　光をまったく出さないから", "エ　地球に近いから"], answer: "正解：ア　光るガスと質量の中心がずれているから", explain: "重力レンズで求めた質量分布が、高温ガスの位置と分離していた。" },
-      { q: "弾丸銀河団で質量の位置を測った方法はどれか。", choices: ["ア　重力レンズ", "イ　彗星の尾", "ウ　北極星", "エ　地震計"], answer: "正解：ア　重力レンズ", explain: "手前の質量が背景の光を曲げる重力レンズで質量分布を測った。" },
-      { q: "衝突後、光るガスと質量の中心はどうなっていたか。", choices: ["ア　別々の場所に分かれていた", "イ　完全に一致していた", "ウ　消えていた", "エ　恒星になった"], answer: "正解：ア　別々の場所に分かれていた", explain: "ガスは中央に残り、質量の中心は先へ抜けて分離していた。" }
+      { q: "弾丸銀河団がダークマターの証拠とされる理由はどれか。", choices: ["ア　光るガスと質量の中心がずれているから", "イ　星が一個もないから", "ウ　光をまったく出さないから", "エ　地球に近いから"], answer: "正解：ア　光るガスと質量の中心がずれているから", explain: "光るガスと「重さの中心」が別の場所。見えない物質だけ走り抜けた決定的証拠。" },
+      { q: "弾丸銀河団で質量の位置を測った方法はどれか。", choices: ["ア　重力レンズ", "イ　彗星の尾", "ウ　北極星", "エ　地震計"], answer: "正解：ア　重力レンズ", explain: "手前の重さは奥の光を曲げる（重力レンズ）。曲がり方で「重さの地図」が描ける。" },
+      { q: "衝突後、光るガスと質量の中心はどうなっていたか。", choices: ["ア　別々の場所に分かれていた", "イ　完全に一致していた", "ウ　消えていた", "エ　恒星になった"], answer: "正解：ア　別々の場所に分かれていた", explain: "ガスは衝突で足止め、重さは素通りして先へ。だから両者がズレた。" }
     ]
   },
   "coma-cluster": {
@@ -3093,9 +3162,9 @@ const CATALOG_LESSON_CONTENT = {
     note: { heading: "ツビッキーの気づき", text: "銀河の運動の速さから必要な質量を見積もると、見える物質ではまったく足りなかった。そこで「見えない質量（ダークマター）」が提唱された。" },
     points: ["かみのけ座銀河団の銀河は見える質量だけでは速すぎる。", "束ねるには見えない質量（ダークマター）が必要。", "ダークマター研究の出発点になった。"],
     quiz: [
-      { q: "かみのけ座銀河団の観測が示したことはどれか。", choices: ["ア　見えない質量（ダークマター）の存在", "イ　銀河に星がないこと", "ウ　地球が宇宙の中心", "エ　太陽の温度"], answer: "正解：ア　見えない質量（ダークマター）の存在", explain: "銀河の高速運動を束ねるには見える物質では足りず、見えない質量が必要とされた。" },
-      { q: "見えない質量を最初に提唱したのは誰か。", choices: ["ア　ツビッキー", "イ　彗星の発見者", "ウ　北極星の命名者", "エ　誰もいない"], answer: "正解：ア　ツビッキー", explain: "ツビッキーが銀河の高速運動から見えない質量を提唱した。" },
-      { q: "銀河が見える質量だけでは説明できないのはなぜか。", choices: ["ア　運動が速すぎて束ねきれないから", "イ　星が冷たいから", "ウ　光が強いから", "エ　地球に近いから"], answer: "正解：ア　運動が速すぎて束ねきれないから", explain: "速い運動を束ねるには見える物質では足りず、見えない質量が要る。" }
+      { q: "かみのけ座銀河団の観測が示したことはどれか。", choices: ["ア　見えない質量（ダークマター）の存在", "イ　銀河に星がないこと", "ウ　地球が宇宙の中心", "エ　太陽の温度"], answer: "正解：ア　見えない質量（ダークマター）の存在", explain: "銀河が速すぎて飛び散るはず。なのに残る＝見えない重しがある証拠。" },
+      { q: "見えない質量を最初に提唱したのは誰か。", choices: ["ア　ツビッキー", "イ　彗星の発見者", "ウ　北極星の命名者", "エ　誰もいない"], answer: "正解：ア　ツビッキー", explain: "「計算が合わない！」ツビッキーが見えない質量（ダークマター）を最初に言い出した舞台。" },
+      { q: "銀河が見える質量だけでは説明できないのはなぜか。", choices: ["ア　運動が速すぎて束ねきれないから", "イ　星が冷たいから", "ウ　光が強いから", "エ　地球に近いから"], answer: "正解：ア　運動が速すぎて束ねきれないから", explain: "見える星だけでは束ねられない速さ。足りない重さの正体がダークマター。" }
     ]
   },
   "milky-way-galaxy": {
@@ -3105,9 +3174,9 @@ const CATALOG_LESSON_CONTENT = {
     note: { heading: "三つの部品で覚える", text: "銀河は「円盤（渦巻く腕）」「バルジ（中央の膨らみ）」「ハロー（球状に広がる古い星と暗黒物質）」からなる。天の川もこの構造をもつ。" },
     points: ["天の川銀河は円盤・バルジ・ハローからなる。", "夜空の帯は円盤を内側から見た姿。", "星とガスの運動から構造とダークマターを調べる。"],
     quiz: [
-      { q: "天の川銀河の構造に含まれないものはどれか。", choices: ["ア　惑星の環", "イ　円盤", "ウ　バルジ", "エ　ハロー"], answer: "正解：ア　惑星の環", explain: "銀河は円盤・バルジ・ハローからなる。惑星の環は土星などの構造で別物。" },
-      { q: "夜空を横切る「天の川」の正体はどれか。", choices: ["ア　円盤に並ぶ無数の恒星", "イ　地球の雲", "ウ　太陽の光の帯", "エ　彗星の尾"], answer: "正解：ア　円盤に並ぶ無数の恒星", explain: "円盤を内側から見ているため、無数の星が帯に見える。" },
-      { q: "銀河中心の膨らんだ部分を何というか。", choices: ["ア　バルジ", "イ　ハロー", "ウ　コロナ", "エ　リング"], answer: "正解：ア　バルジ", explain: "中央の膨らみをバルジ、それを包む球状部分をハローという。" }
+      { q: "天の川銀河の構造に含まれないものはどれか。", choices: ["ア　惑星の環", "イ　円盤", "ウ　バルジ", "エ　ハロー"], answer: "正解：ア　惑星の環", explain: "銀河の三点セットは「円盤・バルジ・ハロー」。環（リング）は土星の持ち物。" },
+      { q: "夜空を横切る「天の川」の正体はどれか。", choices: ["ア　円盤に並ぶ無数の恒星", "イ　地球の雲", "ウ　太陽の光の帯", "エ　彗星の尾"], answer: "正解：ア　円盤に並ぶ無数の恒星", explain: "夜空の帯は雲じゃない。円盤を内側から見た、星のびっしり行列。" },
+      { q: "銀河中心の膨らんだ部分を何というか。", choices: ["ア　バルジ", "イ　ハロー", "ウ　コロナ", "エ　リング"], answer: "正解：ア　バルジ", explain: "中央のふくらみ＝バルジ、外を包む球＝ハロー。目玉焼きで覚えると早い。" }
     ]
   },
   "spiral-galaxy": {
@@ -3117,9 +3186,9 @@ const CATALOG_LESSON_CONTENT = {
     note: { heading: "回転曲線の読み方", text: "中心からの距離ごとに回転速度を測ったグラフが回転曲線。見える物質だけなら外側で速度が落ちるはずが、実際は落ちない。→ 見えない質量が広がっている。" },
     points: ["渦巻銀河の外縁は予想より速く回っている。", "回転曲線が外側で落ちない＝見えない質量がある。", "銀河を包むダークマターハローの証拠。"],
     quiz: [
-      { q: "渦巻銀河の回転曲線からわかることはどれか。", choices: ["ア　銀河を包むダークマターの存在", "イ　星の色", "ウ　彗星の軌道", "エ　太陽の黒点数"], answer: "正解：ア　銀河を包むダークマターの存在", explain: "外縁が予想より速く回るのは、見えない質量（ハロー）が広がっているため。" },
-      { q: "渦巻銀河の外縁の星の回転速度はどうなっているか。", choices: ["ア　予想より速いまま落ちない", "イ　外で急に止まる", "ウ　ゼロになる", "エ　逆回転する"], answer: "正解：ア　予想より速いまま落ちない", explain: "見える物質だけなら外で落ちるはずが、実際は落ちない。" },
-      { q: "落ちない回転を説明するものはどれか。", choices: ["ア　銀河を包むダークマターハロー", "イ　恒星の色", "ウ　彗星の群れ", "エ　太陽風"], answer: "正解：ア　銀河を包むダークマターハロー", explain: "見えないハローが引きとめているため、外縁でも速度が落ちない。" }
+      { q: "渦巻銀河の回転曲線からわかることはどれか。", choices: ["ア　銀河を包むダークマターの存在", "イ　星の色", "ウ　彗星の軌道", "エ　太陽の黒点数"], answer: "正解：ア　銀河を包むダークマターの存在", explain: "外の星が落ちずに速く回る＝見えない重し（ダークマターハロー）が支えている。" },
+      { q: "渦巻銀河の外縁の星の回転速度はどうなっているか。", choices: ["ア　予想より速いまま落ちない", "イ　外で急に止まる", "ウ　ゼロになる", "エ　逆回転する"], answer: "正解：ア　予想より速いまま落ちない", explain: "ふつうなら外ほど遅いはず。なのに落ちない回転曲線が「異変」の合図。" },
+      { q: "落ちない回転を説明するものはどれか。", choices: ["ア　銀河を包むダークマターハロー", "イ　恒星の色", "ウ　彗星の群れ", "エ　太陽風"], answer: "正解：ア　銀河を包むダークマターハロー", explain: "銀河を包む見えないハローが手綱を握る。だから振り落とされない。" }
     ]
   },
   "distant-galaxy": {
@@ -8323,19 +8392,158 @@ function renderLibraryTab() {
   `;
 }
 
-function renderSettingsTab() {
-  return `
-    <section class="app-screen-panel settings-tab">
-      <div class="app-screen-header">
-        <span>CONFIG</span>
-        <h2>設定</h2>
+function formatProgressPercent(current, total) {
+  if (!total) return 0;
+  return Math.round((current / total) * 100);
+}
 
+function renderUserProgressCard({ label, value, detail, percent }) {
+  return `
+    <div class="user-progress-card" style="--profile-meter: ${percent}%">
+      <span>${label}</span>
+      <strong>${value}</strong>
+      ${detail ? `<small>${detail}</small>` : ""}
+      <i aria-hidden="true"><b></b></i>
+    </div>
+  `;
+}
+
+function isStoryObserved(storyId) {
+  const story = STORIES[storyId];
+  if (!story) return false;
+  const ids = [story.reward?.id, ...(story.extraRewardIds ?? [])].filter(Boolean);
+  return ids.some((id) => claimedRewards.has(id));
+}
+
+function getObservedBodyStats() {
+  const items = getObservableItems().filter((item) => item.storyId && !item.locked);
+  const observed = items.filter((item) => isStoryObserved(item.storyId)).length;
+  return { current: observed, total: items.length };
+}
+
+function isQuestCompleted(quest) {
+  if (quest.facts?.length) return getHandedOver(quest.id) >= quest.facts.length;
+  return Boolean(quest.rewardScrollId) && claimedRewards.has(quest.rewardScrollId);
+}
+
+function getQuestStats() {
+  return {
+    current: QUESTS.filter(isQuestCompleted).length,
+    total: QUESTS.length
+  };
+}
+
+function getScrollStats() {
+  return {
+    current: LIBRARY_SCROLLS.filter((scroll) => claimedRewards.has(scroll.id)).length,
+    total: LIBRARY_SCROLLS.length
+  };
+}
+
+function getLessonQuizIds() {
+  return Object.entries(LESSON_PAGES).flatMap(([scrollId, lesson]) =>
+    (lesson.blocks ?? []).flatMap((block) =>
+      block.type === "quiz"
+        ? block.items.map((_, index) => `${scrollId}:${index}`)
+        : []
+    )
+  );
+}
+
+function getQuizStats() {
+  const ids = getLessonQuizIds();
+  const current = ids.filter((id) => quizProgress[id]).length;
+  return { current, total: ids.length };
+}
+
+function getOwnedObservationTools() {
+  return OBSERVATION_TOOLS.map((tool, index) => ({
+    ...tool,
+    owned: index === 0 || tool.rewardIds.some((id) => claimedRewards.has(id))
+  }));
+}
+
+function getToolStats() {
+  const tools = getOwnedObservationTools();
+  return {
+    current: tools.filter((tool) => tool.owned).length,
+    total: tools.length,
+    tools
+  };
+}
+
+function renderObservationToolSlot(tool) {
+  return `
+    <div class="user-tool-slot${tool.owned ? " owned" : " locked"}">
+      <img src="${withAssetVersion(tool.image)}" alt="${tool.title}" />
+      <span>${tool.title}</span>
+    </div>
+  `;
+}
+
+function renderSettingsTab() {
+  const bodyStats = getObservedBodyStats();
+  const questStats = getQuestStats();
+  const scrollStats = getScrollStats();
+  const quizStats = getQuizStats();
+  const toolStats = getToolStats();
+  const progressItems = [
+    {
+      label: "観測天体",
+      value: `${bodyStats.current} / ${bodyStats.total}`,
+      detail: "",
+      percent: formatProgressPercent(bodyStats.current, bodyStats.total)
+    },
+    {
+      label: "クエスト",
+      value: `${questStats.current} / ${questStats.total}`,
+      detail: "",
+      percent: formatProgressPercent(questStats.current, questStats.total)
+    },
+    {
+      label: "巻物",
+      value: `${scrollStats.current} / ${scrollStats.total}`,
+      detail: "",
+      percent: formatProgressPercent(scrollStats.current, scrollStats.total)
+    },
+    {
+      label: "クイズ",
+      value: `${formatProgressPercent(quizStats.current, quizStats.total)}%`,
+      detail: `${quizStats.current} / ${quizStats.total}`,
+      percent: formatProgressPercent(quizStats.current, quizStats.total)
+    },
+    {
+      label: "アイテム",
+      value: `${toolStats.current} / ${toolStats.total}`,
+      detail: "",
+      percent: formatProgressPercent(toolStats.current, toolStats.total)
+    }
+  ];
+
+  return `
+    <section class="app-screen-panel settings-tab user-profile-panel">
+      <div class="app-screen-header">
+        <span>USER</span>
+        <h2>観測者プロフィール</h2>
       </div>
-      <div class="settings-menu">
-        <button type="button"><span>音量</span><strong>ON</strong></button>
-        <button type="button"><span>演出</span><strong>標準</strong></button>
-        <button type="button"><span>データ</span><strong>保存中</strong></button>
-        <button type="button" data-open-reference><span>巻物の入手先</span><strong>対応表 ›</strong></button>
+      <div class="user-profile-layout">
+        <figure class="user-hero-card" aria-label="観測者">
+          <img src="${withAssetVersion(OBSERVER_PROFILE_IMAGE)}" alt="観測者の全身ビジュアル" />
+        </figure>
+
+        <section class="user-progress-board" aria-label="進捗度">
+          ${progressItems.map(renderUserProgressCard).join("")}
+        </section>
+
+        <section class="user-item-board" aria-label="持っているアイテム">
+          <header>
+            <span>ITEMS</span>
+          </header>
+          <div class="user-tool-grid">
+            ${toolStats.tools.map(renderObservationToolSlot).join("")}
+          </div>
+          <button type="button" class="user-reference-button" data-open-reference>巻物の入手先を見る</button>
+        </section>
       </div>
     </section>
   `;
@@ -8512,7 +8720,7 @@ function shuffleQuizItem(item) {
   return { choices, answer, correctIndex };
 }
 
-function renderLessonBlock(block) {
+function renderLessonBlock(block, scrollId = "") {
   switch (block.type) {
     case "compare":
       return `
@@ -8596,14 +8804,16 @@ function renderLessonBlock(block) {
               .map(
                 (item, i) => {
                   const { choices, answer, correctIndex } = shuffleQuizItem(item);
+                  const quizId = `${scrollId}:${i}`;
+                  const cleared = Boolean(quizProgress[quizId]);
                   return `
-              <li class="lesson-quiz-item">
+              <li class="lesson-quiz-item${cleared ? " is-cleared" : ""}" data-quiz-id="${quizId}">
                 <p class="lesson-quiz-q"><span class="lesson-quiz-num">Q${i + 1}</span>${item.q}</p>
                 ${choices ? `
                 <ul class="lesson-quiz-choices">
                   ${choices.map((c, idx) => `<li><button type="button" class="lesson-quiz-choice" data-choice="${idx}"${idx === correctIndex ? ' data-correct="1"' : ""}>${c}</button></li>`).join("")}
                 </ul>
-                <p class="lesson-quiz-verdict" aria-live="polite"></p>` : ""}
+                <p class="lesson-quiz-verdict" aria-live="polite">${cleared ? "クリア済み" : ""}</p>` : ""}
                 <details class="lesson-quiz-detail">
                   <summary><span class="lesson-quiz-summary-label">解説</span><span class="lesson-quiz-summary-icon" aria-hidden="true">＋</span></summary>
                   <div class="lesson-quiz-answer">
@@ -8637,7 +8847,7 @@ function openLesson(scrollId) {
       <div class="lesson-body">
         ${lesson.hook ? `<p class="lesson-hook">${lesson.hook}</p>` : ""}
         <p class="lesson-lead">${lesson.lead}</p>
-        ${lesson.blocks.map(renderLessonBlock).join("")}
+        ${lesson.blocks.map((block) => renderLessonBlock(block, scrollId)).join("")}
       </div>
     </section>
   `;
@@ -8931,6 +9141,11 @@ lessonOverlay.addEventListener("click", (event) => {
     const itemEl = choiceButton.closest(".lesson-quiz-item");
     if (!itemEl) return;
     const isCorrect = choiceButton.dataset.correct === "1";
+    if (isCorrect && itemEl.dataset.quizId) {
+      quizProgress[itemEl.dataset.quizId] = true;
+      saveQuizProgress();
+      itemEl.classList.add("is-cleared");
+    }
     itemEl.querySelectorAll(".lesson-quiz-choice").forEach((btn) => {
       btn.classList.remove("is-correct", "is-incorrect");
       if (btn.dataset.correct === "1") {
