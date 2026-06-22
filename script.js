@@ -2162,6 +2162,9 @@ const rewardKnowledgeList = document.querySelector("#rewardKnowledgeList");
 const rewardCloseButton = document.querySelector("#rewardCloseButton");
 const lessonOverlay = document.querySelector("#lessonOverlay");
 const referenceOverlay = document.querySelector("#referenceOverlay");
+const observationLoading = document.querySelector("#observationLoading");
+const loadingConstellation = document.querySelector("#loadingConstellation");
+const loadingConstellationName = document.querySelector("#loadingConstellationName");
 const enemySprite = document.querySelector("#enemySprite");
 const targetStatusThumb = document.querySelector("#targetStatusThumb");
 const targetStatusName = document.querySelector("#targetStatusName");
@@ -2252,6 +2255,22 @@ const questHandedOver = loadQuestHandedOver();
 function saveQuestHandedOver() {
   localStorage.setItem(QUEST_PROGRESS_KEY, JSON.stringify(questHandedOver));
 }
+
+const INITIAL_LOADING_DURATION = 3200;
+const OBSERVATION_LOADING_DURATION = 4800;
+const OBSERVATION_LOADING_STEP = 2200;
+const LOADING_CONSTELLATIONS = [
+  { name: "Cassiopeia", points: [[18, 42], [34, 30], [50, 42], [66, 30], [82, 42]] },
+  { name: "Cetus", points: [[24, 58], [36, 45], [52, 38], [68, 45], [78, 62], [58, 72], [38, 70]] },
+  { name: "Orion", points: [[28, 70], [38, 42], [50, 25], [62, 42], [72, 70], [50, 54]] },
+  { name: "Cygnus", points: [[18, 52], [34, 48], [50, 44], [66, 34], [82, 24], [58, 58], [74, 72]] },
+  { name: "Lyra", points: [[34, 32], [56, 28], [72, 46], [58, 66], [36, 60], [48, 44]] },
+  { name: "Scorpius", points: [[18, 34], [30, 44], [42, 52], [56, 56], [70, 62], [78, 74], [88, 66]] }
+];
+
+let observationLoadingTimer = null;
+let observationLoadingCycleTimer = null;
+let loadingConstellationQueue = [];
 
 function getHandedOver(questId) {
   return questHandedOver[questId] ?? 0;
@@ -7823,9 +7842,84 @@ function selectKingdom(kingdomId) {
   render();
 }
 
-function openStory(storyId) {
+function renderLoadingConstellation(index) {
+  if (!loadingConstellation) return;
+  const constellation = LOADING_CONSTELLATIONS[index % LOADING_CONSTELLATIONS.length];
+  const points = constellation.points;
+  if (loadingConstellationName) loadingConstellationName.textContent = constellation.name;
+  const circles = points
+    .map(([cx, cy], pointIndex) => `
+      <circle class="loading-star-dot" style="--point-index: ${pointIndex}" cx="${cx}" cy="${cy}" r="1.12" />
+    `)
+    .join("");
+  const lines = points
+    .slice(1)
+    .map(([x2, y2], lineIndex) => {
+      const [x1, y1] = points[lineIndex];
+      return `
+        <line class="loading-star-line" style="--line-index: ${lineIndex}" x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" />
+      `;
+    })
+    .join("");
+
+  loadingConstellation.innerHTML = `
+    <svg class="loading-constellation-svg" viewBox="0 0 100 100" role="img" aria-hidden="true">
+      <g>${lines}</g>
+      <g>${circles}</g>
+    </svg>
+  `;
+}
+
+function shuffleLoadingConstellations() {
+  const indexes = LOADING_CONSTELLATIONS.map((_, index) => index);
+  for (let index = indexes.length - 1; index > 0; index -= 1) {
+    const swapIndex = Math.floor(Math.random() * (index + 1));
+    [indexes[index], indexes[swapIndex]] = [indexes[swapIndex], indexes[index]];
+  }
+  return indexes;
+}
+
+function renderNextLoadingConstellation() {
+  if (loadingConstellationQueue.length === 0) {
+    loadingConstellationQueue = shuffleLoadingConstellations();
+  }
+  renderLoadingConstellation(loadingConstellationQueue.shift());
+}
+
+function hideObservationLoading() {
+  if (observationLoadingTimer) {
+    clearTimeout(observationLoadingTimer);
+    observationLoadingTimer = null;
+  }
+  if (observationLoadingCycleTimer) {
+    clearInterval(observationLoadingCycleTimer);
+    observationLoadingCycleTimer = null;
+  }
+  observationLoading?.classList.add("is-hidden");
+}
+
+function showObservationLoading(onComplete, duration = OBSERVATION_LOADING_DURATION) {
+  hideObservationLoading();
+  loadingConstellationQueue = shuffleLoadingConstellations();
+  renderNextLoadingConstellation();
+  observationLoading?.classList.remove("is-hidden");
+
+  observationLoadingCycleTimer = setInterval(() => {
+    renderNextLoadingConstellation();
+  }, OBSERVATION_LOADING_STEP);
+
+  observationLoadingTimer = setTimeout(() => {
+    hideObservationLoading();
+    onComplete?.();
+  }, duration);
+}
+
+function showInitialObservationLoading() {
+  showObservationLoading(null, INITIAL_LOADING_DURATION);
+}
+
+function enterStory(storyId) {
   const story = STORIES[storyId];
-  hideReward();
   state.mode = "story";
   state.kingdomId = story.kingdomId;
   state.storyId = storyId;
@@ -7835,7 +7929,15 @@ function openStory(storyId) {
   render();
 }
 
+function openStory(storyId) {
+  const story = STORIES[storyId];
+  if (!story) return;
+  hideReward();
+  showObservationLoading(() => enterStory(storyId));
+}
+
 function goHome() {
+  hideObservationLoading();
   hideReward();
   state.mode = "home";
   state.kingdomId = null;
@@ -9360,3 +9462,4 @@ document.addEventListener("keydown", (event) => {
 });
 
 render();
+showInitialObservationLoading();

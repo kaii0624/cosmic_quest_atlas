@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>COSMIC QUEST</title>
-    <link rel="stylesheet" href="./styles.css?v=user-profile-companion-v1" />
+    <link rel="stylesheet" href="./styles.css?v=battle-loading-v2" />
   </head>
   <body>
     <div class="star-dust" aria-hidden="true"></div>
@@ -205,9 +205,15 @@
       </section>
     </div>
 
+    <div id="observationLoading" class="observation-loading" aria-live="polite" aria-label="loading">
+      <div id="loadingConstellation" class="loading-constellation" aria-hidden="true"></div>
+      <span id="loadingConstellationName" class="loading-constellation-name">Cetus</span>
+      <p>loading</p>
+    </div>
+
     <div id="lessonOverlay" class="lesson-overlay is-hidden" aria-live="polite"></div>
     <div id="referenceOverlay" class="lesson-overlay is-hidden" aria-live="polite"></div>
 
-    <script src="./script.js?v=user-profile-companion-v1"></script>
+    <script src="./script.js?v=battle-loading-v2"></script>
   </body>
 </html>

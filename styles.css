@@ -8257,6 +8257,111 @@ button {
   }
 }
 
+/* ===== 観測バトル開始ロード ===== */
+.observation-loading {
+  position: fixed;
+  inset: 0;
+  z-index: 120;
+  display: grid;
+  place-items: center;
+  align-content: center;
+  gap: 9px;
+  min-height: 100dvh;
+  background: #050817;
+  color: #f8df9a;
+}
+
+.observation-loading.is-hidden {
+  display: none;
+}
+
+.loading-constellation {
+  width: min(42vw, 188px);
+  aspect-ratio: 1;
+}
+
+.loading-constellation-svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.loading-star-dot {
+  opacity: 0;
+  fill: rgba(248, 223, 154, 0.86);
+  filter: drop-shadow(0 0 5px rgba(248, 223, 154, 0.58));
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: loadingStarDot 0.7s ease forwards;
+  animation-delay: calc(var(--point-index) * 0.13s);
+}
+
+.loading-star-line {
+  opacity: 0;
+  stroke: rgba(248, 223, 154, 0.62);
+  stroke-width: 0.72;
+  stroke-linecap: round;
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  filter: drop-shadow(0 0 4px rgba(248, 223, 154, 0.28));
+  animation: loadingStarLine 0.5s ease forwards;
+  animation-delay: calc(1.05s + var(--line-index) * 0.11s);
+}
+
+.loading-constellation-name {
+  color: rgba(248, 223, 154, 0.72);
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(0.62rem, 1.8vw, 0.78rem);
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  line-height: 1;
+  text-transform: none;
+}
+
+.observation-loading p {
+  margin: 0;
+  color: rgba(248, 223, 154, 0.82);
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(0.68rem, 2vw, 0.86rem);
+  font-weight: 700;
+  letter-spacing: 0.28em;
+  line-height: 1;
+  text-transform: lowercase;
+}
+
+@keyframes loadingStarDot {
+  0% {
+    opacity: 0;
+    transform: scale(0.35);
+  }
+  62% {
+    opacity: 1;
+    transform: scale(1.28);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes loadingStarLine {
+  0% {
+    opacity: 0;
+    stroke-dashoffset: 1;
+  }
+  100% {
+    opacity: 1;
+    stroke-dashoffset: 0;
+  }
+}
+
+@media (max-width: 700px) {
+  .loading-constellation {
+    width: min(48vw, 168px);
+  }
+}
+
 /* ===== 詳細を学ぶ（学習ページ） ===== */
 .lesson-overlay {
   position: fixed;
