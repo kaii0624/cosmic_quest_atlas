@@ -8330,6 +8330,21 @@ button {
   text-transform: lowercase;
 }
 
+.loading-dot {
+  opacity: 0;
+  animation: loadingDotFade 1.6s ease-in-out infinite;
+}
+
+.loading-dot:nth-child(1) { animation-delay: 0s; }
+.loading-dot:nth-child(2) { animation-delay: 0.32s; }
+.loading-dot:nth-child(3) { animation-delay: 0.64s; }
+
+@keyframes loadingDotFade {
+  0%, 20% { opacity: 0; }
+  50%      { opacity: 1; }
+  80%, 100% { opacity: 0; }
+}
+
 @keyframes loadingStarDot {
   0% {
     opacity: 0;
@@ -9318,6 +9333,73 @@ button.quest-fact-card {
   border-color: rgba(134, 169, 214, 0.34);
 }
 
+.observe-tab .observe-body-card {
+  min-height: clamp(102px, 17vw, 134px);
+  align-content: start;
+  gap: 7px;
+  padding: 0 4px;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
+.observe-tab .observe-body-card img {
+  width: clamp(58px, 10vw, 82px);
+  height: clamp(58px, 10vw, 82px);
+  object-fit: contain;
+}
+
+.observe-tab .observe-body-card span:not(.observe-body-placeholder) {
+  min-height: 28px;
+  display: grid;
+  place-items: center;
+  padding: 4px 7px 5px;
+  color: #ffe8a5;
+  background:
+    linear-gradient(90deg, transparent 0 7%, rgba(241, 194, 82, 0.95) 7% 8%, transparent 8% 92%, rgba(241, 194, 82, 0.95) 92% 93%, transparent 93%),
+    linear-gradient(180deg, rgba(15, 35, 65, 0.98), rgba(5, 13, 34, 0.98));
+  clip-path: polygon(7% 0, 93% 0, 100% 50%, 93% 100%, 7% 100%, 0 50%);
+  font-size: clamp(0.52rem, 1.45vw, 0.68rem);
+  line-height: 1.08;
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 230, 139, 0.48),
+    0 3px 0 rgba(18, 9, 4, 0.62);
+}
+
+.observe-tab .observe-body-card.selected,
+.observe-tab .observe-body-card.unlocked:hover,
+.observe-tab .observe-body-card.unlocked:focus-visible {
+  outline: none;
+  filter: brightness(1.1) saturate(1.08);
+  box-shadow: none;
+}
+
+.observe-tab .observe-body-card.selected img,
+.observe-tab .observe-body-card.unlocked:hover img,
+.observe-tab .observe-body-card.unlocked:focus-visible img {
+  filter: brightness(1.12) drop-shadow(0 0 18px rgba(95, 185, 255, 0.46));
+}
+
+.observe-tab .observe-body-card.pending {
+  cursor: default;
+  filter: grayscale(0.9) brightness(0.45);
+  pointer-events: none;
+}
+
+.observe-body-card .observe-body-placeholder {
+  display: block;
+  width: clamp(58px, 10vw, 82px);
+  max-width: clamp(58px, 10vw, 82px);
+  height: clamp(58px, 10vw, 82px);
+  place-items: unset;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 42% 38%, rgba(255, 240, 180, 0.28) 0 16%, rgba(100, 170, 220, 0.28) 18% 34%, rgba(30, 60, 120, 0.38) 37% 62%, transparent 65%),
+    rgba(4, 9, 24, 0.55);
+  border: 1px solid rgba(120, 150, 210, 0.22);
+}
+
 .agenda-chapter-head,
 .agenda-section-head {
   display: flex;
@@ -9364,9 +9446,9 @@ button.quest-fact-card {
 }
 
 .agenda-body-grid {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(8px, 2vw, 12px);
   min-width: 0;
 }
 
@@ -9507,30 +9589,15 @@ button.quest-fact-card {
     gap: 5px;
   }
 
-  .agenda-body-card {
-    min-height: 31px;
-    grid-template-columns: 20px minmax(0, auto);
-    column-gap: 5px;
-    padding: 4px 6px 4px 5px;
+  .observe-tab .observe-body-card {
+    min-height: 98px;
   }
 
-  .agenda-body-orb {
-    width: 18px;
-    height: 18px;
-  }
-
-  .agenda-body-orb img {
-    width: 20px;
-    height: 20px;
-  }
-
-  .agenda-body-title {
-    max-width: 108px;
-    font-size: 0.56rem;
-  }
-
-  .agenda-body-card small {
-    font-size: 0.48rem;
+  .observe-tab .observe-body-card img,
+  .observe-body-card .observe-body-placeholder {
+    width: 58px;
+    max-width: 58px;
+    height: 58px;
   }
 
   .library-agenda-scroll-grid {

@@ -8135,23 +8135,23 @@ function getAgendaProgress(names, agendaIndex) {
 function renderAgendaBodyEntry(name, item, selected, usedItemIds) {
   if (!item) {
     return `
-      <span class="agenda-body-card pending" aria-disabled="true">
-        <span class="agenda-body-orb" aria-hidden="true"></span>
-        <span class="agenda-body-title">${name}</span>
-        <small>未発見</small>
+      <span class="library-scroll-card agenda-scroll-card observe-body-card pending" aria-disabled="true">
+        <span class="observe-body-placeholder" aria-hidden="true"></span>
+        <span>${name}</span>
       </span>
     `;
   }
 
   usedItemIds.add(item.id);
   const selectedClass = selected.id === item.id ? " selected" : "";
-  const image = item.asset ? `<img src="${withAssetVersion(item.asset)}" alt="" aria-hidden="true" />` : "";
+  const image = item.asset
+    ? `<img src="${withAssetVersion(item.asset)}" alt="" aria-hidden="true" />`
+    : `<span class="observe-body-placeholder" aria-hidden="true"></span>`;
 
   return `
-    <button class="agenda-body-card${selectedClass}" type="button" data-observe-id="${item.id}" aria-pressed="${selected.id === item.id ? "true" : "false"}">
-      <span class="agenda-body-orb ${item.asset ? "has-asset" : ""}" aria-hidden="true">${image}</span>
-      <span class="agenda-body-title">${name}</span>
-      <small>${item.kingdomName}</small>
+    <button class="library-scroll-card agenda-scroll-card observe-body-card unlocked${selectedClass}" type="button" data-observe-id="${item.id}" aria-pressed="${selected.id === item.id ? "true" : "false"}">
+      ${image}
+      <span>${name}</span>
     </button>
   `;
 }
