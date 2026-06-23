@@ -9701,11 +9701,13 @@ function finishStory(story) {
   newRewards.forEach((reward) => {
     claimedRewards.add(reward.id);
   });
-
   if (newRewards.length > 0) {
     saveClaimedRewards();
-    state.selectedScrollId = newRewards[0].id;
-    showReward(newRewards[0]);
+  }
+
+  if (rewards.length > 0) {
+    state.selectedScrollId = rewards[0].id;
+    showReward(rewards[0]);
   }
 }
 
@@ -9950,7 +9952,11 @@ battleBgButtons.forEach((button) => {
 
 homeButton.addEventListener("click", goHome);
 storyAdvanceButton.addEventListener("click", nextStoryLine);
-rewardCloseButton.addEventListener("click", hideReward);
+rewardCloseButton.addEventListener("click", () => {
+  const scrollId = state.selectedScrollId;
+  hideReward();
+  openLesson(scrollId);
+});
 rewardPopup.addEventListener("click", (event) => {
   const target = getEventElement(event);
   if (target?.closest("[data-reward-close]")) {
