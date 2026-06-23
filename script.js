@@ -41,7 +41,7 @@ const KINGDOMS = {
     detailAlt: "夏の王国と白鳥座の詳細星図",
     detailTitle: "夏の星図",
     detailText: "天の川の上に白鳥座が羽を広げる。星の位置を何度も測ると、距離の手がかりが現れる。",
-    steps: ["ベガ", "デネブ", "アルビレオ", "61 Cygni"],
+    steps: ["ベガ", "デネブ", "アルビレオ", "白鳥座61番星"],
     points: [
       {
         id: "vega",
@@ -71,7 +71,7 @@ const KINGDOMS = {
         id: "cygni61",
         x: 18,
         y: 82,
-        label: "61 Cygni",
+        label: "白鳥座61番星",
         storyId: "cygni61",
         badgeAsset: "./assets/cygni61-enemy-normal.png"
       }
@@ -937,7 +937,7 @@ const STORIES = {
       },
       {
         speaker: "白鳥座キュグヌス",
-        text: "p を秒角で測れば、距離 d はパーセクで d = 1 / p。61 Cygni はこの測定で有名な白鳥座の近い星だ。",
+        text: "p を秒角で測れば、距離 d はパーセクで d = 1 / p。白鳥座61番星はこの測定で有名な白鳥座の近い星だ。",
         pattern: "parallax"
       },
       {
@@ -1211,7 +1211,7 @@ const STORIES = {
     kingdomId: "summer",
     battleBg: "summer",
     type: "STORY 15",
-    name: "近星の測り手61 Cygni",
+    name: "近星の測り手白鳥座61番星",
     subtitle: "最初期の年周視差測定",
     lead: "白鳥座の近い恒星。背景星に対する小さなずれから距離を測る。",
     mechanic: "parallaxHistory",
@@ -1234,17 +1234,17 @@ const STORIES = {
     reward: {
       id: "cygnus-parallax-scroll",
       title: "年周視差",
-      message: "61 Cygniを観測してゲットしました。",
+      message: "白鳥座61番星を観測してゲットしました。",
       image: "./assets/reward-scroll-cygnus-parallax.png",
       tier: "major",
       knowledgeTitle: "",
       knowledge: ["距離は視差の逆数"]
     },
     lines: [
-      { speaker: "近星の測り手61 Cygni", text: "私は白鳥座に潜む近い恒星。派手ではないが、距離測定の歴史に名を残した。", pattern: "normal" },
-      { speaker: "近星の測り手61 Cygni", text: "地球が公転すると、近い星は遠い背景星に対してわずかにずれる。", pattern: "parallax" },
-      { speaker: "近星の測り手61 Cygni", text: "その角度が年周視差。小さな角度を測れば、星までの距離がほどける。", pattern: "parallax" },
-      { speaker: "近星の測り手61 Cygni", text: "星座の絵の奥に、本当の距離の層を重ねて見よ。", pattern: "normal" }
+      { speaker: "近星の測り手白鳥座61番星", text: "私は白鳥座に潜む近い恒星。派手ではないが、距離測定の歴史に名を残した。", pattern: "normal" },
+      { speaker: "近星の測り手白鳥座61番星", text: "地球が公転すると、近い星は遠い背景星に対してわずかにずれる。", pattern: "parallax" },
+      { speaker: "近星の測り手白鳥座61番星", text: "その角度が年周視差。小さな角度を測れば、星までの距離がほどける。", pattern: "parallax" },
+      { speaker: "近星の測り手白鳥座61番星", text: "星座の絵の奥に、本当の距離の層を重ねて見よ。", pattern: "normal" }
     ]
   },
   mira: {
@@ -7685,8 +7685,8 @@ const OBSERVE_AGENDA = [
     chapter: "第2章：四季の星空と恒星",
     sections: [
       { label: "2-1. 春の星空：恒星の種類・連星・質量", bodies: ["アルクトゥルス", "スピカ", "レグルス", "ミザール", "アルコル", "カペラ", "かみのけ座星団"] },
-      { label: "2-2. 夏の星空：恒星までの距離と天の川", bodies: ["ベガ", "アルタイル", "デネブ", "アルビレオ", "61 Cygni", "バーナード星", "プロキシマ・ケンタウリ", "アンタレス", "天の川"] },
-      { label: "2-3. 秋の星空：変光星と宇宙の距離はしご", bodies: ["ミラ", "アルゴル", "δケフェイ", "RR Lyrae", "M31", "M33", "M31内のセファイド"] },
+      { label: "2-2. 夏の星空：恒星までの距離と天の川", bodies: ["ベガ", "アルタイル", "デネブ", "アルビレオ", "白鳥座61番星", "バーナード星", "プロキシマ・ケンタウリ", "アンタレス", "天の川"] },
+      { label: "2-3. 秋の星空：変光星と宇宙の距離はしご", bodies: ["ミラ", "アルゴル", "δケフェイ", "こと座RR星", "M31", "M33", "M31内のセファイド"] },
       { label: "2-4. 冬の星空：恒星の温度・組成・進化", bodies: ["シリウス", "シリウスB", "リゲル", "ベテルギウス", "プロキオン", "カペラ", "アルデバラン", "ポルックス", "オリオン大星雲"] },
       { label: "2-5. 系外惑星発見ルート：恒星の異常から惑星に気づく", bodies: ["51 Pegasi", "51 Pegasi b", "HD 209458", "HD 209458 b", "プロキシマ・ケンタウリ", "プロキシマb", "TRAPPIST-1", "WASP-39", "WASP-39b", "ケプラー186", "ケプラー186f", "ケプラー452", "ケプラー452b"] }
     ]
@@ -7728,7 +7728,7 @@ const OBSERVE_AGENDA_ITEM_IDS = {
   バーナード星: "catalog-barnards-star",
   アンタレス: "catalog-antares",
   "δケフェイ": "catalog-delta-cephei",
-  "RR Lyrae": "catalog-rr-lyrae",
+  "こと座RR星": "catalog-rr-lyrae",
   シリウスB: "catalog-sirius-b",
   プロキオン: "catalog-procyon",
   カペラ: "catalog-capella",
