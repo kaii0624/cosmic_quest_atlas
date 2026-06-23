@@ -14,7 +14,7 @@ const KINGDOMS = {
         y: 42,
         label: "ミザール",
         storyId: "mizar",
-        asset: "./assets/mizar-enemy-normal.png"
+        badgeAsset: "./assets/mizar-enemy-normal.png"
       },
       {
         id: "arcturus",
@@ -22,7 +22,7 @@ const KINGDOMS = {
         y: 71,
         label: "アルクトゥルス",
         storyId: "arcturus",
-        asset: "./assets/ui-star-orb-arcturus.png"
+        badgeAsset: "./assets/ui-star-orb-arcturus.png"
       },
       {
         id: "spica",
@@ -30,7 +30,7 @@ const KINGDOMS = {
         y: 76,
         label: "スピカ",
         storyId: "spica",
-        asset: "./assets/ui-star-orb-spica.png"
+        badgeAsset: "./assets/ui-star-orb-spica.png"
       }
     ]
   },
@@ -49,7 +49,7 @@ const KINGDOMS = {
         y: 31,
         label: "ベガ",
         storyId: "vega",
-        asset: "./assets/ui-star-orb-vega.png"
+        badgeAsset: "./assets/ui-star-orb-vega.png"
       },
       {
         id: "deneb",
@@ -57,7 +57,7 @@ const KINGDOMS = {
         y: 78,
         label: "デネブ",
         storyId: "deneb",
-        asset: "./assets/ui-star-orb-deneb.png"
+        badgeAsset: "./assets/ui-star-orb-deneb.png"
       },
       {
         id: "albireo",
@@ -65,7 +65,7 @@ const KINGDOMS = {
         y: 42,
         label: "アルビレオ",
         storyId: "albireo",
-        asset: "./assets/ui-star-orb-albireo.png"
+        badgeAsset: "./assets/ui-star-orb-albireo.png"
       },
       {
         id: "cygni61",
@@ -73,7 +73,7 @@ const KINGDOMS = {
         y: 82,
         label: "61 Cygni",
         storyId: "cygni61",
-        asset: "./assets/cygni61-enemy-normal.png"
+        badgeAsset: "./assets/cygni61-enemy-normal.png"
       }
     ]
   },
@@ -92,7 +92,7 @@ const KINGDOMS = {
         y: 47,
         label: "アルゴル",
         storyId: "algol",
-        asset: "./assets/algol-enemy-normal.png"
+        badgeAsset: "./assets/algol-enemy-normal.png"
       },
       {
         id: "mira",
@@ -100,7 +100,7 @@ const KINGDOMS = {
         y: 70,
         label: "ミラ",
         storyId: "mira",
-        asset: "./assets/ui-star-orb-mira.png"
+        badgeAsset: "./assets/ui-star-orb-mira.png"
       },
       {
         id: "m31",
@@ -108,7 +108,7 @@ const KINGDOMS = {
         y: 76,
         label: "M31",
         storyId: "m31",
-        asset: "./assets/m31-enemy-normal.png"
+        badgeAsset: "./assets/m31-enemy-normal.png"
       }
     ]
   },
@@ -127,7 +127,7 @@ const KINGDOMS = {
         y: 70,
         label: "リゲル",
         storyId: "rigel",
-        asset: "./assets/ui-star-orb-rigel.png"
+        badgeAsset: "./assets/ui-star-orb-rigel.png"
       },
       {
         id: "betelgeuse",
@@ -135,7 +135,7 @@ const KINGDOMS = {
         y: 32,
         label: "ベテルギウス",
         storyId: "betelgeuse",
-        asset: "./assets/ui-star-orb-betelgeuse.png"
+        badgeAsset: "./assets/ui-star-orb-betelgeuse.png"
       },
       {
         id: "sirius",
@@ -143,7 +143,7 @@ const KINGDOMS = {
         y: 83,
         label: "シリウス",
         storyId: "sirius",
-        asset: "./assets/ui-star-orb-sirius.png"
+        badgeAsset: "./assets/ui-star-orb-sirius.png"
       }
     ]
   },
@@ -8153,7 +8153,7 @@ function getObservableItems() {
         kingdomId,
         kingdomName: kingdom.name,
         kind: point.kind ?? "star",
-        asset: point.asset ?? "",
+        asset: point.badgeAsset ?? point.asset ?? "",
         title: story?.name ?? (point.id === "rigel" ? "青白き巨星リゲル" : point.label),
         enemyImage: story?.enemy?.normal ?? story?.portrait ?? "",
         enemyAlt: story?.name ?? point.label,
