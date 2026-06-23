@@ -13,21 +13,24 @@ const KINGDOMS = {
         x: 49,
         y: 42,
         label: "ミザール",
-        storyId: "mizar"
+        storyId: "mizar",
+        asset: "./assets/mizar-enemy-normal.png"
       },
       {
         id: "arcturus",
         x: 28,
         y: 71,
         label: "アルクトゥルス",
-        storyId: "arcturus"
+        storyId: "arcturus",
+        asset: "./assets/ui-star-orb-arcturus.png"
       },
       {
         id: "spica",
         x: 73,
         y: 76,
         label: "スピカ",
-        storyId: "spica"
+        storyId: "spica",
+        asset: "./assets/ui-star-orb-spica.png"
       }
     ]
   },
@@ -45,28 +48,32 @@ const KINGDOMS = {
         x: 74,
         y: 31,
         label: "ベガ",
-        storyId: "vega"
+        storyId: "vega",
+        asset: "./assets/ui-star-orb-vega.png"
       },
       {
         id: "deneb",
         x: 49,
         y: 78,
         label: "デネブ",
-        storyId: "deneb"
+        storyId: "deneb",
+        asset: "./assets/ui-star-orb-deneb.png"
       },
       {
         id: "albireo",
         x: 25,
         y: 42,
         label: "アルビレオ",
-        storyId: "albireo"
+        storyId: "albireo",
+        asset: "./assets/ui-star-orb-albireo.png"
       },
       {
         id: "cygni61",
         x: 18,
         y: 82,
         label: "61 Cygni",
-        storyId: "cygni61"
+        storyId: "cygni61",
+        asset: "./assets/cygni61-enemy-normal.png"
       }
     ]
   },
@@ -84,21 +91,24 @@ const KINGDOMS = {
         x: 13,
         y: 47,
         label: "アルゴル",
-        storyId: "algol"
+        storyId: "algol",
+        asset: "./assets/algol-enemy-normal.png"
       },
       {
         id: "mira",
         x: 36,
         y: 70,
         label: "ミラ",
-        storyId: "mira"
+        storyId: "mira",
+        asset: "./assets/ui-star-orb-mira.png"
       },
       {
         id: "m31",
         x: 84,
         y: 76,
         label: "M31",
-        storyId: "m31"
+        storyId: "m31",
+        asset: "./assets/m31-enemy-normal.png"
       }
     ]
   },
@@ -116,21 +126,24 @@ const KINGDOMS = {
         x: 57,
         y: 70,
         label: "リゲル",
-        storyId: "rigel"
+        storyId: "rigel",
+        asset: "./assets/ui-star-orb-rigel.png"
       },
       {
         id: "betelgeuse",
         x: 39,
         y: 32,
         label: "ベテルギウス",
-        storyId: "betelgeuse"
+        storyId: "betelgeuse",
+        asset: "./assets/ui-star-orb-betelgeuse.png"
       },
       {
         id: "sirius",
         x: 78,
         y: 83,
         label: "シリウス",
-        storyId: "sirius"
+        storyId: "sirius",
+        asset: "./assets/ui-star-orb-sirius.png"
       }
     ]
   },
