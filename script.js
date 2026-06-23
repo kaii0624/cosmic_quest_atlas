@@ -8411,13 +8411,19 @@ function showObservationLoading(onComplete, duration = OBSERVATION_LOADING_DURAT
   renderNextLoadingConstellation();
   observationLoading?.classList.remove("is-hidden");
 
+  let readyToFinish = false;
+
   observationLoadingCycleTimer = setInterval(() => {
+    if (readyToFinish) {
+      hideObservationLoading();
+      onComplete?.();
+      return;
+    }
     renderNextLoadingConstellation();
   }, OBSERVATION_LOADING_STEP);
 
   observationLoadingTimer = setTimeout(() => {
-    hideObservationLoading();
-    onComplete?.();
+    readyToFinish = true;
   }, duration);
 }
 
