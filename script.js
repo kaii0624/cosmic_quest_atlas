@@ -9537,7 +9537,20 @@ function renderAppScreen() {
   appScreen.innerHTML = renderers[state.mode]?.() ?? "";
   if (state.mode === "library") {
     restoreLibraryScrollPosition();
+  } else if (state.mode === "observe") {
+    restoreTabScrollPosition(".observe-tab .app-scroll-area", "observeScrollTop");
+  } else if (state.mode === "quests") {
+    restoreTabScrollPosition(".quest-tab .app-scroll-area", "questScrollTop");
   }
+}
+
+function restoreTabScrollPosition(selector, stateKey) {
+  const restore = () => {
+    const area = appScreen.querySelector(selector);
+    if (area) area.scrollTop = state[stateKey] ?? 0;
+  };
+  restore();
+  requestAnimationFrame(restore);
 }
 
 function restoreLibraryScrollPosition() {
@@ -10868,6 +10881,8 @@ appScreen.addEventListener("click", (event) => {
 
   const questButton = target?.closest("[data-quest-id]");
   if (questButton) {
+    const scrollArea = questButton.closest(".app-scroll-area");
+    state.questScrollTop = scrollArea?.scrollTop ?? state.questScrollTop ?? 0;
     state.focusedQuestId = questButton.dataset.questId;
     state.selectedQuestId = null;
     render();
@@ -10876,6 +10891,8 @@ appScreen.addEventListener("click", (event) => {
 
   const observeButton = target?.closest("[data-observe-id]");
   if (observeButton) {
+    const scrollArea = observeButton.closest(".app-scroll-area");
+    state.observeScrollTop = scrollArea?.scrollTop ?? state.observeScrollTop ?? 0;
     state.selectedObserveId = observeButton.dataset.observeId;
     render();
     return;
