@@ -2483,37 +2483,37 @@ const OBSERVATION_TOOLS = [
     id: "astrometry",
     title: "測角器",
     image: "./assets/observation-tool-astrometry-v1.png",
-    rewardIds: ["cygnus-parallax-scroll", "proper-motion-scroll"]
+    rewardIds: ["cygnus-parallax-scroll", "proper-motion-scroll", "tycho-precision-record-scroll", "bradley-stellar-aberration-discovery-scroll", "bessel-stellar-distance-catalogue-scroll", "le-verrier-celestial-mechanics-scroll"]
   },
   {
     id: "spectroscope",
     title: "分光器",
     image: "./assets/observation-tool-spectroscope-v1.png",
-    rewardIds: ["spica-spectrum-scroll", "helium-solar-spectrum-scroll", "spectrum-redshift-scroll"]
+    rewardIds: ["spica-spectrum-scroll", "helium-solar-spectrum-scroll", "spectrum-redshift-scroll", "payne-stellar-hydrogen-scroll"]
   },
   {
     id: "photometer",
     title: "測光器",
     image: "./assets/observation-tool-ccd-photometer-v1.png",
-    rewardIds: ["algol-eclipse-scroll", "catalog-hd-209458b-scroll", "venus-phases-scroll"]
+    rewardIds: ["algol-eclipse-scroll", "catalog-hd-209458b-scroll", "venus-phases-scroll", "halley-comet-period-scroll", "leavitt-period-luminosity-ruler-scroll"]
   },
   {
     id: "radio",
     title: "電波アンテナ",
     image: "./assets/observation-tool-radio-antenna-v1.png",
-    rewardIds: ["pulsar-scroll", "cmb-scroll"]
+    rewardIds: ["pulsar-scroll", "cmb-scroll", "penzias-cmb-radio-detection-scroll", "schmidt-quasar-redshift-scroll"]
   },
   {
     id: "infrared",
     title: "赤外線観測器",
     image: "./assets/observation-tool-infrared-v1.png",
-    rewardIds: ["catalog-beta-pictoris-scroll", "catalog-tw-hydrae-scroll", "catalog-fomalhaut-scroll"]
+    rewardIds: ["catalog-beta-pictoris-scroll", "catalog-tw-hydrae-scroll", "catalog-fomalhaut-scroll", "herschel-deepsky-survey-scroll"]
   },
   {
     id: "xray",
     title: "X線検出器",
     image: "./assets/observation-tool-xray-detector-v1.png",
-    rewardIds: ["xray-blackhole-scroll"]
+    rewardIds: ["xray-blackhole-scroll", "chandrasekhar-mass-limit-scroll", "rubin-rotation-curve-scroll", "zwicky-dark-cluster-mass-scroll"]
   },
   {
     id: "spacetime",
@@ -3129,6 +3129,126 @@ LIBRARY_SCROLLS.push(
     tier: "major",
     lesson: "BH影を直接画像化",
     description: "M87中心ブラックホールのシャドウ画像は、ブラックホールを直接的に検証する重要成果。"
+  }
+);
+
+LIBRARY_SCROLLS.push(
+  {
+    id: "tycho-precision-record-scroll",
+    title: "精密観測記録",
+    period: "クエスト",
+    image: "./assets/scroll-proper-motion.png",
+    tier: "major",
+    lesson: "精密な数字が理論を変える",
+    description: "ティコ・ブラーエの膨大で精密な惑星位置記録は、ケプラーの法則発見の土台となった。高精度観測が科学を動かす。"
+  },
+  {
+    id: "halley-comet-period-scroll",
+    title: "周期彗星の軌道",
+    period: "クエスト",
+    image: "./assets/reward-scroll-minor-mars-retrograde.png",
+    tier: "major",
+    lesson: "彗星も重力に従う",
+    description: "ハレーはケプラーの法則とニュートン重力から彗星の周期を計算し、同じ彗星が繰り返し回帰することを予言した。"
+  },
+  {
+    id: "bradley-stellar-aberration-discovery-scroll",
+    title: "恒星光行差の発見",
+    period: "クエスト",
+    image: "./assets/scroll-stellar-aberration.png",
+    tier: "major",
+    lesson: "地球公転と光速で星がずれる",
+    description: "ブラッドリーは恒星の見かけ位置が年周期でずれることを発見し、光行差として説明した。地球公転の直接証拠になった。"
+  },
+  {
+    id: "bessel-stellar-distance-catalogue-scroll",
+    title: "恒星距離目録",
+    period: "クエスト",
+    image: "./assets/reward-scroll-cygnus-parallax.png",
+    tier: "major",
+    lesson: "年周視差で実距離を測定",
+    description: "ベッセルは白鳥座61番星の年周視差を初めて精密に測定し、11光年という恒星距離を実測した天文学的快挙を達成した。"
+  },
+  {
+    id: "herschel-deepsky-survey-scroll",
+    title: "深空掃天目録",
+    period: "クエスト",
+    image: "./assets/scroll-m31-galaxy.png",
+    tier: "major",
+    lesson: "掃天で銀河・星雲を発見",
+    description: "ハーシェルは大型望遠鏡で体系的な掃天観測を行い、天王星発見に加え数千の星雲・星団を記録して深空天文学を開いた。"
+  },
+  {
+    id: "payne-stellar-hydrogen-scroll",
+    title: "恒星は水素とヘリウム",
+    period: "クエスト",
+    image: "./assets/obs-helium-spectrum.png",
+    tier: "major",
+    lesson: "スペクトルで恒星組成を読む",
+    description: "ペインはスペクトル分析から恒星が主に水素とヘリウムで構成されることを示した。当初は信じられなかったが、後に天文学の基礎知識となった。"
+  },
+  {
+    id: "leavitt-period-luminosity-ruler-scroll",
+    title: "周期光度関係",
+    period: "クエスト",
+    image: "./assets/scroll-cepheid-distance.png",
+    tier: "major",
+    lesson: "変光周期で宇宙距離を測る",
+    description: "リービットはセファイド変光星の周期が長いほど本当の明るさが増すことを発見。宇宙の距離測定の根本的な物差しになった。"
+  },
+  {
+    id: "chandrasekhar-mass-limit-scroll",
+    title: "チャンドラセカール限界",
+    period: "クエスト",
+    image: "./assets/scroll-white-dwarf.png",
+    tier: "major",
+    lesson: "白色矮星には質量の上限がある",
+    description: "チャンドラセカールは縮退電子圧の計算から、白色矮星が支えられる質量の上限（太陽質量の約1.4倍）を導いた。これを超えると超新星爆発や中性子星になる。"
+  },
+  {
+    id: "penzias-cmb-radio-detection-scroll",
+    title: "宇宙背景放射の受信",
+    period: "クエスト",
+    image: "./assets/scroll-cmb.png",
+    tier: "major",
+    lesson: "全方向の電波ノイズはビッグバンの残光",
+    description: "ペンジアスとウィルソンはホーン型電波アンテナで消えない3Kのノイズを発見し、それが宇宙マイクロ波背景放射と判明。ビッグバン宇宙論の決定的証拠となった。"
+  },
+  {
+    id: "rubin-rotation-curve-scroll",
+    title: "銀河回転曲線",
+    period: "クエスト",
+    image: "./assets/scroll-dark-matter.png",
+    tier: "major",
+    lesson: "外縁部まで速度が落ちない銀河",
+    description: "ルービンは多くの銀河の回転速度を測定し、外縁部でも速度が落ちないことを示した。見える物質だけでは説明できず、銀河を包む暗黒物質ハローの存在を強く示した。"
+  },
+  {
+    id: "le-verrier-celestial-mechanics-scroll",
+    title: "天体力学の計算",
+    period: "クエスト",
+    image: "./assets/obs-neptune-prediction.png",
+    tier: "major",
+    lesson: "軌道のずれから惑星位置を計算",
+    description: "ルヴェリエは天王星の軌道のずれから未知惑星の位置を計算で予言し、海王星を発見した。観測ではなく計算で天体を「発見」した先駆的な例。"
+  },
+  {
+    id: "zwicky-dark-cluster-mass-scroll",
+    title: "銀河団の暗黒質量",
+    period: "クエスト",
+    image: "./assets/scroll-dark-matter.png",
+    tier: "major",
+    lesson: "見える質量では重力が足りない",
+    description: "ツビッキーはかみのけ座銀河団の銀河の速度が、見える質量から予測されるより遥かに大きいことを示し、見えない暗黒物質の存在を初めて提唱した。"
+  },
+  {
+    id: "schmidt-quasar-redshift-scroll",
+    title: "クエーサーの大赤方偏移",
+    period: "クエスト",
+    image: "./assets/scroll-quasar.png",
+    tier: "major",
+    lesson: "遠方AGNが異常に明るく輝く",
+    description: "シュミットは3C 273のスペクトルが大赤方偏移を示すことを解読し、クエーサーが遠方銀河の活動中心核であることを明らかにした。"
   }
 );
 
@@ -7601,6 +7721,841 @@ QUESTS.push(
     complete: [
       "電波のパルサー、X線のブラックホール。光以外の使者たちが、隠れた宇宙を映し出した。",
       "そしてついに、時空のさざ波――重力波さえ捉える時が来た。これからは、宇宙を『聴く』のだ。これこそ、新しい天文学の幕開けだ。受け取ってくれ。"
+    ]
+  }
+);
+
+QUESTS.push(
+  {
+    id: "tycho-precision",
+    number: 13,
+    title: "精密観測の誇り",
+    requester: "ティコ・ブラーエ",
+    requesterImage: "./assets/quest-requester-tycho-brahe.png",
+    mainImage: "./assets/quest-main-heliocentric.png",
+    objective: "惑星の精密な位置データを揃える",
+    conversation: "目盛りは嘘をつかない。火星の逆行と土星の周期を精確に記録し、天体運動の真の姿を示せ。",
+    requesterStats: {
+      birthYear: "1546年",
+      fullName: "Tycho Brahe",
+      achievement: "望遠鏡なしで史上最高精度の惑星位置を観測し続け、ケプラーの法則発見の基礎データを提供した。"
+    },
+    summary: "惑星の正確な位置記録を集めてほしい。",
+    detail: "火星の逆行と土星のケプラー第3法則データを揃え、精密観測がどれほど天文学を動かすかを示す依頼。",
+    reward: "精密観測記録の星章",
+    rewardScrollId: "tycho-precision-record-scroll",
+    requiredScrolls: [
+      { id: "mars-retrograde-scroll", label: "火星の逆行" },
+      { id: "saturn-kepler3-scroll", label: "ケプラー第3法則" }
+    ],
+    intro: [
+      "私はティコ・ブラーエ。四半世紀にわたり、天体の位置を毎夜記録し続けた。",
+      "望遠鏡のない時代に、目盛りと執念だけで精度を上げた。誤差1分角以下――それが私の誇りだ。",
+      "だが精密な数字は、それを読み解く者があってこそ意味を持つ。火星と土星の記録を持っているか？"
+    ],
+    facts: [
+      {
+        id: "mars-retrograde-scroll",
+        label: "火星の逆行",
+        ask: [
+          "まず火星だ。火星の逆行は、惑星観測者の最大の難問だった。",
+          "私は何千夜も火星の位置を記し続けた。逆行の経路を追えば、理論と現実のわずかなずれが見えてくる。",
+          "火星の逆行を観測した記録を、見せてもらえないか？"
+        ],
+        thanks: [
+          "ふむ、これだ。この逆行の記録こそ、ケプラーが楕円軌道の法則に辿り着いた素材だ。",
+          "数字は正直だ。どんな理論より、まず観測を積み重ねることが先だ。よくやった。"
+        ]
+      },
+      {
+        id: "saturn-kepler3-scroll",
+        label: "ケプラー第3法則",
+        ask: [
+          "次は土星だ。土星の公転周期は約29.5年。軌道は広く、動きは遅い。",
+          "周期と軌道の比を正確に記録すれば、惑星運動に深い規則があることが見えてくる。",
+          "土星の観測と周期の関係を示す記録は、持っているか？"
+        ],
+        thanks: [
+          "土星の周期と軌道――これがケプラー第3法則の骨格だ。",
+          "精密な観測なくして、この法則はなかった。これを受け取ってくれ。"
+        ]
+      }
+    ],
+    revisit: [
+      "また来たか。記録を刻む手は、一日たりとも止めていない。",
+      "前に頼んだあの観測データ、用意できたか？"
+    ],
+    complete: [
+      "火星の逆行、土星の周期――どちらも、精密な数字が理論を変えた。",
+      "観測とは、空を信頼して数字を信じることだ。その精度こそが、宇宙の扉を開く鍵になる。感謝する。"
+    ]
+  },
+  {
+    id: "halley-comet",
+    number: 14,
+    title: "彗星の帰還",
+    requester: "エドモンド・ハレー",
+    requesterImage: "./assets/quest-requester-edmond-halley.png",
+    mainImage: "./assets/battle-bg-planetarium.png",
+    objective: "彗星の軌道計算の根拠を集める",
+    conversation: "重力法則と惑星周期を組み合わせれば、彗星の軌道も計算できる。その証拠を揃えてくれ。",
+    requesterStats: {
+      birthYear: "1656年",
+      fullName: "Edmond Halley",
+      achievement: "ニュートン力学を彗星に適用し、1682年の彗星が76年周期で回帰することを予言した。"
+    },
+    summary: "重力と周期から彗星の軌道を計算できることを示してほしい。",
+    detail: "ケプラー第3法則と万有引力を組み合わせて彗星の周期を導く、計算天文学の先駆け的依頼。",
+    reward: "周期彗星の星章",
+    rewardScrollId: "halley-comet-period-scroll",
+    requiredScrolls: [
+      { id: "saturn-kepler3-scroll", label: "ケプラー第3法則" },
+      { id: "universal-gravity-scroll", label: "万有引力" }
+    ],
+    intro: [
+      "私はエドモンド・ハレー。1682年、空に大きな彗星を見た。",
+      "だが同じような彗星が1531年と1607年にも現れていた記録がある。これは偶然か、それとも同じ天体が戻ってきたのか？",
+      "ニュートンが示した重力の法則と惑星の周期規則を合わせれば、彗星の軌道を計算できるはずだ。力を貸してくれ。"
+    ],
+    facts: [
+      {
+        id: "saturn-kepler3-scroll",
+        label: "ケプラー第3法則",
+        ask: [
+          "まず、惑星の公転周期と軌道の関係だ。ケプラーが示したこの法則は、彗星にも適用できるはずだ。",
+          "周期が76年なら、軌道の大きさを計算で求められる。それを使えば、同じ天体かどうか見極められる。",
+          "周期と軌道の関係を記した観測記録は持っているか？"
+        ],
+        thanks: [
+          "ケプラーの法則の数値を見せてくれてありがとう。",
+          "これで彗星の軌道半径を求める計算の準備ができた。次の材料が必要だ。"
+        ]
+      },
+      {
+        id: "universal-gravity-scroll",
+        label: "万有引力",
+        ask: [
+          "次に、ニュートンの万有引力だ。彗星も惑星も、同じ重力法則に従うはずだ。",
+          "引力があるから、彗星は楕円軌道を描いて戻ってくる。この力を組み合わせれば、次の回帰の時期を計算できる。",
+          "万有引力の法則を示す観測や理論の記録は、ないか？"
+        ],
+        thanks: [
+          "万有引力を受け取った。これでケプラー法則と合わせ、彗星の軌道が決まる。",
+          "計算の結果、この彗星は1758年に戻るはずだ。私はもうその頃はいないだろうが、必ず帰ってくる。受け取ってくれ。"
+        ]
+      }
+    ],
+    revisit: [
+      "また来たか。計算は夜ごと進んでいる。",
+      "あの記録は手に入ったか？彗星の帰還の計算に必要なのだ。"
+    ],
+    complete: [
+      "ケプラーの周期則と、ニュートンの引力法則。二つを合わせて、彗星の軌道を計算した。",
+      "私の死後に彗星が戻り、この予言が正しいと証明されれば、それがすべての答えだ。これを持っていてくれ。"
+    ]
+  },
+  {
+    id: "bradley-aberration",
+    number: 15,
+    title: "光行差の謎",
+    requester: "ジェームズ・ブラッドリー",
+    requesterImage: "./assets/quest-requester-james-bradley.png",
+    mainImage: "./assets/battle-bg-planetarium.png",
+    objective: "地球公転と恒星位置のずれを確認する",
+    conversation: "地球が動いているなら、望遠鏡の向きで星の見え方が変わるはずだ。年周視差とは違うそのずれを探せ。",
+    requesterStats: {
+      birthYear: "1693年",
+      fullName: "James Bradley",
+      achievement: "恒星の光行差を発見し、地球公転の直接証拠を示した。光速の最初の精密測定にも貢献した。"
+    },
+    summary: "恒星位置の年間変化を地球公転と光速で説明したい。",
+    detail: "地動説と望遠鏡観測を前提に、光行差という新現象を発見した過程を辿る依頼。",
+    reward: "光行差の星章",
+    rewardScrollId: "bradley-stellar-aberration-discovery-scroll",
+    requiredScrolls: [
+      { id: "heliocentric-theory-scroll", label: "地動説" },
+      { id: "telescope-observation-scroll", label: "望遠鏡観測" }
+    ],
+    intro: [
+      "私はジェームズ・ブラッドリー。恒星の年周視差を探していたが、見つかったのは別のものだった。",
+      "星の位置が年間でずれているのに、そのパターンが視差の予測と一致しない。何かが見えていないのだ。",
+      "地動説が正しく、望遠鏡があるなら――光の速さと地球の動きが絡んでいるかもしれない。力を貸してくれ。"
+    ],
+    facts: [
+      {
+        id: "heliocentric-theory-scroll",
+        label: "地動説",
+        ask: [
+          "まず確認させてくれ。地球が太陽の周りを回っているという前提が必要だ。",
+          "地球が動いているからこそ、望遠鏡を少し傾けないと正確に星を捉えられない――それが光行差の本質だ。",
+          "地動説を支える観測記録は、持っているか？"
+        ],
+        thanks: [
+          "地動説の証拠を確認した。地球は確かに動いている。",
+          "では次の材料が揃えば、光行差の原因を特定できるはずだ。"
+        ]
+      },
+      {
+        id: "telescope-observation-scroll",
+        label: "望遠鏡観測",
+        ask: [
+          "次に、精密な望遠鏡観測だ。裸眼では気づけない0.01度以下のずれを、長焦点の望遠鏡で記録する。",
+          "年間を通じて星の位置を何百回と測ることで、ずれのパターンが見えてくる。",
+          "精密な望遠鏡観測を記した記録は、あるか？"
+        ],
+        thanks: [
+          "望遠鏡観測の記録が揃った。このデータが鍵だ。",
+          "地球の公転方向と光速の比から、光行差の角度を計算できた。これを受け取ってくれ。"
+        ]
+      }
+    ],
+    revisit: [
+      "また来たか。星の位置記録は続けている。",
+      "あの資料は揃ったか？光行差の謎を解く最後のピースが要るのだ。"
+    ],
+    complete: [
+      "地動説と精密な望遠鏡観測。この二つがあってこそ、光行差という現象が意味を持つ。",
+      "地球は動いている。そしてその動きは、光の進む方向さえも変えてしまう。宇宙の精緻さに、今もって驚かされる。"
+    ]
+  },
+  {
+    id: "bessel-parallax",
+    number: 16,
+    title: "恒星距離の測定",
+    requester: "フリードリヒ・ベッセル",
+    requesterImage: "./assets/quest-requester-friedrich-bessel.png",
+    mainImage: "./assets/battle-bg-planetarium.png",
+    objective: "年周視差と固有運動で恒星距離を割り出す",
+    conversation: "視差と固有運動を組み合わせれば、最も近い恒星の距離が実測できる。その証拠を集めてくれ。",
+    requesterStats: {
+      birthYear: "1784年",
+      fullName: "Friedrich Wilhelm Bessel",
+      achievement: "白鳥座61番星の年周視差を1838年に初測定。史上初めて恒星の距離を直接測定した。"
+    },
+    summary: "年周視差と固有運動から恒星の実距離を算出したい。",
+    detail: "年周視差の観測と恒星の固有運動を組み合わせて、観測可能な最近傍恒星の距離を実測する依頼。",
+    reward: "恒星距離目録の星章",
+    rewardScrollId: "bessel-stellar-distance-catalogue-scroll",
+    requiredScrolls: [
+      { id: "cygnus-parallax-scroll", label: "年周視差" },
+      { id: "proper-motion-scroll", label: "固有運動" }
+    ],
+    intro: [
+      "私はベッセル。白鳥座61番星の固有運動が大きいことに気づき、この星が近いに違いないと考えた。",
+      "近ければ年周視差が大きく測れる。1838年、私はついにその角度を捉えた。",
+      "恒星までの距離を実測するには、二つの観測事実が要る。手伝ってくれないか？"
+    ],
+    facts: [
+      {
+        id: "cygnus-parallax-scroll",
+        label: "年周視差",
+        ask: [
+          "まず年周視差だ。地球が太陽の周りを回ると、近い恒星が半年ごとに左右にわずかにずれて見える。",
+          "そのずれの角度――年周視差から、三角測量の原理で距離が計算できる。",
+          "年周視差の観測記録は、持っているか？"
+        ],
+        thanks: [
+          "年周視差の記録をありがとう。白鳥座61番星の視差は0.314秒角だった。",
+          "これを距離に換算すると、約11光年。初めて恒星の距離が実測された瞬間だ。"
+        ]
+      },
+      {
+        id: "proper-motion-scroll",
+        label: "固有運動",
+        ask: [
+          "もう一つ、固有運動だ。恒星が天球上でゆっくり動く固有運動が大きいほど、近くにいる可能性が高い。",
+          "白鳥座61番星は当時知られていた中で最大級の固有運動を持っていた。これが観測対象の選定の鍵だった。",
+          "恒星の固有運動を示す記録は、あるか？"
+        ],
+        thanks: [
+          "固有運動の記録が揃った。近い星を絞り込む戦略が、これで完成した。",
+          "視差と固有運動の組み合わせは、恒星天文学の基本だ。これを受け取ってくれ。"
+        ]
+      }
+    ],
+    revisit: [
+      "また来たか。望遠鏡の目盛りはいつも正直だ。",
+      "あの観測記録は揃ったか？恒星距離の計算に欠かせない。"
+    ],
+    complete: [
+      "年周視差と固有運動。二つを組み合わせれば、恒星距離が実測できる。",
+      "宇宙はずっと遠かった。だがこの方法で、その距離に数字がついた。感謝する。"
+    ]
+  },
+  {
+    id: "herschel-survey",
+    number: 17,
+    title: "深空掃天の旅",
+    requester: "ウィリアム・ハーシェル",
+    requesterImage: "./assets/quest-requester-william-herschel.png",
+    mainImage: "./assets/battle-bg-planetarium.png",
+    objective: "天王星の発見と銀河の深さを把握する",
+    conversation: "大型望遠鏡で系統的に空を掃けば、惑星の向こうに銀河がある。その広がりを記録しよう。",
+    requesterStats: {
+      birthYear: "1738年",
+      fullName: "Frederick William Herschel",
+      achievement: "天王星を発見し、体系的掃天観測で2500以上の星雲・星団を記録した。銀河系の形状を初めて推定した。"
+    },
+    summary: "太陽系の端と銀河の深さを示す観測を集めてほしい。",
+    detail: "天王星の傾きという太陽系の端の観測と、M31銀河の距離を合わせて宇宙の深さを理解する依頼。",
+    reward: "深空掃天の星章",
+    rewardScrollId: "herschel-deepsky-survey-scroll",
+    requiredScrolls: [
+      { id: "uranus-tilt-scroll", label: "天王星の傾き" },
+      { id: "galaxy-distance-scroll", label: "M31銀河距離" }
+    ],
+    intro: [
+      "私はウィリアム・ハーシェル。1781年に天王星を見つけた――偶然ではなく、系統的な掃天の結果として。",
+      "太陽系がこれほど広いと知ってから、私はさらに遠くへ目を向けた。星雲とは何か、どれほど遠いのか？",
+      "二つの観測が必要だ。力を貸してくれないか？"
+    ],
+    facts: [
+      {
+        id: "uranus-tilt-scroll",
+        label: "天王星の傾き",
+        ask: [
+          "まず天王星だ。私が発見したこの惑星は、自転軸が98度傾いている――ほぼ横倒しだ。",
+          "こんな惑星が存在すること自体、太陽系の多様性を示している。掃天によってのみ見えてくる事実だ。",
+          "天王星の傾きを示す観測記録は持っているか？"
+        ],
+        thanks: [
+          "天王星の傾き――これが太陽系の端で起きていることの証だ。",
+          "系統的に空を見ることで、想像を超えた天体が見つかる。次の材料を頼む。"
+        ]
+      },
+      {
+        id: "galaxy-distance-scroll",
+        label: "M31銀河距離",
+        ask: [
+          "次に銀河だ。空に見える星雲のうち、いくつかは天の川の外にある別の銀河かもしれない。",
+          "アンドロメダ銀河M31の距離がわかれば、銀河系の外がどれほど遠いかが見えてくる。",
+          "M31銀河の距離を示す観測は、あるか？"
+        ],
+        thanks: [
+          "M31銀河の距離……恒星の向こうに、もう一つの銀河がある。",
+          "掃天を続けた甲斐があった。深空の地図を作る第一歩だ。これを受け取ってくれ。"
+        ]
+      }
+    ],
+    revisit: [
+      "また来たか。今夜も大型望遠鏡を向けている。",
+      "あの記録は揃ったか？掃天の続きに必要なのだ。"
+    ],
+    complete: [
+      "天王星から銀河まで――宇宙の広さは、系統的な観測だけが明かしてくれる。",
+      "掃天とは、空全体を信頼することだ。見えないものも、必ず記録の中にある。ありがとう。"
+    ]
+  },
+  {
+    id: "payne-stellar-composition",
+    number: 18,
+    title: "恒星の素顔",
+    requester: "セシリア・ペイン",
+    requesterImage: "./assets/quest-requester-cecilia-payne.png",
+    mainImage: "./assets/battle-bg-planetarium.png",
+    objective: "スペクトルから恒星の組成を読み解く",
+    conversation: "スペクトルの暗線が語るのは、恒星の温度だけではない。その成分そのものを読め。",
+    requesterStats: {
+      birthYear: "1900年",
+      fullName: "Cecilia Helena Payne-Gaposchkin",
+      achievement: "恒星スペクトルから水素とヘリウムが圧倒的主成分であることを示した。当初否定されたが後に正当化された。"
+    },
+    summary: "恒星のスペクトルから組成を解析したい。",
+    detail: "分光連星の観測と太陽ヘリウムの発見を組み合わせて、恒星が主に水素でできていると示す依頼。",
+    reward: "恒星組成の星章",
+    rewardScrollId: "payne-stellar-hydrogen-scroll",
+    requiredScrolls: [
+      { id: "spica-spectrum-scroll", label: "分光連星" },
+      { id: "helium-solar-spectrum-scroll", label: "太陽ヘリウム" }
+    ],
+    intro: [
+      "私はセシリア・ペイン。スペクトルを読むことが、恒星の秘密を解く鍵だと信じている。",
+      "誰もが恒星は地球と同じ成分だと思っていた。だがデータは別のことを言っていた。",
+      "恒星スペクトルの記録を集めて、私の仮説を検証する手伝いをしてくれないか？"
+    ],
+    facts: [
+      {
+        id: "spica-spectrum-scroll",
+        label: "分光連星",
+        ask: [
+          "まず分光観測だ。スペクトルを分析すれば、恒星が近づいているか遠ざかっているかだけでなく、何の原子があるかもわかる。",
+          "スピカのようなスペクトル連星では、二つの星のスペクトルが交互に現れる。",
+          "分光連星のスペクトル記録は、持っているか？"
+        ],
+        thanks: [
+          "分光連星のデータをありがとう。スペクトルが天体の中身を語る、その証だ。",
+          "では次の核心に迫ろう。太陽のヘリウムが要る。"
+        ]
+      },
+      {
+        id: "helium-solar-spectrum-scroll",
+        label: "太陽ヘリウム",
+        ask: [
+          "次に、太陽スペクトルのヘリウム吸収線だ。1868年の太陽観測で見つかったこの線は、地球上では知られていなかった元素を示していた。",
+          "ヘリウムは太陽で先に発見された元素だ。恒星スペクトルは宇宙の組成を直接語っている。",
+          "太陽スペクトルのヘリウム記録は、あるか？"
+        ],
+        thanks: [
+          "ヘリウムスペクトル……これが決め手だ。水素の次に多いのがヘリウム。",
+          "恒星は鉄や岩でできているのではなく、ほとんどが水素とヘリウムだ。これを持っていてくれ。"
+        ]
+      }
+    ],
+    revisit: [
+      "また来たか。スペクトルの解析は一行一行が発見だ。",
+      "あの観測記録は手に入ったか？組成の分析を進めたい。"
+    ],
+    complete: [
+      "分光連星と太陽ヘリウム。スペクトルの一本一本の線が、恒星の素顔を語っていた。",
+      "信じてもらえなくても、データが正しければ歴史は変わる。これを受け取ってくれ。"
+    ]
+  },
+  {
+    id: "leavitt-cepheid",
+    number: 19,
+    title: "宇宙の物差し",
+    requester: "ヘンリエッタ・リービット",
+    requesterImage: "./assets/quest-requester-henrietta-leavitt.png",
+    mainImage: "./assets/battle-bg-spring.png",
+    objective: "変光星の周期と距離の関係を見つける",
+    conversation: "脈動する星の周期を記録すれば、その本当の明るさがわかる。銀河の距離を測る物差しが生まれる。",
+    requesterStats: {
+      birthYear: "1868年",
+      fullName: "Henrietta Swan Leavitt",
+      achievement: "セファイド変光星の周期光度関係を発見し、宇宙距離梯子の基礎を築いた。"
+    },
+    summary: "変光星の周期から銀河の距離を測る方法を示してほしい。",
+    detail: "脈動変光星の周期光度関係とM31銀河の距離を組み合わせて、宇宙距離の物差しを確立する依頼。",
+    reward: "周期光度の星章",
+    rewardScrollId: "leavitt-period-luminosity-ruler-scroll",
+    requiredScrolls: [
+      { id: "mira-pulsation-scroll", label: "脈動変光星" },
+      { id: "galaxy-distance-scroll", label: "M31銀河距離" }
+    ],
+    intro: [
+      "私はヘンリエッタ・リービット。大マゼラン雲の変光星を何千枚もの写真乾板から記録し続けた。",
+      "あることに気づいた。変光周期が長い星ほど、明るい。この規則が宇宙の物差しになるかもしれない。",
+      "変光星と銀河の距離の記録を持ち寄ってくれないか？"
+    ],
+    facts: [
+      {
+        id: "mira-pulsation-scroll",
+        label: "脈動変光星",
+        ask: [
+          "まず、脈動変光星の記録だ。ミラ型のような長周期変光星は、星の外層が膨張収縮を繰り返して明るさが変わる。",
+          "この脈動の周期を精確に測ることが、距離計算の出発点になる。",
+          "脈動変光星の観測記録は、持っているか？"
+        ],
+        thanks: [
+          "脈動の記録をありがとう。周期がわかれば、その星の本当の明るさが推定できる。",
+          "見かけの明るさと本当の明るさを比べれば、距離が出る。次の材料を頼む。"
+        ]
+      },
+      {
+        id: "galaxy-distance-scroll",
+        label: "M31銀河距離",
+        ask: [
+          "次にM31銀河の距離だ。この銀河の中にもセファイド変光星が見つかった。",
+          "周期光度関係を使えば、この遠い銀河までの距離を実測できる。宇宙のスケールが初めて測れるようになる。",
+          "M31銀河の距離を示す観測記録は、あるか？"
+        ],
+        thanks: [
+          "M31の距離が測れた。セファイド変光星という物差しがなければ、こうはいかなかった。",
+          "この発見が、宇宙膨張の発見へとつながっていく。受け取ってくれ。"
+        ]
+      }
+    ],
+    revisit: [
+      "また来たか。写真乾板は今も積み上がっている。",
+      "あの観測記録は揃ったか？物差しを完成させたい。"
+    ],
+    complete: [
+      "変光星の周期と銀河の距離。二つを結んだこの関係が、宇宙の物差しになった。",
+      "遠い銀河の距離を測る鍵を、変光星が持っていたのだ。これを持っていてくれ。"
+    ]
+  },
+  {
+    id: "chandrasekhar-limit",
+    number: 20,
+    title: "白色矮星の限界",
+    requester: "チャンドラセカール",
+    requesterImage: "./assets/quest-requester-subrahmanyan-chandrasekhar.png",
+    mainImage: "./assets/deep-cosmos-gate-map.png",
+    objective: "白色矮星の構造と核融合の終わりを理解する",
+    conversation: "星の最後を支える縮退電子圧には限界がある。その質量の壁を超えれば、白色矮星にはなれない。",
+    requesterStats: {
+      birthYear: "1910年",
+      fullName: "Subrahmanyan Chandrasekhar",
+      achievement: "量子力学を使い白色矮星の質量上限（太陽質量の約1.4倍）を理論的に導出した。1983年ノーベル物理学賞。"
+    },
+    summary: "白色矮星と核融合の終わりから、恒星の最後の形を理論的に示してほしい。",
+    detail: "白色矮星の存在と核融合の終わりを組み合わせ、縮退電子圧の限界という量子力学的結論を導く依頼。",
+    reward: "質量限界の星章",
+    rewardScrollId: "chandrasekhar-mass-limit-scroll",
+    requiredScrolls: [
+      { id: "white-dwarf-scroll", label: "白色矮星" },
+      { id: "stellar-fusion-scroll", label: "恒星核融合" }
+    ],
+    intro: [
+      "私はチャンドラセカール。インドからイギリスへの船の上で、白色矮星の内部を量子力学で計算した。",
+      "縮退電子圧で支えられる白色矮星には、質量の上限があるはずだ。それを超えれば、崩壊する。",
+      "だが計算だけでは信じてもらえない。観測事実が必要だ。手を貸してくれないか？"
+    ],
+    facts: [
+      {
+        id: "white-dwarf-scroll",
+        label: "白色矮星",
+        ask: [
+          "まず白色矮星の観測だ。シリウスBのような白色矮星は、太陽ほどの質量を地球ほどの大きさに詰め込んでいる。",
+          "この超高密度が縮退電子圧で支えられている証拠を示す観測が必要だ。",
+          "白色矮星の観測記録は、持っているか？"
+        ],
+        thanks: [
+          "白色矮星の観測をありがとう。この高密度天体の存在が、縮退圧の計算の出発点になる。",
+          "次に、その星がなぜそこで止まるのかを示す材料が要る。"
+        ]
+      },
+      {
+        id: "stellar-fusion-scroll",
+        label: "恒星核融合",
+        ask: [
+          "次に、核融合の終わりだ。恒星は核融合で輝くが、いつか燃料が尽きる。",
+          "太陽程度の星は最終的に核融合が止まり、外層を失い、白色矮星として残る。",
+          "恒星の核融合と終焉に関する記録は、あるか？"
+        ],
+        thanks: [
+          "核融合の終わりと白色矮星が繋がった。",
+          "だがこの矮星の質量が太陽の1.4倍を超えれば、縮退圧は支えられない。その先に中性子星か、ブラックホールがある。これを持っていてくれ。"
+        ]
+      }
+    ],
+    revisit: [
+      "また来たか。数式は常に正直だ、宇宙に嘘はない。",
+      "あの観測は揃ったか？限界の計算を進めたい。"
+    ],
+    complete: [
+      "白色矮星と核融合の終わり。これが揃って、質量限界の理論が地に足をつけた。",
+      "太陽の1.4倍より重い白色矮星はない。それを超えた星は、宇宙が自ら答えを出す。感謝する。"
+    ]
+  },
+  {
+    id: "penzias-cmb",
+    number: 21,
+    title: "宇宙の残光",
+    requester: "アーノ・ペンジアス",
+    requesterImage: "./assets/quest-requester-arno-penzias.png",
+    mainImage: "./assets/deep-cosmos-gate-map.png",
+    objective: "宇宙膨張の証拠と全天電波ノイズを結びつける",
+    conversation: "宇宙が膨張しているなら、誕生時の熱の残光が全方向から電波として届いているはずだ。",
+    requesterStats: {
+      birthYear: "1933年",
+      fullName: "Arno Allan Penzias",
+      achievement: "ロバート・ウィルソンとともに宇宙マイクロ波背景放射（CMB）を発見。1978年ノーベル物理学賞。"
+    },
+    summary: "膨張宇宙論と銀河系外の観測を組み合わせて、CMBの意味を示してほしい。",
+    detail: "ハッブルの膨張則と銀河の実体を前提に、全方向から来る電波ノイズがビッグバンの名残だと示す依頼。",
+    reward: "宇宙背景放射の星章",
+    rewardScrollId: "penzias-cmb-radio-detection-scroll",
+    requiredScrolls: [
+      { id: "hubble-law-scroll", label: "ハッブルの法則" },
+      { id: "galaxy-nature-scroll", label: "銀河の正体" }
+    ],
+    intro: [
+      "私はアーノ・ペンジアス。ロバート・ウィルソンと電波アンテナで空を測っていたとき、消えないノイズに気づいた。",
+      "どこを向いても同じ強さのノイズが来る。鳩の巣もアンテナの汚れも取り除いた。それでも消えなかった。",
+      "宇宙が膨張しているなら、この答えが見つかるかもしれない。力を貸してくれ。"
+    ],
+    facts: [
+      {
+        id: "hubble-law-scroll",
+        label: "ハッブルの法則",
+        ask: [
+          "まず宇宙膨張の証拠だ。ハッブルが示した、遠い銀河ほど速く遠ざかるという法則だ。",
+          "宇宙が膨張しているなら、過去には小さく高温だったはず。ならば誕生時の熱が冷えた光が、今も宇宙を満たしているはずだ。",
+          "宇宙膨張を示す観測記録は、持っているか？"
+        ],
+        thanks: [
+          "ハッブルの膨張則の記録をありがとう。宇宙は過去に小さく、熱かった。",
+          "では次は、その熱がどこにあるかを示す材料が要る。"
+        ]
+      },
+      {
+        id: "galaxy-nature-scroll",
+        label: "銀河の正体",
+        ask: [
+          "次に、銀河の正体だ。天の川の外に無数の銀河があり、宇宙は広大だとわかった。",
+          "そのスケールで考えれば、ビッグバンの残光は特定の方向からではなく、全方向から等しく届くはずだ。",
+          "銀河の実体と宇宙の広大さを示す観測は、あるか？"
+        ],
+        thanks: [
+          "銀河の正体と宇宙の広さが揃った。",
+          "全方向から来る3Kの電波ノイズ――これはビッグバンの残光だ。宇宙マイクロ波背景放射と呼ぼう。これを受け取ってくれ。"
+        ]
+      }
+    ],
+    revisit: [
+      "また来たか。あのノイズはまだ、全方向から届いている。",
+      "あの資料は揃ったか？残光の謎を解きたい。"
+    ],
+    complete: [
+      "膨張する宇宙と銀河の広がり。これが揃って初めて、全方向のノイズの意味がわかった。",
+      "宇宙の誕生から138億年。その残光が今も届いているとは、なんと壮大な話だ。受け取ってくれ。"
+    ]
+  },
+  {
+    id: "rubin-dark-matter",
+    number: 22,
+    title: "見えない質量",
+    requester: "ヴェラ・ルービン",
+    requesterImage: "./assets/quest-requester-vera-rubin.png",
+    mainImage: "./assets/deep-cosmos-gate-map.png",
+    objective: "銀河回転と暗黒物質の証拠を集める",
+    conversation: "銀河の外縁部でも回転速度が落ちない。見える星の質量だけでは、説明がつかない。",
+    requesterStats: {
+      birthYear: "1928年",
+      fullName: "Vera Florence Cooper Rubin",
+      achievement: "多数の銀河で回転曲線を測定し、暗黒物質ハローの存在を強く示す証拠を積み上げた。"
+    },
+    summary: "銀河の回転速度と暗黒物質の存在を示す観測を集めてほしい。",
+    detail: "銀河の正体と暗黒物質の観測を組み合わせて、見えない質量が銀河を包んでいることを示す依頼。",
+    reward: "銀河回転曲線の星章",
+    rewardScrollId: "rubin-rotation-curve-scroll",
+    requiredScrolls: [
+      { id: "dark-matter-scroll", label: "暗黒物質" },
+      { id: "galaxy-nature-scroll", label: "銀河の正体" }
+    ],
+    intro: [
+      "私はヴェラ・ルービン。銀河の外縁部の星の速度を測り続けた。",
+      "外側ほど遅くなるはず――ところが速度が落ちない。中心に詰まった星の質量だけでは、この速度を保てない。",
+      "見えない何かが銀河を包んでいるに違いない。証拠を集める手伝いをしてくれないか？"
+    ],
+    facts: [
+      {
+        id: "dark-matter-scroll",
+        label: "暗黒物質",
+        ask: [
+          "まず暗黒物質の観測証拠だ。光を出さない物質が、銀河の重力を補っているという考えだ。",
+          "銀河団の重力レンズや銀河回転速度など、見えない質量の存在を示す観測が積み上がっている。",
+          "暗黒物質の観測記録は、持っているか？"
+        ],
+        thanks: [
+          "暗黒物質の証拠を受け取った。見えない質量の存在が、データで語られている。",
+          "次に、それが銀河全体でどう機能しているかを示す材料が要る。"
+        ]
+      },
+      {
+        id: "galaxy-nature-scroll",
+        label: "銀河の正体",
+        ask: [
+          "次に銀河の正体だ。天の川のような銀河は、中心部に多くの星が集まった渦巻き構造だ。",
+          "その銀河の外縁部の星が、内側の星と同じ速度で回っているなら、銀河全体を包む見えない質量があるはずだ。",
+          "銀河の構造や質量分布を示す観測記録は、あるか？"
+        ],
+        thanks: [
+          "銀河の正体と回転速度の記録が揃った。",
+          "見える星の質量より遥かに多い暗黒物質が、銀河を包んでいる。宇宙の質量の大半は、見えない。これを受け取ってくれ。"
+        ]
+      }
+    ],
+    revisit: [
+      "また来たか。銀河の回転速度は、今夜も測り続けている。",
+      "あの観測は揃ったか？回転曲線を完成させたい。"
+    ],
+    complete: [
+      "暗黒物質と銀河の構造。二つを合わせると、見えない質量が銀河を支配していることがわかる。",
+      "宇宙の大半は、見えない。その事実を受け入れることから、次の物理が始まる。感謝する。"
+    ]
+  },
+  {
+    id: "leverrier-neptune",
+    number: 23,
+    title: "計算する天文学者",
+    requester: "ユルバン・ルヴェリエ",
+    requesterImage: "./assets/quest-requester-urbain-le-verrier.png",
+    mainImage: "./assets/battle-bg-planetarium.png",
+    objective: "重力計算から未知惑星の位置を特定する",
+    conversation: "天王星の軌道のずれは、見えない惑星のせいだ。万有引力の計算で、その惑星の位置を割り出せる。",
+    requesterStats: {
+      birthYear: "1811年",
+      fullName: "Urbain Jean Joseph Le Verrier",
+      achievement: "天王星の軌道摂動から計算のみで海王星の位置を予言し、1846年に発見させた。"
+    },
+    summary: "重力法則と天王星の軌道ずれから未知惑星を導きたい。",
+    detail: "万有引力の法則と天王星の傾き・軌道ずれを組み合わせて、海王星の位置を計算で予言する依頼。",
+    reward: "天体力学の星章",
+    rewardScrollId: "le-verrier-celestial-mechanics-scroll",
+    requiredScrolls: [
+      { id: "universal-gravity-scroll", label: "万有引力" },
+      { id: "uranus-tilt-scroll", label: "天王星の傾き" }
+    ],
+    intro: [
+      "私はユルバン・ルヴェリエ。天文台で天王星の軌道を追い続けると、理論からのずれが積み重なっていった。",
+      "このずれは、遠くにある未知の惑星の引力のせいだと計算した。望遠鏡ではなく、紙と計算で惑星を見つけてみせる。",
+      "二つの材料が要る。力を貸してくれないか？"
+    ],
+    facts: [
+      {
+        id: "universal-gravity-scroll",
+        label: "万有引力",
+        ask: [
+          "まず万有引力の法則だ。質量を持つすべての天体は引き合う。遠い惑星ほどその引力は弱くなるが、消えはしない。",
+          "未知惑星の引力が天王星を引っ張っているなら、その力の大きさと方向から惑星の位置が計算できる。",
+          "万有引力の法則を示す記録は、持っているか？"
+        ],
+        thanks: [
+          "万有引力の記録を受け取った。計算の基礎がこれで揃った。",
+          "次に天王星の軌道ずれの具体的なデータが要る。"
+        ]
+      },
+      {
+        id: "uranus-tilt-scroll",
+        label: "天王星の傾き",
+        ask: [
+          "次に天王星の観測データだ。傾きだけでなく、軌道全体の精密な位置記録が必要だ。",
+          "理論値と実測値のずれがどこで大きいかを見れば、摂動の源がどの方角にあるか見えてくる。",
+          "天王星の軌道観測の記録は、あるか？"
+        ],
+        thanks: [
+          "天王星のデータが揃った。計算を重ねた結果、未知惑星の位置が割り出せた。",
+          "ベルリン天文台に望遠鏡を向けさせれば、そこにあるはずだ。計算が正しければ。これを受け取ってくれ。"
+        ]
+      }
+    ],
+    revisit: [
+      "また来たか。計算は続いている。天体は嘘をつかない。",
+      "あの観測は揃ったか？位置計算の最終確認に必要だ。"
+    ],
+    complete: [
+      "万有引力と天王星の軌道ずれ。計算だけで惑星の場所を割り出した。",
+      "望遠鏡ではなく数学で星を発見した――それが天体力学の力だ。感謝する。"
+    ]
+  },
+  {
+    id: "zwicky-cluster-mass",
+    number: 24,
+    title: "銀河団の隠れた質量",
+    requester: "フリッツ・ツビッキー",
+    requesterImage: "./assets/quest-requester-fritz-zwicky.png",
+    mainImage: "./assets/deep-cosmos-gate-map.png",
+    objective: "銀河団の速度と質量の食い違いを示す",
+    conversation: "銀河団の銀河が動く速さは、見える星の質量では説明できない。隠れた質量があるはずだ。",
+    requesterStats: {
+      birthYear: "1898年",
+      fullName: "Fritz Zwicky",
+      achievement: "かみのけ座銀河団の銀河速度から暗黒物質の存在を初めて提唱。超新星爆発と中性子星の理論にも先駆けた。"
+    },
+    summary: "銀河の正体と銀河間距離から、銀河団に隠れた質量があることを示してほしい。",
+    detail: "銀河の本質と銀河距離のスケールを前提に、銀河団の質量と銀河速度の食い違いから暗黒物質を提唱した依頼。",
+    reward: "銀河団暗黒質量の星章",
+    rewardScrollId: "zwicky-dark-cluster-mass-scroll",
+    requiredScrolls: [
+      { id: "galaxy-nature-scroll", label: "銀河の正体" },
+      { id: "galaxy-distance-scroll", label: "M31銀河距離" }
+    ],
+    intro: [
+      "私はフリッツ・ツビッキー。かみのけ座銀河団の銀河の動きを測っていた。",
+      "銀河の速度が速すぎる。見える星の質量から計算できる重力では、銀河団を束ねておけない。",
+      "この矛盾を解く材料を集めてくれないか？"
+    ],
+    facts: [
+      {
+        id: "galaxy-nature-scroll",
+        label: "銀河の正体",
+        ask: [
+          "まず銀河の正体だ。銀河は数千億の恒星の集まり。その質量を推定できる。",
+          "だが銀河団の中で銀河が動く速度は、その見える質量から予測される値をはるかに超えている。",
+          "銀河の質量や構造を示す観測記録は、持っているか？"
+        ],
+        thanks: [
+          "銀河の正体と質量の記録をありがとう。これで見える質量の限界が明確になった。",
+          "次に、銀河間のスケールを示す材料が要る。"
+        ]
+      },
+      {
+        id: "galaxy-distance-scroll",
+        label: "M31銀河距離",
+        ask: [
+          "次に銀河の距離だ。M31アンドロメダ銀河の距離が測れたなら、銀河団の広がりも推定できる。",
+          "銀河団のスケールと銀河の速度を合わせれば、必要な質量が計算できる。見える質量の400倍以上が要る。",
+          "銀河の距離を示す観測記録は、あるか？"
+        ],
+        thanks: [
+          "銀河距離のデータが揃った。計算すると、見える質量の何百倍もの暗黒質量が必要だ。",
+          "これを暗黒物質と呼ぼう。当時は誰も信じなかったが、後にルービンらが確認する。これを受け取ってくれ。"
+        ]
+      }
+    ],
+    revisit: [
+      "また来たか。銀河団のデータはまだ増え続けている。",
+      "あの観測は揃ったか？質量の食い違いを示したい。"
+    ],
+    complete: [
+      "銀河の質量と銀河間距離が揃って、銀河団の矛盾が数字で示せた。",
+      "見える質量の何百倍も隠れている。宇宙は見えているものより、はるかに重い。感謝する。"
+    ]
+  },
+  {
+    id: "schmidt-quasar",
+    number: 25,
+    title: "宇宙の彼方から来る光",
+    requester: "マールテン・シュミット",
+    requesterImage: "./assets/quest-requester-maarten-schmidt.png",
+    mainImage: "./assets/deep-cosmos-gate-map.png",
+    objective: "クエーサーの赤方偏移と宇宙膨張を結びつける",
+    conversation: "星のように見えるのに、スペクトルが異様にずれている。遠すぎるほど遠い銀河核だ。",
+    requesterStats: {
+      birthYear: "1929年",
+      fullName: "Maarten Schmidt",
+      achievement: "3C 273のスペクトルを解析し、クエーサーが大赤方偏移を持つ遠方の活動銀河核であることを1963年に発見した。"
+    },
+    summary: "クエーサーのスペクトルと宇宙膨張の法則を結びつけてほしい。",
+    detail: "クエーサーの正体とハッブルの膨張則を組み合わせて、クエーサーが遠方銀河の活動中心核だと証明する依頼。",
+    reward: "クエーサー赤方偏移の星章",
+    rewardScrollId: "schmidt-quasar-redshift-scroll",
+    requiredScrolls: [
+      { id: "quasar-scroll", label: "クエーサー" },
+      { id: "hubble-law-scroll", label: "ハッブルの法則" }
+    ],
+    intro: [
+      "私はマールテン・シュミット。3C 273という電波天体のスペクトルを何ヶ月も睨んでいた。",
+      "見慣れた水素の吸収線が、大きくずれて見えた。赤方偏移0.158――つまりこの天体は20億光年以上遠い。",
+      "星のように見えて、銀河全体より明るい。これは何者なのか？力を貸してくれ。"
+    ],
+    facts: [
+      {
+        id: "quasar-scroll",
+        label: "クエーサー",
+        ask: [
+          "まずクエーサーの観測記録だ。星点状に見えるが、電波が強く、スペクトルに通常の星座の線がない。",
+          "これは恒星ではない。銀河の中心核が超大質量ブラックホールに物質を飲み込まれ、異常に輝いているのだ。",
+          "クエーサーの観測記録は、持っているか？"
+        ],
+        thanks: [
+          "クエーサーの記録をありがとう。この謎めいた天体の正体に迫る手がかりが揃ってきた。",
+          "次に宇宙膨張との関係を示す材料が要る。"
+        ]
+      },
+      {
+        id: "hubble-law-scroll",
+        label: "ハッブルの法則",
+        ask: [
+          "次にハッブルの膨張則だ。遠い天体ほど赤方偏移が大きい。この関係を使えば、赤方偏移から距離が出る。",
+          "3C 273の赤方偏移0.158は、20億光年以上を意味する。その距離でこれほど明るいなら、エネルギーは想像を絶する。",
+          "宇宙膨張と赤方偏移の関係を示す観測記録は、あるか？"
+        ],
+        thanks: [
+          "ハッブルの法則の記録が揃った。膨張則と赤方偏移を合わせれば、クエーサーの距離が出る。",
+          "遠方銀河の核が、ブラックホールに飲み込まれる物質の輝きで銀河全体より明るく見える。これがクエーサーの正体だ。受け取ってくれ。"
+        ]
+      }
+    ],
+    revisit: [
+      "また来たか。あのスペクトルは今でも夢に出てくる。",
+      "あの観測記録は揃ったか？赤方偏移の謎を解きたい。"
+    ],
+    complete: [
+      "クエーサーとハッブルの膨張則。スペクトルのずれが、宇宙の果てからの光だと証明した。",
+      "138億光年の宇宙を、たった一本の吸収線が語ってくれた。これを受け取ってくれ。"
     ]
   }
 );
