@@ -2299,7 +2299,7 @@ button {
 .game-shell[data-mode="quests"] .app-screen,
 .game-shell[data-mode="library"] .app-screen,
 .game-shell[data-mode="settings"] .app-screen {
-  padding-bottom: 176px;
+  padding-bottom: 129px;
 }
 
 .game-shell[data-mode="observe"] .app-screen::before,
