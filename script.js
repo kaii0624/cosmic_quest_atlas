@@ -6946,8 +6946,7 @@ const QUESTS = [
     requiredScrolls: [
       { id: "mars-retrograde-scroll", label: "火星の逆行" },
       { id: "venus-phases-scroll", label: "金星の満ち欠け" },
-      { id: "jupiter-moons-scroll", label: "木星の衛星" },
-      { id: "cygnus-parallax-scroll", label: "年周視差" }
+      { id: "jupiter-moons-scroll", label: "木星の衛星" }
     ],
     // 依頼者を一つずつ手伝う会話形式。観測事実を順に手渡すと理論が進む。
     intro: [
@@ -6995,19 +6994,6 @@ const QUESTS = [
           "また一つ、古い常識が崩れ落ちた。心から礼を言う。"
         ]
       },
-      {
-        id: "cygnus-parallax-scroll",
-        label: "年周視差",
-        ask: [
-          "最後に、決定的な証拠がいる。地球が本当に動いているなら、近い星は一年のうちに、その位置をわずかにずらすはず――年周視差だ。",
-          "あまりに小さな角度ゆえ、捉えるのは至難。だがこれさえあれば、地球が動いていることは、もはや誰にも否めぬ。",
-          "年周視差の観測は、手元にないかね？"
-        ],
-        thanks: [
-          "年周視差……地球が動いている、まごうことなき証だ！",
-          "これで地動説は、机上の空想ではなくなった。観測に裏打ちされた、ひとつの事実だ。"
-        ]
-      }
     ],
     // 再訪時のあいさつ（まだ宿題が残っているとき）
     revisit: [
@@ -7015,7 +7001,7 @@ const QUESTS = [
       "前に頼んだあの件――もう、観測できたかね？"
     ],
     complete: [
-      "火星の逆行、金星の満ち欠け、木星の衛星、そして年周視差。四つの事実が、すべて揃った。",
+      "火星の逆行、金星の満ち欠け、木星の衛星。三つの事実が、すべて揃った。",
       "どれ一つとして、地球を宇宙の中心に置いたままでは説明しきれぬ。太陽を中心とする宇宙が、ここに証明されたのだ。",
       "君のおかげで、新しい宇宙の姿が見えたよ。これは礼だ――どうか、受け取ってくれ。"
     ]
@@ -7602,8 +7588,7 @@ QUESTS.push(
     requiredScrolls: [
       { id: "stellar-fusion-scroll", label: "核融合" },
       { id: "rigel-color-luminosity-scroll", label: "星色と温度" },
-      { id: "betelgeuse-redgiant-scroll", label: "赤色超巨星" },
-      { id: "white-dwarf-scroll", label: "白色矮星" }
+      { id: "betelgeuse-redgiant-scroll", label: "赤色超巨星" }
     ],
     intro: [
       "私は恒星図鑑を編む者。空の星々を、ただ並べるのではなく、一本の『生涯』の物語として描きたい。",
@@ -7643,24 +7628,13 @@ QUESTS.push(
           "赤く膨らんだ巨星……星の老いの姿だ。この先には、壮絶な最期が待っている。"
         ]
       },
-      {
-        id: "white-dwarf-scroll",
-        label: "白色矮星",
-        ask: [
-          "最後は、星の亡骸だ。太陽ほどの星は、外層を脱ぎ捨て、地球ほどの小さく重い芯だけを残す――白色矮星。",
-          "冷えゆく星の終わりを捉えた記録はないか？"
-        ],
-        thanks: [
-          "地球の大きさに、太陽ほどの質量……星の燃え殻だ。これで、星の一生の、最後の一頁が埋まった。"
-        ]
-      }
     ],
     revisit: [
       "やあ、また来たか。星の生涯の物語は、まだ書きかけだ。",
       "頼んだあの記録は、集まったか？"
     ],
     complete: [
-      "核融合の灯、色と温度、老いた巨星、そして冷えゆく亡骸。星の一生が、一枚の図に繋がった。",
+      "核融合の灯、色と温度、老いた巨星。星の一生が、一枚の図に繋がった。",
       "誕生から死までを並べたこの図――HR図こそ、恒星の系譜だ。我々もまた、いつかの星の灰から生まれた。よくぞ集めてくれた。"
     ]
   },
@@ -9029,7 +9003,7 @@ function getQuestSelectedEvidenceIds(quest) {
     state.selectedQuestEvidence[quest.id] = quest.requiredScrolls
       .filter((requirement) => claimedRewards.has(requirement.id))
       .map((requirement) => requirement.id)
-      .slice(0, 4);
+      .slice(0, 3);
   }
 
   return state.selectedQuestEvidence[quest.id];
@@ -9053,7 +9027,7 @@ function toggleQuestEvidence(questId, evidenceId) {
 
   if (currentIndex >= 0) {
     selected.splice(currentIndex, 1);
-  } else if (selected.length < 4) {
+  } else if (selected.length < 3) {
     selected.push(evidenceId);
   }
 
@@ -9396,11 +9370,30 @@ function shuffleLoadingConstellations() {
   return indexes;
 }
 
+function getConstellationAnimDuration(index) {
+  const constellation = LOADING_CONSTELLATIONS[index % LOADING_CONSTELLATIONS.length];
+  let lineCount = 0;
+  let pointCount = 0;
+  const seen = new Set();
+  constellation.paths.forEach((path) => {
+    lineCount += path.length - 1;
+    path.forEach(([x, y]) => {
+      const key = `${x},${y}`;
+      if (!seen.has(key)) { seen.add(key); pointCount++; }
+    });
+  });
+  const lineDone = 1050 + Math.max(0, lineCount - 1) * 110 + 500;
+  const dotDone = Math.max(0, pointCount - 1) * 130 + 700;
+  return Math.max(lineDone, dotDone) + 180;
+}
+
 function renderNextLoadingConstellation() {
   if (loadingConstellationQueue.length === 0) {
     loadingConstellationQueue = shuffleLoadingConstellations();
   }
-  renderLoadingConstellation(loadingConstellationQueue.shift());
+  const index = loadingConstellationQueue.shift();
+  renderLoadingConstellation(index);
+  return getConstellationAnimDuration(index);
 }
 
 function hideObservationLoading() {
@@ -9409,7 +9402,7 @@ function hideObservationLoading() {
     observationLoadingTimer = null;
   }
   if (observationLoadingCycleTimer) {
-    clearInterval(observationLoadingCycleTimer);
+    clearTimeout(observationLoadingCycleTimer);
     observationLoadingCycleTimer = null;
   }
   observationLoading?.classList.add("is-hidden");
@@ -9418,19 +9411,21 @@ function hideObservationLoading() {
 function showObservationLoading(onComplete, duration = OBSERVATION_LOADING_DURATION) {
   hideObservationLoading();
   loadingConstellationQueue = shuffleLoadingConstellations();
-  renderNextLoadingConstellation();
   observationLoading?.classList.remove("is-hidden");
 
   let readyToFinish = false;
 
-  observationLoadingCycleTimer = setInterval(() => {
+  function scheduleNext() {
     if (readyToFinish) {
       hideObservationLoading();
       onComplete?.();
       return;
     }
-    renderNextLoadingConstellation();
-  }, OBSERVATION_LOADING_STEP);
+    const animDuration = renderNextLoadingConstellation();
+    observationLoadingCycleTimer = setTimeout(scheduleNext, animDuration);
+  }
+
+  scheduleNext();
 
   observationLoadingTimer = setTimeout(() => {
     readyToFinish = true;
@@ -9730,12 +9725,12 @@ function renderHomeSelectionPanel() {
   const detail = HOME_KINGDOM_DETAILS[state.homeKingdomId] ?? HOME_KINGDOM_DETAILS.autumn;
 
   return `
-    <section class="home-selection-panel ${state.homeKingdomId}" aria-label="${detail.title}の説明">
+    <section class="home-selection-panel app-detail-panel ${state.homeKingdomId}" aria-label="${detail.title}の説明">
       <figure class="home-selection-card">
         <img src="${withAssetVersion(detail.card)}" alt="${detail.title}の星域" />
       </figure>
       <div class="home-selection-copy">
-        <h2><span aria-hidden="true">${detail.icon}</span>${detail.title}<span aria-hidden="true">${detail.icon}</span></h2>
+        <h2>${detail.title}</h2>
         <p>${detail.description}</p>
         ${detail.enterId
           ? `
@@ -9763,7 +9758,7 @@ function renderObserveDetailPanel(item) {
       </figure>
       <div class="home-selection-copy app-detail-copy">
         <h2>${item.title}</h2>
-        <p><strong>${item.lesson}</strong>${item.description}</p>
+        <p>${item.description}</p>
         ${canObserve ? `
         <div class="home-selection-actions">
           <button class="home-enter-button" type="button" data-observe-start="${item.storyId}">
@@ -9928,7 +9923,7 @@ function renderQuestDetail(quest) {
   const progress = getQuestProgress(quest);
   const evidenceOptions = getQuestEvidenceOptions(quest);
   const selectedEvidenceIds = getQuestSelectedEvidenceIds(quest);
-  const selectedSlots = Array.from({ length: 4 }, (_, index) => selectedEvidenceIds[index] ?? null);
+  const selectedSlots = Array.from({ length: 3 }, (_, index) => selectedEvidenceIds[index] ?? null);
   const canCombine = quest.requiredScrolls.every((requirement) => selectedEvidenceIds.includes(requirement.id));
   const requesterStats = quest.requesterStats ?? {
     birthYear: "不明",

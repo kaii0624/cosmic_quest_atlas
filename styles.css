@@ -3809,20 +3809,14 @@ button {
     drop-shadow(0 0 10px rgba(255, 222, 132, 0.24));
 }
 
-.home-selection-card::before,
 .home-selection-card::after {
   content: "";
   position: absolute;
-  inset: -6px;
+  inset: -7px;
   pointer-events: none;
-  border: 1px solid rgba(95, 53, 19, 0.62);
+  border: 1px solid rgba(244, 196, 83, 0.55);
   border-radius: 16px;
-}
-
-.home-selection-card::after {
-  inset: -11px;
-  border-color: rgba(244, 196, 83, 0.5);
-  box-shadow: 0 0 10px color-mix(in srgb, var(--home-accent) 45%, transparent);
+  box-shadow: 0 0 10px color-mix(in srgb, var(--home-accent) 35%, transparent);
 }
 
 .home-selection-card img {
@@ -5316,8 +5310,8 @@ button {
 }
 
 .user-tool-slot img {
-  width: min(100%, 54px);
-  height: min(100%, 54px);
+  width: 100%;
+  height: 100%;
   object-fit: contain;
   filter: drop-shadow(0 0 9px rgba(255, 223, 116, 0.26));
 }
@@ -5542,12 +5536,8 @@ button {
     border-radius: 0;
   }
 
-  .home-selection-card::before {
-    inset: -4px;
-  }
-
   .home-selection-card::after {
-    inset: -8px;
+    inset: -6px;
   }
 
   .home-selection-copy {
@@ -6038,8 +6028,8 @@ button {
   }
 
   .user-tool-slot img {
-    width: min(100%, 36px);
-    height: min(100%, 36px);
+    width: 100%;
+    height: 100%;
   }
 
   .user-tool-slot span {
@@ -7955,6 +7945,10 @@ button {
   padding-top: clamp(21px, 3.4vw, 31px);
 }
 
+.home-selection-panel.app-detail-panel .home-selection-card {
+  margin-left: clamp(6px, 1.8vw, 14px);
+}
+
 .home-selection-panel.app-detail-panel .home-selection-card img {
   object-fit: contain;
   background:
@@ -7970,6 +7964,12 @@ button {
 
 .home-selection-panel.library-detail-panel .home-selection-card img {
   padding: 4px;
+}
+
+.home-selection-panel.app-detail-panel:not(.observe-detail-panel):not(.quest-detail-panel):not(.library-detail-panel) .home-selection-card img {
+  object-fit: cover;
+  background: none;
+  padding: 0;
 }
 
 .home-selection-panel.app-detail-panel .home-selection-copy h2 {
@@ -7991,12 +7991,6 @@ button {
   overflow: hidden;
 }
 
-/* 説明文を2行に固定したぶん、ボタンの引き上げ量を打ち消して重なりを防ぐ */
-.home-selection-panel.library-detail-panel .home-selection-actions {
-  transform: none;
-  margin-top: clamp(3px, 0.8vw, 7px);
-}
-
 .home-selection-panel.app-detail-panel .home-selection-copy p strong {
   display: block;
   margin-bottom: 3px;
@@ -8004,7 +7998,7 @@ button {
   font-size: 0.98em;
 }
 
-.home-selection-panel.quest-detail-panel .home-selection-actions {
+.home-selection-panel.app-detail-panel .home-selection-actions {
   width: min(80%, 330px);
   transform: translateY(-0.45rem);
 }
@@ -8067,7 +8061,7 @@ button {
     line-height: 1.36;
   }
 
-  .home-selection-panel.quest-detail-panel .home-selection-actions {
+  .home-selection-panel.app-detail-panel .home-selection-actions {
     width: min(82%, 260px);
     transform: translateY(-0.24rem);
   }
@@ -8937,33 +8931,12 @@ button {
   }
 }
 
-/* ===== ホーム説明欄を「天体を見る」のFMT（左寄せ・小さめ）に合わせる ===== */
-.home-selection-panel:not(.app-detail-panel) .home-selection-copy h2 {
-  font-size: clamp(1rem, 3.3vw, 1.55rem);
-  justify-content: flex-start;
-  text-align: left;
-}
-
-.home-selection-panel:not(.app-detail-panel) .home-selection-copy h2 span {
-  display: none;
-}
-
-.home-selection-panel:not(.app-detail-panel) .home-selection-copy p {
-  font-size: clamp(0.72rem, 2vw, 0.9rem);
-  line-height: 1.46;
-  text-align: left;
-}
 
 /* ===== バトル画面: 左上ステータスの天体名は非表示 ===== */
 #targetStatusName {
   display: none;
 }
 
-/* 観測パネルに「観測する」ボタンを付けたぶん、引き上げ量を打ち消して重なりを防ぐ */
-.home-selection-panel.observe-detail-panel .home-selection-actions {
-  transform: none;
-  margin-top: clamp(3px, 0.8vw, 7px);
-}
 
 /* ===== 詳細マップの説明欄を囲む外側の金枠（codex-panelのベース枠）を削除 ===== */
 .game-shell[data-mode="detail"] .codex-panel {
