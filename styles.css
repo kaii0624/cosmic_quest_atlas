@@ -2297,15 +2297,13 @@ button {
 
 .game-shell[data-mode="observe"] .app-screen,
 .game-shell[data-mode="quests"] .app-screen,
-.game-shell[data-mode="library"] .app-screen,
-.game-shell[data-mode="settings"] .app-screen {
+.game-shell[data-mode="library"] .app-screen {
   padding-bottom: 129px;
 }
 
 .game-shell[data-mode="observe"] .app-screen::before,
 .game-shell[data-mode="quests"] .app-screen::before,
-.game-shell[data-mode="library"] .app-screen::before,
-.game-shell[data-mode="settings"] .app-screen::before {
+.game-shell[data-mode="library"] .app-screen::before {
   bottom: 129px;
 }
 
@@ -5939,7 +5937,7 @@ button {
 
   .user-profile-layout {
     grid-template-columns: minmax(150px, 1.08fr) minmax(0, 0.92fr);
-    grid-template-rows: minmax(0, 1fr) minmax(96px, 0.48fr);
+    grid-template-rows: minmax(0, 1fr) minmax(0, 1fr);
     grid-template-areas:
       "hero progress"
       "items items";
