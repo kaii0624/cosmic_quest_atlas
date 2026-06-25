@@ -2302,6 +2302,13 @@ button {
   padding-bottom: 176px;
 }
 
+.game-shell[data-mode="observe"] .app-screen::before,
+.game-shell[data-mode="quests"] .app-screen::before,
+.game-shell[data-mode="library"] .app-screen::before,
+.game-shell[data-mode="settings"] .app-screen::before {
+  bottom: 129px;
+}
+
 .app-screen::before {
   content: "";
   position: absolute;
