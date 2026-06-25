@@ -8758,7 +8758,7 @@ const QUEST_AGENDA = [
 const SCROLL_AGENDA = [
   {
     chapter: "第1章：太陽系と地動説",
-    label: "A. 位置と運動の巻物",
+    label: "1-1. 位置と天球運動",
     scrollIds: [
       "geocentric-model-scroll",
       "heliocentric-theory-scroll",
@@ -8777,7 +8777,7 @@ const SCROLL_AGENDA = [
   },
   {
     chapter: "第2章：四季の星空と恒星",
-    label: "B. 距離測定の巻物",
+    label: "2-1. 恒星までの距離測定",
     scrollIds: [
       "cygnus-parallax-scroll",
       "vega-absolute-magnitude-scroll",
@@ -8792,7 +8792,7 @@ const SCROLL_AGENDA = [
   },
   {
     chapter: "第2章：四季の星空と恒星",
-    label: "C. 光とスペクトルの巻物",
+    label: "2-2. 光とスペクトル",
     scrollIds: [
       "rigel-color-luminosity-scroll",
       "albireo-color-scroll",
@@ -8805,7 +8805,7 @@ const SCROLL_AGENDA = [
   },
   {
     chapter: "第2章：四季の星空と恒星",
-    label: "D. 明るさと時間変化の巻物",
+    label: "2-3. 明るさと変光",
     scrollIds: [
       "sirius-brightness-scroll",
       "mira-pulsation-scroll",
@@ -8817,7 +8817,7 @@ const SCROLL_AGENDA = [
   },
   {
     chapter: "第2章：四季の星空と恒星",
-    label: "E. 恒星物理の巻物",
+    label: "2-4. 恒星の物理と進化",
     scrollIds: [
       "arcturus-giant-scroll",
       "betelgeuse-redgiant-scroll",
@@ -8834,7 +8834,7 @@ const SCROLL_AGENDA = [
   },
   {
     chapter: "第2章：四季の星空と恒星",
-    label: "F. 連星と質量測定の巻物",
+    label: "2-5. 連星と質量測定",
     scrollIds: [
       "mizar-double-star-scroll",
       "catalog-capella-scroll",
@@ -8846,7 +8846,7 @@ const SCROLL_AGENDA = [
   },
   {
     chapter: "第2章：四季の星空と恒星",
-    label: "G. 系外惑星の巻物",
+    label: "2-6. 系外惑星",
     scrollIds: [
       "exoplanet-pulsar-scroll",
       "exoplanet-main-sequence-scroll",
@@ -8866,7 +8866,7 @@ const SCROLL_AGENDA = [
   },
   {
     chapter: "第3章：銀河と宇宙論",
-    label: "H. 銀河の巻物",
+    label: "3-1. 銀河の構造と種類",
     scrollIds: [
       "galaxy-nature-scroll",
       "catalog-milky-way-galaxy-scroll",
@@ -8877,7 +8877,7 @@ const SCROLL_AGENDA = [
   },
   {
     chapter: "第3章：銀河と宇宙論",
-    label: "I. 宇宙論の巻物",
+    label: "3-2. 宇宙膨張と宇宙論",
     scrollIds: [
       "hubble-law-scroll",
       "cmb-scroll",
@@ -8890,7 +8890,7 @@ const SCROLL_AGENDA = [
   },
   {
     chapter: "第4章：高エネルギー宇宙",
-    label: "J. 高エネルギー天文学の巻物",
+    label: "4-1. 高エネルギー天文学",
     scrollIds: [
       "general-relativity-scroll",
       "light-bending-scroll",
@@ -8902,7 +8902,7 @@ const SCROLL_AGENDA = [
   },
   {
     chapter: "第1章：太陽系と地動説",
-    label: "K. 観測技術の巻物",
+    label: "1-2. 観測技術と太陽系探査",
     scrollIds: [
       "telescope-observation-scroll",
       "venus-phases-scroll",
@@ -10133,11 +10133,11 @@ function getLibraryAgendaGroups() {
   });
 
   const extras = LIBRARY_SCROLLS.filter((scroll) => !used.has(scroll.id));
-  const techGroup = groups.find((group) => group.label.startsWith("K."));
+  const techGroup = groups.find((group) => group.label === "1-2. 観測技術と太陽系探査");
   if (techGroup) {
     techGroup.scrolls = [...techGroup.scrolls, ...extras];
   } else if (extras.length) {
-    groups.push({ label: "K. 観測技術の巻物", scrolls: extras });
+    groups.push({ chapter: "第1章：太陽系と地動説", label: "1-2. 観測技術と太陽系探査", scrolls: extras });
   }
 
   return groups.filter((group) => group.scrolls.length);
