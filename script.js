@@ -8724,8 +8724,40 @@ const OBSERVE_AGENDA_ITEM_IDS = {
   M31内のセファイド: "m31Cepheid"
 };
 
+const QUEST_AGENDA = [
+  {
+    chapter: "第1章：太陽系と地動説",
+    sections: [
+      { label: "1-1. 地動説の革命", questIds: ["geocentric-model", "heliocentric-theory", "telescope-observation", "kepler-third-law"] },
+      { label: "1-2. 重力と軌道の確立", questIds: ["universal-gravity", "tycho-precision", "halley-comet", "leverrier-neptune"] }
+    ]
+  },
+  {
+    chapter: "第2章：四季の星空と恒星",
+    sections: [
+      { label: "2-1. 恒星観測と距離測定", questIds: ["bradley-aberration", "bessel-parallax", "herschel-survey", "stellar-evolution"] },
+      { label: "2-2. 恒星の組成と宇宙の物差し", questIds: ["payne-stellar-composition", "leavitt-cepheid"] }
+    ]
+  },
+  {
+    chapter: "第3章：銀河と宇宙論",
+    sections: [
+      { label: "3-1. 銀河と宇宙膨張", questIds: ["galaxy-nature", "hubble-law", "cosmology-temple"] },
+      { label: "3-2. 宇宙の隠れた構造", questIds: ["rubin-dark-matter", "zwicky-cluster-mass", "penzias-cmb", "schmidt-quasar"] }
+    ]
+  },
+  {
+    chapter: "第4章：高エネルギー宇宙",
+    sections: [
+      { label: "4-1. 相対論と重力", questIds: ["general-relativity", "light-bending", "chandrasekhar-limit"] },
+      { label: "4-2. 重力波と新天文学", questIds: ["new-messenger-astronomy"] }
+    ]
+  }
+];
+
 const SCROLL_AGENDA = [
   {
+    chapter: "第1章：太陽系と地動説",
     label: "A. 位置と運動の巻物",
     scrollIds: [
       "geocentric-model-scroll",
@@ -8744,6 +8776,7 @@ const SCROLL_AGENDA = [
     ]
   },
   {
+    chapter: "第2章：四季の星空と恒星",
     label: "B. 距離測定の巻物",
     scrollIds: [
       "cygnus-parallax-scroll",
@@ -8758,6 +8791,7 @@ const SCROLL_AGENDA = [
     ]
   },
   {
+    chapter: "第2章：四季の星空と恒星",
     label: "C. 光とスペクトルの巻物",
     scrollIds: [
       "rigel-color-luminosity-scroll",
@@ -8770,6 +8804,7 @@ const SCROLL_AGENDA = [
     ]
   },
   {
+    chapter: "第2章：四季の星空と恒星",
     label: "D. 明るさと時間変化の巻物",
     scrollIds: [
       "sirius-brightness-scroll",
@@ -8781,6 +8816,7 @@ const SCROLL_AGENDA = [
     ]
   },
   {
+    chapter: "第2章：四季の星空と恒星",
     label: "E. 恒星物理の巻物",
     scrollIds: [
       "arcturus-giant-scroll",
@@ -8797,6 +8833,7 @@ const SCROLL_AGENDA = [
     ]
   },
   {
+    chapter: "第2章：四季の星空と恒星",
     label: "F. 連星と質量測定の巻物",
     scrollIds: [
       "mizar-double-star-scroll",
@@ -8808,6 +8845,7 @@ const SCROLL_AGENDA = [
     ]
   },
   {
+    chapter: "第2章：四季の星空と恒星",
     label: "G. 系外惑星の巻物",
     scrollIds: [
       "exoplanet-pulsar-scroll",
@@ -8827,6 +8865,7 @@ const SCROLL_AGENDA = [
     ]
   },
   {
+    chapter: "第3章：銀河と宇宙論",
     label: "H. 銀河の巻物",
     scrollIds: [
       "galaxy-nature-scroll",
@@ -8837,6 +8876,7 @@ const SCROLL_AGENDA = [
     ]
   },
   {
+    chapter: "第3章：銀河と宇宙論",
     label: "I. 宇宙論の巻物",
     scrollIds: [
       "hubble-law-scroll",
@@ -8849,6 +8889,7 @@ const SCROLL_AGENDA = [
     ]
   },
   {
+    chapter: "第4章：高エネルギー宇宙",
     label: "J. 高エネルギー天文学の巻物",
     scrollIds: [
       "general-relativity-scroll",
@@ -8860,6 +8901,7 @@ const SCROLL_AGENDA = [
     ]
   },
   {
+    chapter: "第1章：太陽系と地動説",
     label: "K. 観測技術の巻物",
     scrollIds: [
       "telescope-observation-scroll",
@@ -10011,6 +10053,39 @@ function renderQuestFactPanel(quest) {
   `;
 }
 
+function renderQuestAgendaSection(section) {
+  const quests = section.questIds.map((id) => QUESTS.find((q) => q.id === id)).filter(Boolean);
+  const openCount = quests.filter((q) => getQuestProgress(q).open).length;
+
+  return `
+    <section class="agenda-section">
+      <div class="agenda-section-head">
+        <h4>${section.label}</h4>
+        <span>${openCount} / ${quests.length}</span>
+      </div>
+      <div class="quest-list">
+        ${quests.map(renderQuestCard).join("")}
+      </div>
+    </section>
+  `;
+}
+
+function renderQuestAgendaChapter(chapter, index) {
+  const allQuests = chapter.sections
+    .flatMap((s) => s.questIds.map((id) => QUESTS.find((q) => q.id === id)).filter(Boolean));
+  const openCount = allQuests.filter((q) => getQuestProgress(q).open).length;
+
+  return `
+    <article class="agenda-chapter" style="--agenda-index: ${index}">
+      <header class="agenda-chapter-head">
+        <h3>${chapter.chapter}</h3>
+        <span>${openCount} / ${allQuests.length}</span>
+      </header>
+      ${chapter.sections.map(renderQuestAgendaSection).join("")}
+    </article>
+  `;
+}
+
 function renderQuestTab() {
   const selectedQuest = state.selectedQuestId ? getSelectedQuest() : null;
 
@@ -10027,8 +10102,8 @@ function renderQuestTab() {
         <h2>クエスト一覧</h2>
       </div>
       <div class="app-scroll-area quest-list-scroll">
-        <div class="quest-list" aria-label="依頼掲示板">
-          ${QUESTS.map(renderQuestCard).join("")}
+        <div class="agenda-list" aria-label="依頼掲示板">
+          ${QUEST_AGENDA.map((chapter, index) => renderQuestAgendaChapter(chapter, index)).join("")}
         </div>
       </div>
     </section>
@@ -10068,6 +10143,17 @@ function getLibraryAgendaGroups() {
   return groups.filter((group) => group.scrolls.length);
 }
 
+function getLibraryAgendaChapters() {
+  const groups = getLibraryAgendaGroups();
+  const chapterMap = new Map();
+  for (const group of groups) {
+    const ch = group.chapter ?? "その他";
+    if (!chapterMap.has(ch)) chapterMap.set(ch, []);
+    chapterMap.get(ch).push(group);
+  }
+  return Array.from(chapterMap.entries()).map(([chapter, sections]) => ({ chapter, sections }));
+}
+
 function renderLibraryAgendaScroll(scroll, selected) {
   const unlocked = claimedRewards.has(scroll.id);
 
@@ -10079,25 +10165,40 @@ function renderLibraryAgendaScroll(scroll, selected) {
   `;
 }
 
-function renderLibraryAgendaGroup(group, selected, index) {
+function renderLibraryAgendaGroup(group, selected) {
   const owned = group.scrolls.filter((scroll) => claimedRewards.has(scroll.id)).length;
+
+  return `
+    <section class="agenda-section">
+      <div class="agenda-section-head">
+        <h4>${group.label}</h4>
+        <span>${owned} / ${group.scrolls.length}</span>
+      </div>
+      <div class="library-agenda-scroll-grid">
+        ${group.scrolls.map((scroll) => renderLibraryAgendaScroll(scroll, selected)).join("")}
+      </div>
+    </section>
+  `;
+}
+
+function renderLibraryChapter(chapter, selected, index) {
+  const allScrolls = chapter.sections.flatMap((g) => g.scrolls);
+  const owned = allScrolls.filter((s) => claimedRewards.has(s.id)).length;
 
   return `
     <article class="agenda-chapter library-agenda-group" style="--agenda-index: ${index}">
       <header class="agenda-chapter-head">
-        <h3>${group.label}</h3>
-        <span>${owned} / ${group.scrolls.length}</span>
+        <h3>${chapter.chapter}</h3>
+        <span>${owned} / ${allScrolls.length}</span>
       </header>
-      <div class="library-agenda-scroll-grid">
-        ${group.scrolls.map((scroll) => renderLibraryAgendaScroll(scroll, selected)).join("")}
-      </div>
+      ${chapter.sections.map((group) => renderLibraryAgendaGroup(group, selected)).join("")}
     </article>
   `;
 }
 
 function renderLibraryTab() {
   const selected = getSelectedLibraryScroll();
-  const groups = getLibraryAgendaGroups();
+  const chapters = getLibraryAgendaChapters();
 
   return `
     <section class="app-screen-panel library-tab">
@@ -10107,7 +10208,7 @@ function renderLibraryTab() {
       </div>
       <div class="app-scroll-area">
         <div class="agenda-list library-agenda-list" aria-label="巻物アジェンダ">
-          ${groups.map((group, index) => renderLibraryAgendaGroup(group, selected, index)).join("")}
+          ${chapters.map((chapter, index) => renderLibraryChapter(chapter, selected, index)).join("")}
         </div>
       </div>
     </section>
