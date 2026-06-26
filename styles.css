@@ -7089,7 +7089,7 @@ button {
 .game-shell[data-mode="story"] .target-status-panel {
   top: 7%;
   left: 8%;
-  width: min(276px, 32.4%);
+  width: min(296px, 36%);
   min-height: clamp(100px, 14vw, 140px);
   display: grid;
   align-content: center;
@@ -7160,34 +7160,41 @@ button {
 .game-shell[data-mode="story"] .status-stats dt {
   display: flex;
   align-items: center;
-  gap: 5px;
+  gap: 4px;
   font-size: clamp(0.58rem, 1.05vw, 0.64rem);
   font-weight: 500;
-  color: rgba(205, 175, 95, 0.50);
-  letter-spacing: 0.09em;
+  color: rgba(205, 175, 95, 0.55);
+  letter-spacing: 0.06em;
   white-space: nowrap;
   line-height: 1;
 }
 
 .game-shell[data-mode="story"] .status-stats dt::before {
-  content: "";
-  display: block;
-  width: 9px;
-  height: 1px;
-  background: rgba(205, 175, 95, 0.33);
+  content: "✦";
+  font-size: 0.72em;
+  color: rgba(225, 195, 110, 0.75);
   flex-shrink: 0;
+  line-height: 1;
+}
+
+.game-shell[data-mode="story"] .status-stats dt::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(to right, rgba(205, 175, 95, 0.52), rgba(205, 175, 95, 0.04));
+  align-self: center;
 }
 
 .game-shell[data-mode="story"] .status-stats dd {
+  padding-left: 1.1em;
   font-size: clamp(0.84rem, 1.72vw, 0.96rem);
   font-weight: 700;
   color: #fef3da;
   text-shadow:
     0 1px 0 rgba(0, 0, 0, 0.88),
     0 0 10px rgba(255, 215, 100, 0.22);
-  line-height: 1.2;
+  line-height: 1.25;
   margin: 0;
-  white-space: nowrap;
   text-align: left;
 }
 
@@ -7371,8 +7378,8 @@ button {
   .game-shell[data-mode="story"] .target-status-panel {
     top: 5.6%;
     left: 7%;
-    width: 35%;
-    min-height: 98px;
+    width: 40%;
+    min-height: 112px;
     padding: 10px 12px;
   }
 
@@ -7409,6 +7416,7 @@ button {
   }
 
   .game-shell[data-mode="story"] .status-stats dd {
+    padding-left: 1.0em;
     font-size: 0.80rem;
   }
 
