@@ -9936,7 +9936,7 @@ function renderQuestDetail(quest) {
   return `
     <section class="app-screen-panel quest-tab quest-detail-view">
       <div class="quest-detail-title">
-        <button class="quest-back-button" type="button" data-quest-back aria-label="クエスト一覧へ戻る">←</button>
+        <button class="quest-back-button" type="button" data-quest-back aria-label="クエスト一覧へ戻る">戻る</button>
         <span>QUEST ${quest.number}</span>
         <h2>${quest.title}</h2>
       </div>
@@ -9994,7 +9994,7 @@ function renderQuestFactDetail(quest) {
   return `
     <section class="app-screen-panel quest-tab quest-detail-view quest-fact-view">
       <div class="quest-detail-title">
-        <button class="quest-back-button" type="button" data-quest-back aria-label="クエスト一覧へ戻る">←</button>
+        <button class="quest-back-button" type="button" data-quest-back aria-label="クエスト一覧へ戻る">戻る</button>
         <span>QUEST ${quest.number}</span>
         <h2>${quest.title}</h2>
       </div>
