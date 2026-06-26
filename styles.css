@@ -7979,8 +7979,10 @@ button {
 }
 
 .home-selection-panel.app-detail-panel .home-selection-copy p {
+  margin: 0;
   font-size: clamp(0.72rem, 2vw, 0.9rem);
   line-height: 1.46;
+  text-align: left;
 }
 
 .home-selection-panel.library-detail-panel .home-selection-copy p {
@@ -8104,7 +8106,7 @@ button {
 }
 
 .home-selection-panel.app-detail-panel .home-selection-copy {
-  padding-left: clamp(22px, 4vw, 36px);
+  padding-left: clamp(10px, 2.2vw, 18px);
 }
 
 .quest-number {
@@ -8138,7 +8140,7 @@ button {
   }
 
   .home-selection-panel.app-detail-panel .home-selection-copy {
-    padding-left: 28px;
+    padding-left: 14px;
   }
 }
 
