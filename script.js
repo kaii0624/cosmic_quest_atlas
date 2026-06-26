@@ -2178,6 +2178,7 @@ const referenceOverlay = document.querySelector("#referenceOverlay");
 const observationLoading = document.querySelector("#observationLoading");
 const loadingConstellation = document.querySelector("#loadingConstellation");
 const loadingConstellationName = document.querySelector("#loadingConstellationName");
+const loadingConstellationNameJa = document.querySelector("#loadingConstellationNameJa");
 const enemySprite = document.querySelector("#enemySprite");
 const targetStatusThumb = document.querySelector("#targetStatusThumb");
 const targetStatusName = document.querySelector("#targetStatusName");
@@ -9329,6 +9330,7 @@ function renderLoadingConstellation(index) {
   if (!loadingConstellation) return;
   const constellation = LOADING_CONSTELLATIONS[index % LOADING_CONSTELLATIONS.length];
   if (loadingConstellationName) loadingConstellationName.textContent = constellation.name;
+  if (loadingConstellationNameJa) loadingConstellationNameJa.textContent = constellation.ja;
 
   const seen = new Map();
   let pointIndex = 0;

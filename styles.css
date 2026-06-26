@@ -4197,7 +4197,7 @@ button {
 
 .quest-list {
   display: grid;
-  gap: clamp(8px, 1.8vw, 13px);
+  gap: clamp(3px, 0.8vw, 6px);
 }
 
 .quest-card {
@@ -4226,6 +4226,7 @@ button {
 .quest-card:focus-visible {
   outline: none;
   transform: translateY(-2px);
+  z-index: 1;
   filter:
     brightness(1.05)
     drop-shadow(0 6px 0 rgba(16, 8, 4, 0.58))
@@ -4244,7 +4245,7 @@ button {
   display: grid;
   justify-items: center;
   gap: 1px;
-  transform: translateY(clamp(-14px, -2.5vw, -8px));
+  transform: translateY(clamp(-5px, -0.8vw, 0px));
 }
 
 .quest-requester img,
@@ -5670,7 +5671,7 @@ button {
   }
 
   .quest-list {
-    gap: 8px;
+    gap: 4px;
   }
 
   .quest-card {
@@ -7751,6 +7752,8 @@ button {
   background-size: 100% 70% !important;
   background-position: center !important;
   padding-inline: clamp(18px, 3.4vw, 34px);
+  margin-block: -clamp(16px, 3vw, 22px);
+  z-index: 0;
 }
 
 .quest-evidence-row,
@@ -7839,6 +7842,7 @@ button {
     background-size: 100% 70% !important;
     background-position: center !important;
     padding: 18px 14px 17px;
+    margin-block: -14px;
   }
 
   .quest-requester-status {
@@ -8005,6 +8009,7 @@ button {
 
 .quest-card.selected {
   transform: translateY(-2px);
+  z-index: 1;
   filter:
     brightness(1.07)
     saturate(1.04)
@@ -8319,6 +8324,16 @@ button {
   letter-spacing: 0.18em;
   line-height: 1;
   text-transform: none;
+}
+
+.loading-constellation-name-ja {
+  color: rgba(248, 223, 154, 0.52);
+  font-family: "Hiragino Mincho ProN", "YuMincho", serif;
+  font-size: clamp(0.56rem, 1.5vw, 0.68rem);
+  font-weight: 400;
+  letter-spacing: 0.12em;
+  line-height: 1;
+  margin-top: -4px;
 }
 
 .observation-loading p {
