@@ -7085,7 +7085,7 @@ button {
   top: 7%;
   left: 8%;
   width: min(276px, 32.4%);
-  min-height: clamp(150px, 21vw, 196px);
+  min-height: clamp(100px, 14vw, 140px);
   display: grid;
   align-content: center;
   padding: clamp(14px, 1.9vw, 22px) clamp(14px, 1.9vw, 24px);
@@ -7156,14 +7156,53 @@ button {
 .game-shell[data-mode="story"] .observer-status-panel {
   right: 5%;
   bottom: 6%;
-  width: min(400px, 43%);
-  padding: clamp(58px, 6.8vw, 80px) clamp(24px, 3.2vw, 42px) clamp(15px, 2.1vw, 26px);
+  width: min(220px, 28%);
+  min-height: auto;
+  padding: clamp(44px, 5.4vw, 64px) clamp(16px, 2.2vw, 28px) clamp(10px, 1.4vw, 18px);
   background-image: url("./assets/ui-battle-observer-status-frame.png");
+  display: grid;
+  place-items: center;
 }
 
-.game-shell[data-mode="story"] .observer-stats div {
-  grid-template-columns: minmax(82px, auto) 64px 1fr;
-  gap: 8px;
+.observe-tool-button {
+  display: grid;
+  justify-items: center;
+  gap: clamp(4px, 0.8vw, 7px);
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: #ffe8a7;
+  font-family: "Hiragino Mincho ProN", "YuMincho", "Yu Mincho", serif;
+  font-size: clamp(0.68rem, 1.6vw, 0.86rem);
+  font-weight: 900;
+  text-shadow: 0 2px 0 rgba(4, 3, 2, 0.92);
+  cursor: pointer;
+  transition: filter 140ms ease, transform 140ms ease;
+}
+
+.observe-tool-button img {
+  width: clamp(44px, 8vw, 68px);
+  aspect-ratio: 1;
+  object-fit: contain;
+  filter:
+    drop-shadow(0 3px 0 rgba(3, 5, 13, 0.56))
+    drop-shadow(0 0 10px rgba(255, 221, 118, 0.32));
+}
+
+.observe-tool-button:hover,
+.observe-tool-button:focus-visible {
+  outline: none;
+  transform: scale(1.06);
+  filter: brightness(1.15);
+}
+
+.observe-tool-button.is-tapped {
+  pointer-events: none;
+  opacity: 0.5;
+}
+
+.observe-tool-button[hidden] {
+  display: none;
 }
 
 .game-shell[data-mode="story"] .enemy-sprite.story-rigel {

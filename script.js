@@ -265,6 +265,9 @@ const PLANET_STORIES = {
     lead: "太陽の近くを素早く巡る内惑星。見える高さは最大離角で決まる。",
     mechanic: "innerPlanetElongation",
     clearAt: 4,
+    bodyType: "内惑星",
+    measureTarget: "太陽との角度（離角）",
+    tool: "starChart",
     portrait: "./assets/planet-enemy-mercury-normal.png",
     enemy: {
       normal: "./assets/planet-enemy-mercury-normal.png",
@@ -295,26 +298,10 @@ const PLANET_STORIES = {
       ]
     },
     lines: [
-      {
-        speaker: "水星兎メルクリウス",
-        text: "私は太陽のすぐそばを走る水星の兎。夜中の高い空では待っても会えない。",
-        pattern: "normal"
-      },
-      {
-        speaker: "水星兎メルクリウス",
-        text: "太陽から見かけ上もっとも離れるころを狙え。それが最大離角だ。",
-        pattern: "elongation"
-      },
-      {
-        speaker: "水星兎メルクリウス",
-        text: "夕方の西空、または明け方の東空。短い時間にだけ、私の小さな影を観測できる。",
-        pattern: "elongation"
-      },
-      {
-        speaker: "水星兎メルクリウス",
-        text: "内惑星は太陽との角度で探す。速さではなく、見える位置関係を読め。",
-        pattern: "normal"
-      }
+      { speaker: "水星兎メルクリウス", text: "私はどの時間帯に観測できるか、星図で位置関係を確かめてみよ。", pattern: "normal" },
+      { type: "tool-tap" },
+      { speaker: "観測者", text: "水星は太陽の近くにいる。最大離角のころ、夕方か明け方にだけ見える", pattern: "elongation" },
+      { speaker: "水星兎メルクリウス", text: "内惑星は太陽から大きく離れない。最大離角を狙え。", pattern: "elongation" }
     ]
   },
   sunReference: {
@@ -326,6 +313,9 @@ const PLANET_STORIES = {
     lead: "惑星の中心に輝く恒星。太陽の光度と質量を、星を比べる基準として読む。",
     mechanic: "solarReference",
     clearAt: 4,
+    bodyType: "恒星",
+    measureTarget: "光度と質量の基準",
+    tool: "photometer",
     portrait: "./assets/planet-enemy-sun-normal.png",
     enemy: {
       normal: "./assets/planet-enemy-sun-normal.png",
@@ -354,26 +344,10 @@ const PLANET_STORIES = {
       knowledge: ["太陽は恒星の基準"]
     },
     lines: [
-      {
-        speaker: "太陽獅子ソル",
-        text: "私は惑星台座の中心に輝く太陽。惑星を照らすだけでなく、恒星を比べる物差しにもなる。",
-        pattern: "normal"
-      },
-      {
-        speaker: "太陽獅子ソル",
-        text: "光度は 1 L☉、質量は 1 M☉。遠い恒星の強さを語るとき、私の単位が基準になる。",
-        pattern: "reference"
-      },
-      {
-        speaker: "太陽獅子ソル",
-        text: "惑星たちは私のまわりを巡る。円の配置を見れば、太陽中心の見方が星図に浮かぶ。",
-        pattern: "reference"
-      },
-      {
-        speaker: "太陽獅子ソル",
-        text: "太陽はただの背景ではない。恒星を学ぶための最初の基準星だ。",
-        pattern: "normal"
-      }
+      { speaker: "太陽獅子ソル", text: "私の光度を測って、他の恒星と比べてみよ。", pattern: "normal" },
+      { type: "tool-tap" },
+      { speaker: "観測者", text: "光度1 L☉、質量1 M☉。太陽が恒星を比べる基準単位になる", pattern: "reference" },
+      { speaker: "太陽獅子ソル", text: "遠い恒星の強さを語るとき、私の光度と質量が物差しになる。", pattern: "reference" }
     ]
   },
   uranusTilt: {
@@ -385,6 +359,9 @@ const PLANET_STORIES = {
     lead: "望遠鏡で惑星として見出された氷の惑星。大きく傾いた自転軸を持つ。",
     mechanic: "tiltedAxis",
     clearAt: 4,
+    bodyType: "氷巨大惑星",
+    measureTarget: "自転軸の向き",
+    tool: "opticalTelescope",
     portrait: "./assets/planet-enemy-uranus-normal.png",
     enemy: {
       normal: "./assets/planet-enemy-uranus-normal.png",
@@ -415,26 +392,10 @@ const PLANET_STORIES = {
       ]
     },
     lines: [
-      {
-        speaker: "天王梟ウラノス",
-        text: "私は淡い青緑の天王星。肉眼の星の列に紛れ、望遠鏡で惑星として見出された。",
-        pattern: "normal"
-      },
-      {
-        speaker: "天王梟ウラノス",
-        text: "私の自転軸は大きく傾く。まるで横倒しで太陽のまわりを巡るように見える。",
-        pattern: "tilt"
-      },
-      {
-        speaker: "天王梟ウラノス",
-        text: "惑星は明るさだけではない。位置の変化、円盤の見え方、軸の向きまで観測するのだ。",
-        pattern: "tilt"
-      },
-      {
-        speaker: "天王梟ウラノス",
-        text: "望遠鏡は、星に見えた点を新しい惑星へ変える。",
-        pattern: "normal"
-      }
+      { speaker: "天王梟ウラノス", text: "望遠鏡で私を観測してみよ。何かおかしな向きに気付くはずだ。", pattern: "normal" },
+      { type: "tool-tap" },
+      { speaker: "観測者", text: "自転軸が約98度傾いている。横倒しで公転している惑星だ", pattern: "tilt" },
+      { speaker: "天王梟ウラノス", text: "位置の変化、円盤の見え方、軸の向きまで観測する。それが惑星の読み方だ。", pattern: "tilt" }
     ]
   },
   venusPhases: {
@@ -446,6 +407,9 @@ const PLANET_STORIES = {
     lead: "太陽に近い内惑星。望遠鏡で見ると、月のように満ち欠けする。",
     mechanic: "planetPhase",
     clearAt: 4,
+    bodyType: "内惑星",
+    measureTarget: "形の変化（満ち欠け）",
+    tool: "opticalTelescope",
     portrait: "./assets/planet-enemy-venus-normal.png",
     enemy: {
       normal: "./assets/planet-enemy-venus-normal.png",
@@ -476,26 +440,10 @@ const PLANET_STORIES = {
       ]
     },
     lines: [
-      {
-        speaker: "金星狐ヴィーナ",
-        text: "私は夕空と明け方に現れる金の狐。太陽から大きく離れては見えない。",
-        pattern: "normal"
-      },
-      {
-        speaker: "金星狐ヴィーナ",
-        text: "望遠鏡でよく見よ。丸くなり、半分になり、細い爪のようにも欠ける。",
-        pattern: "phase"
-      },
-      {
-        speaker: "金星狐ヴィーナ",
-        text: "これは呪いではない。地球より内側を回る私の昼面が、角度で変わって見えるのだ。",
-        pattern: "phase"
-      },
-      {
-        speaker: "金星狐ヴィーナ",
-        text: "満ち欠けを読めば、惑星が太陽のまわりを回る姿が見えてくる。",
-        pattern: "normal"
-      }
+      { speaker: "金星狐ヴィーナ", text: "望遠鏡で私の形をよく見てみよ。", pattern: "normal" },
+      { type: "tool-tap" },
+      { speaker: "観測者", text: "金星が月のように満ち欠けしている。内惑星だから昼面の見え方が変わる", pattern: "phase" },
+      { speaker: "金星狐ヴィーナ", text: "満ち欠けを読めば、惑星が太陽のまわりを回る姿が見えてくる。", pattern: "phase" }
     ]
   },
   jupiterMoons: {
@@ -507,6 +455,9 @@ const PLANET_STORIES = {
     lead: "巨大な惑星のそばに、小さな衛星が並ぶ観測の試練。",
     mechanic: "galileanMoons",
     clearAt: 4,
+    bodyType: "巨大ガス惑星",
+    measureTarget: "衛星の位置変化",
+    tool: "opticalTelescope",
     portrait: "./assets/planet-enemy-jupiter-normal.png",
     enemy: {
       normal: "./assets/planet-enemy-jupiter-normal.png",
@@ -537,26 +488,10 @@ const PLANET_STORIES = {
       ]
     },
     lines: [
-      {
-        speaker: "木星獅子ジュピター",
-        text: "私は巨大な木星の獅子。明るい本体だけを見ていては、まわりの小さな点を見逃す。",
-        pattern: "normal"
-      },
-      {
-        speaker: "木星獅子ジュピター",
-        text: "日を変えて見よ。小さな星たちは私の左右で並び替わる。",
-        pattern: "moons"
-      },
-      {
-        speaker: "木星獅子ジュピター",
-        text: "その正体は衛星だ。イオ、エウロパ、ガニメデ、カリストが木星を回っている。",
-        pattern: "moons"
-      },
-      {
-        speaker: "木星獅子ジュピター",
-        text: "空のすべてが地球を回るわけではない。小さな点の動きが、宇宙観を変えた。",
-        pattern: "normal"
-      }
+      { speaker: "木星獅子ジュピター", text: "望遠鏡で私のそばを日を変えて観測してみよ。", pattern: "normal" },
+      { type: "tool-tap" },
+      { speaker: "観測者", text: "木星のそばで小さな点が並び替わっている。ガリレオ衛星だ", pattern: "moons" },
+      { speaker: "木星獅子ジュピター", text: "イオ、エウロパ、ガニメデ、カリスト。衛星が惑星を回る証拠だ。", pattern: "moons" }
     ]
   },
   marsRetrograde: {
@@ -568,6 +503,9 @@ const PLANET_STORIES = {
     lead: "赤い惑星が星座の中で逆向きに進む、見かけの運動を読む。",
     mechanic: "retrograde",
     clearAt: 4,
+    bodyType: "外惑星",
+    measureTarget: "星座に対する見かけの動き",
+    tool: "starChart",
     portrait: "./assets/planet-enemy-mars-normal.png",
     enemy: {
       normal: "./assets/planet-enemy-mars-normal.png",
@@ -598,26 +536,10 @@ const PLANET_STORIES = {
       ]
     },
     lines: [
-      {
-        speaker: "火星狼マルス",
-        text: "私は赤く光る火星の狼。星座の道を進んでいたはずが、突然うしろへ戻るように見える。",
-        pattern: "normal"
-      },
-      {
-        speaker: "火星狼マルス",
-        text: "この足跡を追え。空の背景に対して、進行方向が一時的に逆になる。",
-        pattern: "retrograde"
-      },
-      {
-        speaker: "火星狼マルス",
-        text: "本当に逆走しているのではない。速い地球が内側から追い越すため、見かけの向きが変わる。",
-        pattern: "retrograde"
-      },
-      {
-        speaker: "火星狼マルス",
-        text: "逆行は惑星の軌道を立体的に読む合図だ。赤い足跡を恐れるな。",
-        pattern: "normal"
-      }
+      { speaker: "火星狼マルス", text: "星図で私の動きを追ってみよ。進む向きを確かめよ。", pattern: "normal" },
+      { type: "tool-tap" },
+      { speaker: "観測者", text: "火星が一時的に逆向きに動いている。見かけの逆行だ", pattern: "retrograde" },
+      { speaker: "火星狼マルス", text: "速い地球が内側から追い越すとき、見かけの向きが変わる。逆行は軌道を立体的に読む合図だ。", pattern: "retrograde" }
     ]
   },
   saturnKepler3: {
@@ -629,6 +551,9 @@ const PLANET_STORIES = {
     lead: "遠い惑星ほど公転に時間がかかる。軌道の大きさと周期の法則を読む。",
     mechanic: "keplerThird",
     clearAt: 4,
+    bodyType: "環の惑星",
+    measureTarget: "公転周期と軌道の大きさ",
+    tool: "starChart",
     portrait: "./assets/planet-enemy-saturn-normal.png",
     enemy: {
       normal: "./assets/planet-enemy-saturn-normal.png",
@@ -659,26 +584,10 @@ const PLANET_STORIES = {
       ]
     },
     lines: [
-      {
-        speaker: "土星鹿サターン",
-        text: "私は環をまとう土星の鹿。遠い軌道ほど、ひと回りする時間は長い。",
-        pattern: "normal"
-      },
-      {
-        speaker: "土星鹿サターン",
-        text: "軌道の大きさと周期を比べよ。ばらばらに見える惑星の巡りには、同じ規則がある。",
-        pattern: "orbit"
-      },
-      {
-        speaker: "土星鹿サターン",
-        text: "ケプラー第3法則。公転周期 P の2乗は、軌道長半径 a の3乗に比例する。",
-        pattern: "orbit"
-      },
-      {
-        speaker: "土星鹿サターン",
-        text: "環の美しさに惑わされるな。数で読むと、惑星たちは同じ法則の上を進んでいる。",
-        pattern: "normal"
-      }
+      { speaker: "土星鹿サターン", text: "私の公転周期と軌道の大きさを測り、比べてみよ。", pattern: "normal" },
+      { type: "tool-tap" },
+      { speaker: "観測者", text: "周期の2乗が軌道長半径の3乗に比例している。ケプラー第3法則だ", pattern: "orbit" },
+      { speaker: "土星鹿サターン", text: "環の美しさに惑わされるな。数で読むと、惑星たちは同じ法則の上を進んでいる。", pattern: "orbit" }
     ]
   },
   neptuneCalculation: {
@@ -690,6 +599,9 @@ const PLANET_STORIES = {
     lead: "見えない惑星を、軌道のずれと計算から探し出す。",
     mechanic: "calculatedPlanet",
     clearAt: 4,
+    bodyType: "氷巨大惑星",
+    measureTarget: "軌道のずれと重力",
+    tool: "starChart",
     portrait: "./assets/planet-enemy-neptune-normal.png",
     enemy: {
       normal: "./assets/planet-enemy-neptune-normal.png",
@@ -720,26 +632,10 @@ const PLANET_STORIES = {
       ]
     },
     lines: [
-      {
-        speaker: "海王海竜ネプトゥーン",
-        text: "私は深い青の海王星。望遠鏡を向ける前に、まず計算で呼び出された惑星だ。",
-        pattern: "normal"
-      },
-      {
-        speaker: "海王海竜ネプトゥーン",
-        text: "天王星の動きに小さなずれがあった。そのずれは、見えない重力の足跡だった。",
-        pattern: "calculated"
-      },
-      {
-        speaker: "海王海竜ネプトゥーン",
-        text: "軌道の乱れを計算すると、未知の惑星がいる方角が示された。",
-        pattern: "calculated"
-      },
-      {
-        speaker: "海王海竜ネプトゥーン",
-        text: "観測は目だけではない。数式もまた、暗い海の底にある惑星を照らす灯だ。",
-        pattern: "normal"
-      }
+      { speaker: "海王海竜ネプトゥーン", text: "天王星の動きに小さなずれがある。星図で軌道を追ってみよ。", pattern: "normal" },
+      { type: "tool-tap" },
+      { speaker: "観測者", text: "軌道のずれを分析した。見えない重力源が存在する", pattern: "calculated" },
+      { speaker: "海王海竜ネプトゥーン", text: "ずれを計算すると未知の惑星がいる方角が示された。観測は目だけではない。", pattern: "calculated" }
     ]
   }
 };
@@ -754,6 +650,9 @@ const STORIES = {
     lead: "北斗七星の柄に並ぶ、ミザールとアルコルの観測試練。",
     mechanic: "doubleStar",
     clearAt: 4,
+    bodyType: "二重星",
+    measureTarget: "星の分離",
+    tool: "opticalTelescope",
     portrait: "./assets/mizar-enemy-normal.png",
     enemy: {
       normal: "./assets/mizar-enemy-normal.png",
@@ -784,26 +683,10 @@ const STORIES = {
       ]
     },
     lines: [
-      {
-        speaker: "双星の門ミザール",
-        text: "春の北の空、北斗七星の柄をたどれ。私は一つに見えて、隣に小さな相棒を隠している。",
-        pattern: "normal"
-      },
-      {
-        speaker: "双星の門ミザール",
-        text: "その名はアルコル。目がよく、空が暗ければ、肉眼でも私たちは分かれて見える。",
-        pattern: "split"
-      },
-      {
-        speaker: "双星の門ミザール",
-        text: "望遠鏡を向けると、ミザール自身もさらに連星だと分かる。星は点に見えても、奥に仲間を持つ。",
-        pattern: "split"
-      },
-      {
-        speaker: "双星の門ミザール",
-        text: "星座は見かけの地図。近くに並んで見える星を、観測で一つずつほどいていけ。",
-        pattern: "normal"
-      }
+      { speaker: "双星の門ミザール", text: "北斗七星の柄をたどれ。望遠鏡で私の隣を見てみよ。", pattern: "normal" },
+      { type: "tool-tap" },
+      { speaker: "観測者", text: "隣にアルコルが見えた。二つに分かれている二重星だ", pattern: "split" },
+      { speaker: "双星の門ミザール", text: "点に見えていた私が二重星だと分かった。星は奥に仲間を持つ。", pattern: "split" }
     ]
   },
   algol: {
@@ -815,6 +698,9 @@ const STORIES = {
     lead: "ペルセウス座、メデューサの首に宿る変光星。",
     mechanic: "lightCurve",
     clearAt: 4,
+    bodyType: "食変光星",
+    measureTarget: "明るさの周期変化",
+    tool: "photometer",
     portrait: "./assets/algol-story-character.png",
     enemy: {
       normal: "./assets/algol-enemy-normal.png",
@@ -845,36 +731,10 @@ const STORIES = {
       ]
     },
     lines: [
-      {
-        speaker: "悪魔の首アルゴル",
-        text: "ペルセウスの手に掲げられたこの首は、まだ空で明滅している。",
-        pattern: "normal"
-      },
-      {
-        speaker: "悪魔の首アルゴル",
-        text: "我が名はアルゴル。悪魔の頭と呼ばれ、メデューサの目の位置にある星。",
-        pattern: "eclipse"
-      },
-      {
-        speaker: "悪魔の首アルゴル",
-        text: "呪いと思うか。数日ごとに、私はすっと暗くなる。",
-        pattern: "normal"
-      },
-      {
-        speaker: "悪魔の首アルゴル",
-        text: "伴星が前を横切る。そのとき光が隠れ、光度曲線には深い谷が刻まれる。",
-        pattern: "eclipse"
-      },
-      {
-        speaker: "悪魔の首アルゴル",
-        text: "正体は食変光星。2つの星が互いに回り、隠し合っているのだ。",
-        pattern: "eclipse"
-      },
-      {
-        speaker: "悪魔の首アルゴル",
-        text: "恐れるな。暗くなる時刻を読めば、悪魔の目は観測で見破れる。",
-        pattern: "normal"
-      }
+      { speaker: "悪魔の首アルゴル", text: "私の明るさを測ってみよ。数日ごとに何かが変わる。", pattern: "normal" },
+      { type: "tool-tap" },
+      { speaker: "観測者", text: "明るさが周期的に暗くなっている。光度曲線に深い谷がある", pattern: "eclipse" },
+      { speaker: "悪魔の首アルゴル", text: "伴星が前を横切るとき光が隠れる。これが食変光星の証拠だ。", pattern: "eclipse" }
     ]
   },
   cygnus: {
@@ -886,6 +746,9 @@ const STORIES = {
     lead: "夏の天の川を渡る白鳥座。距離は、空の小さなずれから見破る。",
     mechanic: "parallax",
     clearAt: 4,
+    bodyType: "近傍恒星",
+    measureTarget: "年周視差",
+    tool: "parallax",
     portrait: "./assets/cygnus-swan-normal.png",
     enemy: {
       normal: "./assets/cygnus-swan-normal.png",
@@ -915,36 +778,10 @@ const STORIES = {
       ]
     },
     lines: [
-      {
-        speaker: "白鳥座キュグヌス",
-        text: "夏の王国、天の川の上に大きな十字が浮かぶ。星座絵では翼を広げた白鳥だ。",
-        pattern: "normal"
-      },
-      {
-        speaker: "白鳥座キュグヌス",
-        text: "尾のデネブは遠く強く輝き、くちばしのアルビレオは色の違いを見せる。だが今夜の試練は距離だ。",
-        pattern: "normal"
-      },
-      {
-        speaker: "白鳥座キュグヌス",
-        text: "半年おいて同じ星を見る。地球が公転軌道の反対側へ移ると、近い星だけ背景に対して少しずれる。",
-        pattern: "parallax"
-      },
-      {
-        speaker: "白鳥座キュグヌス",
-        text: "この小さな角度が年周視差。視差 p が大きいほど、その星は近い。",
-        pattern: "parallax"
-      },
-      {
-        speaker: "白鳥座キュグヌス",
-        text: "p を秒角で測れば、距離 d はパーセクで d = 1 / p。白鳥座61番星はこの測定で有名な白鳥座の近い星だ。",
-        pattern: "parallax"
-      },
-      {
-        speaker: "白鳥座キュグヌス",
-        text: "年周視差の羽根を得た。星座の絵の奥に、近い星と遠い星の立体的な距離が見える。",
-        pattern: "normal"
-      }
+      { speaker: "白鳥座キュグヌス", text: "天の川の白鳥よ。近い星の位置を半年おいて測ってみよ。", pattern: "normal" },
+      { type: "tool-tap" },
+      { speaker: "観測者", text: "星の位置が背景に対してわずかにずれた。年周視差を検出した", pattern: "parallax" },
+      { speaker: "白鳥座キュグヌス", text: "視差 p が分かれば距離は d = 1/p。星座の奥に、星ごとの距離の層が見えてくる。", pattern: "parallax" }
     ]
   },
   rigel: {
@@ -956,6 +793,9 @@ const STORIES = {
     lead: "オリオン座の足もとで輝く、青白い高温の大光度星。",
     mechanic: "stellarColor",
     clearAt: 4,
+    bodyType: "青色超巨星",
+    measureTarget: "表面温度と光度",
+    tool: "spectrometer",
     portrait: "./assets/rigel-enemy-normal.png",
     enemy: {
       normal: "./assets/rigel-enemy-normal.png",
@@ -985,26 +825,10 @@ const STORIES = {
       ]
     },
     lines: [
-      {
-        speaker: "青白き巨星リゲル",
-        text: "オリオンの足もとを見よ。私は青白く輝くリゲル、冬の空の大光度星だ。",
-        pattern: "normal"
-      },
-      {
-        speaker: "青白き巨星リゲル",
-        text: "赤いベテルギウスと比べれば分かる。青白い星ほど表面温度は高い。",
-        pattern: "hot"
-      },
-      {
-        speaker: "青白き巨星リゲル",
-        text: "私は近いからだけ明るいのではない。遠くにいても強く輝く、巨大で高温の星なのだ。",
-        pattern: "hot"
-      },
-      {
-        speaker: "青白き巨星リゲル",
-        text: "色、温度、光度を合わせて読め。冬の星座は、恒星進化を学ぶ入口になる。",
-        pattern: "normal"
-      }
+      { speaker: "青白き巨星リゲル", text: "私の青白い光を分光してみよ。色は何を語るか。", pattern: "normal" },
+      { type: "tool-tap" },
+      { speaker: "観測者", text: "スペクトルから表面温度は約1.2万K。高温の青色超巨星だ", pattern: "hot" },
+      { speaker: "青白き巨星リゲル", text: "青白い星ほど高温。そして高温だから大光度になる。色は温度の合図だ。", pattern: "hot" }
     ]
   },
   arcturus: {
@@ -1016,6 +840,9 @@ const STORIES = {
     lead: "うしかい座で輝く橙色巨星。色から温度と進化を読む春の試練。",
     mechanic: "giantColor",
     clearAt: 4,
+    bodyType: "橙色巨星",
+    measureTarget: "表面温度と進化段階",
+    tool: "spectrometer",
     portrait: "./assets/arcturus-enemy-normal.png",
     enemy: {
       normal: "./assets/arcturus-enemy-normal.png",
@@ -1041,10 +868,10 @@ const STORIES = {
       knowledge: ["橙色巨星は低温"]
     },
     lines: [
-      { speaker: "橙の巨星アルクトゥルス", text: "春の大曲線をたどれば、私は橙色に輝いて待っている。", pattern: "normal" },
-      { speaker: "橙の巨星アルクトゥルス", text: "青白い星より私は冷たい。だが大きくふくらんだ巨星だから、春の空で強く目立つ。", pattern: "giant" },
-      { speaker: "橙の巨星アルクトゥルス", text: "色は温度の合図。橙色の光は、星が進化して外層を広げた姿を語る。", pattern: "giant" },
-      { speaker: "橙の巨星アルクトゥルス", text: "星の色を読めば、星座の点は温度と進化を持つ天体へ変わる。", pattern: "normal" }
+      { speaker: "橙の巨星アルクトゥルス", text: "私の色をよく見て、スペクトルを調べてみよ。", pattern: "normal" },
+      { type: "tool-tap" },
+      { speaker: "観測者", text: "スペクトルから温度は約4300K。外層が広がった橙色の巨星だ", pattern: "giant" },
+      { speaker: "橙の巨星アルクトゥルス", text: "橙色は青白い星より低温。でも外層が広がった巨星だから明るく輝く。", pattern: "giant" }
     ]
   },
   spica: {
@@ -1056,6 +883,9 @@ const STORIES = {
     lead: "おとめ座の青白い一等星。高温の光と、分光で分かる連星性を読む。",
     mechanic: "spectroscopicBinary",
     clearAt: 4,
+    bodyType: "青白い連星",
+    measureTarget: "スペクトル線の変化",
+    tool: "spectrometer",
     portrait: "./assets/spica-enemy-normal.png",
     enemy: {
       normal: "./assets/spica-enemy-normal.png",
@@ -1081,10 +911,10 @@ const STORIES = {
       knowledge: ["スペクトルで連星"]
     },
     lines: [
-      { speaker: "青麦の双星スピカ", text: "私は春の大曲線の先、おとめ座の麦穂に青白く光る。", pattern: "normal" },
-      { speaker: "青麦の双星スピカ", text: "青白い星は高温。だが私の秘密は色だけではない。", pattern: "normal" },
-      { speaker: "青麦の双星スピカ", text: "スペクトル線が周期的に揺れる。近い相棒と回るため、光の線がわずかにずれるのだ。", pattern: "spectrum" },
-      { speaker: "青麦の双星スピカ", text: "望遠鏡で分けられない連星も、分光で見破れる。光を細かく分けて読め。", pattern: "spectrum" }
+      { speaker: "青麦の双星スピカ", text: "私の光をスペクトルで細かく分けてみよ。", pattern: "normal" },
+      { type: "tool-tap" },
+      { speaker: "観測者", text: "スペクトル線が周期的にずれている。近接連星の証拠だ", pattern: "spectrum" },
+      { speaker: "青麦の双星スピカ", text: "望遠鏡では分けられない連星も、光を細かく分ければ見破れる。", pattern: "spectrum" }
     ]
   },
   vega: {
@@ -1096,6 +926,9 @@ const STORIES = {
     lead: "こと座で青白く輝く基準星。見かけの明るさを基準に、距離を入れて絶対等級へ進む。",
     mechanic: "magnitudeStandard",
     clearAt: 4,
+    bodyType: "A0V標準星",
+    measureTarget: "見かけの等級と絶対等級",
+    tool: "photometer",
     portrait: "./assets/vega-enemy-normal.png",
     enemy: {
       normal: "./assets/vega-enemy-normal.png",
@@ -1121,10 +954,10 @@ const STORIES = {
       knowledge: ["距離で明るさ補正"]
     },
     lines: [
-      { speaker: "基準星ベガ", text: "私は夏の夜、こと座で青白く輝くベガ。明るさを測る物差しとして呼ばれてきた。", pattern: "normal" },
-      { speaker: "基準星ベガ", text: "見かけの等級だけでは、星本来の強さは分からない。近い星は強く、遠い星は弱く見える。", pattern: "standard" },
-      { speaker: "基準星ベガ", text: "距離を入れて補正せよ。10パーセクに置いた明るさ、それが絶対等級だ。", pattern: "standard" },
-      { speaker: "基準星ベガ", text: "基準を持てば、星座の明るさはただの印象ではなく、比べられる数になる。", pattern: "normal" }
+      { speaker: "基準星ベガ", text: "私の明るさを測り、距離を考えてみよ。", pattern: "normal" },
+      { type: "tool-tap" },
+      { speaker: "観測者", text: "見かけの等級を測定した。距離補正を加えると絶対等級が求まる", pattern: "standard" },
+      { speaker: "基準星ベガ", text: "10パーセクに置いた明るさが絶対等級だ。基準があれば星を比べられる。", pattern: "standard" }
     ]
   },
   deneb: {
@@ -1136,6 +969,9 @@ const STORIES = {
     lead: "白鳥の尾で輝く青白い超巨星。見かけの明るさと本当の明るさを分ける。",
     mechanic: "absoluteMagnitude",
     clearAt: 4,
+    bodyType: "青白い超巨星",
+    measureTarget: "見かけの等級と本来の光度",
+    tool: "photometer",
     portrait: "./assets/deneb-enemy-normal.png",
     enemy: {
       normal: "./assets/deneb-enemy-normal.png",
@@ -1161,10 +997,10 @@ const STORIES = {
       knowledge: ["距離込みで明るさ"]
     },
     lines: [
-      { speaker: "遠光の尾デネブ", text: "天の川の白鳥の尾に、私は青白く輝く。", pattern: "normal" },
-      { speaker: "遠光の尾デネブ", text: "近いから明るいのではない。遠く離れてなお見えるほど、私は本当に強く輝く。", pattern: "luminosity" },
-      { speaker: "遠光の尾デネブ", text: "見かけの等級と絶対等級を分けよ。距離を入れて初めて星の力が分かる。", pattern: "luminosity" },
-      { speaker: "遠光の尾デネブ", text: "星座の点の奥には、近い星と遠い超巨星が同じ地図に重なっている。", pattern: "normal" }
+      { speaker: "遠光の尾デネブ", text: "私の等級を測り、距離も考えてみよ。", pattern: "normal" },
+      { type: "tool-tap" },
+      { speaker: "観測者", text: "約2600光年の遠さにある。本当の光度は非常に大きい超巨星だ", pattern: "luminosity" },
+      { speaker: "遠光の尾デネブ", text: "近いから明るいのではない。遠くても輝くほど、私は本当に強い超巨星なのだ。", pattern: "luminosity" }
     ]
   },
   albireo: {
@@ -1176,6 +1012,9 @@ const STORIES = {
     lead: "白鳥のくちばしで青と橙が並ぶ美しい二重星。星の色と温度を読む。",
     mechanic: "colorContrast",
     clearAt: 4,
+    bodyType: "二重星",
+    measureTarget: "星の色と温度",
+    tool: "photometer",
     portrait: "./assets/albireo-enemy-normal.png",
     enemy: {
       normal: "./assets/albireo-enemy-normal.png",
@@ -1201,10 +1040,10 @@ const STORIES = {
       knowledge: ["色は温度の手がかり"]
     },
     lines: [
-      { speaker: "双彩のくちばしアルビレオ", text: "白鳥のくちばしを見よ。私は一つではなく、色の違う二つの輝きだ。", pattern: "normal" },
-      { speaker: "双彩のくちばしアルビレオ", text: "青は熱く、橙は冷たい。並べて見ると、星の温度差が目で分かる。", pattern: "color" },
-      { speaker: "双彩のくちばしアルビレオ", text: "色指数は星の色を数で表す道具。温度を読むための観測事実になる。", pattern: "color" },
-      { speaker: "双彩のくちばしアルビレオ", text: "美しさに見とれるだけでは終わらない。色は物理を語る。", pattern: "normal" }
+      { speaker: "双彩のくちばしアルビレオ", text: "私の色を測って比べてみよ。青と橙、何が違う？", pattern: "normal" },
+      { type: "tool-tap" },
+      { speaker: "観測者", text: "色指数を測定した。青い星は高温、橙の星は低温だ", pattern: "color" },
+      { speaker: "双彩のくちばしアルビレオ", text: "色は温度の合図。並んで見れば、星の温度差が目で分かる。", pattern: "color" }
     ]
   },
   cygni61: {
@@ -1216,6 +1055,9 @@ const STORIES = {
     lead: "白鳥座の近い恒星。背景星に対する小さなずれから距離を測る。",
     mechanic: "parallaxHistory",
     clearAt: 4,
+    bodyType: "近傍恒星",
+    measureTarget: "年周視差",
+    tool: "parallax",
     portrait: "./assets/cygni61-enemy-normal.png",
     enemy: {
       normal: "./assets/cygni61-enemy-normal.png",
@@ -1241,10 +1083,10 @@ const STORIES = {
       knowledge: ["距離は視差の逆数"]
     },
     lines: [
-      { speaker: "近星の測り手白鳥座61番星", text: "私は白鳥座に潜む近い恒星。派手ではないが、距離測定の歴史に名を残した。", pattern: "normal" },
-      { speaker: "近星の測り手白鳥座61番星", text: "地球が公転すると、近い星は遠い背景星に対してわずかにずれる。", pattern: "parallax" },
-      { speaker: "近星の測り手白鳥座61番星", text: "その角度が年周視差。小さな角度を測れば、星までの距離がほどける。", pattern: "parallax" },
-      { speaker: "近星の測り手白鳥座61番星", text: "星座の絵の奥に、本当の距離の層を重ねて見よ。", pattern: "normal" }
+      { speaker: "近星の測り手白鳥座61番星", text: "私は近い星だ。半年おいて背景星に対する位置を測ってみよ。", pattern: "normal" },
+      { type: "tool-tap" },
+      { speaker: "観測者", text: "わずかな位置のずれを検出した。年周視差だ", pattern: "parallax" },
+      { speaker: "近星の測り手白鳥座61番星", text: "視差が大きいほど近い。その逆数が距離だ。小さな角度が宇宙の奥行きを開く。", pattern: "parallax" }
     ]
   },
   mira: {
@@ -1256,6 +1098,9 @@ const STORIES = {
     lead: "くじら座の長周期変光星。星の脈動で明るさが大きく変わる。",
     mechanic: "pulsatingVariable",
     clearAt: 4,
+    bodyType: "脈動変光星",
+    measureTarget: "明るさの長周期変化",
+    tool: "photometer",
     portrait: "./assets/mira-enemy-normal.png",
     enemy: {
       normal: "./assets/mira-enemy-normal.png",
@@ -1281,10 +1126,10 @@ const STORIES = {
       knowledge: ["星が脈動して変光"]
     },
     lines: [
-      { speaker: "脈打つ心臓ミラ", text: "私はくじら座の心臓。夜空で消えたように暗くなり、また戻ってくる。", pattern: "normal" },
-      { speaker: "脈打つ心臓ミラ", text: "伴星が隠すのではない。私自身が膨らみ縮み、表面の明るさを変える。", pattern: "pulse" },
-      { speaker: "脈打つ心臓ミラ", text: "約332日の長い周期で脈打つ光。変光星には、食だけでなく脈動もある。", pattern: "pulse" },
-      { speaker: "脈打つ心臓ミラ", text: "光度曲線を追えば、海獣の心臓が刻む時間が見えてくる。", pattern: "normal" }
+      { speaker: "脈打つ心臓ミラ", text: "私の明るさを追ってみよ。消えるのか、戻ってくるのか。", pattern: "normal" },
+      { type: "tool-tap" },
+      { speaker: "観測者", text: "約332日の周期で明るさが大きく変化している", pattern: "pulse" },
+      { speaker: "脈打つ心臓ミラ", text: "伴星が隠すのではない。私自身が膨らみ縮み、脈動変光星として光を変える。", pattern: "pulse" }
     ]
   },
   m31: {
@@ -1296,6 +1141,9 @@ const STORIES = {
     lead: "アンドロメダ座方向に見える大銀河。星座の入口の奥に宇宙の階層を見る。",
     mechanic: "galaxyDepth",
     clearAt: 4,
+    bodyType: "渦巻銀河",
+    measureTarget: "位置と距離",
+    tool: "starChart",
     portrait: "./assets/m31-enemy-normal.png",
     enemy: {
       normal: "./assets/m31-enemy-normal.png",
@@ -1321,10 +1169,10 @@ const STORIES = {
       knowledge: ["星座の奥に銀河"]
     },
     lines: [
-      { speaker: "渦巻く隣国M31", text: "アンドロメダ座の線をたどった先に、私は淡い雲のように浮かぶ。", pattern: "normal" },
-      { speaker: "渦巻く隣国M31", text: "だが私は星雲ではない。無数の恒星を抱く、天の川の隣の大銀河だ。", pattern: "depth" },
-      { speaker: "渦巻く隣国M31", text: "星座は見かけの地図。方向の奥には、恒星よりはるか遠い銀河の階層がある。", pattern: "depth" },
-      { speaker: "渦巻く隣国M31", text: "入口の星座から、宇宙の奥行きへ進め。", pattern: "normal" }
+      { speaker: "渦巻く隣国M31", text: "アンドロメダ座の方向を星図で追ってみよ。奥に何がある？", pattern: "normal" },
+      { type: "tool-tap" },
+      { speaker: "観測者", text: "アンドロメダ座の奥に巨大な渦巻銀河M31が見える", pattern: "depth" },
+      { speaker: "渦巻く隣国M31", text: "星座は見かけの地図。方向の奥には、はるか遠い銀河の階層がある。", pattern: "depth" }
     ]
   },
   betelgeuse: {
@@ -1336,6 +1184,9 @@ const STORIES = {
     lead: "オリオンの肩で赤く輝く超巨星。低温で巨大な進化した星を読む。",
     mechanic: "redSupergiant",
     clearAt: 4,
+    bodyType: "赤色超巨星",
+    measureTarget: "表面温度と半径",
+    tool: "spectrometer",
     portrait: "./assets/betelgeuse-enemy-normal.png",
     enemy: {
       normal: "./assets/betelgeuse-enemy-normal.png",
@@ -1361,10 +1212,10 @@ const STORIES = {
       knowledge: ["赤い超巨星は低温巨大"]
     },
     lines: [
-      { speaker: "赤肩の超巨星ベテルギウス", text: "オリオンの肩を見よ。私は赤く、ゆっくりと光を変える巨大な星だ。", pattern: "normal" },
-      { speaker: "赤肩の超巨星ベテルギウス", text: "赤は高温ではない。青白いリゲルより表面は低温だ。", pattern: "evolution" },
-      { speaker: "赤肩の超巨星ベテルギウス", text: "それでも明るいのは、外層が大きく広がった超巨星だからだ。", pattern: "evolution" },
-      { speaker: "赤肩の超巨星ベテルギウス", text: "色、温度、半径、進化段階。冬のオリオンは恒星進化の教室になる。", pattern: "normal" }
+      { speaker: "赤肩の超巨星ベテルギウス", text: "私の赤い光をスペクトルで測ってみよ。赤は何を意味する？", pattern: "normal" },
+      { type: "tool-tap" },
+      { speaker: "観測者", text: "スペクトルから温度は約3500K。低温だが外層は巨大に広がっている", pattern: "evolution" },
+      { speaker: "赤肩の超巨星ベテルギウス", text: "赤い色は低温の証。それでも明るいのは、外層が大きく広がった超巨星だからだ。", pattern: "evolution" }
     ]
   },
   sirius: {
@@ -1376,6 +1227,9 @@ const STORIES = {
     lead: "おおいぬ座で最も明るく見える恒星。距離と見かけの明るさを読む。",
     mechanic: "apparentBrightness",
     clearAt: 4,
+    bodyType: "白い主系列星",
+    measureTarget: "距離と見かけの明るさ",
+    tool: "parallax",
     portrait: "./assets/sirius-enemy-normal.png",
     enemy: {
       normal: "./assets/sirius-enemy-normal.png",
@@ -1401,10 +1255,10 @@ const STORIES = {
       knowledge: ["明るさは距離も効く"]
     },
     lines: [
-      { speaker: "白犬王シリウス", text: "私は冬の空で最もまばゆく見える白犬王。だが強さの理由を見誤るな。", pattern: "normal" },
-      { speaker: "白犬王シリウス", text: "私はとても近い。距離が近いほど、同じ光でも強く届く。", pattern: "near" },
-      { speaker: "白犬王シリウス", text: "そばには白色矮星の伴星もいる。明るい点の奥にも、進化した小さな星が隠れる。", pattern: "near" },
-      { speaker: "白犬王シリウス", text: "見かけの明るさだけで判断するな。距離と本当の明るさを分けて読め。", pattern: "normal" }
+      { speaker: "白犬王シリウス", text: "私がなぜこれほど明るいか、距離を測ってみよ。", pattern: "normal" },
+      { type: "tool-tap" },
+      { speaker: "観測者", text: "距離は約8.6光年。近いから非常に明るく見えている", pattern: "near" },
+      { speaker: "白犬王シリウス", text: "見かけの明るさは距離にも依存する。近いから明るい、それだけだ。", pattern: "near" }
     ]
   }
 };
@@ -1420,7 +1274,10 @@ function makeCosmicStory({
   pattern,
   statusRows,
   reward,
-  lines
+  lines,
+  bodyType,
+  measureTarget,
+  tool
 }) {
   return {
     kingdomId,
@@ -1430,7 +1287,10 @@ function makeCosmicStory({
     subtitle: "",
     lead,
     mechanic: pattern,
-    clearAt: lines.length,
+    clearAt: 4,
+    bodyType,
+    measureTarget,
+    tool,
     portrait: normal,
     enemy: {
       normal,
@@ -1454,11 +1314,7 @@ function makeCosmicStory({
       knowledgeTitle: "",
       knowledge: [reward.lesson]
     },
-    lines: lines.map((text, index) => ({
-      speaker: name,
-      text,
-      pattern: index % 2 === 0 ? "normal" : pattern
-    }))
+    lines
   };
 }
 
@@ -1481,10 +1337,14 @@ const ADDITIONAL_STORIES = {
       image: "./assets/scroll-m31-cepheid.png",
       lesson: "周期で銀河距離"
     },
+    bodyType: "セファイド変光星",
+    measureTarget: "変光周期と距離",
+    tool: "photometer",
     lines: [
-      "私はアンドロメダ銀河の中で脈打つ小さな灯。",
-      "変光の周期を読めば、本当の明るさが分かる。",
-      "見かけの暗さと比べることで、M31が天の川の外にあると分かった。"
+      { speaker: "M31セファイドの灯", text: "私の変光周期を測ってみよ。", pattern: "normal" },
+      { type: "tool-tap" },
+      { speaker: "観測者", text: "周期から本当の明るさが分かった。M31は天の川の外にある", pattern: "cepheid" },
+      { speaker: "M31セファイドの灯", text: "変光周期が明るさを決める。周期光度関係で銀河の距離を読む。", pattern: "cepheid" }
     ]
   }),
   virgoDarkMatter: makeCosmicStory({
@@ -1505,10 +1365,14 @@ const ADDITIONAL_STORIES = {
       image: "./assets/scroll-dark-matter.png",
       lesson: "見えない質量がある"
     },
+    bodyType: "銀河団",
+    measureTarget: "銀河の運動速度と質量",
+    tool: "spectrometer",
     lines: [
-      "銀河団では、銀河たちが重力に束ねられている。",
-      "見える星や銀河だけでは、その速さを説明できない。",
-      "不足する重力の手がかりが、暗黒物質の存在を示した。"
+      { speaker: "銀河団の見えない重り", text: "銀河たちの動きをスペクトルで測ってみよ。", pattern: "normal" },
+      { type: "tool-tap" },
+      { speaker: "観測者", text: "銀河の速度が速すぎる。見える物質だけでは重力が足りない", pattern: "cluster" },
+      { speaker: "銀河団の見えない重り", text: "不足する重力の手がかりが、暗黒物質の存在を示した。", pattern: "cluster" }
     ]
   }),
   quasarBeacon: makeCosmicStory({
@@ -1529,10 +1393,14 @@ const ADDITIONAL_STORIES = {
       image: "./assets/scroll-quasar.png",
       lesson: "遠方AGNは明るい"
     },
+    bodyType: "活動銀河核",
+    measureTarget: "光の強度とスペクトル",
+    tool: "spectrometer",
     lines: [
-      "私は星のように見えて、正体は遠方銀河の中心。",
-      "巨大ブラックホールへ落ち込む物質が、強烈な光を放つ。",
-      "クエーサーは遠い宇宙を照らす灯台だ。"
+      { speaker: "遠方灯台クエーサー", text: "私の光をスペクトルで分析してみよ。どれほど遠い？", pattern: "normal" },
+      { type: "tool-tap" },
+      { speaker: "観測者", text: "スペクトル線が大きく赤方偏移している。非常に遠方の天体だ", pattern: "jet" },
+      { speaker: "遠方灯台クエーサー", text: "巨大ブラックホールへ落ち込む物質が強烈な光を放つ。遠い宇宙を照らす灯台だ。", pattern: "jet" }
     ]
   }),
   cmbEcho: makeCosmicStory({
@@ -1553,10 +1421,14 @@ const ADDITIONAL_STORIES = {
       image: "./assets/scroll-cmb.png",
       lesson: "宇宙に熱の残響"
     },
+    bodyType: "宇宙マイクロ波背景放射",
+    measureTarget: "温度と方向依存性",
+    tool: "radioTelescope",
     lines: [
-      "どの方向を見ても、宇宙には微かな冷たい光が残る。",
-      "それは初期宇宙が熱かった時代の残響だ。",
-      "宇宙マイクロ波背景放射は、ビッグバン宇宙論の強い証拠になった。"
+      { speaker: "宇宙背景の残響", text: "あらゆる方向に来る冷たい電波を電波望遠鏡で測ってみよ。", pattern: "normal" },
+      { type: "tool-tap" },
+      { speaker: "観測者", text: "約2.7Kの一様な放射が全方向から来ている。宇宙の残響だ", pattern: "echo" },
+      { speaker: "宇宙背景の残響", text: "初期宇宙が熱かった時代の残響。ビッグバン宇宙論の強い証拠になった。", pattern: "echo" }
     ]
   }),
   pulsarBeacon: makeCosmicStory({
@@ -1577,10 +1449,14 @@ const ADDITIONAL_STORIES = {
       image: "./assets/scroll-pulsar.png",
       lesson: "中性子星が脈打つ"
     },
+    bodyType: "中性子星",
+    measureTarget: "電波パルスの周期",
+    tool: "radioTelescope",
     lines: [
-      "私は超新星のあとに残る、極端に密な星。",
-      "回転するビームが地球をかすめるたび、規則正しいパルスが届く。",
-      "パルサーの発見は、恒星進化の極限を開いた。"
+      { speaker: "脈打つ中性子星", text: "電波望遠鏡でパルスを受信してみよ。", pattern: "normal" },
+      { type: "tool-tap" },
+      { speaker: "観測者", text: "規則正しい電波パルスを検出した。高速回転する中性子星だ", pattern: "pulse" },
+      { speaker: "脈打つ中性子星", text: "回転するビームが地球をかすめるたびパルスが届く。恒星進化の極限を示す天体だ。", pattern: "pulse" }
     ]
   }),
   cygnusX1: makeCosmicStory({
@@ -1601,10 +1477,14 @@ const ADDITIONAL_STORIES = {
       image: "./assets/scroll-xray-binary.png",
       lesson: "見えないBHを推定"
     },
+    bodyType: "X線連星",
+    measureTarget: "X線フラックスと伴星の質量",
+    tool: "xrayTelescope",
     lines: [
-      "白鳥座の方向から強いX線が届く。",
-      "見える星のそばには、重く見えない伴星がいる。",
-      "X線連星は、ブラックホールを間接的に見つける道を開いた。"
+      { speaker: "白鳥座X-1の影", text: "白鳥座の方向からX線を観測してみよ。", pattern: "normal" },
+      { type: "tool-tap" },
+      { speaker: "観測者", text: "強いX線を検出した。見える星のそばに重く見えない伴星がいる", pattern: "xray" },
+      { speaker: "白鳥座X-1の影", text: "ブラックホールは光らない。しかし周囲の物質が放つX線がその存在を教える。", pattern: "xray" }
     ]
   }),
   sn1987a: makeCosmicStory({
@@ -1625,10 +1505,14 @@ const ADDITIONAL_STORIES = {
       image: "./assets/scroll-sn1987a.png",
       lesson: "超新星で元素が散る"
     },
+    bodyType: "超新星残骸",
+    measureTarget: "光度変化とニュートリノ",
+    tool: "spectrometer",
     lines: [
-      "近くの銀河で、大質量星が最期の爆発を起こした。",
-      "光だけでなくニュートリノも届き、星の内部崩壊を直接示した。",
-      "超新星は恒星進化と元素合成を結ぶ巨大な合図だ。"
+      { speaker: "大マゼラン雲の超新星", text: "スペクトルで光度と元素の組成を測ってみよ。", pattern: "normal" },
+      { type: "tool-tap" },
+      { speaker: "観測者", text: "超新星の光と同時にニュートリノが検出された。星の内部崩壊の証拠だ", pattern: "burst" },
+      { speaker: "大マゼラン雲の超新星", text: "大質量星が最期の爆発を起こした。超新星は恒星進化と元素合成を結ぶ合図だ。", pattern: "burst" }
     ]
   }),
   m87Shadow: makeCosmicStory({
@@ -1649,10 +1533,14 @@ const ADDITIONAL_STORIES = {
       image: "./assets/scroll-m87-blackhole.png",
       lesson: "BH影を直接画像化"
     },
+    bodyType: "超巨大ブラックホール",
+    measureTarget: "事象の地平線の影",
+    tool: "radioTelescope",
     lines: [
-      "M87銀河の中心には、巨大な重力の影がある。",
-      "世界中の望遠鏡をつなぎ、地球サイズの目でその輪郭を描いた。",
-      "ブラックホールシャドウは、見えない天体を画像で確かめる時代を開いた。"
+      { speaker: "M87黒影の門", text: "M87銀河中心の電波画像を合成してみよ。", pattern: "normal" },
+      { type: "tool-tap" },
+      { speaker: "観測者", text: "光の輪の中に暗い影が見える。ブラックホールシャドウだ", pattern: "shadow" },
+      { speaker: "M87黒影の門", text: "世界中の電波望遠鏡をつなぎ、地球サイズの目で描いた。見えない天体を画像で確かめる時代だ。", pattern: "shadow" }
     ]
   }),
   gravityWaveGate: makeCosmicStory({
@@ -1673,10 +1561,14 @@ const ADDITIONAL_STORIES = {
       image: "./assets/scroll-gravitational-waves.png",
       lesson: "時空の波を観測"
     },
+    bodyType: "ブラックホール連星",
+    measureTarget: "時空の歪み（重力波）",
+    tool: "radioTelescope",
     lines: [
-      "二つのブラックホールが合体すると、時空そのものが波打つ。",
-      "その波は光ではない。重力波として地球の検出器に届いた。",
-      "重力波は、宇宙を見る新しい感覚を開いた。"
+      { speaker: "重力波の双黒門", text: "重力波検出器でこの方向からの信号を観測してみよ。", pattern: "normal" },
+      { type: "tool-tap" },
+      { speaker: "観測者", text: "時空の歪みを検出した。ブラックホール連星の合体からの重力波だ", pattern: "wave" },
+      { speaker: "重力波の双黒門", text: "二つのブラックホールが合体すると時空が波打つ。重力波は宇宙を見る新しい感覚だ。", pattern: "wave" }
     ]
   }),
   darkEnergySupernova: makeCosmicStory({
@@ -1697,10 +1589,14 @@ const ADDITIONAL_STORIES = {
       image: "./assets/scroll-dark-energy.png",
       lesson: "遠方SNで加速膨張"
     },
+    bodyType: "Ia型超新星",
+    measureTarget: "距離と見かけの明るさ",
+    tool: "photometer",
     lines: [
-      "Ia型超新星は、遠方宇宙の距離を測る標準光源になる。",
-      "遠方の超新星は、予想より暗く見えた。",
-      "そこから宇宙の膨張が加速していることが示された。"
+      { speaker: "遠方超新星の暗き力", text: "遠方のIa型超新星の明るさを測定してみよ。", pattern: "normal" },
+      { type: "tool-tap" },
+      { speaker: "観測者", text: "予想より暗い。宇宙の膨張が加速していることを示す", pattern: "accelerate" },
+      { speaker: "遠方超新星の暗き力", text: "Ia型超新星は標準光源。遠方の暗さから宇宙の加速膨張が示された。", pattern: "accelerate" }
     ]
   })
 };
@@ -2163,6 +2059,9 @@ const storyTextPanel = document.querySelector("#storyTextPanel");
 const storyAdvanceButton = document.querySelector("#storyAdvanceButton");
 const storyTextSpeaker = document.querySelector("#storyTextSpeaker");
 const storyTextLine = document.querySelector("#storyTextLine");
+const observeToolButton = document.querySelector("#observeToolButton");
+const observeToolIcon = document.querySelector("#observeToolIcon");
+const observeToolName = document.querySelector("#observeToolName");
 const guidePanel = document.querySelector("#guidePanel");
 const storyPanel = document.querySelector("#storyPanel");
 const scrollPanel = document.querySelector(".scroll-panel");
@@ -2472,6 +2371,17 @@ const HOME_TABS = [
 const APP_SCREEN_MODES = new Set(["observe", "quests", "library", "settings"]);
 
 const OBSERVER_PROFILE_IMAGE = "./assets/observer-astronomer-front-v1.png";
+
+const OBSERVE_TOOLS = {
+  starChart:        { name: "星図",          image: "./assets/observation-tool-astrometry-v1.png" },
+  opticalTelescope: { name: "光学望遠鏡",    image: "./assets/observation-tool-telescope-v1.png" },
+  photometer:       { name: "測光器",        image: "./assets/observation-tool-ccd-photometer-v1.png" },
+  spectrometer:     { name: "分光器",        image: "./assets/observation-tool-spectroscope-v1.png" },
+  doppler:          { name: "ドップラー観測", image: "./assets/observation-tool-spectroscope-v1.png" },
+  parallax:         { name: "視差測定器",    image: "./assets/observation-tool-astrometry-v1.png" },
+  radioTelescope:   { name: "電波望遠鏡",    image: "./assets/observation-tool-radio-antenna-v1.png" },
+  xrayTelescope:    { name: "X線望遠鏡",     image: "./assets/observation-tool-xray-detector-v1.png" },
+};
 
 const OBSERVATION_TOOLS = [
   {
@@ -10484,10 +10394,10 @@ function renderStory() {
   const story = STORIES[state.storyId];
   const pointLabel = Object.values(KINGDOMS).flatMap(k => k.points ?? []).find(p => p.storyId === state.storyId)?.label ?? story.name;
   const line = story.lines[state.lineIndex];
-  const pattern = line.pattern ?? "normal";
+  const isToolTap = line.type === "tool-tap";
+  const pattern = isToolTap ? "normal" : (line.pattern ?? "normal");
   const sprite = story.enemy[pattern] ?? story.enemy.normal;
 
-  storyTextPanel.classList.remove("is-hidden");
   scrollPanel.classList.add("is-hidden");
   storyScene.dataset.bg = story.battleBg;
   storyScene.dataset.story = state.storyId;
@@ -10495,36 +10405,63 @@ function renderStory() {
   enemySprite.src = sprite;
   enemySprite.alt = story.name;
   enemySprite.className = `enemy-sprite story-${state.storyId} pattern-${pattern}`;
-  targetStatusThumb.src = sprite;
-  targetStatusThumb.alt = story.name;
-  targetStatusName.textContent = pointLabel;
+
+  // 左上: 天体種別・測定対象の2行のみ
   targetStatusStats.innerHTML = "";
-  story.status.rows.forEach((row) => {
+  const statusRows = story.bodyType ? [
+    { label: "天体種別", value: story.bodyType },
+    { label: "測定対象", value: story.measureTarget ?? "" }
+  ] : (story.status?.rows ?? []);
+  statusRows.forEach((row) => {
     const item = document.createElement("div");
     const term = document.createElement("dt");
-    const icon = document.createElement("span");
     const value = document.createElement("dd");
-
-    icon.setAttribute("aria-hidden", "true");
-    icon.textContent = row.icon;
-    term.append(icon, row.label);
+    if (row.icon) {
+      const icon = document.createElement("span");
+      icon.setAttribute("aria-hidden", "true");
+      icon.textContent = row.icon;
+      term.append(icon);
+    }
+    term.append(document.createTextNode(row.label));
     value.textContent = row.value;
     item.append(term, value);
     targetStatusStats.appendChild(item);
   });
-  targetStatusMeter.style.setProperty("--meter", `${story.status.meter[pattern] ?? 70}%`);
+
+  // 右下: 観測道具アイコン＋名前（タップで観測）
+  const tool = story.tool ? (OBSERVE_TOOLS[story.tool] ?? null) : null;
+  if (tool && observeToolIcon && observeToolName) {
+    observeToolIcon.src = withAssetVersion(tool.image);
+    observeToolIcon.alt = tool.name;
+    observeToolName.textContent = tool.name;
+  }
+
+  // tool-tapステップ: テキストパネルを隠して道具ボタンを強調
+  if (isToolTap) {
+    storyTextPanel.classList.add("is-hidden");
+    if (observeToolButton) {
+      observeToolButton.classList.remove("is-tapped");
+      observeToolButton.removeAttribute("hidden");
+    }
+  } else {
+    storyTextPanel.classList.remove("is-hidden");
+    if (observeToolButton) {
+      observeToolButton.classList.toggle("is-tapped", pattern !== "normal");
+    }
+    storyTextSpeaker.textContent = line.speaker;
+    storyTextLine.textContent = line.text;
+    storyAdvanceButton.setAttribute(
+      "aria-label",
+      state.lineIndex >= story.lines.length - 1 ? "星図へ戻る" : "次のセリフへ"
+    );
+  }
+
   storySceneTypeEl.textContent = story.type;
   storySceneNameEl.textContent = pointLabel;
   storyTypeEl.textContent = story.type;
   storyNameEl.textContent = pointLabel;
   storySubtitleEl.textContent = "";
   storySubtitleEl.hidden = true;
-  storyTextSpeaker.textContent = line.speaker;
-  storyTextLine.textContent = line.text;
-  storyAdvanceButton.setAttribute(
-    "aria-label",
-    state.lineIndex >= story.lines.length - 1 ? "星図へ戻る" : "次のセリフへ"
-  );
   renderBattleBgButtons();
 }
 
@@ -11022,6 +10959,11 @@ battleBgButtons.forEach((button) => {
 
 homeButton.addEventListener("click", goHome);
 storyAdvanceButton.addEventListener("click", nextStoryLine);
+observeToolButton?.addEventListener("click", () => {
+  if (state.mode !== "story") return;
+  observeToolButton.classList.add("is-tapped");
+  setTimeout(() => nextStoryLine(), 200);
+});
 rewardCloseButton.addEventListener("click", () => {
   const scrollId = state.selectedScrollId;
   hideReward();

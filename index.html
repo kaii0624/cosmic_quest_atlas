@@ -76,18 +76,7 @@
                 alt=""
                 aria-hidden="true"
               />
-              <div class="status-object">
-                <img
-                  id="targetStatusThumb"
-                  src="./assets/algol-enemy-normal.png"
-                  alt="悪魔の首アルゴル"
-                />
-                <div>
-                  <strong id="targetStatusName">悪魔の首アルゴル</strong>
-                  <dl id="targetStatusStats" class="status-stats target-stats"></dl>
-                </div>
-              </div>
-              <span class="status-meter gold"><b id="targetStatusMeter"></b></span>
+              <dl id="targetStatusStats" class="status-stats target-stats"></dl>
             </div>
             <img
               id="enemySprite"
@@ -101,24 +90,10 @@
               alt="望遠鏡を構える観測者"
             />
             <div id="observerStatusPanel" class="status-panel observer-status-panel">
-
-              <dl class="status-stats observer-stats">
-                <div>
-                  <dt><span aria-hidden="true">▤</span>観測知識</dt>
-                  <dd>120 / 200</dd>
-                  <span class="status-meter blue"><b style="--meter: 60%"></b></span>
-                </div>
-                <div>
-                  <dt><span aria-hidden="true">◎</span>観測精度</dt>
-                  <dd>85 %</dd>
-                  <span class="status-meter blue"><b style="--meter: 85%"></b></span>
-                </div>
-                <div>
-                  <dt><span aria-hidden="true">⌛</span>観測時間</dt>
-                  <dd>60 秒</dd>
-                  <span class="status-meter blue"><b style="--meter: 72%"></b></span>
-                </div>
-              </dl>
+              <button id="observeToolButton" class="observe-tool-button" type="button" data-observe-tool aria-label="観測する">
+                <img id="observeToolIcon" src="" alt="" />
+                <span id="observeToolName"></span>
+              </button>
             </div>
           </div>
           <div class="story-scene-title">
