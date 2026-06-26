@@ -8023,7 +8023,7 @@ button {
 .quest-card.selected::after {
   content: "";
   position: absolute;
-  inset: clamp(8px, 1.8vw, 14px);
+  inset: 15% clamp(8px, 1.8vw, 14px);
   border: 1px solid rgba(255, 221, 113, 0.58);
   border-radius: 6px;
   pointer-events: none;
@@ -8087,12 +8087,12 @@ button {
 }
 
 .quest-requester img {
-  width: clamp(101px, 24.5vw, 190px);
-  transform: translate(clamp(4px, 1vw, 9px), clamp(3px, 0.8vw, 7px));
+  width: clamp(81px, 19.6vw, 152px);
+  transform: translate(clamp(4px, 1vw, 9px), clamp(10px, 2.3vw, 16px));
 }
 
 .quest-requester span {
-  transform: translate(clamp(4px, 1vw, 9px), clamp(-22px, -4vw, -14px));
+  transform: translate(clamp(4px, 1vw, 9px), clamp(-14px, -2.2vw, -6px));
 }
 
 .quest-card-copy {
@@ -8121,12 +8121,12 @@ button {
   }
 
   .quest-requester img {
-    width: 102px;
-    transform: translate(5px, 4px);
+    width: 82px;
+    transform: translate(5px, 12px);
   }
 
   .quest-requester span {
-    transform: translate(5px, -16px);
+    transform: translate(5px, -8px);
   }
 
   .quest-card-copy {
