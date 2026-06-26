@@ -7748,7 +7748,8 @@ button {
 .quest-card {
   overflow: visible;
   background-image: url("./assets/ui-quest-flyer-card.png?v=quest-ui-v7") !important;
-  background-size: 100% 100% !important;
+  background-size: 100% 60% !important;
+  background-position: center !important;
   padding-inline: clamp(18px, 3.4vw, 34px);
 }
 
@@ -7835,7 +7836,8 @@ button {
   }
 
   .quest-card {
-    background-size: 100% 100% !important;
+    background-size: 100% 60% !important;
+    background-position: center !important;
     padding: 18px 14px 17px;
   }
 
@@ -7946,7 +7948,7 @@ button {
 }
 
 .home-selection-panel.app-detail-panel .home-selection-card {
-  margin-left: clamp(6px, 1.8vw, 14px);
+  margin-left: clamp(14px, 3.5vw, 26px);
 }
 
 .home-selection-panel.app-detail-panel .home-selection-card::after {
@@ -8090,7 +8092,7 @@ button {
 }
 
 .quest-requester span {
-  transform: translateX(clamp(4px, 1vw, 9px));
+  transform: translate(clamp(4px, 1vw, 9px), clamp(-22px, -4vw, -14px));
 }
 
 .quest-card-copy {
@@ -8124,7 +8126,7 @@ button {
   }
 
   .quest-requester span {
-    transform: translateX(5px);
+    transform: translate(5px, -16px);
   }
 
   .quest-card-copy {
