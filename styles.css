@@ -7949,21 +7949,13 @@ button {
   margin-left: clamp(6px, 1.8vw, 14px);
 }
 
+.home-selection-panel.app-detail-panel .home-selection-card::after {
+  content: none;
+}
+
 .home-selection-panel.app-detail-panel .home-selection-card img {
   object-fit: contain;
-  background:
-    radial-gradient(circle at 50% 45%, rgba(20, 72, 134, 0.2), transparent 58%),
-    rgba(20, 13, 18, 0.08);
-}
-
-.home-selection-panel.observe-detail-panel .home-selection-card img,
-.home-selection-panel.quest-detail-panel .home-selection-card img,
-.home-selection-panel.quest-dialogue-detail-panel .home-selection-card img {
-  padding: 6px;
-}
-
-.home-selection-panel.library-detail-panel .home-selection-card img {
-  padding: 4px;
+  background: rgba(14, 10, 18, 0.12);
 }
 
 .home-selection-panel.app-detail-panel:not(.observe-detail-panel):not(.quest-detail-panel):not(.library-detail-panel) .home-selection-card img {
