@@ -2059,6 +2059,11 @@ const storyTextPanel = document.querySelector("#storyTextPanel");
 const storyAdvanceButton = document.querySelector("#storyAdvanceButton");
 const storyTextSpeaker = document.querySelector("#storyTextSpeaker");
 const storyTextLine = document.querySelector("#storyTextLine");
+const storyToolPrompt = document.querySelector("#storyToolPrompt");
+const storyToolIcon = document.querySelector("#storyToolIcon");
+const storyToolName = document.querySelector("#storyToolName");
+const storyToolPromptText = document.querySelector("#storyToolPromptText");
+const storyUseToolButton = document.querySelector("#storyUseToolButton");
 const observeToolButton = document.querySelector("#observeToolButton");
 const observeToolIcon = document.querySelector("#observeToolIcon");
 const observeToolName = document.querySelector("#observeToolName");
@@ -10437,15 +10442,43 @@ function renderStory() {
     observeToolName.textContent = tool.name;
   }
 
-  // tool-tapステップ: テキストパネルを隠して道具ボタンを強調
+  if (observeToolButton) {
+    observeToolButton.disabled = true;
+  }
+
+  // tool-tapステップ: セリフ枠内に道具使用CTAを表示
   if (isToolTap) {
-    storyTextPanel.classList.add("is-hidden");
+    storyTextPanel.classList.remove("is-hidden");
+    storyTextPanel.classList.add("is-tool-prompt");
+    storyAdvanceButton.hidden = true;
     if (observeToolButton) {
       observeToolButton.classList.remove("is-tapped");
-      observeToolButton.removeAttribute("hidden");
+    }
+    if (storyToolPrompt) {
+      storyToolPrompt.hidden = false;
+      storyToolPrompt.classList.remove("is-tapped");
+    }
+    if (storyToolIcon && tool) {
+      storyToolIcon.src = withAssetVersion(tool.image);
+      storyToolIcon.alt = tool.name;
+    }
+    if (storyToolName && tool) {
+      storyToolName.textContent = tool.name;
+    }
+    if (storyToolPromptText) {
+      storyToolPromptText.textContent = `「${story.name}」を観測してみよう`;
+    }
+    if (storyUseToolButton) {
+      storyUseToolButton.disabled = false;
+      storyUseToolButton.setAttribute("aria-label", `${tool?.name ?? "観測機器"}を使う`);
     }
   } else {
     storyTextPanel.classList.remove("is-hidden");
+    storyTextPanel.classList.remove("is-tool-prompt");
+    storyAdvanceButton.hidden = false;
+    if (storyToolPrompt) {
+      storyToolPrompt.hidden = true;
+    }
     if (observeToolButton) {
       observeToolButton.classList.toggle("is-tapped", pattern !== "normal");
     }
@@ -10728,6 +10761,19 @@ function nextStoryLine() {
   finishStory(story);
 }
 
+function useStoryTool() {
+  if (state.mode !== "story") return;
+  const story = STORIES[state.storyId];
+  const line = story?.lines?.[state.lineIndex];
+  if (line?.type !== "tool-tap") return;
+
+  storyToolPrompt?.classList.add("is-tapped");
+  if (storyUseToolButton) {
+    storyUseToolButton.disabled = true;
+  }
+  setTimeout(() => nextStoryLine(), 200);
+}
+
 function render() {
   renderMap();
   renderPanel();
@@ -10960,11 +11006,7 @@ battleBgButtons.forEach((button) => {
 
 homeButton.addEventListener("click", goHome);
 storyAdvanceButton.addEventListener("click", nextStoryLine);
-observeToolButton?.addEventListener("click", () => {
-  if (state.mode !== "story") return;
-  observeToolButton.classList.add("is-tapped");
-  setTimeout(() => nextStoryLine(), 200);
-});
+storyUseToolButton?.addEventListener("click", useStoryTool);
 rewardCloseButton.addEventListener("click", () => {
   const scrollId = state.selectedScrollId;
   hideReward();

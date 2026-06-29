@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>COSMIC QUEST</title>
-    <link rel="stylesheet" href="./styles.css?v=battle-ui-polish-v8" />
+    <link rel="stylesheet" href="./styles.css?v=battle-tool-dialogue-v7" />
   </head>
   <body>
     <div class="star-dust" aria-hidden="true"></div>
@@ -113,6 +113,16 @@
           </span>
           <span class="story-cue" aria-hidden="true">▼</span>
         </button>
+        <div id="storyToolPrompt" class="story-tool-prompt" hidden>
+          <figure class="story-tool-card" aria-hidden="true">
+            <img id="storyToolIcon" class="story-tool-icon" src="" alt="" />
+          </figure>
+          <div class="story-tool-copy">
+            <strong id="storyToolName" class="story-tool-name"></strong>
+            <p id="storyToolPromptText" class="story-tool-description"></p>
+            <button id="storyUseToolButton" class="home-enter-button story-use-tool-button" type="button">道具を使う</button>
+          </div>
+        </div>
       </section>
 
       <aside class="codex-panel" aria-label="観測手帳">
@@ -190,6 +200,6 @@
     <div id="lessonOverlay" class="lesson-overlay is-hidden" aria-live="polite"></div>
     <div id="referenceOverlay" class="lesson-overlay is-hidden" aria-live="polite"></div>
 
-    <script src="./script.js?v=battle-ui-polish-v8"></script>
+    <script src="./script.js?v=battle-tool-dialogue-v7"></script>
   </body>
 </html>
