@@ -10424,6 +10424,7 @@ function renderStory() {
     }
     term.append(document.createTextNode(row.label));
     value.textContent = row.value;
+    value.classList.toggle("is-long-value", String(row.value ?? "").length >= 7);
     item.append(term, value);
     targetStatusStats.appendChild(item);
   });
