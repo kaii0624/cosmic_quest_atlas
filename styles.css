@@ -2774,8 +2774,13 @@ button {
   object-fit: contain;
   image-rendering: auto;
   filter:
+    brightness(1.08)
+    saturate(1.08)
+    contrast(1.04)
     drop-shadow(0 14px 0 rgba(31, 29, 23, 0.22))
-    drop-shadow(0 0 36px rgba(255, 210, 130, 0.42));
+    drop-shadow(0 0 12px rgba(255, 244, 184, 0.66))
+    drop-shadow(0 0 30px rgba(255, 214, 116, 0.5))
+    drop-shadow(0 0 52px rgba(116, 154, 255, 0.28));
   transition:
     opacity 180ms ease,
     transform 220ms ease,
